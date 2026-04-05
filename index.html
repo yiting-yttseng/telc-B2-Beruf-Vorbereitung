@@ -15,65 +15,65 @@
     .container { max-width: 680px; margin: 0 auto; }
 
     .header {
-      background: linear-gradient(135deg, #2c3e50, #3498db);
-      border-radius: 16px;
-      padding: 32px 28px;
-      margin-bottom: 24px;
-      color: white;
+      margin-bottom: 28px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid #1a1a1a;
     }
-    .header-emoji { font-size: 40px; margin-bottom: 12px; }
-    .header h1 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
-    .header p { font-size: 14px; opacity: 0.85; line-height: 1.6; }
-    .badges { margin-top: 14px; display: flex; gap: 8px; flex-wrap: wrap; }
-    .badge {
-      background: rgba(255,255,255,0.2);
-      border-radius: 20px;
-      padding: 4px 12px;
-      font-size: 12px;
+    .header h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1a1a1a;
+      letter-spacing: 0.01em;
+    }
+    .header p {
+      font-size: 14px;
+      color: #666;
+      margin-top: 6px;
+      line-height: 1.6;
     }
 
     .section-title {
-      font-size: 13px;
-      font-weight: 600;
+      font-size: 12px;
+      font-weight: 700;
       color: #888;
       text-transform: uppercase;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.1em;
       margin-bottom: 10px;
       margin-top: 28px;
     }
 
-    .file-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .file-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
     .file-list a {
       display: flex;
       align-items: center;
       gap: 14px;
-      padding: 14px 18px;
+      padding: 13px 16px;
       background: #fff;
       border: 1px solid #e0e0e0;
-      border-radius: 10px;
+      border-radius: 8px;
       text-decoration: none;
       color: #1a1a1a;
-      font-size: 15px;
+      font-size: 14px;
       transition: background 0.15s, border-color 0.15s;
     }
     .file-list a:hover { background: #e8f0fe; border-color: #3498db; }
-    .file-icon { font-size: 20px; flex-shrink: 0; }
+    .file-icon { font-size: 18px; flex-shrink: 0; }
     .file-name { flex: 1; }
     .file-tag {
       font-size: 11px;
       background: #f0f0f0;
       color: #666;
       border-radius: 4px;
-      padding: 2px 8px;
+      padding: 2px 7px;
     }
 
     .about-btn {
       width: 100%;
       margin-top: 28px;
-      padding: 14px 18px;
+      padding: 13px 16px;
       background: #fff;
       border: 1px solid #e0e0e0;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
       font-size: 14px;
       color: #444;
@@ -83,15 +83,15 @@
       gap: 10px;
     }
     .about-btn:hover { background: #f5f5f5; }
-    .about-arrow { transition: transform 0.2s; font-style: normal; }
+    .about-arrow { transition: transform 0.2s; display: inline-block; font-style: normal; }
     .about-arrow.open { transform: rotate(90deg); }
 
     .about-content {
       display: none;
-      margin-top: 10px;
+      margin-top: 8px;
       background: #fff;
       border: 1px solid #e0e0e0;
-      border-radius: 10px;
+      border-radius: 8px;
       padding: 24px;
       font-size: 14px;
       line-height: 1.8;
@@ -100,7 +100,7 @@
     .lang-block { margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid #f0f0f0; }
     .lang-block:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
     .lang-block h2 { font-size: 15px; margin-bottom: 10px; }
-    .lang-block h3 { font-size: 13px; color: #666; margin-top: 12px; margin-bottom: 4px; }
+    .lang-block h3 { font-size: 12px; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 14px; margin-bottom: 4px; }
     .lang-block ul { padding-left: 18px; }
     .lang-block ul li { margin-bottom: 3px; }
     .lang-block a { color: #3498db; }
@@ -109,7 +109,7 @@
       margin-top: 32px;
       text-align: center;
       font-size: 12px;
-      color: #aaa;
+      color: #bbb;
     }
   </style>
 </head>
@@ -117,39 +117,37 @@
 <div class="container">
 
   <div class="header">
-    <div class="header-emoji">📚</div>
     <h1>telc B2 Beruf Vorbereitung</h1>
     <p>Lernmaterialien zur Vorbereitung auf den Deutsch-Test für den Beruf B2</p>
-    <div class="badges">
-      <span class="badge">🇩🇪 Deutsch B2</span>
-      <span class="badge">📝 telc DTB B2</span>
-      <span class="badge">💼 Beruf</span>
-    </div>
   </div>
 
-  <p class="section-title">📂 Dateien</p>
+  <p class="section-title">Wortschatz</p>
   <ul class="file-list">
     <li>
       <a href="Wortschatz_Klett-B2.html">
-        <span class="file-icon">🔤</span>
+        <span class="file-icon">📖</span>
         <span class="file-name">Wortschatz Klett B2</span>
         <span class="file-tag">HTML</span>
       </a>
     </li>
     <li>
       <a href="Wortschatz_Nomen-Verben-Verbindungen.html">
-        <span class="file-icon">🔗</span>
-        <span class="file-name">Nomen-Verben-Verbindungen</span>
+        <span class="file-icon">📖</span>
+        <span class="file-name">Wortschatz Nomen-Verben-Verbindungen</span>
         <span class="file-tag">HTML</span>
       </a>
     </li>
     <li>
       <a href="Wortschatz_unregelmaessige-Verben.html">
-        <span class="file-icon">📋</span>
-        <span class="file-name">Unregelmaessige Verben</span>
+        <span class="file-icon">📖</span>
+        <span class="file-name">Wortschatz Unregelmaessige Verben</span>
         <span class="file-tag">HTML</span>
       </a>
     </li>
+  </ul>
+
+  <p class="section-title">Prüfungsvorbereitung</p>
+  <ul class="file-list">
     <li>
       <a href="SchreibenII_Forumsbeitrag_Analyse.pdf">
         <span class="file-icon">📄</span>
@@ -161,7 +159,7 @@
 
   <button class="about-btn" onclick="toggleAbout()">
     <em class="about-arrow" id="arrow">▶</em>
-    ℹ️ 關於此專案 / About / Über dieses Projekt
+    關於此專案 / About / Über dieses Projekt
   </button>
   <div class="about-content" id="about">
 
