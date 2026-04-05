@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unregelmäßige Verben – Arbeitswelt</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,600;1,8..60,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #f5f2ec;
+    --surface:   #ffffff;
+    --surface2:  #eef3f8;
+    --border:    #ccd6e0;
+    --accent:    #1a4a7a;
+    --accent2:   #2e75b6;
+    --accent3:   #e8f0f8;
+    --text:      #1a1f2e;
+    --muted:     #5a6270;
+    --tag-prae:  #1a6e3c;
+    --tag-praet: #7a3a00;
+    --tag-perf:  #4a1a7a;
+    --tag-fut:   #1a4a7a;
+    --playing:   #d4edda;
+    --playing-border: #28a745;
+    --hover-form: #e8f4fd;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Serif 4', 'Noto Serif TC', Georgia, serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--accent);
+    color: white;
+    padding: 28px 32px 24px;
+    border-bottom: 4px solid var(--accent2);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  header h1 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    line-height: 1.3;
+  }
+  header h1 span {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 400;
+    opacity: 0.7;
+    letter-spacing: 0.08em;
+    margin-top: 3px;
+    font-family: 'Source Serif 4', serif;
+  }
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .count-badge {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 4px 12px;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  /* ── SEARCH & FILTER ── */
+  .toolbar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 32px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 89px;
+    z-index: 99;
+  }
+  .search-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+    max-width: 380px;
+  }
+  .search-wrap svg {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0.4;
+  }
+  #searchInput {
+    width: 100%;
+    padding: 8px 12px 8px 34px;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    background: var(--bg);
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  #searchInput:focus { border-color: var(--accent2); }
+
+  .filter-btn {
+    padding: 7px 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg);
+    font-size: 0.82rem;
+    font-family: 'IBM Plex Mono', monospace;
+    cursor: pointer;
+    color: var(--muted);
+    transition: all 0.15s;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  .filter-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+  .filter-btn:hover:not(.active) { border-color: var(--accent2); color: var(--accent2); }
+
+  #resultCount {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    margin-left: auto;
+  }
+
+  /* ── GRID ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(520px, 1fr));
+    gap: 20px;
+    padding: 28px 32px;
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+
+  /* ── CARD ── */
+  .card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: box-shadow 0.2s, transform 0.15s;
+    display: flex;
+    flex-direction: column;
+  }
+  .card:hover {
+    box-shadow: 0 4px 20px rgba(26,74,122,0.12);
+    transform: translateY(-1px);
+  }
+
+  /* Card header: verb forms */
+  .card-forms {
+    background: var(--accent);
+    color: white;
+    padding: 14px 18px 12px;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    transition: background 0.15s;
+    position: relative;
+  }
+  .card-forms:hover { background: #1d5491; }
+  .card-forms.playing {
+    background: #145a32;
+    outline: 2px solid #28a745;
+  }
+
+  .forms-left { flex: 1; }
+  .infinitiv {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    line-height: 1;
+    margin-bottom: 7px;
+  }
+  .forms-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 10px;
+  }
+  .form-item {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem;
+    opacity: 0.85;
+    line-height: 1.4;
+  }
+
+  .speak-icon {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+    margin-top: 2px;
+  }
+  .card-forms:hover .speak-icon { background: rgba(255,255,255,0.25); }
+  .card-forms.playing .speak-icon { background: rgba(40,167,69,0.5); }
+
+  /* Translation row */
+  .card-trans {
+    padding: 10px 18px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    background: var(--accent3);
+  }
+  .trans-zh {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .trans-en {
+    font-size: 0.82rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  /* Examples */
+  .card-examples {
+    padding: 10px 14px 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+  }
+
+  .ex-row {
+    display: grid;
+    grid-template-columns: 68px 1fr;
+    gap: 6px 10px;
+    align-items: start;
+    border-radius: 6px;
+    padding: 2px 4px;
+  }
+
+  .tense-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    padding: 2px 7px;
+    border-radius: 4px;
+    text-align: center;
+    white-space: nowrap;
+    margin-top: 2px;
+    text-transform: uppercase;
+  }
+  .tag-prae  { background: #d4edda; color: var(--tag-prae); }
+  .tag-praet { background: #ffe8cc; color: var(--tag-praet); }
+  .tag-perf  { background: #e8d5f5; color: var(--tag-perf); }
+  .tag-fut   { background: #d0e8f8; color: var(--tag-fut); }
+
+  .ex-content { display: flex; flex-direction: column; gap: 1px; }
+
+  .ex-de {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--text);
+    cursor: pointer;
+    border-radius: 4px;
+    padding: 1px 5px;
+    transition: background 0.12s;
+    display: inline-block;
+  }
+  .ex-de:hover { background: var(--hover-form); }
+  .ex-de.playing {
+    background: var(--playing);
+    outline: 1.5px solid var(--playing-border);
+  }
+
+  .ex-zh {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 0.78rem;
+    color: var(--muted);
+    padding: 0 5px;
+    line-height: 1.5;
+  }
+
+  /* ── SPEAKING INDICATOR ── */
+  .speaking-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #28a745;
+    margin-left: 5px;
+    animation: pulse 0.8s infinite alternate;
+    vertical-align: middle;
+  }
+  @keyframes pulse {
+    from { opacity: 0.4; transform: scale(0.8); }
+    to   { opacity: 1;   transform: scale(1.2); }
+  }
+
+  /* ── EMPTY STATE ── */
+  .empty-state {
+    grid-column: 1/-1;
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+    font-size: 1rem;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 7px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    header { padding: 18px 16px; }
+    .toolbar { padding: 12px 16px; top: 80px; }
+    .grid { padding: 16px; gap: 14px; grid-template-columns: 1fr; }
+    header h1 { font-size: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>
+    Unregelmäßige Verben
+    <span>不規則動詞 · Thema: Arbeitswelt</span>
+  </h1>
+  <div class="header-right">
+    <div class="count-badge" id="totalCount">110 Verben</div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="search-wrap">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="searchInput" placeholder="動詞搜索… (z.B. gehen, 去, to go)">
+  </div>
+  <button class="filter-btn active" data-filter="all">全部</button>
+  <button class="filter-btn" data-filter="hat">hat + ge–</button>
+  <button class="filter-btn" data-filter="ist">ist + ge–</button>
+  <span id="resultCount"></span>
+</div>
+
+<div class="grid" id="verbGrid"></div>
+
+<script>
+const VERBS = [["befehlen","befiehlt","befahl","hat befohlen","命令，下令","to command, to order","Der Vorgesetzte befiehlt dem Team, den Bericht bis Freitag fertigzustellen.","上司命令團隊在週五前完成報告。","Der Manager befahl den Mitarbeitern, Überstunden zu leisten.","經理命令員工加班。","Die Geschäftsführung hat befohlen, alle Kosten zu reduzieren.","管理層已下令削減所有費用。","Der Projektleiter wird befehlen, die Arbeit neu zu verteilen.","項目負責人將命令重新分配工作。"],["beginnen","beginnt","begann","hat begonnen","開始，著手","to begin, to start","Das Meeting beginnt pünktlich um neun Uhr.","會議準時在九點開始。","Das neue Projekt begann mit einer Planungssitzung.","新項目從一次規劃會議開始。","Die Zusammenarbeit mit dem Kooperationspartner hat begonnen.","與合作夥伴的合作已經開始。","Die Schulung wird nächste Woche beginnen.","培訓將在下週開始。"],["begreifen","begreift","begriff","hat begriffen","理解，領悟","to understand, to grasp","Er begreift die neuen Arbeitsprozesse schnell.","他很快理解了新的工作流程。","Die neue Kollegin begriff die Aufgaben sofort.","新同事立刻理解了工作任務。","Das Team hat den Sinn der Umstrukturierung nicht begriffen.","團隊沒有理解重組的意義。","Er wird die Anforderungen nach der Einarbeitung besser begreifen.","他在入職培訓後會更好地理解要求。"],["betrügen","betrügt","betrog","hat betrogen","欺騙，詐騙","to deceive, to cheat","Wer seinen Arbeitgeber betrügt, riskiert seine Stelle.","欺騙雇主的人冒著失去職位的風險。","Der Angestellte betrog das Unternehmen um eine große Summe.","那名員工騙取了公司一大筆錢。","Ein Mitarbeiter hat die Buchhaltung betrogen.","一名員工欺騙了會計部門。","Wer betrügt, wird früher oder später entlassen werden.","欺騙者遲早會被解雇。"],["biegen","biegt","bog","hat gebogen","彎曲，轉彎","to bend, to turn","Der Techniker biegt das Kabel vorsichtig um die Ecke.","技術人員小心地將電纜彎繞過角落。","Er bog um die Ecke und betrat das Büro.","他轉過角落走進了辦公室。","Der Mechaniker hat das beschädigte Teil gebogen.","技師已將損壞的零件彎曲。","Man wird die Leitungen neu biegen müssen.","將需要重新彎曲管線。"],["bieten","bietet","bot","hat geboten","提供，出價","to offer, to bid","Das Unternehmen bietet seinen Mitarbeitern flexible Arbeitszeiten.","公司向員工提供彈性工作時間。","Die Firma bot dem Bewerber ein attraktives Gehalt.","公司向應聘者提出了有吸引力的薪資。","Die neue Stelle hat gute Entwicklungsmöglichkeiten geboten.","新職位提供了良好的發展機會。","Das Unternehmen wird bessere Konditionen bieten.","公司將提供更好的條件。"],["bitten","bittet","bat","hat gebeten","請求，要求","to ask, to request","Die Mitarbeiterin bittet um einen freien Tag.","員工請求休一天假。","Er bat seinen Vorgesetzten um ein Feedback-Gespräch.","他請求上司進行一次反饋談話。","Die Kollegin hat um eine Gehaltserhöhung gebeten.","同事已請求加薪。","Er wird die Personalabteilung um Unterstützung bitten.","他將請求人事部門的支持。"],["bleiben","bleibt","blieb","ist geblieben","留下，保持","to stay, to remain","Sie bleibt heute länger im Büro.","她今天在辦公室待得比較晚。","Der Direktor blieb trotz des Angebots in seiner Stelle.","儘管有其他機會，主任仍然留在了他的職位上。","Er ist der Firma zwanzig Jahre lang treu geblieben.","他在公司忠心耿耿地待了二十年。","Sie wird vorerst in der gleichen Abteilung bleiben.","她暫時將留在同一個部門。"],["brechen","bricht","brach","hat gebrochen","違反，打破","to break, to violate","Er bricht nie seine Versprechen gegenüber Kollegen.","他從不違背對同事的承諾。","Die Firma brach den Vertrag ohne Vorwarnung.","公司在沒有預警的情況下違約了。","Der Mitarbeiter hat die Arbeitszeitregelung gebrochen.","員工違反了工作時間規定。","Niemand wird die Vereinbarungen brechen dürfen.","任何人都不得違反協議。"],["bringen","bringt","brachte","hat gebracht","帶來，提交","to bring, to submit","Er bringt die Unterlagen ins Büro des Chefs.","他把文件帶到主管辦公室。","Sie brachte frische Ideen in das Projekt ein.","她為項目帶來了新思路。","Das neue Verfahren hat gute Ergebnisse gebracht.","新流程帶來了良好的成果。","Der Praktikant wird die Berichte morgen bringen.","實習生明天會把報告帶來。"],["denken","denkt","dachte","hat gedacht","思考，認為","to think, to consider","Der Ingenieur denkt über neue Lösungsansätze nach.","工程師正在思考新的解決方案。","Sie dachte lange über das Jobangebot nach.","她對那份工作邀請思考了很久。","Das Team hat kreativ über das Problem gedacht.","團隊對問題進行了創造性思考。","Man wird auch an die langfristigen Folgen denken müssen.","也必須考慮長遠的後果。"],["dürfen","darf","durfte","hat dürfen/gedurft","被允許，可以","may, to be allowed to","Praktikanten dürfen an Teambesprechungen teilnehmen.","實習生可以參加團隊會議。","Früher durfte man im Büro rauchen.","以前在辦公室是允許吸煙的。","Der neue Mitarbeiter hat früher nach Hause gehen dürfen.","新員工被允許早點回家。","Nur autorisiertes Personal wird das Labor betreten dürfen.","只有授權人員才能進入實驗室。"],["einladen","lädt ein","lud ein","hat eingeladen","邀請","to invite","Die Firma lädt alle Mitarbeiter zum Jahresfest ein.","公司邀請所有員工參加年會。","Der Chef lud die wichtigsten Kunden zum Abendessen ein.","老闆邀請了最重要的客戶共進晚餐。","Die Personalabteilung hat den Bewerber zum Vorstellungsgespräch eingeladen.","人事部已邀請求職者參加面試。","Das Unternehmen wird alle Partner zur Konferenz einladen.","公司將邀請所有合作夥伴參加會議。"],["empfehlen","empfiehlt","empfahl","hat empfohlen","推薦，建議","to recommend","Der Betriebsrat empfiehlt eine bessere Pausenregelung.","工廠委員會建議改善休息規定。","Die Kollegin empfahl einen Fachanwalt für Arbeitsrecht.","同事推薦了一位勞動法專業律師。","Der Vorgesetzte hat eine Weiterbildung empfohlen.","上司已推薦了一項進修課程。","Der Berater wird weitere Maßnahmen empfehlen.","顧問將建議進一步的措施。"],["entscheiden","entscheidet","entschied","hat entschieden","決定，決策","to decide","Die Geschäftsführung entscheidet über neue Investitionen.","管理層決定新的投資方向。","Das Komitee entschied sich für den günstigsten Anbieter.","委員會選擇了最划算的供應商。","Die Abteilung hat sich für eine neue Software entschieden.","部門已決定使用一款新軟件。","Der Vorstand wird morgen über die Fusion entscheiden.","董事會明天將就合并問題作出決定。"],["essen","isst","aß","hat gegessen","吃，進食","to eat","Die Kollegen essen gemeinsam in der Kantine.","同事們一起在食堂吃飯。","Das Team aß nach dem Seminar zusammen.","研討會結束後，團隊一起吃飯。","Wir haben in der Mittagspause schnell gegessen.","我們在午休時間快速吃了飯。","Das Team wird nach der Präsentation zusammen essen.","演示結束後，團隊將一起吃飯。"],["fahren","fährt","fuhr","ist gefahren","乘車，前往","to drive, to travel","Er fährt jeden Tag mit dem Zug zur Arbeit.","他每天乘火車去上班。","Sie fuhr zur Fachmesse nach München.","她乘車去慕尼黑參加專業展覽。","Die Delegation ist gestern nach Berlin gefahren.","代表團昨天去了柏林。","Der Vertriebsmitarbeiter wird nächste Woche zum Kunden fahren.","銷售人員下週將前往客戶處。"],["fallen","fällt","fiel","ist gefallen","下降，落下","to fall, to drop","Der Umsatz fällt in diesem Quartal deutlich.","這個季度銷售額明顯下降。","Die Produktivität fiel nach dem Umzug vorübergehend.","搬遷後生產力暫時下降了。","Die Bewerberzahl ist im letzten Jahr stark gefallen.","去年申請人數大幅下降。","Die Kosten werden nach der Optimierung fallen.","優化後成本將下降。"],["fangen","fängt","fing","hat gefangen","抓住，捕捉","to catch","Das System fängt Fehler automatisch ab.","系統自動捕捉錯誤。","Die IT-Abteilung fing den Virus rechtzeitig ab.","IT部門及時截獲了病毒。","Das Programm hat alle fehlerhaften Datensätze gefangen.","程序已捕獲所有錯誤數據記錄。","Die neue Firewall wird Angriffe frühzeitig fangen.","新防火牆將提前截獲攻擊。"],["finden","findet","fand","hat gefunden","找到，發現","to find","Sie findet schnell eine Lösung für technische Probleme.","她能快速找到技術問題的解決方案。","Das Team fand einen neuen Ansatz für das Projekt.","團隊找到了項目的新方向。","Die Personalabteilung hat einen qualifizierten Kandidaten gefunden.","人事部已找到了一位有資歷的候選人。","Man wird sicher eine bessere Methode finden.","一定會找到更好的方法的。"],["fliegen","fliegt","flog","ist geflogen","飛行，乘飛機","to fly","Der Vertriebsleiter fliegt regelmäßig nach Asien.","銷售總監定期飛往亞洲。","Die Geschäftsdelegation flog nach New York zur Konferenz.","商務代表團飛往紐約參加會議。","Er ist letzte Woche für ein Projekt nach Japan geflogen.","他上週為了一個項目飛去了日本。","Das Verhandlungsteam wird nach Brüssel fliegen.","談判團隊將飛往布魯塞爾。"],["fliehen","flieht","floh","ist geflohen","逃跑，逃避","to flee, to escape","Kein verantwortungsvoller Mitarbeiter flieht vor schwierigen Aufgaben.","負責任的員工不會逃避困難的任務。","Er floh vor der Verantwortung und kündigte.","他逃避責任，辭職了。","Der Praktikant ist vor dem Druck geflohen.","實習生在壓力下逃走了。","Niemand wird vor den Konsequenzen fliehen können.","沒有人能逃避後果。"],["fließen","fließt","floss","ist geflossen","流動，流入","to flow","Viel Geld fließt in die Forschungsabteilung.","大量資金流入研究部門。","Die Investitionen flossen in neue Infrastruktur.","投資流入了新的基礎設施。","Das Kapital ist in ein neues Projekt geflossen.","資本已流入一個新項目。","Mehr Mittel werden in die Weiterbildung fließen.","更多資金將流入員工培訓。"],["frieren","friert","fror","hat gefroren","凍結，感到寒冷","to freeze, to be cold","Im Winter frieren die Leitungen manchmal ein.","冬天管道有時會結冰。","Die Produktion fror wegen des Schneesturms ein.","因為暴風雪，生產停頓了。","Das Budget ist aufgrund der Krise eingefroren worden.","由於危機，預算已被凍結。","Die Verhandlungen werden vorerst einfrieren.","談判將暫時凍結。"],["geben","gibt","gab","hat gegeben","給予，提供","to give","Der Vorgesetzte gibt dem Team ein detailliertes Feedback.","上司向團隊提供了詳細的反饋。","Die Firma gab allen Mitarbeitern eine Prämie.","公司向所有員工發放了獎金。","Der Mentor hat dem Praktikanten wertvolle Tipps gegeben.","導師向實習生提供了寶貴的建議。","Das Unternehmen wird nächstes Jahr Gehaltserhöhungen geben.","公司明年將提供加薪。"],["gehen","geht","ging","ist gegangen","去，進行（情況）","to go, to work out","Das Bewerbungsverfahren geht reibungslos vonstatten.","申請流程進展順利。","Die Zusammenarbeit mit dem neuen Kollegen ging gut.","與新同事的合作進行得很順利。","Das Projekt ist nach Plan gegangen.","項目按計劃進行了。","Die Verhandlung wird hoffentlich gut gehen.","談判希望會進展順利。"],["gelingen","gelingt","gelang","ist gelungen","成功，完成","to succeed, to manage","Es gelingt dem Team, den Auftrag rechtzeitig zu erfüllen.","團隊成功地按時完成了任務。","Die Präsentation gelang trotz technischer Probleme.","儘管有技術問題，演示仍然成功了。","Die Einführung des neuen Systems ist reibungslos gelungen.","新系統的引入已順利成功。","Es wird gelingen, das Ziel bis Ende des Jahres zu erreichen.","到年底將能成功實現目標。"],["gelten","gilt","galt","hat gegolten","適用，有效，被視為","to be valid, to apply, to be considered","Diese Regelung gilt für alle Mitarbeiter.","這項規定適用於所有員工。","Die alte Betriebsordnung galt bis zur Umstrukturierung.","舊的企業規章在重組前一直有效。","Der Vertrag hat bis zum Jahresende gegolten.","合同一直有效到年底。","Die neuen Vorschriften werden ab nächstem Monat gelten.","新規定將從下個月起生效。"],["genießen","genießt","genoss","hat genossen","享受，享有","to enjoy","Er genießt die Vorteile des Homeoffice.","他享受居家辦公的好處。","Die Mitarbeiterin genoss das Vertrauen der Führungskraft.","員工享有領導的信任。","Das Team hat den gemeinsamen Erfolg genossen.","團隊享受了共同的成功。","Man wird die verbesserten Arbeitsbedingungen genießen.","大家將享受改善了的工作條件。"],["geschehen","geschieht","geschah","ist geschehen","發生，出現","to happen, to occur","Im Büro geschieht immer etwas Interessantes.","辦公室裡總是發生有趣的事情。","Der Unfall geschah aufgrund mangelnder Sicherheitsvorkehrungen.","事故是由於安全措施不足而發生的。","Ein Fehler in der Produktion ist gestern geschehen.","昨天生產中發生了一個錯誤。","Wenn nichts geschieht, wird die Situation eskalieren.","如果什麼都不做，情況將會升級。"],["gewinnen","gewinnt","gewann","hat gewonnen","贏得，獲得","to win, to gain","Das Unternehmen gewinnt neue Marktanteile.","公司正在獲得新的市場份額。","Das Team gewann den Innovationspreis der Branche.","團隊贏得了行業創新獎。","Die Firma hat durch Networking neue Kunden gewonnen.","公司通過人際網絡獲得了新客戶。","Man wird durch die neue Strategie neue Partner gewinnen.","通過新策略將贏得新的合作夥伴。"],["haben","hat","hatte","hat gehabt","有，擁有","to have","Das Unternehmen hat über 500 Mitarbeiter.","公司擁有500多名員工。","Die Abteilung hatte früher ein größeres Budget.","這個部門以前有更大的預算。","Er hat lange Erfahrung im Projektmanagement gehabt.","他有豐富的項目管理經驗。","Die Firma wird bald mehr Ressourcen haben.","公司很快將擁有更多資源。"],["halten","hält","hielt","hat gehalten","舉辦，保持，遵守","to hold, to keep, to maintain","Er hält eine Präsentation vor dem Vorstand.","他在董事會前做演示。","Die Teamleiterin hielt ihr Versprechen gegenüber den Mitarbeitern.","團隊負責人遵守了對員工的承諾。","Die Firma hat an ihrem Qualitätsstandard festgehalten.","公司堅持了其質量標準。","Der Dozent wird nächste Woche einen Vortrag halten.","講師下週將舉辦一場講座。"],["hängen","hängt","hing","hat gehangen","懸掛，取決於","to hang, to depend","Der Dienstplan hängt im Pausenraum aus.","值班表掛在休息室裡。","Die Gehaltserhöhung hing von der Jahreszielerfüllung ab.","加薪取決於年度目標的完成情況。","Das Ergebnis hat von der Teamleistung abgehangen.","結果取決於團隊的表現。","Der Erfolg des Projekts wird von der Finanzierung abhängen.","項目的成功將取決於資金投入。"],["heben","hebt","hob","hat gehoben","提升，舉起","to lift, to raise","Die neue Kampagne hebt das Unternehmensimage.","新活動提升了公司形象。","Die Gehaltsrunde hob die Motivation der Belegschaft.","薪資談判提升了員工的積極性。","Die Maßnahmen haben die Produktionseffizienz gehoben.","這些措施已提升了生產效率。","Das neue Programm wird das Kompetenzniveau der Mitarbeiter heben.","新計劃將提升員工的能力水平。"],["heißen","heißt","hieß","hat geheißen","叫做，意思是","to be called, to mean","Das neue Produkt heißt ProMax 5.","新產品叫做ProMax 5。","Das Projekt hieß zunächst intern \"Phase Alpha\".","該項目最初內部稱為「Alpha階段」。","Die Abteilung hat früher anders geheißen.","這個部門以前叫做別的名字。","Die neue Softwarelösung wird ProDesk heißen.","新軟件解決方案將被命名為ProDesk。"],["helfen","hilft","half","hat geholfen","幫助，協助","to help","Der erfahrene Kollege hilft dem Neuen bei der Einarbeitung.","有經驗的同事幫助新人入職培訓。","Die IT-Abteilung half bei der Systemumstellung.","IT部門幫助了系統轉換。","Das Team hat dem Praktikanten bei der Aufgabe geholfen.","團隊幫助了實習生完成任務。","Der Mentor wird dem Nachwuchs beim Berufseinstieg helfen.","導師將幫助新人職業起步。"],["hinweisen","weist hin","wies hin","hat hingewiesen","指出，提示","to point out, to refer to","Der Betriebsrat weist auf die neuen Regelungen hin.","工廠委員會指出了新的規定。","Der Vorgesetzte wies auf die Fehler im Bericht hin.","上司指出了報告中的錯誤。","Die Personalabteilung hat auf die Kündigungsfrist hingewiesen.","人事部已提示了解雇通知期限。","Der Sicherheitsbeauftragte wird auf neue Vorschriften hinweisen.","安全專員將指出新的規定。"],["kennen","kennt","kannte","hat gekannt","認識，了解","to know (a person/thing)","Er kennt alle Abläufe in der Abteilung genau.","他非常了解部門的所有流程。","Sie kannte das System bereits aus einer früheren Stelle.","她已經從以前的職位了解了這個系統。","Der neue Mitarbeiter hat alle Kollegen schnell gekannt.","新員工很快就認識了所有同事。","Man wird den neuen Geschäftsführer bald gut kennen.","大家很快就會認識新的總經理。"],["klingen","klingt","klang","hat geklungen","聽起來，響起","to sound","Der Vorschlag klingt sehr professionell.","這個建議聽起來非常專業。","Das Angebot klang zunächst attraktiv, aber die Details fehlten.","這個提案起初聽起來很吸引人，但缺少細節。","Die Präsentation hat überzeugend geklungen.","演示聽起來很有說服力。","Der neue Plan wird sicher gut klingen.","新計劃聽起來肯定很好。"],["können","kann","konnte","hat können/gekonnt","能夠，可以","can, to be able to","Er kann fließend Englisch und Deutsch sprechen.","他能流利地說英語和德語。","Die Mitarbeiterin konnte das Problem selbständig lösen.","員工能夠自主解決這個問題。","Das Team hat die Deadline einhalten können.","團隊能夠遵守截止日期。","Mit mehr Ressourcen werden wir mehr erreichen können.","有了更多資源，我們將能夠實現更多目標。"],["kommen","kommt","kam","ist gekommen","來，到來","to come","Die Bewerbungsunterlagen kommen per E-Mail.","申請材料通過電郵到達。","Der neue Vorgesetzte kam aus einer anderen Branche.","新上司來自另一個行業。","Der Personalchef ist heute zu uns ins Team gekommen.","人事總監今天來到了我們的團隊。","Ein externer Berater wird nächste Woche kommen.","一位外部顧問下週將到來。"],["lassen","lässt","ließ","hat gelassen","讓，允許，放棄","to let, to leave, to have done","Der Chef lässt das Team eigenverantwortlich arbeiten.","老闆讓團隊自主工作。","Sie ließ alle Mitarbeiter am Entscheidungsprozess teilhaben.","她讓所有員工參與決策過程。","Das Unternehmen hat die Räume renovieren lassen.","公司讓人翻新了房間。","Er wird den Kollegen mehr Freiheit lassen.","他將給同事更多自由。"],["laufen","läuft","lief","ist gelaufen","運行，進行","to run, to work (process)","Das neue System läuft reibungslos.","新系統運行順暢。","Das Projekt lief besser als erwartet.","項目的進展比預期更好。","Die Pilotphase ist erfolgreich gelaufen.","試點階段已順利完成。","Die Produktion wird nach dem Update besser laufen.","更新後生產將運行得更好。"],["leiden","leidet","litt","hat gelitten","受苦，遭受","to suffer","Die Qualität leidet unter dem Zeitdruck.","質量在時間壓力下受到影響。","Das Team litt unter der schlechten Kommunikation.","團隊因溝通不良而受苦。","Die Arbeitsmoral hat unter dem Konflikt gelitten.","工作積極性因衝突而受損。","Ohne klare Führung wird die Effizienz leiden.","沒有明確的領導，效率將受損。"],["leihen","leiht","lieh","hat geliehen","借出，借入","to lend, to borrow","Die Firma leiht dem Mitarbeiter ein Dienstfahrzeug.","公司借給員工一輛公務車。","Der Kollege lieh mir sein Fachbuch für die Weiterbildung.","同事把他的專業書借給我進修用。","Das Unternehmen hat der Abteilung Equipment geliehen.","公司已借給部門設備。","Man wird uns die Software vorübergehend leihen.","他們將暫時把軟件借給我們使用。"],["lesen","liest","las","hat gelesen","閱讀，讀取","to read","Der Forscher liest täglich aktuelle Fachliteratur.","研究員每天閱讀最新的專業文獻。","Die Managerin las alle Bewerbungsunterlagen sorgfältig.","女經理仔細閱讀了所有申請材料。","Das Team hat die neuen Betriebsanweisungen gelesen.","團隊已閱讀了新的操作指南。","Alle Mitarbeiter werden die Richtlinien lesen müssen.","所有員工都必須閱讀指導方針。"],["liegen","liegt","lag","hat gelegen","位於，在於","to lie, to be located","Das Büro liegt im Zentrum der Stadt.","辦公室位於市中心。","Die Ursache des Problems lag in der fehlenden Kommunikation.","問題的原因在於缺乏溝通。","Die Priorität hat auf der Kundenzufriedenheit gelegen.","重點一直在於客戶滿意度。","Der Schwerpunkt wird auf der Digitalisierung liegen.","重點將在於數字化轉型。"],["lügen","lügt","log","hat gelogen","說謊，撒謊","to lie, to tell lies","Wer im Vorstellungsgespräch lügt, schadet sich selbst.","在面試中說謊的人會損害自己的利益。","Er log über seine Qualifikationen im Lebenslauf.","他在簡歷中謊報了自己的資格。","Der Mitarbeiter hat über seine Arbeitszeiten gelogen.","員工謊報了自己的工作時間。","Niemand wird im Arbeitsumfeld ungestraft lügen können.","沒有人能在職場撒謊而不受懲罰。"],["meiden","meidet","mied","hat gemieden","避免，迴避","to avoid, to shun","Er meidet unnötige Konflikte im Büro.","他避免辦公室中不必要的衝突。","Sie mied nach dem Streit den Kontakt mit dem Kollegen.","爭吵後，她迴避了與同事的接觸。","Der Mitarbeiter hat Überstunden nach Möglichkeit gemieden.","員工盡可能地避免了加班。","Gute Führungskräfte werden unnötige Konflikte meiden.","優秀的領導者將避免不必要的衝突。"],["messen","misst","maß","hat gemessen","測量，衡量","to measure","Die Abteilung misst den Fortschritt mit klaren KPIs.","部門通過明確的關鍵績效指標衡量進展。","Das Labor maß die Genauigkeit des neuen Geräts.","實驗室測量了新設備的精確度。","Die Leistung der Mitarbeiter wurde regelmäßig gemessen.","員工的表現被定期衡量。","Man wird den Erfolg der Maßnahmen genau messen.","將精確衡量措施的成功程度。"],["mögen","mag","mochte","hat mögen/gemocht","喜歡，願意","to like","Er mag die offene Kommunikationskultur im Unternehmen.","他喜歡公司開放的溝通文化。","Die Praktikantin mochte die kollegiale Atmosphäre.","實習生喜歡同事間的融洽氛圍。","Das Team hat den neuen Arbeitsstil sehr gemocht.","團隊非常喜歡新的工作方式。","Die Mitarbeiter werden die neuen Räumlichkeiten mögen.","員工將會喜歡新的辦公室。"],["müssen","muss","musste","hat müssen/gemusst","必須，不得不","must, to have to","Alle Mitarbeiter müssen pünktlich erscheinen.","所有員工必須準時出現。","Sie musste kurzfristig einspringen, weil ein Kollege krank war.","她因為一位同事生病而不得不臨時頂替。","Das Team hat Überstunden machen müssen.","團隊不得不加班。","Für das Projekt wird man mehr Personal einstellen müssen.","為了項目，將不得不招聘更多人員。"],["nehmen","nimmt","nahm","hat genommen","拿，接受，採取","to take","Sie nimmt an der Weiterbildung teil.","她參加了進修培訓。","Das Unternehmen nahm einen neuen Kredit auf.","公司申請了新的貸款。","Das Team hat die Herausforderung angenommen.","團隊接受了挑戰。","Die Abteilung wird neue Aufgaben annehmen.","部門將接受新的任務。"],["nennen","nennt","nannte","hat genannt","稱為，說出，提到","to name, to call, to mention","Der Chef nennt das Hauptziel des Quartals.","老闆說出了本季度的主要目標。","Im Interview nannte er seine Stärken und Schwächen.","在面試中，他提到了自己的優缺點。","Die Personalabteilung hat klare Kriterien für die Stelle genannt.","人事部已說明了職位的明確標準。","Der Vorstand wird die strategischen Prioritäten nennen.","董事會將說明戰略優先事項。"],["raten","rät","riet","hat geraten","建議，猜測","to advise, to guess","Der Berater rät zur sofortigen Umstrukturierung.","顧問建議立即進行重組。","Der Mentor riet dem Praktikanten, früh Verantwortung zu übernehmen.","導師建議實習生早日承擔責任。","Die Personalabteilung hat von der Kündigung abgeraten.","人事部建議不要辭職。","Der Coach wird raten, die Kommunikation zu verbessern.","教練將建議改善溝通。"],["reiten","reitet","ritt","ist geritten","騎馬","to ride (a horse)","Beim Betriebsausflug reitet das Team gemeinsam.","在公司郊遊中，團隊一起騎馬。","Die Kolleginnen ritten beim Teambuildingevent.","女同事們在團隊建設活動中騎了馬。","Das Team ist beim Ausflug geritten.","團隊在郊遊時騎了馬。","Bei der nächsten Teamveranstaltung wird man reiten.","下次團隊活動將會騎馬。"],["rennen","rennt","rannte","ist gerannt","跑，奔跑","to run, to sprint","Im Büroalltag rennt man oft von Termin zu Termin.","在辦公室日常中，人們常常從一個約會趕到下一個。","Er rannte zum Meeting, weil er sich verspätet hatte.","他跑去參加會議，因為他遲到了。","Die Kollegin ist wegen des Notfalls sofort gerannt.","同事因為緊急情況立刻跑了過去。","Wenn der Zeitplan eng ist, wird man von Termin zu Termin rennen.","如果時間表緊張，人們將從一個約會奔赴另一個。"],["riechen","riecht","roch","hat gerochen","聞到，嗅出","to smell, to detect","Man riecht im Labor manchmal gefährliche Chemikalien.","在實驗室有時能聞到危險化學品。","Er roch das Problem in der Produktion sofort.","他立刻察覺到了生產中的問題。","Das Team hat die Unregelmäßigkeit früh gerochen.","團隊很早就察覺到了不規則情況。","Erfahrene Manager werden Probleme früh riechen.","有經驗的經理將及早察覺問題。"],["rufen","ruft","rief","hat gerufen","打電話，呼叫","to call, to shout","Die Assistentin ruft den Kunden zurück.","助理回電給客戶。","Der Chef rief alle Teamleiter zu einer Dringlichkeitssitzung.","老闆召集所有團隊負責人開緊急會議。","Die Personalabteilung hat den Bewerber zur zweiten Runde gerufen.","人事部已通知求職者進入第二輪。","Die Führungskraft wird das gesamte Team zu einer Besprechung rufen.","領導將召集全體團隊開會。"],["scheinen","scheint","schien","hat geschienen","似乎，看來","to seem, to appear","Das neue Angebot scheint sehr attraktiv zu sein.","新的提案看起來非常吸引人。","Der Kandidat schien für die Stelle gut geeignet zu sein.","候選人看起來非常適合這個職位。","Die Lösung hat zunächst einfach geschienen.","這個解決方案起初看起來很簡單。","Die Verhandlung wird schwieriger scheinen als erwartet.","談判看起來將比預期更困難。"],["schieben","schiebt","schob","hat geschoben","推遲，推動","to push, to postpone","Er schiebt wichtige Aufgaben nie auf.","他從不推遲重要的任務。","Das Management schob die Entscheidung auf den nächsten Monat.","管理層把決定推遲到下個月。","Das Projekt wurde mehrfach geschoben.","項目被多次推遲了。","Man wird die Deadline nicht weiter schieben können.","將不能再推遲截止日期了。"],["schießen","schießt","schoss","hat geschossen","迅速增長，飆升","to shoot up (figurative: rise fast)","Der Umsatz schießt nach der Werbekampagne in die Höhe.","廣告活動後，銷售額迅速飆升。","Die Kosten schossen nach der Expansion stark in die Höhe.","擴張後成本急劇飆升。","Die Anfragen sind nach der Produkteinführung in die Höhe geschossen.","產品推出後，查詢量急劇上升。","Die Nachfrage wird nach dem Launch in die Höhe schießen.","產品發布後需求將急劇上升。"],["schlafen","schläft","schlief","hat geschlafen","睡覺，休息","to sleep","Wer schlecht schläft, kann sich im Job nicht konzentrieren.","睡眠不好的人在工作中無法集中注意力。","Nach dem Nachtdienst schlief er zwölf Stunden.","夜班後，他睡了十二個小時。","Der erschöpfte Mitarbeiter hat im Urlaub endlich gut geschlafen.","精疲力竭的員工終於在假期好好睡了。","Nach dem stressigen Projekt wird er endlich wieder gut schlafen.","壓力大的項目結束後，他終於能再好好睡覺了。"],["schlagen","schlägt","schlug","hat geschlagen","提議，超越","to propose, to beat, to strike","Die Abteilung schlägt eine neue Methode vor.","部門提議了一種新方法。","Das Unternehmen schlug alle Konkurrenten auf dem Markt.","公司在市場上超越了所有競爭對手。","Das Team hat eine innovative Lösung vorgeschlagen.","團隊提出了一個創新解決方案。","Man wird neue Maßnahmen zur Effizienzsteigerung vorschlagen.","將提議提高效率的新措施。"],["schließen","schließt","schloss","hat geschlossen","關閉，簽訂","to close, to conclude","Das Team schließt einen neuen Kooperationsvertrag ab.","團隊簽訂了新的合作合同。","Das Unternehmen schloss eine Filiale in der Innenstadt.","公司關閉了市中心的一個分店。","Die Firma hat einen wichtigen Deal geschlossen.","公司已簽訂了一個重要協議。","Man wird den Vertrag bis Ende des Monats schließen.","將在月底前簽訂合同。"],["schneiden","schneidet","schnitt","hat geschnitten","剪裁，削減","to cut","Das Unternehmen schneidet bei den Kosten aggressiv.","公司大力削減成本。","Das Budget wurde im letzten Quartal stark geschnitten.","上個季度預算被大幅削減。","Die Managerin hat das Projekt auf das Wesentliche geschnitten.","女經理已將項目精簡到核心。","Man wird das Marketingbudget weiter schneiden müssen.","將不得不進一步削減市場預算。"],["schreiben","schreibt","schrieb","hat geschrieben","寫，撰寫","to write","Sie schreibt täglich Protokolle und E-Mails.","她每天撰寫會議記錄和電子郵件。","Er schrieb einen ausführlichen Bericht über das Projekt.","他撰寫了一份關於項目的詳細報告。","Der Mitarbeiter hat seine Bewerbungsunterlagen sorgfältig geschrieben.","員工認真撰寫了自己的申請材料。","Das Team wird nächste Woche einen Abschlussbericht schreiben.","團隊下週將撰寫一份結題報告。"],["schreien","schreit","schrie","hat geschrien","大叫，呼喊","to shout, to scream","Im Büro sollte niemand seinen Kollegen anschreien.","在辦公室，任何人都不應該對同事大喊大叫。","Der Kunde schrie vor Wut über den schlechten Service.","客戶因為服務差勁而憤怒地大叫。","Der Teamleiter hat nie seine Mitarbeiter angeschrien.","團隊負責人從未對員工大喊大叫。","Bei gutem Management wird niemand schreien müssen.","在良好的管理下，沒有人需要大叫。"],["schweigen","schweigt","schwieg","hat geschwiegen","沉默，保持沉默","to be silent, to keep quiet","In kritischen Situationen sollte man nicht schweigen.","在關鍵情況下，不應該保持沉默。","Der Mitarbeiter schwieg bei der Befragung zu den Vorfällen.","員工在詢問事件時保持了沉默。","Das Team hat bei dem Konflikt leider geschwiegen.","在衝突中，團隊遺憾地保持了沉默。","Angesichts von Fehlern wird man nicht schweigen dürfen.","面對錯誤，不能保持沉默。"],["schwimmen","schwimmt","schwamm","ist geschwommen","游泳，漂浮","to swim, to float (figurative: to struggle)","Neue Mitarbeiter schwimmen manchmal in der Aufgabenfülle.","新員工有時在大量任務中掙扎。","Ohne klare Anleitung schwamm er in den ersten Wochen.","沒有明確指導，他在最初幾週很吃力。","Der Praktikant ist anfangs in der Fülle der Informationen geschwommen.","實習生起初在大量信息中掙扎。","Ohne Einarbeitung wird der Neue im Job schwimmen.","沒有入職培訓，新人將在工作中掙扎。"],["sehen","sieht","sah","hat gesehen","看到，見到","to see","Die Führungskraft sieht das Potenzial der Mitarbeiter.","領導看到了員工的潛力。","Er sah die Chance und nutzte sie sofort.","他看到了機會並立刻抓住了它。","Das Team hat klare Verbesserungen gesehen.","團隊看到了明顯的改善。","Man wird nach der Reform neue Ergebnisse sehen.","改革後將看到新的成果。"],["sein","ist","war","ist gewesen","是，成為","to be","Er ist zurzeit der zuständige Projektleiter.","他目前是負責的項目負責人。","Die Zusammenarbeit war sehr erfolgreich.","這次合作非常成功。","Das Ergebnis der Verhandlung ist positiv gewesen.","談判結果是積極的。","Die neue Strategie wird wegweisend sein.","新策略將具有指導意義。"],["singen","singt","sang","hat gesungen","唱歌","to sing","Beim Betriebsfest singt das Team gemeinsam.","在公司節日活動中，團隊一起唱歌。","Beim Teambuilding sang die Gruppe ein Lied zusammen.","在團隊建設中，小組一起唱了一首歌。","Das Ensemble hat beim Firmenjubiläum gesungen.","合唱團在公司周年紀念活動上唱了歌。","Beim nächsten Betriebsfest wird das Team wieder singen.","下次公司活動，團隊將再次唱歌。"],["sinken","sinkt","sank","ist gesunken","下降，下沉","to sink, to drop","Die Mitarbeiterzufriedenheit sinkt bei schlechtem Betriebsklima.","在不良的公司氛圍中，員工滿意度會下降。","Der Aktienkurs sank nach der Bekanntgabe schlechter Ergebnisse.","公佈不良業績後，股價下跌了。","Die Produktivität ist nach dem Umzug vorübergehend gesunken.","搬遷後生產率暫時下降了。","Ohne Investitionen wird die Qualität weiter sinken.","沒有投資，質量將繼續下降。"],["sitzen","sitzt","saß","hat gesessen","坐，位於","to sit","Beim Meeting sitzt das Team in einem großen Kreis.","開會時，團隊圍坐成一個大圈。","Er saß stundenlang an seinem Schreibtisch und arbeitete.","他在辦公桌前坐了幾個小時工作。","Das Komitee hat lange über den Antrag gesessen.","委員會就申請書開了很長時間的會。","Beim Abschlussgespräch werden alle Beteiligten zusammensitzen.","結束談話時，所有相關人員將坐在一起。"],["sollen","soll","sollte","hat sollen/gesollt","應該，應當","should, to be supposed to","Alle Mitarbeiter sollen die Sicherheitsvorschriften einhalten.","所有員工都應當遵守安全規定。","Er sollte das Protokoll bis Montag fertig haben.","他應當在週一前完成會議記錄。","Das Projekt hat planmäßig abgeschlossen werden sollen.","項目本應按計劃完成。","Die neue Kampagne soll mehr Kunden ansprechen.","新活動應當吸引更多客戶。"],["sprechen","spricht","sprach","hat gesprochen","說話，談論","to speak, to talk","Die Teamleiterin spricht klar und deutlich mit ihren Mitarbeitern.","女團隊負責人與員工清楚明確地交流。","Der Personalchef sprach mit dem Kandidaten über die Stelle.","人事主任與候選人談論了職位情況。","Er hat nach dem Meeting mit seinem Vorgesetzten gesprochen.","他在會後與上司進行了交談。","Die Führungskraft wird mit dem Team über die Ziele sprechen.","領導將與團隊討論目標。"],["springen","springt","sprang","ist gesprungen","跳，跳躍（轉換）","to jump, to switch (figurative)","Er springt zwischen verschiedenen Projekten hin und her.","他在不同項目之間來回切換。","Die Mitarbeiterin sprang kurzfristig für eine Kollegin ein.","員工臨時頂替了一位同事。","Der Freelancer ist von Auftrag zu Auftrag gesprungen.","自由職業者從一個合同跳到另一個合同。","Flexibel sein heißt, schnell einzuspringen, wenn Bedarf besteht.","靈活意味著在需要時能迅速頂替。"],["stechen","sticht","stach","hat gestochen","突出，刺痛","to sting, to stand out","Sein Lebenslauf sticht unter allen Bewerbungen hervor.","他的簡歷在所有申請中脫穎而出。","Das innovative Konzept stach aus der Masse der Angebote heraus.","這個創新概念在衆多提案中脫穎而出。","Das Angebot hat durch sein einzigartiges Konzept gestochen.","這個提案因其獨特理念而脫穎而出。","Ein starkes Portfolio wird aus der Masse herausstechen.","強大的作品集將從眾多中脫穎而出。"],["stehen","steht","stand","hat gestanden","站立，處於","to stand, to be in a state","Das Unternehmen steht vor großen Veränderungen.","公司正面臨巨大的變化。","Das Team stand unter enormem Druck in der Abschlussphase.","在最後階段，團隊承受了巨大的壓力。","Das Unternehmen hat seit Jahren gut im Wettbewerb gestanden.","公司多年來在競爭中表現良好。","Das Projekt wird vor neuen Herausforderungen stehen.","項目將面臨新的挑戰。"],["stehlen","stiehlt","stahl","hat gestohlen","竊取，盜取","to steal","Wer Firmengeheimnisse stiehlt, macht sich strafbar.","竊取公司機密是犯法的。","Ein Mitarbeiter stahl vertrauliche Kundendaten.","一名員工盜取了機密客戶數據。","Geistiges Eigentum wurde aus dem System gestohlen.","知識產權被從系統中竊取了。","Niemand wird ungestraft Firmengeheimnisse stehlen können.","沒有人能不受懲罰地竊取公司機密。"],["steigen","steigt","stieg","ist gestiegen","上升，增加","to rise, to increase","Die Nachfrage nach Fachkräften steigt kontinuierlich.","對專業人才的需求持續上升。","Die Produktivität stieg nach der Einführung neuer Software.","引入新軟件後，生產率上升了。","Der Unternehmensgewinn ist im letzten Jahr stark gestiegen.","去年公司利潤大幅上升。","Die Arbeitgeberattraktivität wird durch bessere Benefits steigen.","通過更好的福利，雇主吸引力將上升。"],["sterben","stirbt","starb","ist gestorben","死亡，消亡","to die","Traditionsunternehmen sterben, wenn sie sich nicht anpassen.","傳統企業如果不適應就會消亡。","Das Startup starb, weil es keine Investoren fand.","這家初創公司因找不到投資者而倒閉了。","Viele Familienunternehmen sind nach dem Generationswechsel gestorben.","許多家族企業在代際交替後消亡了。","Ohne Innovation wird die Firma langsam sterben.","沒有創新，公司將慢慢消亡。"],["stoßen","stößt","stieß","hat gestoßen","遇到，撞上","to encounter, to push against","Das Team stößt bei der Umsetzung auf unerwartete Hindernisse.","團隊在執行過程中遇到了意想不到的障礙。","Das Projekt stieß auf Widerstand im Management.","該項目在管理層遇到了阻力。","Der Vorschlag ist auf großes Interesse gestoßen.","這個建議引起了極大的興趣。","Die neue Idee wird auf Zustimmung stoßen.","新想法將會得到贊成。"],["streichen","streicht","strich","hat gestrichen","刪除，取消","to delete, to cancel","Man streicht überflüssige Punkte aus dem Protokoll.","將多餘的要點從會議記錄中刪除。","Das Unternehmen strich das Bonusprogramm wegen der Krise.","公司因危機取消了獎金計劃。","Mehrere Projektziele wurden aus dem Plan gestrichen.","幾個項目目標已從計劃中刪除。","Das Management wird unnötige Ausgaben streichen.","管理層將刪減不必要的支出。"],["streiten","streitet","stritt","hat gestritten","爭論，爭吵","to argue, to dispute","Im Team streitet man gelegentlich über Prioritäten.","在團隊中，有時會就優先事項爭論。","Die Abteilungen stritten über die Budgetverteilung.","各部門為預算分配爭吵了起來。","Die Kollegen haben lange über die beste Strategie gestritten.","同事們為最佳策略爭論了很長時間。","Man wird über den neuen Vertrag noch streiten.","將來還會就新合同爭論。"],["tragen","trägt","trug","hat getragen","承擔，攜帶","to carry, to bear (responsibility)","Der Projektleiter trägt die Verantwortung für das Ergebnis.","項目負責人承擔結果的責任。","Sie trug die schwere Last der Umstrukturierung allein.","她獨自承擔了重組的沉重負擔。","Das Team hat gemeinsam die Kosten des Fehlers getragen.","團隊共同承擔了錯誤的代價。","Die Führungskraft wird die Konsequenzen tragen müssen.","領導將不得不承擔後果。"],["treffen","trifft","traf","hat getroffen","見面，作出（決定）","to meet, to make (decision)","Das Management trifft wichtige Entscheidungen täglich.","管理層每天作出重要決策。","Der Vorstand traf sich zu einer außerordentlichen Sitzung.","董事會召開了一次特別會議。","Das Team hat sich zur Projektbesprechung getroffen.","團隊已開過項目討論會。","Man wird sich nächste Woche zum Jahresgespräch treffen.","下週將見面進行年度談話。"],["treiben","treibt","trieb","hat getrieben","推動，驅動","to drive, to push forward","Das Unternehmen treibt die Digitalisierung aktiv voran.","公司積極推動數字化轉型。","Der Wettbewerb trieb die Firma zu mehr Innovation.","競爭推動公司進行更多創新。","Die Nachfrage hat die Entwicklung neuer Produkte getrieben.","市場需求推動了新產品的開發。","Der Marktdruck wird Verbesserungen weiter vorantreiben.","市場壓力將繼續推動改進。"],["treten","tritt","trat","hat/ist getreten","加入，進入，踏入","to step, to join (an organization)","Er tritt dem Betriebsrat bei.","他加入了工廠委員會。","Sie trat in die Firma als Quereinsteigerin ein.","她以跨行業人員的身份加入了公司。","Der Mitarbeiter ist in die Gewerkschaft getreten.","員工加入了工會。","Er wird im nächsten Jahr in den Vorstand treten.","他明年將加入董事會。"],["trinken","trinkt","trank","hat getrunken","喝，飲用","to drink","Das Team trinkt nach dem Meeting gemeinsam Kaffee.","會議後，團隊一起喝咖啡。","Beim Firmenjubiläum trank man auf den gemeinsamen Erfolg.","在公司周年紀念日，大家為共同的成功乾杯。","Nach dem erfolgreichen Abschluss haben wir zusammen getrunken.","成功完成後，我們一起喝了酒。","Das Team wird nach dem Projektabschluss anstoßen.","項目完成後，團隊將舉杯慶祝。"],["tun","tut","tat","hat getan","做，進行","to do","Die Personalabteilung tut alles, um gute Mitarbeiter zu halten.","人事部門盡一切努力留住優秀員工。","Er tat sein Bestes, um den Auftrag rechtzeitig abzuliefern.","他盡了最大努力按時完成任務。","Das Team hat alles Nötige für das Projekt getan.","團隊已為項目做了一切必要的工作。","Man wird mehr tun müssen, um die Kundenzufriedenheit zu steigern.","將必須做更多的事情來提高客戶滿意度。"],["unterscheiden","unterscheidet","unterschied","hat unterschieden","區分，辨別","to distinguish, to differentiate","Das Unternehmen unterscheidet sich durch seine Unternehmenskultur.","公司通過其企業文化脫穎而出。","Der Kandidat unterschied sich positiv von anderen Bewerbern.","候選人與其他求職者相比有積極的差異。","Man hat klar zwischen Pflicht- und Zusatzaufgaben unterschieden.","已明確區分了必要任務和附加任務。","Man wird zwischen kurzfristigen und langfristigen Zielen unterscheiden.","將區分短期目標和長期目標。"],["verbergen","verbirgt","verbarg","hat verborgen","隱瞞，藏匿","to hide, to conceal","Im Bewerbungsgespräch sollte man Schwächen nicht verbergen.","在面試中，不應該隱瞞弱點。","Er verbarg seine Unsicherheit hinter einem professionellen Auftreten.","他以專業的外表掩藏了自己的不確定性。","Die Fehler wurden lange vor dem Vorstand verborgen.","這些錯誤被董事會長期隱瞞了。","Transparente Unternehmen werden Probleme nicht verbergen.","透明的公司不會隱瞞問題。"],["verbinden","verbindet","verband","hat verbunden","連接，聯繫","to connect, to link","Networking verbindet Fachleute aus verschiedenen Branchen.","人際網絡將不同行業的專業人士聯繫在一起。","Das Projekt verband die Expertise mehrerer Abteilungen.","項目匯集了多個部門的專業知識。","Das Kooperationsabkommen hat die beiden Firmen verbunden.","合作協議已將兩家公司聯繫起來。","Die neue Plattform wird Mitarbeiter weltweit verbinden.","新平台將把全球員工聯繫在一起。"],["vergessen","vergisst","vergaß","hat vergessen","忘記","to forget","Er vergisst nie die Namen seiner Kunden.","他從不忘記客戶的名字。","Der Mitarbeiter vergaß, den Bericht abzugeben.","員工忘記提交報告了。","Das Team hat die Deadline leider vergessen.","團隊遺憾地忘記了截止日期。","Man sollte nie die Hauptziele des Projekts vergessen.","永遠不應該忘記項目的主要目標。"],["vergleichen","vergleicht","verglich","hat verglichen","比較，對比","to compare","HR vergleicht verschiedene Gehaltsangebote für die neue Stelle.","人力資源部門比較了新職位的不同薪資方案。","Das Team verglich mehrere Software-Lösungen.","團隊比較了幾種軟件解決方案。","Man hat die Angebote aller Dienstleister verglichen.","已比較了所有服務提供商的報價。","Man wird die Ergebnisse beider Strategien vergleichen.","將比較兩種策略的結果。"],["verlieren","verliert","verlor","hat verloren","失去，損失","to lose","Das Unternehmen verliert durch schlechten Service Kunden.","公司因服務不佳而流失客戶。","Die Firma verlor einen wichtigen Auftrag an die Konkurrenz.","公司將一個重要合同輸給了競爭對手。","Man hat durch schlechte Planung viel Zeit verloren.","因為計劃不周，浪費了大量時間。","Ohne Anpassung wird die Firma Marktanteile verlieren.","不進行調整，公司將失去市場份額。"],["verschwinden","verschwindet","verschwand","ist verschwunden","消失，不見了","to disappear, to vanish","Papierdokumente verschwinden mit der Digitalisierung.","隨著數字化，紙質文件正在消失。","Das Projektbudget verschwand ohne klare Abrechnung.","項目預算在沒有明確核算的情況下消失了。","Die alten Arbeitsmethoden sind durch neue Technologien verschwunden.","舊的工作方式已隨著新技術的出現而消失。","Veraltete Berufsbilder werden mit der Zeit verschwinden.","過時的職業形象將隨著時間而消失。"],["verzeihen","verzeiht","verzieh","hat verziehen","原諒，寬恕","to forgive, to pardon","Ein guter Vorgesetzter verzeiht ehrliche Fehler.","一位好上司會原諒誠實的錯誤。","Die Teamleiterin verzieh dem Kollegen seinen Fehler.","女團隊負責人原諒了同事的錯誤。","Das Management hat dem Mitarbeiter nach der Entschuldigung verziehen.","管理層在道歉後原諒了員工。","Man wird Fehler leichter verzeihen, wenn man offen kommuniziert.","公開溝通後，錯誤更容易被原諒。"],["wachsen","wächst","wuchs","ist gewachsen","成長，增長","to grow","Das Unternehmen wächst jährlich um zehn Prozent.","公司每年增長百分之十。","Das Startup wuchs innerhalb von zwei Jahren stark.","這家初創公司在兩年內快速成長。","Der Mitarbeiter ist mit seinen Aufgaben gewachsen.","員工隨著任務的挑戰而成長了。","Das Team wird mit neuen Projekten weiter wachsen.","團隊將隨著新項目繼續成長。"],["werben","wirbt","warb","hat geworben","招聘，宣傳","to recruit, to advertise","Das Unternehmen wirbt aktiv um neue Fachkräfte.","公司積極招募新的專業人才。","Die Firma warb auf Jobmessen intensiv um Absolventen.","公司在招聘會上積極招募應屆畢業生。","Man hat durch Social Media um qualifizierte Bewerber geworben.","已通過社交媒體招募有資歷的求職者。","Das Unternehmen wird verstärkt um internationale Talente werben.","公司將加大力度招募國際人才。"],["werden","wird","wurde","ist geworden","成為，變成","to become","Sie wird nächstes Jahr Abteilungsleiterin.","她明年將成為部門負責人。","Das Startup wurde zu einem international bekannten Unternehmen.","這家初創公司成為了一家國際知名企業。","Der Praktikant ist nach zwei Jahren Festangestellter geworden.","實習生兩年後成為了正式員工。","Mit harter Arbeit wird er ein erfolgreicher Manager werden.","通過努力工作，他將成為一位成功的經理。"],["werfen","wirft","warf","hat geworfen","提出，拋出","to throw, to raise (a question)","Das Projekt wirft neue ethische Fragen auf.","這個項目提出了新的倫理問題。","Der Bericht warf ein schlechtes Licht auf die Abteilung.","報告使這個部門形象受損。","Die Revision hat ernste Fragen aufgeworfen.","審計提出了嚴重的問題。","Die neue Analyse wird wichtige Erkenntnisse aufwerfen.","新分析將提出重要的見解。"],["wiegen","wiegt","wog","hat gewogen","重量，衡量","to weigh","Diese Entscheidung wiegt schwer für das Unternehmen.","這個決定對公司而言意義重大。","Der Verlust wog schwerer als die Gewinne des Vorjahres.","這次損失比前一年的利潤更重。","Die Vor- und Nachteile wurden sorgfältig gewogen.","利弊已被仔細衡量。","Die langfristigen Konsequenzen werden schwer wiegen.","長遠的後果將非常重要。"],["wissen","weiß","wusste","hat gewusst","知道，了解","to know (a fact)","Er weiß genau, was von ihm in der Stelle erwartet wird.","他清楚地知道對他這個職位的期望。","Die Managerin wusste früh von den Problemen im Team.","女經理很早就知道了團隊中的問題。","Das Team hat von den neuen Richtlinien rechtzeitig gewusst.","團隊及時知道了新的指導方針。","Alle Mitarbeiter werden über die Änderungen Bescheid wissen.","所有員工都將了解這些變化。"],["wollen","will","wollte","hat wollen/gewollt","想要，願意","to want, to wish","Er will in der Forschungsabteilung weiter arbeiten.","他想繼續在研究部門工作。","Die Mitarbeiterin wollte mehr Verantwortung übernehmen.","員工想要承擔更多責任。","Das Team hat eine transparentere Kommunikation gewollt.","團隊一直希望有更透明的溝通。","Das Unternehmen wird mehr in Weiterbildung investieren wollen.","公司將希望在進修培訓方面投入更多。"],["ziehen","zieht","zog","hat gezogen","吸引，遷移","to pull, to move, to attract","Das Unternehmen zieht viele Talente an.","公司吸引了許多人才。","Die Firma zog ihren Hauptsitz nach München.","公司將總部遷移到了慕尼黑。","Das neue Bürogebäude hat viele Mitarbeiter angezogen.","新辦公樓吸引了許多員工。","Eine attraktive Unternehmenskultur wird mehr Bewerber anziehen.","有吸引力的企業文化將吸引更多求職者。"],["zwingen","zwingt","zwang","hat gezwungen","強迫，迫使","to force, to compel","Kein Vorgesetzter darf Mitarbeiter zu illegalen Handlungen zwingen.","任何上司都不得強迫員工做違法的事。","Der Marktdruck zwang das Unternehmen zur Preissenkung.","市場壓力迫使公司降價。","Die Krise hat viele Firmen zur Kurzarbeit gezwungen.","危機迫使許多公司實行短時工作制。","Neue Vorschriften werden Unternehmen zur Anpassung zwingen.","新法規將迫使企業進行調整。"]];
+
+// ── TTS ──────────────────────────────────────────────────────────────────────
+let currentUtterance = null;
+let currentPlayingEl = null;
+
+function stopSpeaking() {
+  window.speechSynthesis.cancel();
+  if (currentPlayingEl) {
+    currentPlayingEl.classList.remove('playing');
+    currentPlayingEl = null;
+  }
+}
+
+function speak(text, el) {
+  stopSpeaking();
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'de-DE';
+  utter.rate = 0.92;
+
+  // Try to pick a German voice
+  const voices = window.speechSynthesis.getVoices();
+  const deVoice = voices.find(v => v.lang.startsWith('de'));
+  if (deVoice) utter.voice = deVoice;
+
+  currentUtterance = utter;
+  currentPlayingEl = el;
+  if (el) el.classList.add('playing');
+
+  utter.onend = () => {
+    if (el) el.classList.remove('playing');
+    if (currentPlayingEl === el) currentPlayingEl = null;
+  };
+  utter.onerror = () => {
+    if (el) el.classList.remove('playing');
+  };
+  window.speechSynthesis.speak(utter);
+}
+
+// Speak 4 verb forms in sequence
+function speakForms(inf, prae, praet, perf, cardFormEl) {
+  stopSpeaking();
+  cardFormEl.classList.add('playing');
+
+  const parts = [inf, prae, praet, perf];
+  let idx = 0;
+
+  function speakNext() {
+    if (idx >= parts.length) {
+      cardFormEl.classList.remove('playing');
+      return;
+    }
+    const utter = new SpeechSynthesisUtterance(parts[idx]);
+    utter.lang = 'de-DE';
+    utter.rate = 0.88;
+    const voices = window.speechSynthesis.getVoices();
+    const deVoice = voices.find(v => v.lang.startsWith('de'));
+    if (deVoice) utter.voice = deVoice;
+    utter.onend = () => { idx++; speakNext(); };
+    utter.onerror = () => { idx++; speakNext(); };
+    window.speechSynthesis.speak(utter);
+  }
+  speakNext();
+}
+
+// ── RENDER ───────────────────────────────────────────────────────────────────
+const TENSE_LABELS = ['Präsens', 'Präteritum', 'Perfekt', 'Futur I'];
+const TENSE_CLASSES = ['tag-prae', 'tag-praet', 'tag-perf', 'tag-fut'];
+
+function buildCard(v) {
+  const [inf, prae, praet, perf, zh, en,
+         ex0de, ex0zh, ex1de, ex1zh, ex2de, ex2zh, ex3de, ex3zh] = v;
+
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.dataset.inf = inf.toLowerCase();
+  card.dataset.zh = zh;
+  card.dataset.en = en.toLowerCase();
+  card.dataset.perf = perf.toLowerCase();
+
+  // ── Forms header (click → speak 4 forms) ──
+  const formsDiv = document.createElement('div');
+  formsDiv.className = 'card-forms';
+  formsDiv.title = 'Klicken zum Vorlesen aller vier Formen';
+  formsDiv.innerHTML = `
+    <div class="forms-left">
+      <div class="infinitiv">${inf}</div>
+      <div class="forms-row">
+        <span class="form-item">${prae}</span>
+        <span class="form-item" style="opacity:0.4">·</span>
+        <span class="form-item">${praet}</span>
+        <span class="form-item" style="opacity:0.4">·</span>
+        <span class="form-item">${perf}</span>
+      </div>
+    </div>
+    <div class="speak-icon">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+      </svg>
+    </div>`;
+  formsDiv.addEventListener('click', () => speakForms(inf, prae, praet, perf, formsDiv));
+
+  // ── Translation ──
+  const transDiv = document.createElement('div');
+  transDiv.className = 'card-trans';
+  transDiv.innerHTML = `<span class="trans-zh">${zh}</span><span class="trans-en">${en}</span>`;
+
+  // ── Examples ──
+  const exDiv = document.createElement('div');
+  exDiv.className = 'card-examples';
+
+  const examples = [[ex0de, ex0zh], [ex1de, ex1zh], [ex2de, ex2zh], [ex3de, ex3zh]];
+  examples.forEach(([de, zh2], i) => {
+    const row = document.createElement('div');
+    row.className = 'ex-row';
+
+    const tag = document.createElement('span');
+    tag.className = `tense-tag ${TENSE_CLASSES[i]}`;
+    tag.textContent = TENSE_LABELS[i];
+
+    const content = document.createElement('div');
+    content.className = 'ex-content';
+
+    const deEl = document.createElement('span');
+    deEl.className = 'ex-de';
+    deEl.textContent = de;
+    deEl.title = 'Klicken zum Vorlesen';
+    deEl.addEventListener('click', (e) => {
+      e.stopPropagation();
+      speak(de, deEl);
+    });
+
+    const zhEl = document.createElement('span');
+    zhEl.className = 'ex-zh';
+    zhEl.textContent = zh2;
+
+    content.appendChild(deEl);
+    content.appendChild(zhEl);
+    row.appendChild(tag);
+    row.appendChild(content);
+    exDiv.appendChild(row);
+  });
+
+  card.appendChild(formsDiv);
+  card.appendChild(transDiv);
+  card.appendChild(exDiv);
+  return card;
+}
+
+// ── FILTER & SEARCH ───────────────────────────────────────────────────────────
+let currentFilter = 'all';
+let currentSearch = '';
+
+function filterVerbs() {
+  const q = currentSearch.trim().toLowerCase();
+  return VERBS.filter(v => {
+    const [inf,,,,zh, en,,,,,,,,] = v;
+    const perf = v[3].toLowerCase();
+
+    // Filter
+    if (currentFilter === 'hat' && !perf.startsWith('hat')) return false;
+    if (currentFilter === 'ist' && !perf.startsWith('ist')) return false;
+
+    // Search
+    if (!q) return true;
+    return inf.toLowerCase().includes(q)
+      || zh.includes(q)
+      || en.toLowerCase().includes(q)
+      || v[1].toLowerCase().includes(q)
+      || v[2].toLowerCase().includes(q)
+      || perf.includes(q);
+  });
+}
+
+function render() {
+  const grid = document.getElementById('verbGrid');
+  const filtered = filterVerbs();
+
+  grid.innerHTML = '';
+  if (filtered.length === 0) {
+    grid.innerHTML = '<div class="empty-state">找不到符合的動詞 · Kein Verb gefunden</div>';
+  } else {
+    filtered.forEach(v => grid.appendChild(buildCard(v)));
+  }
+
+  const rc = document.getElementById('resultCount');
+  if (filtered.length < VERBS.length) {
+    rc.textContent = `${filtered.length} / ${VERBS.length} Verben`;
+  } else {
+    rc.textContent = '';
+  }
+}
+
+// ── EVENT LISTENERS ───────────────────────────────────────────────────────────
+document.getElementById('searchInput').addEventListener('input', e => {
+  currentSearch = e.target.value;
+  render();
+});
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    render();
+  });
+});
+
+// Load voices async
+if (window.speechSynthesis.onvoiceschanged !== undefined) {
+  window.speechSynthesis.onvoiceschanged = () => {};
+}
+
+// Initial render
+render();
+</script>
+</body>
+</html>
