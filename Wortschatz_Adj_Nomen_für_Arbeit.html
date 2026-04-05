@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>工作形容詞 / 名詞 Tracker</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; background: #f5f5f3; color: #1a1a1a; font-size: 14px; }
+
+/* ── Header ── */
+.top-bar { background: #2E4057; padding: 14px 20px 10px; }
+.top-bar h1 { color: #fff; font-size: 17px; font-weight: 600; margin-bottom: 3px; }
+.top-bar .sub { color: #a8c8f0; font-size: 11px; }
+
+.page { max-width: 1300px; margin: 0 auto; padding: 20px; }
+
+/* ── Toolbar ── */
+.toolbar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px; flex-wrap: wrap; margin-bottom: 16px;
+  background: #fff; border: 0.5px solid #ddd; border-radius: 10px;
+  padding: 10px 14px;
+}
+.toolbar-left { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.filter-btn {
+  padding: 5px 14px; border-radius: 6px;
+  border: 0.5px solid #ccc; background: #fff;
+  color: #333; font-size: 13px; cursor: pointer; transition: all 0.15s;
+}
+.filter-btn.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+.stats { font-size: 12px; color: #888; margin-left: 4px; }
+.speaking-badge {
+  display: none; align-items: center; gap: 5px;
+  font-size: 11px; color: #666; padding: 3px 10px;
+  border: 0.5px solid #ddd; border-radius: 20px; background: #fafaf8;
+}
+.speaking-badge.active { display: flex; }
+.speaking-dot { width: 7px; height: 7px; border-radius: 50%; background: #4a9eff; animation: pulse 0.9s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.export-btn { padding: 5px 14px; border-radius: 6px; border: 0.5px solid #ccc; background: #fff; color: #333; font-size: 13px; cursor: pointer; }
+.export-btn:disabled { opacity: 0.35; cursor: default; }
+
+/* ── Letter nav ── */
+.letter-nav { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 14px; }
+.letter-btn { padding: 4px 10px; border-radius: 5px; font-size: 12px; font-weight: 600; border: 0.5px solid #ccc; background: #fff; color: #333; cursor: pointer; transition: all 0.12s; }
+.letter-btn:hover { background: #2E4057; color: #fff; border-color: #2E4057; }
+.letter-btn.has-unfamiliar { border-color: #e24b4a; color: #e24b4a; }
+
+/* ── Section ── */
+.section-block { margin-bottom: 24px; }
+.section-title {
+  font-size: 12px; font-weight: 700; color: #2E4057; letter-spacing: 0.05em;
+  text-transform: uppercase; padding: 9px 12px 7px;
+  background: #d8e4f0; border: 0.5px solid #b0c8e0; border-bottom: none;
+  border-radius: 6px 6px 0 0;
+}
+.letter-header {
+  font-size: 11px; font-weight: 600; color: #555; padding: 6px 10px 5px;
+  letter-spacing: 0.06em; background: #efefed;
+  border: 0.5px solid #ddd; border-top: none; border-bottom: none;
+}
+.letter-header:first-of-type { border-top: 0.5px solid #ddd; }
+
+/* ── Table ── */
+table { width: 100%; border-collapse: collapse; background: #fff; border: 0.5px solid #ddd; table-layout: fixed; }
+.section-block > div:last-child table { border-radius: 0 0 8px 8px; overflow: hidden; }
+th { text-align: left; padding: 7px 10px; background: #fafaf8; color: #777; font-weight: 500; font-size: 11px; border-bottom: 0.5px solid #e0e0e0; letter-spacing: 0.03em; }
+td { padding: 7px 10px; border-bottom: 0.5px solid #efefed; vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+tr.unfamiliar td { background: #fff6f6; }
+
+/* Dot */
+.dot-cell { width: 28px; cursor: pointer; user-select: none; }
+.dot-cell:hover .dot { border-color: #e24b4a; }
+.dot { display: block; width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid #ccc; margin-top: 3px; transition: all 0.15s; }
+tr.unfamiliar .dot { background: #e24b4a; border-color: #e24b4a; }
+
+/* Speak cells */
+td.speak, div.speak { cursor: pointer; }
+td.speak:hover, div.speak:hover { background: #f0f6ff; }
+tr.unfamiliar td.speak:hover, tr.unfamiliar div.speak:hover { background: #ffe0e0; }
+
+/* ── Column widths — SECTION 1 (has adj + noun columns) ── */
+.tbl-main .col-dot  { width: 28px; }
+.tbl-main .col-adj  { width: 14%; }
+.tbl-main .col-noun { width: 16%; }
+.tbl-main .col-enzh { width: 20%; }
+.tbl-main .col-ex   { width: 50%; }
+
+/* ── Column widths — SECTION 2 (adj only, no noun col) ── */
+.tbl-work .col-dot  { width: 28px; }
+.tbl-work .col-adj  { width: 16%; }
+.tbl-work .col-enzh { width: 22%; }
+.tbl-work .col-ex   { width: 62%; }
+
+/* Cell typography */
+.word-adj  { font-weight: 700; font-size: 13px; color: #1a5fc8; display: block; }
+.word-noun { font-weight: 700; font-size: 13px; color: #1a5fc8; display: block; }
+.word-noun.empty { color: #bbb; font-weight: normal; font-size: 12px; }
+.word-en   { font-size: 12px; color: #222; display: block; line-height: 1.5; }
+.word-zh   { font-size: 11px; color: #999; font-style: italic; display: block; line-height: 1.5; }
+.satz-de   { font-size: 12px; color: #222; line-height: 1.6; display: block; }
+.satz-zh   { font-size: 11px; color: #999; font-style: italic; display: block; line-height: 1.5; margin-top: 2px; }
+.satz-divider { border: none; border-top: 0.5px dashed #e0e0e0; margin: 5px 0; }
+.satz-tag  { font-size: 10px; color: #aaa; font-style: italic; display: inline; margin-right: 4px; }
+
+/* ── Kurztext / example texts ── */
+.kurztext { margin: 10px 0 20px; background: #fff; border-left: 3px solid #2E4057; border-radius: 0 8px 8px 0; box-shadow: 0 1px 4px rgba(0,0,0,.04); overflow: hidden; }
+.kurztext-header { font-size: 11px; font-weight: 600; color: #2E4057; padding: 7px 12px 5px; background: #f0f4f8; border-bottom: 0.5px solid #d0dde8; letter-spacing: 0.04em; }
+.kurztext-body { padding: 8px 12px 10px; }
+.kurztext-section { font-size: 11px; font-weight: 700; color: #2E4057; padding: 8px 0 3px; text-transform: uppercase; letter-spacing: 0.05em; }
+.kurztext-section:first-child { padding-top: 2px; }
+.kurztext-sent { display: flex; flex-direction: column; padding: 4px 0; border-bottom: 0.5px solid #f0f0ee; }
+.kurztext-sent:last-child { border-bottom: none; }
+.sent-de { font-size: 12.5px; color: #222; line-height: 1.55; cursor: pointer; border-radius: 4px; padding: 2px 4px; transition: background 0.12s; display: block; }
+.sent-de:hover { background: #e8f0fe; }
+.sent-zh { font-size: 11px; color: #999; font-style: italic; padding: 1px 4px 2px; display: block; }
+
+/* ── Empty ── */
+.empty { text-align: center; padding: 40px; color: #aaa; font-size: 13px; background: #fff; border: 0.5px solid #ddd; border-radius: 8px; }
+
+/* ── Export panel ── */
+.export-panel { display: none; margin-top: 24px; background: #fff; border: 0.5px solid #ddd; border-radius: 10px; padding: 20px; }
+.export-panel.visible { display: block; }
+.export-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+.export-top h2 { font-size: 15px; font-weight: 500; }
+.export-actions { display: flex; gap: 8px; }
+.print-btn { padding: 5px 14px; border-radius: 6px; border: 0.5px solid #ccc; background: #1a1a1a; color: #fff; font-size: 12px; cursor: pointer; }
+.close-export { padding: 5px 12px; border-radius: 6px; border: 0.5px solid #ccc; background: #fff; color: #555; font-size: 12px; cursor: pointer; }
+
+@media print {
+  @page { size: A4 portrait; margin: 12mm 10mm; }
+  body * { visibility: hidden; }
+  #exportPanel, #exportPanel * { visibility: visible; }
+  #exportPanel { position: absolute; top: 0; left: 0; width: 100%; border: none !important; padding: 0 !important; margin: 0 !important; }
+  .export-top { display: none !important; }
+  table { width: 100% !important; table-layout: fixed !important; font-size: 9pt !important; border-collapse: collapse !important; }
+  td, th { padding: 4px 6px !important; border: 0.5px solid #ddd !important; }
+  tr { page-break-inside: avoid; }
+  .word-adj { font-size: 9pt; font-weight: bold; color: #1a5fc8; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .word-noun { font-size: 9pt; font-weight: bold; color: #1a5fc8; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .word-en, .satz-de { font-size: 8pt; }
+  .word-zh, .satz-zh { font-size: 7pt; color: #888; font-style: italic; }
+  td { background: #fff !important; }
+  tr.unfamiliar td { background: #fff0f0 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  th { background: #f0f0f0 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .section-title, .letter-header { background: #e8e8e6 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <h1>⚙️ 工作形容詞 / 名詞 Tracker</h1>
+  <div class="sub">⭕ 點圓圈標記不熟悉 &nbsp;🔊 點德文欄位或例句朗讀 &nbsp;📝 點短文句子可朗讀</div>
+</div>
+
+<div class="page">
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <button class="filter-btn active" onclick="setFilter('all',this)">全部</button>
+      <button class="filter-btn" onclick="setFilter('unfamiliar',this)">不熟悉</button>
+      <button class="filter-btn" onclick="setFilter('familiar',this)">已掌握</button>
+      <span class="stats" id="stats"></span>
+      <span class="speaking-badge" id="speakingBadge"><span class="speaking-dot"></span>朗讀中…</span>
+    </div>
+    <button class="export-btn" id="exportBtn" onclick="toggleExport()" disabled>📋 匯出不熟悉</button>
+  </div>
+
+  <div class="letter-nav" id="letterNav"></div>
+  <div id="mainContent"></div>
+
+  <div class="export-panel" id="exportPanel">
+    <div class="export-top">
+      <h2>📋 不熟悉單字清單</h2>
+      <div class="export-actions">
+        <span id="exportCount" style="font-size:12px;color:#888;background:#f5f5f3;padding:3px 10px;border-radius:20px;"></span>
+        <button class="print-btn" onclick="window.print()">列印 / 存PDF</button>
+        <button class="close-export" onclick="toggleExport()">關閉</button>
+      </div>
+    </div>
+    <div id="exportContent"></div>
+  </div>
+</div>
+
+<script>
+// ── Storage ──────────────────────────────────────────────
+const STORE_KEY = 'adj_tracker_v2';
+function loadUnfamiliar() {
+  try { const s = localStorage.getItem(STORE_KEY); return s ? new Set(JSON.parse(s)) : new Set(); }
+  catch(e) { return new Set(); }
+}
+function saveUnfamiliar(set) {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify([...set])); } catch(e) {}
+}
+let unfamiliar = loadUnfamiliar();
+let currentFilter = 'all';
+
+// ═══════════════════════════════════════════════════════════
+// SECTION 1 — Soft Skills / Charaktereigenschaften
+// Format: [adj, noun, en, zh, ex_adj_de, ex_adj_zh, ex_noun_de, ex_noun_zh]
+// ═══════════════════════════════════════════════════════════
+const VOCAB1 = [
+  // A
+  ["achtsam",              "Achtsamkeit",           "mindfulness / attentive",      "正念、專注",
+   "In sozialen Berufen muss man achtsam sein, um die Bedürfnisse anderer frühzeitig zu erkennen.",
+   "在社會性職業中，必須保持正念，以便提早察覺他人的需求。",
+   "In sozialen Berufen ist Achtsamkeit entscheidend, um die Bedürfnisse anderer frühzeitig zu erkennen.",
+   "在社會性職業中，正念是不可或缺的，有助於提早察覺他人的需求。"],
+  ["aufgeschlossen",       "Aufgeschlossenheit",    "open-mindedness",              "開明",
+   "Wer agil entwickelt, muss aufgeschlossen gegenüber neuen Arbeitsmethoden sein.",
+   "凡是進行敏捷開發的人，必須對新工作方式保持開明的態度。",
+   "Aufgeschlossenheit gegenüber neuen Arbeitsmethoden ist in der agilen Softwareentwicklung unerlässlich.",
+   "對新工作方式保持開明的態度，在敏捷軟體開發中是不可缺少的。"],
+  ["ausdauernd",           "Ausdauer",              "perseverance / endurance",     "有毅力",
+   "In der Grundlagenforschung muss man ausdauernd sein, weil Experimente monatelang wiederholt werden.",
+   "在基礎研究中，必須有毅力，因為實驗往往需要反覆進行數月。",
+   "Ausdauer ist in der Grundlagenforschung gefragt, weil Experimente oft monatelang wiederholt werden, bevor verwertbare Ergebnisse vorliegen.",
+   "基礎研究需要毅力，因為實驗往往需要反覆進行數月，才能得出可用的結果。"],
+  ["authentisch",          "Authentizität",         "authenticity",                 "真誠",
+   "Wer im Kundengespräch authentisch wirkt, schafft dauerhaftes Vertrauen.",
+   "在客戶對話中表現真誠的人，能建立持久的信任。",
+   "Authentizität im Kundengespräch schafft Vertrauen und erhöht die Abschlussquote nachhaltig.",
+   "在客戶對話中的真誠，能建立信任並持續提升成交率。"],
+  // B
+  ["begeistert",           "Begeisterung",          "enthusiasm",                   "熱情",
+   "Ein Verkäufer, der begeistert von seinem Produkt ist, überzeugt Kunden viel leichter.",
+   "一個對自己產品充滿熱情的銷售員，能更輕鬆地說服客戶。",
+   "Begeisterung für das Produkt überträgt sich auf Kunden und macht sie zu überzeugten Käufern.",
+   "對產品的熱情會感染客戶，使他們成為堅定的購買者。"],
+  ["belastbar",            "Belastbarkeit",         "stress resilience",            "抗壓",
+   "Im Schichtdienst muss man belastbar sein, da auch in Notsituationen ruhiges Handeln gefragt ist.",
+   "在輪班工作中，必須抗壓，因為在緊急情況下也需要冷靜行動。",
+   "Belastbarkeit ist im Schichtdienst besonders wichtig, da Pflegekräfte auch in Notsituationen ruhig und handlungsfähig bleiben müssen.",
+   "抗壓性在輪班工作中尤為重要，因為護理人員即使在緊急情況下也必須保持冷靜和行動能力。"],
+  // D
+  ["diszipliniert",        "Disziplin",             "discipline",                   "自律",
+   "Wer in der Projektarbeit diszipliniert vorgeht, hält Deadlines zuverlässig ein.",
+   "在專案工作中有紀律的人，能可靠地遵守截止日期。",
+   "Disziplin beim Einhalten von Deadlines ist in der Projektarbeit eine Grundvoraussetzung für reibungslose Abläufe.",
+   "在遵守截止期限方面的自律，是專案工作順利進行的基本前提。"],
+  ["durchsetzungsfähig",   "Durchsetzungsvermögen", "assertiveness",                "執行魄力",
+   "Eine Führungskraft muss durchsetzungsfähig sein, um notwendige Entscheidungen auch gegen Widerstand umzusetzen.",
+   "領導者必須具有執行魄力，才能克服阻力推行必要的決策。",
+   "Durchsetzungsvermögen ist gefragt, wenn es darum geht, unpopuläre, aber notwendige Entscheidungen im Team umzusetzen.",
+   "當需要在團隊中推行不受歡迎但必要的決策時，執行魄力是不可或缺的。"],
+  // E
+  ["effizient",            "Effizienz",             "efficiency",                   "有效率",
+   "Wer in der Lagerverwaltung effizient arbeitet, kann Lieferzeiten deutlich verkürzen.",
+   "在倉庫管理中工作有效率的人，能顯著縮短交貨時間。",
+   "Effizienz in der Lagerverwaltung bedeutet, Bestellprozesse so zu optimieren, dass Lieferzeiten deutlich verkürzt werden.",
+   "倉庫管理中的效率意味著優化訂購流程，從而顯著縮短交貨時間。"],
+  ["ehrgeizig",            "Ehrgeiz",               "ambition",                     "有企圖心",
+   "Wer im Vertrieb ehrgeizig ist, übertrifft konsequent die gesteckten Quartalsziele.",
+   "在銷售工作中有企圖心的人，能持續超越設定的季度目標。",
+   "Ehrgeiz in der Vertriebsabteilung treibt Mitarbeitende an, Quartalsziele konsequent zu übertreffen.",
+   "銷售部門的企圖心驅使員工持續超越季度目標。"],
+  ["eigeninitiativ",       "Eigeninitiative",       "self-initiative",              "主動積極",
+   "In wenig strukturierten Umgebungen muss man eigeninitiativ handeln, ohne auf Anweisungen zu warten.",
+   "在結構不清晰的環境中，必須主動行動，而不是等待指示。",
+   "Eigeninitiative wird erwartet, wenn neue Prozesse noch nicht klar definiert sind und selbstständiges Handeln gefragt ist.",
+   "當新流程尚未明確定義、需要自主行動時，主動積極是必要的。"],
+  ["einfallsreich",        "Einfallsreichtum",      "ingenuity / resourcefulness",  "有創意",
+   "Im Produktdesign muss man einfallsreich sein, um Nutzerbedürfnisse auf unerwartete Weise zu erfüllen.",
+   "在產品設計中，必須有創意，才能以出乎意料的方式滿足用戶需求。",
+   "Einfallsreichtum im Produktdesign führt zu Lösungen, die Nutzerbedürfnisse auf überraschend einfache Weise erfüllen.",
+   "產品設計中的創意能帶來以出乎意料的簡單方式滿足用戶需求的解決方案。"],
+  ["empathisch",           "Empathie",              "empathy",                      "有同理心",
+   "In der psychosozialen Beratung muss man empathisch sein, um Klienten in schwierigen Situationen begleiten zu können.",
+   "在心理社會諮詢中，必須有同理心，才能陪伴處於困難情況下的客戶。",
+   "Empathie ist in der psychosozialen Beratung unabdingbar, um Klienten in schwierigen Lebenssituationen angemessen begleiten zu können.",
+   "在心理社會諮詢中，同理心是不可缺少的，以便在困難的生活處境中適當地陪伴客戶。"],
+  ["engagiert",            "Engagement",            "commitment",                   "投入",
+   "Wer auch außerhalb der Arbeitszeit engagiert ist, zeigt Verantwortungsbewusstsein über den eigenen Bereich hinaus.",
+   "工作時間以外也投入的人，展現了超出自身職責範圍的責任感。",
+   "Gesellschaftliches Engagement außerhalb der Arbeitszeit zeigt, dass eine Person Verantwortung über den eigenen Aufgabenbereich hinaus übernimmt.",
+   "工作時間以外的社會參與表明一個人願意承擔超出自己職責範圍的責任。"],
+  // F
+  ["flexibel",             "Flexibilität",          "flexibility",                  "彈性",
+   "In der Eventbranche muss man flexibel sein, weil kurzfristige Programmänderungen jederzeit möglich sind.",
+   "在活動產業中，必須靈活，因為隨時可能出現臨時節目變更。",
+   "Flexibilität ist in der Eventbranche unverzichtbar, da kurzfristige Programmänderungen jederzeit möglich sind.",
+   "在活動產業中，靈活性是不可缺少的，因為隨時可能出現臨時節目變更。"],
+  ["freundlich",           "Freundlichkeit",        "friendliness",                 "友善親切",
+   "Bei Reklamationen muss man freundlich bleiben, damit unzufriedene Kunden das Unternehmen nicht verlassen.",
+   "在處理投訴時必須保持友善，以防止不滿意的客戶離開公司。",
+   "Freundlichkeit im Umgang mit Reklamationen verhindert, dass unzufriedene Kunden das Unternehmen verlassen.",
+   "在處理投訴時保持友善，能防止不滿意的客戶離開公司。"],
+  ["führungsstark",        "Führungskompetenz",     "leadership competence",        "有領導力",
+   "Eine führungsstarke Person koordiniert heterogene Teams so, dass jeder seine Stärken einbringen kann.",
+   "一個有領導力的人能協調多元化的團隊，讓每個人都能發揮自己的優勢。",
+   "Führungskompetenz zeigt sich darin, ein heterogenes Team so zu koordinieren, dass alle Mitglieder ihre Stärken gezielt einbringen können.",
+   "領導力體現在能夠協調多元化的團隊，讓所有成員都能有針對性地發揮自己的優勢。"],
+  // G
+  ["geduldig",             "Geduld",                "patience",                     "有耐心",
+   "In der Ausbildungsbetreuung muss man geduldig sein, damit Auszubildende komplexe Abläufe verstehen.",
+   "在培訓輔導中，必須有耐心，才能讓學員理解複雜的流程。",
+   "Geduld ist in der Ausbildungsbetreuung essenziell, damit Auszubildende komplexe Abläufe Schritt für Schritt verstehen können.",
+   "在培訓輔導中，耐心是至關重要的，以便學員能夠一步一步理解複雜的流程。"],
+  ["genau",                "Genauigkeit",           "accuracy / precision",         "精確",
+   "Bei der Medikamentendosierung muss man sehr genau arbeiten, da Fehler lebensbedrohlich sein können.",
+   "在藥品劑量方面，必須非常精確地工作，因為錯誤可能危及生命。",
+   "Genauigkeit bei der Medikamentendosierung ist in der Apotheke eine absolute Sicherheitsanforderung.",
+   "藥品劑量方面的精確性是藥局的絕對安全要求。"],
+  ["gewissenhaft",         "Gewissenhaftigkeit",    "conscientiousness",            "嚴謹負責",
+   "In der Buchführung muss man gewissenhaft arbeiten, damit Jahresabschlüsse fehlerfrei eingereicht werden.",
+   "在記帳工作中，必須嚴謹地工作，才能無誤提交年度財務報告。",
+   "Gewissenhaftigkeit in der Buchführung stellt sicher, dass Jahresabschlüsse fehlerfrei und fristgerecht eingereicht werden.",
+   "記帳工作中的嚴謹性確保年度財務報告能夠無誤且按時提交。"],
+  // H
+  ["handwerklich geschickt","handwerkliches Geschick","manual dexterity",          "手工靈巧",
+   "In der Zahntechnik muss man handwerklich geschickt sein, da Zahnersatz millimetergenau gefertigt wird.",
+   "在牙科技術中，必須手工靈巧，因為義齒必須精確到毫米製作。",
+   "Handwerkliches Geschick ist in der Zahntechnik unerlässlich, da Zahnersatz millimetergenau angefertigt werden muss.",
+   "手工靈巧在牙科技術中是不可缺少的，因為義齒必須精確到毫米。"],
+  ["hilfsbereit",          "Hilfsbereitschaft",     "helpfulness",                  "樂於助人",
+   "Wenn Kollegen hilfsbereit sind, werden neue Mitarbeitende schneller eingearbeitet.",
+   "當同事樂於助人時，新員工能更快地融入工作。",
+   "Hilfsbereitschaft unter Kollegen verkürzt Einarbeitungszeiten und steigert die Teamleistung spürbar.",
+   "同事之間的互助精神能縮短培訓時間，並顯著提升團隊績效。"],
+  // K
+  ["kommunikationsstark",  "Kommunikationsfähigkeit","communication skills",       "溝通能力強",
+   "Im Vertrieb muss man kommunikationsstark sein, um Kundenbedürfnisse präzise zu erfragen.",
+   "在銷售工作中，必須有強大的溝通能力，才能準確詢問客戶需求。",
+   "Kommunikationsfähigkeit ist im Vertrieb entscheidend, weil Kundenbedürfnisse präzise erfragt und Lösungen klar vermittelt werden müssen.",
+   "溝通能力在銷售工作中至關重要，因為必須準確詢問客戶需求並清晰傳達解決方案。"],
+  ["kompetent",            "Kompetenz",             "competence",                   "稱職",
+   "Auf dem modernen Arbeitsmarkt reicht es nicht, fachlich kompetent zu sein – soziale Fähigkeiten sind ebenso gefragt.",
+   "在現代就業市場中，僅有專業稱職是不夠的——社交技能同樣受到重視。",
+   "Fachliche Kompetenz allein reicht im modernen Arbeitsmarkt nicht aus – soziale Fähigkeiten sind ebenso gefragt.",
+   "在現代就業市場中，僅有專業能力是不夠的——社交技能同樣受到重視。"],
+  ["konzentriert",         "Konzentrationsfähigkeit","ability to concentrate",      "專注",
+   "Bei der Qualitätskontrolle am Fließband muss man konzentriert arbeiten, um Fehler frühzeitig zu erkennen.",
+   "在流水線質量控制中，必須專注地工作，以便及早發現錯誤。",
+   "Konzentrationsfähigkeit ist bei der Qualitätskontrolle am Fließband entscheidend, um Fehler frühzeitig zu erkennen.",
+   "在流水線質量控制中，專注力是至關重要的，以便及早發現錯誤。"],
+  ["kreativ",              "Kreativität",           "creativity",                   "創意",
+   "In der Werbebranche muss man kreativ sein, um Kampagnen zu entwickeln, die im Gedächtnis bleiben.",
+   "在廣告行業中，必須有創意，才能開發令人難忘的活動。",
+   "Kreativität in der Werbebranche bedeutet, Kampagnen zu entwickeln, die eine Zielgruppe emotional ansprechen und im Gedächtnis bleiben.",
+   "廣告行業中的創意意味著開發能在情感上打動目標群體且令人難忘的活動。"],
+  ["kritikfähig",          "Kritikfähigkeit",       "receptiveness to criticism",   "能接受批評",
+   "Im agilen Arbeitsumfeld muss man kritikfähig sein, da Feedback-Runden regelmäßig stattfinden.",
+   "在敏捷工作環境中，必須能接受批評，因為反饋環節定期舉行。",
+   "Kritikfähigkeit ist im agilen Arbeitsumfeld wichtig, da regelmäßige Feedback-Runden fester Bestandteil des Entwicklungsprozesses sind.",
+   "在敏捷工作環境中，接受批評的能力很重要，因為定期的反饋環節是開發流程的固定組成部分。"],
+  ["kundenorientiert",     "Kundenorientierung",    "customer orientation",         "客戶導向",
+   "Ein kundenorientiertes Unternehmen gestaltet Serviceprozesse so, dass Anliegen schnell gelöst werden.",
+   "一個以客戶為導向的公司設計服務流程，使客戶需求能夠快速得到解決。",
+   "Kundenorientierung bedeutet, Serviceprozesse so zu gestalten, dass Anliegen schnell und zur Zufriedenheit der Kunden gelöst werden.",
+   "客戶導向意味著設計服務流程，使客戶的需求能夠快速並令其滿意地得到解決。"],
+  // L
+  ["lernbereit",           "Lernbereitschaft",      "willingness to learn",         "學習意願強",
+   "In der IT-Branche muss man lernbereit sein, weil sich Technologien ständig weiterentwickeln.",
+   "在IT行業中，必須有學習意願，因為技術不斷發展。",
+   "Lernbereitschaft ist in der IT-Branche unverzichtbar, da sich Technologien und Frameworks in kurzen Zyklen weiterentwickeln.",
+   "在IT行業中，學習意願是不可缺少的，因為技術和框架在短周期內不斷發展。"],
+  // M
+  ["medienkompetent",      "Medienkompetenz",       "media literacy",               "媒體素養",
+   "Wer medienkompetent ist, kann digitale Quellen kritisch bewerten und Informationen zielgruppengerecht aufbereiten.",
+   "具有媒體素養的人能批判性地評估數字來源，並針對目標群體整理信息。",
+   "Medienkompetenz umfasst die Fähigkeit, digitale Quellen kritisch zu bewerten und Informationen zielgruppengerecht aufzubereiten.",
+   "媒體素養包括批判性評估數字來源以及針對目標群體整理信息的能力。"],
+  // O
+  ["organisiert",          "Organisationsfähigkeit","organizational ability",       "組織有序",
+   "Im Eventmanagement muss man gut organisiert sein, um Dienstleister, Termine und Budget gleichzeitig zu koordinieren.",
+   "在活動管理中，必須有良好的組織能力，才能同時協調服務商、日程和預算。",
+   "Organisationsfähigkeit ist im Eventmanagement gefragt, wenn Dutzende von Dienstleistern, Terminen und Budgets gleichzeitig koordiniert werden müssen.",
+   "在活動管理中，組織能力是必不可少的，因為需要同時協調數十個服務商、日程和預算。"],
+  // P
+  ["pragmatisch",          "pragmatisches Handeln", "pragmatism",                   "務實",
+   "Wenn theoretische Lösungen nicht umsetzbar sind, muss man pragmatisch handeln und schnelle Alternativen finden.",
+   "當理論解決方案無法實施時，必須務實行動，迅速找到替代方案。",
+   "Pragmatisches Handeln ist gefragt, wenn theoretisch optimale Lösungen in der Praxis nicht umsetzbar sind und schnelle Alternativen gefunden werden müssen.",
+   "當理論上最優的解決方案在實踐中無法實施、需要迅速找到替代方案時，務實的行動方式是必要的。"],
+  ["präzise",              "Präzision",             "precision",                    "精準",
+   "In der technischen Dokumentation muss man präzise formulieren, damit Anleitungen weltweit korrekt angewendet werden.",
+   "在技術文件中，必須精準地表達，才能讓說明書在全球範圍內被正確應用。",
+   "Präzision in der technischen Dokumentation stellt sicher, dass Montageanleitungen weltweit korrekt angewendet werden können.",
+   "技術文件中的精準性確保裝配說明能夠在全球範圍內被正確應用。"],
+  ["pünktlich",            "Pünktlichkeit",         "punctuality",                  "守時",
+   "In der Logistik muss man pünktlich liefern, da Verzögerungen die gesamte Lieferkette beeinträchtigen.",
+   "在物流中，必須準時交貨，因為延誤會影響整個供應鏈。",
+   "Pünktlichkeit in der Logistik ist betriebskritisch, da Verspätungen in der Lieferkette zu Produktionsstillständen führen können.",
+   "物流中的準時性對業務至關重要，因為供應鏈中的延誤可能導致生產停頓。"],
+  // S
+  ["selbstbewusst",        "Selbstbewusstsein",     "self-confidence",              "有自信",
+   "Beim Präsentieren vor dem Vorstand muss man selbstbewusst auftreten, um die eigene Arbeit überzeugend zu vertreten.",
+   "在董事會前演講時，必須自信地表現，才能令人信服地呈現自己的工作。",
+   "Selbstbewusstsein ist beim Präsentieren von Projektergebnissen vor dem Vorstand entscheidend, um die eigene Arbeit überzeugend zu vertreten.",
+   "在向董事會展示項目成果時，自信心是至關重要的，以便令人信服地呈現自己的工作。"],
+  ["selbstständig",        "Selbstständigkeit",     "independence",                 "獨立自主",
+   "Im Homeoffice muss man selbstständig arbeiten, da externe Kontrolle weitgehend wegfällt.",
+   "在居家辦公中，必須獨立工作，因為外部監督大幅減少。",
+   "Selbstständigkeit ist im Homeoffice besonders wichtig, da externe Kontrolle weitgehend entfällt und Eigenverantwortung gefragt ist.",
+   "在居家辦公中，自主性尤為重要，因為外部監督大幅減少，需要自我負責。"],
+  ["sozial kompetent",     "Sozialkompetenz",       "social competence",            "社交能力強",
+   "In interkulturellen Teams muss man sozial kompetent sein, um effektiv zu kommunizieren und Konflikte zu deeskalieren.",
+   "在跨文化團隊中，必須具有社交能力，才能有效溝通並化解衝突。",
+   "Sozialkompetenz entscheidet darüber, wie effektiv jemand in interkulturellen Teams kommunizieren und Konflikte deeskalieren kann.",
+   "社交能力決定了一個人在跨文化團隊中溝通和化解衝突的效果。"],
+  ["stressresistent",      "Stressresistenz",       "stress resistance",            "耐壓",
+   "Im Notarztdienst muss man stressresistent sein, da unter Zeitdruck lebenserhaltende Entscheidungen getroffen werden.",
+   "在急救醫療中，必須能耐壓，因為必須在時間壓力下做出維持生命的決策。",
+   "Stressresistenz ist im Notarztdienst lebensnotwendig, da unter Zeitdruck lebenserhaltende Entscheidungen getroffen werden müssen.",
+   "在急救醫療中，抗壓性是生死攸關的，因為必須在時間壓力下做出維持生命的決策。"],
+  ["strategisch denkend",  "strategisches Denken",  "strategic thinking",           "策略思考",
+   "Eine Führungskraft, die strategisch denkt, bringt kurzfristige Maßnahmen mit langfristigen Zielen in Einklang.",
+   "一個有策略思考的領導者，能將短期措施與長期目標相協調。",
+   "Strategisches Denken befähigt Führungskräfte, kurzfristige Maßnahmen mit langfristigen Unternehmenszielen in Einklang zu bringen.",
+   "策略思考使領導者能夠將短期措施與企業的長期目標相協調。"],
+  ["strukturiert",         "Strukturiertheit",      "structured approach",          "有條理",
+   "In der Buchhaltung muss man strukturiert vorgehen, um Transaktionen nachvollziehbar zu dokumentieren.",
+   "在記帳工作中，必須有條理地處理，才能使交易記錄可追溯。",
+   "Eine strukturierte Arbeitsweise in der Buchhaltung minimiert Fehler und erleichtert die Nachvollziehbarkeit von Transaktionen.",
+   "記帳工作中有條理的工作方式能最大限度地減少錯誤，並使交易更易於追溯。"],
+  // T
+  ["teamfähig",            "Teamfähigkeit",         "teamwork ability",             "團隊合作",
+   "In der Softwareentwicklung muss man teamfähig sein, da Code-Reviews und gemeinsame Sprints zum Alltag gehören.",
+   "在軟體開發中，必須能夠團隊合作，因為代碼審查和共同衝刺是日常工作的一部分。",
+   "Teamfähigkeit ist in der Softwareentwicklung unverzichtbar, da Code-Reviews, gemeinsame Sprints und kollaboratives Problemlösen zum Alltag gehören.",
+   "在軟體開發中，團隊合作能力是不可缺少的，因為代碼審查、共同衝刺和協作解決問題是日常工作的一部分。"],
+  // V
+  ["verhandlungsstark",    "Verhandlungskompetenz", "negotiation competence",       "談判能力強",
+   "Im Einkauf muss man verhandlungsstark sein, um mit Lieferanten günstige Konditionen auszuhandeln.",
+   "在採購工作中，必須有談判能力，才能與供應商協商有利的條件。",
+   "Verhandlungskompetenz ist im Einkauf gefragt, wenn es darum geht, mit Lieferanten langfristig günstige Konditionen auszuhandeln.",
+   "在採購工作中，談判能力是必不可少的，關鍵在於與供應商協商長期有利的條件。"],
+  ["verlässlich",          "Verlässlichkeit",       "reliability",                  "可靠",
+   "In der IT-Administration muss man verlässlich sein, damit Systemausfälle innerhalb definierter Reaktionszeiten behoben werden.",
+   "在IT管理中，必須可靠，才能在規定的響應時間內修復系統故障。",
+   "Verlässlichkeit in der IT-Administration bedeutet, dass Systemausfälle innerhalb definierter Reaktionszeiten behoben werden.",
+   "IT管理中的可靠性意味著系統故障必須在規定的響應時間內得到修復。"],
+  ["überzeugend",          "Überzeugungskraft",     "persuasiveness",               "有說服力",
+   "Wer überzeugend argumentiert, kann neue Strategien intern verankern und Widerstände im Team überwinden.",
+   "能夠令人信服地論證的人，能在內部推行新策略並克服團隊阻力。",
+   "Überzeugungskraft ist entscheidend, wenn neue Strategien intern verankert werden sollen und Widerstände im Team überwunden werden müssen.",
+   "當需要在內部推行新策略、克服團隊阻力時，說服力是至關重要的。"],
+  // Z
+  ["zeitmanagementstark",  "Zeitmanagement",        "time management",              "時間管理",
+   "Wer zeitmanagementstark ist, kann mehrere Kundenprojekte parallel betreuen, ohne Fristen zu vernachlässigen.",
+   "擅長時間管理的人，能同時處理多個客戶項目，而不會忽略截止日期。",
+   "Effektives Zeitmanagement ermöglicht es, mehrere Kundenprojekte parallel zu betreuen, ohne dabei Qualität oder Fristen zu vernachlässigen.",
+   "有效的時間管理使同時處理多個客戶項目成為可能，而不會忽略質量或截止日期。"],
+  ["zielorientiert",       "Zielorientierung",      "goal orientation",             "目標導向",
+   "Im Vertrieb muss man zielorientiert arbeiten, um Verkaufsziele systematisch zu erreichen.",
+   "在銷售工作中，必須以目標為導向地工作，才能系統性地實現銷售目標。",
+   "Zielorientierung ist im Vertrieb entscheidend, weil nur wer klare Prioritäten setzt, seine Verkaufsziele systematisch erreichen kann.",
+   "在銷售工作中，目標導向是至關重要的，因為只有設定明確優先順序的人才能系統性地實現銷售目標。"],
+  ["zielstrebig",          "Zielstrebigkeit",       "determination / drive",        "有目標、堅定",
+   "Zielstrebige Nachwuchsführungskräfte arbeiten auch nach Rückschlägen konsequent an ihrer beruflichen Entwicklung.",
+   "有目標的年輕領導者即使遭遇挫折，也能堅持不懈地推進自己的職業發展。",
+   "Zielstrebigkeit befähigt Nachwuchsführungskräfte dazu, auch bei Rückschlägen konsequent an ihrer beruflichen Entwicklung weiterzuarbeiten.",
+   "目標堅定使年輕領導者能夠即使遭遇挫折，也能堅持不懈地推進自己的職業發展。"],
+  ["zuverlässig",          "Zuverlässigkeit",       "reliability",                  "可靠守信",
+   "Im Außendienst muss man zuverlässig sein, vereinbarte Termine einhalten und zeitnah Rückmeldungen geben.",
+   "在外勤工作中，必須可靠，遵守約定的時間並及時提供反饋。",
+   "Zuverlässigkeit im Außendienst bedeutet, vereinbarte Termine einzuhalten und Rückmeldungen zeitnah zu geben.",
+   "外勤工作中的可靠性意味著遵守約定的時間並及時提供反饋。"],
+];
+
+// ═══════════════════════════════════════════════════════════
+// SECTION 2 — Arbeitsbeschreibung (描述工作/任務性質)
+// Format: [adj, en, zh, ex_de, ex_zh]   (no noun column)
+// ═══════════════════════════════════════════════════════════
+const VOCAB2 = [
+  // A
+  ["anspruchsvoll",   "demanding",               "要求高的",
+   "Die Stelle im Qualitätsmanagement ist anspruchsvoll, weil sie fundiertes Fachwissen und höchste Genauigkeit gleichzeitig erfordert.",
+   "品質管理職位要求很高，因為它同時需要紮實的專業知識和最高的精確度。"],
+  ["anstrengend",     "exhausting / strenuous",  "費力的",
+   "Nachtschichten im Krankenhaus sind körperlich und geistig anstrengend, weil das Personal trotz Müdigkeit höchste Aufmerksamkeit aufrechterhalten muss.",
+   "醫院的夜班在體力和精神上都很耗費，因為工作人員儘管疲勞也必須保持高度注意力。"],
+  ["aufregend",       "exciting / thrilling",    "令人興奮的",
+   "Die Arbeit als Notärztin ist aufregend, weil jeder Einsatz eine andere Diagnose und eine sofortige Entscheidung verlangt.",
+   "急救醫生的工作令人興奮，因為每次出診都需要不同的診斷和即時的決策。"],
+  ["aufwendig",       "costly / elaborate",      "耗時費力的",
+   "Die Zertifizierung nach ISO-Norm ist aufwendig, weil sie umfangreiche Dokumentation, interne Audits und externe Prüfungen umfasst.",
+   "按照ISO標準進行認證耗時費力，因為它包括大量文件記錄、內部審計和外部檢查。"],
+  // B
+  ["bedauerlich",     "regrettable / unfortunate","令人遺憾的",
+   "Es ist bedauerlich, dass das Forschungsbudget gekürzt wurde, obwohl das Projekt kurz vor einem Durchbruch stand.",
+   "令人遺憾的是，儘管該項目即將取得突破，研究預算卻被削減了。"],
+  ["begrenzt",        "limited / restricted",    "有限的",
+   "Da das Forschungsbudget begrenzt ist, müssen Laborressourcen sorgfältig geplant und priorisiert werden.",
+   "由於研究預算有限，必須仔細規劃和確定實驗室資源的優先順序。"],
+  // G
+  ["gefährlich",      "dangerous / hazardous",   "危險的",
+   "Der Umgang mit chemischen Reagenzien im Labor ist gefährlich, weshalb Schutzkleidung und strikte Sicherheitsprotokolle vorgeschrieben sind.",
+   "實驗室中處理化學試劑是危險的，因此規定必須穿著防護服並遵守嚴格的安全規程。"],
+  // H
+  ["herausfordernd",  "challenging",             "有挑戰性的",
+   "Die Entwicklung bioabbaubarer Verpackungsmaterialien ist herausfordernd, weil mechanische Stabilität und ökologische Verträglichkeit selten gleichzeitig optimiert werden können.",
+   "開發可生物降解的包裝材料具有挑戰性，因為機械穩定性和生態相容性很難同時得到優化。"],
+  // I
+  ["interessant",     "interesting",             "有趣的",
+   "Die Materialforschung ist interessant, weil sie erklärt, warum sich Stoffe unter extremen Bedingungen wie Hitze oder Druck unterschiedlich verhalten.",
+   "材料研究很有趣，因為它解釋了為什麼物質在高溫或高壓等極端條件下會有不同的表現。"],
+  ["international",   "international",           "國際化的",
+   "Das Unternehmen ist international aufgestellt, weshalb Mitarbeitende regelmäßig mit Partnern aus Asien, Amerika und Europa zusammenarbeiten.",
+   "該公司具有國際化佈局，因此員工定期與來自亞洲、美洲和歐洲的合作夥伴共事。"],
+  // K
+  ["komplex",         "complex",                 "複雜的",
+   "Finite-Elemente-Simulationen sind komplex, weil sie die Wechselwirkung zwischen Materialeigenschaften, Geometrie und Randbedingungen gleichzeitig berücksichtigen müssen.",
+   "有限元素模擬很複雜，因為它必須同時考慮材料屬性、幾何形狀和邊界條件之間的相互作用。"],
+  // M
+  ["modern",          "modern / up-to-date",     "現代化的",
+   "Das Labor ist mit moderner Messtechnik ausgestattet, sodass präzise Materialdaten in Echtzeit erfasst werden können.",
+   "實驗室配備了現代化的測量技術，因此可以實時採集精確的材料數據。"],
+  ["mobil",           "mobile / flexible location","具流動性的",
+   "Außendienstmitarbeitende müssen mobil sein, da sie täglich verschiedene Kundenstandorte in unterschiedlichen Städten anfahren.",
+   "外勤員工必須具有流動性，因為他們每天需要前往不同城市的各個客戶地點。"],
+  // O
+  ["optimal",         "optimal",                 "最佳的",
+   "Simulationsparameter müssen optimal gewählt werden, damit das Modell das reale Materialverhalten möglichst genau abbildet.",
+   "模擬參數必須選擇最優，以便模型能盡可能精確地反映真實的材料行為。"],
+  // S
+  ["sicher",          "safe / secure / stable",  "安全穩定的",
+   "Eine Stelle im öffentlichen Dienst gilt als sicher, weil Kündigungen dort an strenge gesetzliche Voraussetzungen geknüpft sind.",
+   "公共服務部門的職位被認為是穩定的，因為解僱與嚴格的法律前提條件相關聯。"],
+  // U
+  ["ungewöhnlich",    "unusual / uncommon",      "不尋常的",
+   "Der Befund ist ungewöhnlich, weil das Messsignal bei dieser Temperatur normalerweise nicht auftritt und auf eine bisher unbekannte Phasenumwandlung hinweisen könnte.",
+   "這個發現很不尋常，因為這種測量信號在這個溫度下通常不會出現，可能指向一個迄今未知的相變。"],
+  // V
+  ["verständlich",    "comprehensible / clear",  "易理解的",
+   "Wissenschaftliche Ergebnisse müssen auch für Laien verständlich präsentiert werden, damit Forschungsförderer den gesellschaftlichen Nutzen eines Projekts nachvollziehen können.",
+   "科學成果必須以外行也能理解的方式呈現，以便研究資助者能夠理解一個項目的社會效益。"],
+  // Z
+  ["zufrieden",       "satisfied / content",     "滿意的",
+   "Mitarbeitende sind zufrieden, wenn ihre Leistungen regelmäßig anerkannt und Weiterentwicklungsmöglichkeiten aktiv angeboten werden.",
+   "當員工的績效受到定期認可並積極提供進步機會時，他們會感到滿意。"],
+  ["zukunftsfähig",   "future-proof / viable",   "有未來性的",
+   "Nur zukunftsfähige Geschäftsmodelle überleben in einem Markt, der von Digitalisierung und ökologischem Wandel gleichzeitig geprägt wird.",
+   "在一個同時被數字化和生態轉型所塑造的市場中，只有具備未來性的商業模式才能存活。"],
+];
+
+// ═══════════════════════════════════════════════════════════
+// EXAMPLE TEXTS — 兩篇，分別對應兩個單字表
+// ═══════════════════════════════════════════════════════════
+// TEXT 1 → Section 1 (Soft Skills): Tätigkeit + Soft Skills Selbstvorstellung
+// TEXT 2 → Section 2 (Arbeitsbeschreibung): 描述研究工作性質
+const TEXTS = [
+  {
+    // Belongs to SECTION 1 (Soft Skills)
+    title: "Beispieltext 1 – Tätigkeit & Soft Skills (Selbstvorstellung)",
+    subtitle: "（口語自我介紹，DTB B2 口試風格）",
+    sentences: [
+      ["Ich bin als Promotionsforscher tätig.", "我從事博士研究工作。"],
+      ["Meine fachliche Kompetenz liegt im Bereich der Materialsimulation.", "我的專業能力在材料模擬領域。"],
+      ["Zu den Aufgaben in diesem Beruf gehören die Simulation von Materialeigenschaften, die Analyse komplexer physikalischer Modelle sowie die Interpretation numerischer Ergebnisse.", "這份工作的任務包括材料屬性的模擬、複雜物理模型的分析以及數值結果的解讀。"],
+      ["Unser Ziel ist es zu verstehen, warum sich ein Material auf eine bestimmte Weise verhält.", "我們的目標是理解為什麼材料會以某種特定方式表現。"],
+      ["Wir arbeiten eng mit dem experimentellen Team zusammen, um Simulationsergebnisse zu validieren.", "我們與實驗團隊緊密合作，以驗證模擬結果。"],
+      ["Der Umgang mit physikalischen Daten gehört zu meinen Stärken.", "處理物理數據是我的強項之一。"],
+      ["Da Projekte oft über einen langen Zeitraum laufen, ist Ausdauer unerlässlich.", "由於項目往往持續很長時間，毅力是不可或缺的。"],
+      ["Eigeninitiative ist ebenfalls gefragt, da mein Betreuer viele parallele Projekte betreut und sich nicht täglich um jeden Einzelnen kümmern kann.", "主動積極也是必要的，因為我的指導老師同時負責許多平行項目，無法每天照顧到每一個人。"],
+      ["Im Laufe meiner Promotion habe ich ein starkes Selbstbewusstsein entwickelt, insbesondere durch die Vorbereitung und Teilnahme an internationalen Seminaren.", "在博士研究過程中，我建立了強烈的自信心，尤其是通過準備和參加國際研討會。"],
+      ["Ich bin in der Lage, komplexe Inhalte verständlich in Präsentationen zu vermitteln, sodass alle Zuhörer meinen Ausführungen folgen können.", "我能夠在演講中清晰地傳達複雜的內容，使所有聽眾都能跟上我的講解。"],
+      ["Ich besitze außerdem eine ausgeprägte Kritikfähigkeit: Wenn ich Feedback vom Publikum erhalte, arbeite ich strukturiert und zielorientiert daran, Meinungsverschiedenheiten sachlich zu diskutieren.", "此外，我具有出色的接受批評的能力：當我收到聽眾的反饋時，我會有條理且有針對性地努力客觀地討論分歧。"],
+      ["Gewissenhaftigkeit hat dabei stets höchste Priorität.", "在這一過程中，嚴謹負責始終是最高優先事項。"],
+      ["Wenn Daten nicht unseren Erwartungen entsprechen, legen wir – nachdem wir dies überprüft haben – stets unsere tatsächlichen Ergebnisse vor und erklären den Ursprung der Abweichung.", "當數據不符合我們的預期時，我們在核實後，始終如實呈現我們的實際結果並解釋偏差的來源。"],
+      ["Die Einhaltung wissenschaftlicher Ethik ist der grundlegendste Standard für Forscher.", "遵守科學倫理是研究人員最基本的標準。"],
+    ]
+  },
+  {
+    // Belongs to SECTION 2 (Arbeitsbeschreibung)
+    title: "Beispieltext 2 – Beschreibung der Forschungsarbeit",
+    subtitle: "（描述職位與研究性質）",
+    sentences: [
+      ["Die Forschungsarbeit ist interessant, weil wir neuartige Konzepte anwenden, um das Materialverhalten zu erklären.", "這份研究工作很有趣，因為我們應用創新的概念來解釋材料的行為。"],
+      ["Allerdings dauert die Fertigstellung eines Projekts in der Regel sehr lange, sodass man viel Ausdauer mitbringen muss.", "然而，一個項目的完成通常需要很長時間，因此必須具備充分的毅力。"],
+      ["Die Arbeit ist außerdem komplex, da physikalische Modelle, numerische Methoden und experimentelle Daten gleichzeitig berücksichtigt werden müssen.", "這份工作也很複雜，因為必須同時考慮物理模型、數值方法和實驗數據。"],
+      ["Zudem ist sie herausfordernd, weil theoretische Vorhersagen oft nicht mit den Messergebnissen übereinstimmen und man den Ursprung der Abweichung systematisch analysieren muss.", "此外，它具有挑戰性，因為理論預測往往與測量結果不符，必須系統性地分析偏差的來源。"],
+      ["Das Forschungsumfeld ist international, da wir regelmäßig an Konferenzen teilnehmen und mit Gruppen weltweit zusammenarbeiten.", "研究環境具有國際化性質，因為我們定期參加會議並與全球各地的研究組合作。"],
+    ]
+  }
+];
+
+// ── Sections config ──────────────────────────────────────
+const SECTIONS = [
+  { id: 'main', label: 'Soft Skills / Charaktereigenschaften', vocab: VOCAB1, type: 'main', textIndex: 0 },
+  { id: 'work', label: 'Arbeitsbeschreibung – Tätigkeit & Aufgaben', vocab: VOCAB2, type: 'work', textIndex: 1 },
+];
+
+function allVocab() {
+  return SECTIONS.flatMap((sec, si) =>
+    sec.vocab.map((v, vi) => ({ v, key: `${si}_${vi}`, si, vi, type: sec.type }))
+  );
+}
+
+// ── Speech ────────────────────────────────────────────────
+function speakText(text) {
+  if (!text || !text.trim()) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'de-DE'; u.rate = 0.92;
+  const badge = document.getElementById('speakingBadge');
+  badge.classList.add('active');
+  u.onend = u.onerror = () => badge.classList.remove('active');
+  window.speechSynthesis.speak(u);
+}
+
+// ── Filter ────────────────────────────────────────────────
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+// ── Toggle unfamiliar ─────────────────────────────────────
+function toggleMark(key) {
+  if (unfamiliar.has(key)) unfamiliar.delete(key); else unfamiliar.add(key);
+  saveUnfamiliar(unfamiliar);
+  render(); renderLetterNav();
+}
+
+// ── Letter nav ────────────────────────────────────────────
+function letterOf(v) {
+  const c = (v[0] || '').toUpperCase()[0] || '';
+  if (c === 'Ä') return 'A'; if (c === 'Ö') return 'O'; if (c === 'Ü') return 'U';
+  return c;
+}
+
+function renderLetterNav() {
+  const letters = {};
+  allVocab().forEach(({v, key}) => {
+    const l = letterOf(v);
+    if (!letters[l]) letters[l] = false;
+    if (unfamiliar.has(key)) letters[l] = true;
+  });
+  document.getElementById('letterNav').innerHTML = Object.keys(letters).sort().map(l =>
+    `<button class="letter-btn ${letters[l] ? 'has-unfamiliar' : ''}" onclick="scrollToLetter('${l}')">${l}</button>`
+  ).join('');
+}
+
+function scrollToLetter(l) {
+  const el = document.getElementById('letter-' + l);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── Build rows ────────────────────────────────────────────
+function esc(s) { return (s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
+
+function buildRowMain(entry, compact) {
+  const { v, key } = entry;
+  const [adj, noun, en, zh, ex_adj_de, ex_adj_zh, ex_noun_de, ex_noun_zh] = v;
+  const isUnf = unfamiliar.has(key);
+  const dotCell = compact ? '' :
+    `<td class="dot-cell" onclick="toggleMark('${key}')"><span class="dot"></span></td>`;
+  return `<tr class="${isUnf ? 'unfamiliar' : ''}">
+    ${dotCell}
+    <td class="speak" onclick="speakText('${esc(adj || noun)}')" title="🔊">
+      <span class="word-adj">${adj || '—'}</span>
+    </td>
+    <td class="speak" onclick="speakText('${esc(noun)}')" title="${noun ? '🔊' : ''}">
+      <span class="word-noun${noun ? '' : ' empty'}">${noun || '—'}</span>
+    </td>
+    <td>
+      <span class="word-en">${en}</span>
+      <span class="word-zh">${zh}</span>
+    </td>
+    <td style="padding:0;">
+      <div class="speak" onclick="speakText('${esc(ex_adj_de)}')" style="padding:7px 10px 5px;">
+        <span class="satz-tag">Adj.</span><span class="satz-de">${ex_adj_de}</span>
+        <span class="satz-zh">${ex_adj_zh}</span>
+      </div>
+      <hr class="satz-divider" style="margin:0;">
+      <div class="speak" onclick="speakText('${esc(ex_noun_de)}')" style="padding:5px 10px 7px;">
+        <span class="satz-tag">Nomen</span><span class="satz-de">${ex_noun_de}</span>
+        <span class="satz-zh">${ex_noun_zh}</span>
+      </div>
+    </td>
+  </tr>`;
+}
+
+function buildRowWork(entry, compact) {
+  const { v, key } = entry;
+  const [adj, en, zh, ex_de, ex_zh] = v;
+  const isUnf = unfamiliar.has(key);
+  const dotCell = compact ? '' :
+    `<td class="dot-cell" onclick="toggleMark('${key}')"><span class="dot"></span></td>`;
+  return `<tr class="${isUnf ? 'unfamiliar' : ''}">
+    ${dotCell}
+    <td class="speak" onclick="speakText('${esc(adj)}')" title="🔊">
+      <span class="word-adj">${adj}</span>
+    </td>
+    <td>
+      <span class="word-en">${en}</span>
+      <span class="word-zh">${zh}</span>
+    </td>
+    <td class="speak" onclick="speakText('${esc(ex_de)}')" title="🔊">
+      <span class="satz-de">${ex_de}</span>
+      <span class="satz-zh">${ex_zh}</span>
+    </td>
+  </tr>`;
+}
+
+function buildTable(entries, compact, type) {
+  const dotTh = compact ? '' : '<th class="col-dot"></th>';
+  if (type === 'main') {
+    return `<table class="tbl-main"><thead><tr>${dotTh}
+      <th class="col-adj">德文（形容詞）</th>
+      <th class="col-noun">德文（名詞）</th>
+      <th class="col-enzh">英文 / 中文</th>
+      <th class="col-ex">造句</th>
+    </tr></thead><tbody>${entries.map(e => buildRowMain(e, compact)).join('')}</tbody></table>`;
+  } else {
+    return `<table class="tbl-work"><thead><tr>${dotTh}
+      <th class="col-adj">德文（形容詞）</th>
+      <th class="col-enzh">英文 / 中文</th>
+      <th class="col-ex">造句</th>
+    </tr></thead><tbody>${entries.map(e => buildRowWork(e, compact)).join('')}</tbody></table>`;
+  }
+}
+
+// ── Group by letter ───────────────────────────────────────
+function groupByLetter(entries) {
+  const out = {};
+  entries.forEach(e => {
+    const l = letterOf(e.v);
+    if (!out[l]) out[l] = [];
+    out[l].push(e);
+  });
+  return out;
+}
+
+// ── Render ────────────────────────────────────────────────
+function render() {
+  const allEntries = allVocab();
+  const filtered = allEntries.filter(({key}) => {
+    if (currentFilter === 'unfamiliar') return unfamiliar.has(key);
+    if (currentFilter === 'familiar')   return !unfamiliar.has(key);
+    return true;
+  });
+
+  document.getElementById('stats').textContent = `不熟悉 ${unfamiliar.size} / ${allEntries.length} 個`;
+  document.getElementById('exportBtn').disabled = unfamiliar.size === 0;
+
+  if (!filtered.length) {
+    document.getElementById('mainContent').innerHTML = `<div class="empty">沒有符合條件的單字</div>`;
+    return;
+  }
+
+  let html = '';
+  SECTIONS.forEach((sec, si) => {
+    const secEntries = filtered.filter(e => e.si === si);
+    if (!secEntries.length) return;
+    const byLetter = groupByLetter(secEntries);
+    let inner = '';
+    Object.keys(byLetter).sort().forEach(l => {
+      inner += `<div id="letter-${l}" style="scroll-margin-top:60px;">
+        <div class="letter-header">${l}</div>
+        ${buildTable(byLetter[l], false, sec.type)}
+      </div>`;
+    });
+    html += `<div class="section-block">
+      <div class="section-title">${sec.label}</div>
+      ${inner}
+    </div>`;
+    // Attach kurztext directly below this section (only when showing all)
+    if (currentFilter === 'all' && sec.textIndex !== undefined) {
+      html += buildKurztext(sec.textIndex);
+    }
+  });
+
+  document.getElementById('mainContent').innerHTML = html;
+}
+
+// ── Kurztext (by index) ───────────────────────────────────
+function buildKurztext(i) {
+  const t = TEXTS[i];
+  if (!t) return '';
+  const rows = t.sentences.map(([de, zh]) =>
+    `<div class="kurztext-sent">
+      <span class="sent-de" onclick="speakText('${esc(de)}')" title="🔊 點擊朗讀">${de}</span>
+      <span class="sent-zh">${zh}</span>
+    </div>`
+  ).join('');
+  return `<div class="kurztext">
+    <div class="kurztext-header">📝 ${t.title} <span style="font-weight:400;opacity:.7;">${t.subtitle}</span> — 點擊句子朗讀</div>
+    <div class="kurztext-body">${rows}</div>
+  </div>`;
+}
+
+// ── Export ────────────────────────────────────────────────
+function toggleExport() {
+  const p = document.getElementById('exportPanel');
+  p.classList.toggle('visible');
+  if (p.classList.contains('visible')) renderExport();
+}
+
+function renderExport() {
+  const words = allVocab().filter(({key}) => unfamiliar.has(key));
+  document.getElementById('exportCount').textContent = `共 ${words.length} 個單字`;
+  if (!words.length) {
+    document.getElementById('exportContent').innerHTML = '<p style="color:#aaa;font-size:13px;padding:12px 0;">尚未標記任何不熟悉的單字。</p>';
+    return;
+  }
+  let html = '';
+  SECTIONS.forEach((sec, si) => {
+    const sw = words.filter(e => e.si === si);
+    if (!sw.length) return;
+    html += `<div class="section-block">
+      <div class="section-title">${sec.label}</div>
+      ${buildTable(sw, true, sec.type)}
+    </div>`;
+  });
+  document.getElementById('exportContent').innerHTML = html;
+}
+
+// ── Init ──────────────────────────────────────────────────
+renderLetterNav();
+render();
+</script>
+</body>
+</html>
