@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verben, Nomen und Adjektive mit Präposition</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; background: #f5f5f3; color: #1a1a1a; font-size: 14px; }
+
+.top-bar { background: #2E4057; padding: 14px 20px 10px; }
+.top-bar h1 { color: #fff; font-size: 17px; font-weight: 600; margin-bottom: 3px; }
+.top-bar .sub { color: #a8c8f0; font-size: 11px; }
+
+.page { max-width: 1400px; margin: 0 auto; padding: 20px; }
+
+.toolbar {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  margin-bottom: 16px; background: #fff; border: 0.5px solid #ddd;
+  border-radius: 10px; padding: 10px 14px;
+}
+.filter-btn { padding: 5px 14px; border-radius: 6px; border: 0.5px solid #ccc; background: #fff; color: #333; font-size: 13px; cursor: pointer; transition: all 0.15s; }
+.filter-btn.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+.stats { font-size: 12px; color: #888; margin-left: 4px; }
+.speaking-badge { display: none; align-items: center; gap: 5px; font-size: 11px; color: #666; padding: 3px 10px; border: 0.5px solid #ddd; border-radius: 20px; background: #fafaf8; }
+.speaking-badge.active { display: flex; }
+.speaking-dot { width: 7px; height: 7px; border-radius: 50%; background: #4a9eff; animation: pulse 0.9s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.section-block { margin-bottom: 24px; }
+.section-title { font-size: 12px; font-weight: 700; color: #2E4057; letter-spacing: 0.05em; text-transform: uppercase; padding: 9px 12px 7px; background: #d8e4f0; border: 0.5px solid #b0c8e0; border-bottom: none; border-radius: 6px 6px 0 0; }
+
+table { width: 100%; border-collapse: collapse; background: #fff; border: 0.5px solid #ddd; border-radius: 0 0 8px 8px; overflow: hidden; table-layout: fixed; }
+th { text-align: left; padding: 7px 10px; background: #fafaf8; color: #777; font-weight: 500; font-size: 11px; border-bottom: 0.5px solid #e0e0e0; letter-spacing: 0.03em; }
+td { padding: 7px 10px; border-bottom: 0.5px solid #efefed; vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+
+tr.review td     { background: #fff6f6; }
+tr.key td        { background: #fffaf0; }
+tr.review.key td { background: #fff2f8; }
+
+td.mark-review { width: 36px; text-align: center; cursor: pointer; user-select: none; }
+td.mark-key    { width: 36px; text-align: center; cursor: pointer; user-select: none; }
+td.mark-review:hover { background: #ffe8e8 !important; }
+td.mark-key:hover    { background: #fff0d0 !important; }
+td.mark-review:hover .mark-box { border-color: #e24b4a; }
+td.mark-key:hover    .mark-box { border-color: #d08010; }
+.mark-box { display: inline-block; width: 11px; height: 11px; border: 1.5px solid #ccc; border-radius: 2px; margin-top: 3px; transition: all 0.15s; }
+tr.review td.mark-review .mark-box { background: #e24b4a; border-color: #e24b4a; }
+tr.key    td.mark-key    .mark-box { background: #d08010; border-color: #d08010; }
+
+td.speak-v   { cursor: pointer; }
+td.speak-n   { cursor: pointer; }
+td.speak-adj { cursor: pointer; }
+td.speak-v:hover   { background: #e8f0fe; }
+td.speak-n:hover   { background: #e8f5ee; }
+td.speak-adj:hover { background: #fdf8e1; }
+tr.review td.speak-v:hover, tr.review td.speak-n:hover, tr.review td.speak-adj:hover { background: #ffe0e0; }
+tr.key    td.speak-v:hover, tr.key    td.speak-n:hover, tr.key    td.speak-adj:hover { background: #fff0d0; }
+
+.col-rev  { width: 36px; }
+.col-key  { width: 36px; }
+.col-v    { width: 11%; }
+.col-n    { width: 13%; }
+.col-adj  { width: 10%; }
+.col-praep{ width: 9%; }
+.col-trans{ width: 13%; }
+
+.word-v   { font-weight: 700; font-size: 13px; color: #1a5fc8; display: block; }
+.word-n   { font-weight: 700; font-size: 13px; color: #1a7840; display: block; }
+.word-adj { font-weight: 700; font-size: 13px; color: #7d6000; display: block; }
+.word-empty { color: #ccc; font-size: 12px; display: block; }
+.word-praep { font-size: 12px; color: #6c3483; display: block; line-height: 1.8; }
+
+.trans-zh   { font-size: 12px; color: #222; display: block; line-height: 1.5; }
+.trans-note { font-size: 10px; color: #aaa; display: block; font-style: italic; }
+.trans-en   { font-size: 11px; color: #999; font-style: italic; display: block; line-height: 1.5; }
+
+.ex-group { margin-bottom: 4px; }
+.ex-group:last-child { margin-bottom: 0; }
+.ex-praep-label { font-size: 10px; font-weight: 600; color: #aaa; letter-spacing: 0.04em; padding: 3px 0 1px; display: block; }
+.ex-item { cursor: pointer; padding: 3px 6px; border-radius: 0 3px 3px 0; margin-bottom: 3px; transition: background 0.1s; }
+.ex-item:last-child { margin-bottom: 0; }
+.ex-item.V   { border-left: 2px solid #aed6f1; }
+.ex-item.N   { border-left: 2px solid #a9dfbf; }
+.ex-item.Adj { border-left: 2px solid #f9e79f; }
+.ex-item.V:hover   { background: #e8f0fe; }
+.ex-item.N:hover   { background: #e8f5ee; }
+.ex-item.Adj:hover { background: #fdf8e1; }
+tr.review .ex-item:hover { background: #ffe0e0; }
+tr.key    .ex-item:hover { background: #fff0d0; }
+.ex-type { font-size: 10px; font-weight: 700; margin-right: 3px; }
+.ex-type.V   { color: #1a5fc8; }
+.ex-type.N   { color: #1a7840; }
+.ex-type.Adj { color: #7d6000; }
+.ex-de { font-size: 12px; color: #222; line-height: 1.55; display: inline; }
+.ex-zh { font-size: 11px; color: #999; font-style: italic; display: block; padding-left: 2px; margin-top: 1px; }
+
+.empty { text-align: center; padding: 40px; color: #aaa; font-size: 13px; background: #fff; border: 0.5px solid #ddd; border-radius: 8px; }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <h1>Verben, Nomen und Adjektive mit Präposition</h1>
+  <div class="sub">Klett Aspekte Beruf · S. 343–345 &nbsp;｜&nbsp; 🔊 點德文欄位或例句朗讀 &nbsp;｜&nbsp; 點「待複習」或「重點」欄標記</div>
+</div>
+
+<div class="page">
+  <div class="toolbar">
+    <button class="filter-btn active" onclick="setFilter('all',this)">全部</button>
+    <button class="filter-btn" onclick="setFilter('review',this)">待複習</button>
+    <button class="filter-btn" onclick="setFilter('key',this)">重點</button>
+    <span class="stats" id="stats"></span>
+    <span class="speaking-badge" id="speakingBadge"><span class="speaking-dot"></span>朗讀中…</span>
+  </div>
+  <div id="mainContent"></div>
+</div>
+
+<script>
+// ── DATA ─────────────────────────────────────────────────────────────────────
+const VOCAB = [
+// ═══════════════════ S. 343 ═══════════════════
+{ id:1, v:"abhängen", n:"die Abhängigkeit", adj:"abhängig", praep:["von + D"],
+  trans:{zh:"取決於；依賴",en:"depend on / dependency / dependent"},
+  ex:[
+    {type:"V",praep:"von + D",de:"Das Gehalt hängt von der Berufserfahrung ab.",zh:"薪資取決於工作經驗。"},
+    {type:"N",praep:"von + D",de:"Die Abhängigkeit von einem einzigen Auftraggeber ist riskant.",zh:"只依賴一個客戶是有風險的。"},
+    {type:"Adj",praep:"von + D",de:"Er ist abhängig von der Entscheidung seines Vorgesetzten.",zh:"他的行動取決於上司的決定。"},
+]},
+{ id:2, v:"abhalten", n:"", adj:"", praep:["von + D"],
+  trans:{zh:"阻止；妨礙（做某事）",en:"keep from / prevent"},
+  ex:[
+    {type:"V",praep:"von + D",de:"Die vielen Meetings halten ihn von der eigentlichen Arbeit ab.",zh:"大量的會議阻礙了他做真正的工作。"},
+]},
+{ id:3, v:"(sich) abmelden", n:"die Abmeldung", adj:"", praep:["von + D"],
+  trans:{zh:"取消登記；請假離開",en:"deregister / sign off"},
+  ex:[
+    {type:"V",praep:"von + D",de:"Sie meldet sich von der Konferenz ab, weil sie krank ist.",zh:"她因為生病而取消了會議登記。"},
+    {type:"N",praep:"von + D",de:"Die Abmeldung von der Veranstaltung muss rechtzeitig erfolgen.",zh:"從活動中取消登記必須及時辦理。"},
+]},
+{ id:4, v:"abraten", n:"", adj:"", praep:["von + D"],
+  trans:{zh:"勸阻；建議不要",en:"advise against"},
+  ex:[
+    {type:"V",praep:"von + D",de:"Der Kollege rät davon ab, die Stelle ohne schriftlichen Vertrag anzunehmen.",zh:"同事勸他不要在沒有書面合約的情況下接受這份工作。"},
+]},
+{ id:5, v:"sich abstimmen", n:"die Abstimmung", adj:"", praep:["mit + D"],
+  trans:{zh:"協調；表決",en:"coordinate with / vote"},
+  ex:[
+    {type:"V",praep:"mit + D",de:"Wir müssen uns mit dem Team abstimmen, bevor wir entscheiden.",zh:"在做決定之前，我們必須與團隊協調。"},
+    {type:"N",praep:"mit + D",de:"Die Abstimmung mit der Personalabteilung dauert manchmal länger.",zh:"與人資部門的協調有時需要較長時間。"},
+]},
+{ id:6, v:"abwickeln", n:"die Abwicklung", adj:"", praep:["über + A"],
+  trans:{zh:"透過某渠道處理；辦理",en:"process / handle via"},
+  ex:[
+    {type:"V",praep:"über + A",de:"Die Zahlung wird über das interne Buchhaltungssystem abgewickelt.",zh:"付款透過內部會計系統處理。"},
+    {type:"N",praep:"über + A",de:"Die Abwicklung über die interne Plattform spart Zeit.",zh:"透過內部平台處理可以節省時間。"},
+]},
+{ id:7, v:"achten", n:"", adj:"", praep:["auf + A"],
+  trans:{zh:"注意；重視",en:"pay attention to / value"},
+  ex:[
+    {type:"V",praep:"auf + A",de:"Im Büro sollte man auf eine klare Kommunikation achten.",zh:"在辦公室應該注重清晰的溝通。"},
+]},
+{ id:8, v:"", n:"die Alternative", adj:"alternativ", praep:["zu + D"],
+  trans:{zh:"替代方案；替代的",en:"alternative (to)"},
+  ex:[
+    {type:"N",praep:"zu + D",de:"Als Alternative zu Überstunden kann man die Aufgaben besser priorisieren.",zh:"作為加班的替代方案，可以更好地排列任務優先順序。"},
+    {type:"Adj",praep:"zu + D",de:"Alternative Lösungen zu den bisherigen Methoden werden im Meeting diskutiert.",zh:"替代現有方法的解決方案將在會議中討論。"},
+]},
+{ id:9, v:"ändern", n:"die Änderung", adj:"", praep:["an + D"],
+  trans:{zh:"改變；修改（某事的一部分）",en:"change / modify"},
+  ex:[
+    {type:"V",praep:"an + D",de:"Er möchte an seiner Arbeitsweise etwas ändern.",zh:"他想改變自己的工作方式。"},
+    {type:"N",praep:"an + D",de:"Die Änderung am Arbeitsvertrag muss schriftlich festgehalten werden.",zh:"對勞動合約的修改必須以書面形式記錄。"},
+]},
+{ id:10, v:"anfangen", n:"", adj:"", praep:["mit + D"],
+  trans:{zh:"開始（做某事）",en:"start with"},
+  ex:[
+    {type:"V",praep:"mit + D",de:"Wir fangen heute mit der Einarbeitung der neuen Mitarbeiterin an.",zh:"我們今天開始對新員工進行入職培訓。"},
+]},
+{ id:11, v:"", n:"", adj:"angewiesen", praep:["auf + A"],
+  trans:{zh:"依賴；仰賴",en:"dependent on / reliant on"},
+  ex:[
+    {type:"Adj",praep:"auf + A",de:"Das Team ist auf die Unterstützung der IT-Abteilung angewiesen.",zh:"團隊依賴IT部門的支援。"},
+]},
+{ id:12, v:"sich ängstigen", n:"die Angst", adj:"", praep:["vor + D"],
+  trans:{zh:"擔心；害怕",en:"be afraid of / fear"},
+  ex:[
+    {type:"V",praep:"vor + D",de:"Viele Bewerber ängstigen sich vor dem Vorstellungsgespräch.",zh:"許多求職者對面試感到緊張。"},
+    {type:"N",praep:"vor + D",de:"Die Angst vor Fehlern kann die Arbeitsleistung beeinträchtigen.",zh:"對犯錯的恐懼可能會影響工作表現。"},
+]},
+{ id:13, v:"ankommen", n:"", adj:"", praep:["auf + A"],
+  trans:{zh:"取決於；關鍵在於",en:"depend on / matter"},
+  ex:[
+    {type:"V",praep:"auf + A",de:"Bei der Bewerbung kommt es auf die Berufserfahrung an.",zh:"在求職中，工作經驗是關鍵所在。"},
+]},
+{ id:14, v:"anpassen", n:"die Anpassung", adj:"angepasst", praep:["an + A"],
+  trans:{zh:"適應；調整",en:"adapt to / adaptation / adapted"},
+  ex:[
+    {type:"V",praep:"an + A",de:"Neue Mitarbeiter müssen sich schnell an die Unternehmenskultur anpassen.",zh:"新員工必須迅速適應公司文化。"},
+    {type:"N",praep:"an + A",de:"Die Anpassung an die neuen Arbeitsbedingungen braucht Zeit.",zh:"適應新的工作條件需要時間。"},
+    {type:"Adj",praep:"an + A",de:"Das Programm ist gut an die Bedürfnisse des Teams angepasst.",zh:"這個程式很好地適應了團隊的需求。"},
+]},
+{ id:15, v:"anrufen", n:"der Anruf", adj:"", praep:["bei + D"],
+  trans:{zh:"打電話給（某機構）",en:"call / phone call"},
+  ex:[
+    {type:"V",praep:"bei + D",de:"Er ruft bei der Personalabteilung an, um einen Termin zu vereinbaren.",zh:"他打電話給人資部門預約時間。"},
+    {type:"N",praep:"bei + D",de:"Ein Anruf beim Kundenservice löst das Problem schnell.",zh:"打電話給客服能迅速解決問題。"},
+]},
+{ id:16, v:"antworten", n:"die Antwort", adj:"", praep:["auf + A"],
+  trans:{zh:"回答；答覆",en:"answer / reply"},
+  ex:[
+    {type:"V",praep:"auf + A",de:"Er antwortet sofort auf jede E-Mail seiner Kunden.",zh:"他立即回覆每位客戶的電子郵件。"},
+    {type:"N",praep:"auf + A",de:"Die Antwort auf die Bewerbung kam nach einer Woche.",zh:"求職申請的回覆在一週後到來。"},
+]},
+{ id:17, v:"", n:"die Anwesenheit", adj:"anwesend", praep:["bei + D"],
+  trans:{zh:"出席；在場",en:"presence / present at"},
+  ex:[
+    {type:"N",praep:"bei + D",de:"Die Anwesenheit bei der Pflichtveranstaltung wird überprüft.",zh:"強制活動的出席情況將受到核查。"},
+    {type:"Adj",praep:"bei + D",de:"Alle Mitarbeiter müssen bei der Jahreshauptversammlung anwesend sein.",zh:"所有員工必須出席年度大會。"},
+]},
+{ id:18, v:"arbeiten", n:"die Arbeit", adj:"", praep:["an + D","bei + D"],
+  trans:{zh:{"an + D":"從事某任務","bei + D":"在某機構工作"},en:"work on (task) / work at (place)"},
+  ex:[
+    {type:"V",praep:"an + D",de:"Das Team arbeitet gerade an einem neuen Konzept.",zh:"團隊正在開發一個新概念。"},
+    {type:"V",praep:"bei + D",de:"Sie arbeitet seit fünf Jahren bei einer internationalen Firma.",zh:"她在一家國際公司工作了五年。"},
+    {type:"N",praep:"an + D",de:"Die Arbeit an diesem Projekt verlangt viel Konzentration.",zh:"這個專案的工作需要高度專注。"},
+]},
+{ id:19, v:"sich ärgern", n:"der Ärger", adj:"ärgerlich / verärgert", praep:["über + A"],
+  trans:{zh:"生氣；對…感到惱火",en:"be annoyed at / annoyance / annoyed"},
+  ex:[
+    {type:"V",praep:"über + A",de:"Er ärgert sich über die ständigen Unterbrechungen im Büro.",zh:"他對辦公室裡不斷的打擾感到惱火。"},
+    {type:"N",praep:"über + A",de:"Der Ärger über die schlechte Organisation ist verständlich.",zh:"對糟糕組織安排的不滿是可以理解的。"},
+    {type:"Adj",praep:"über + A",de:"Sie ist verärgert über die kurzfristige Absage des Meetings.",zh:"她對會議的臨時取消感到不滿。"},
+]},
+{ id:20, v:"", n:"die Aufgeschlossenheit", adj:"aufgeschlossen", praep:["gegenüber + D"],
+  trans:{zh:"開放；對…開明",en:"open-mindedness / open-minded towards"},
+  ex:[
+    {type:"N",praep:"gegenüber + D",de:"Die Aufgeschlossenheit gegenüber neuen Ideen fördert die Innovation.",zh:"對新想法的開放態度促進了創新。"},
+    {type:"Adj",praep:"gegenüber + D",de:"Ein guter Chef ist aufgeschlossen gegenüber den Vorschlägen seines Teams.",zh:"一個好的主管對團隊的建議持開放態度。"},
+]},
+{ id:21, v:"aufhören", n:"", adj:"", praep:["mit + D"],
+  trans:{zh:"停止（做某事）",en:"stop doing"},
+  ex:[
+    {type:"V",praep:"mit + D",de:"Er hört mit den Überstunden auf und achtet jetzt mehr auf die Work-Life-Balance.",zh:"他停止加班，現在更注重工作與生活的平衡。"},
+]},
+{ id:22, v:"aufpassen", n:"", adj:"", praep:["auf + A"],
+  trans:{zh:"照看；注意",en:"watch over / be careful about"},
+  ex:[
+    {type:"V",praep:"auf + A",de:"Im Büro muss man auf die Datensicherheit aufpassen.",zh:"在辦公室必須注意資料安全。"},
+]},
+{ id:23, v:"sich aufregen", n:"die Aufregung", adj:"aufgeregt", praep:["über + A"],
+  trans:{zh:"激動；對…感到興奮或不滿",en:"get upset / excited / excitement / excited"},
+  ex:[
+    {type:"V",praep:"über + A",de:"Sie regt sich über die ungerechte Aufgabenverteilung auf.",zh:"她對不公平的任務分配感到激動。"},
+    {type:"N",praep:"über + A",de:"Die Aufregung über die neue Unternehmensstrategie ist groß.",zh:"對新公司策略的激動反應很強烈。"},
+    {type:"Adj",praep:"über + A",de:"Er ist aufgeregt über die neue Beförderung.",zh:"他對新的晉升感到興奮。"},
+]},
+{ id:24, v:"ausgeben", n:"die Ausgabe", adj:"", praep:["für + A"],
+  trans:{zh:"花費（在某事上）",en:"spend on / expenditure for"},
+  ex:[
+    {type:"V",praep:"für + A",de:"Das Unternehmen gibt viel für die Weiterbildung der Mitarbeiter aus.",zh:"公司在員工培訓上花費了很多。"},
+    {type:"N",praep:"für + A",de:"Die Ausgaben für neue Software wurden im Budget eingeplant.",zh:"新軟體的費用已納入預算。"},
+]},
+{ id:25, v:"ausgehen", n:"", adj:"", praep:["von + D"],
+  trans:{zh:"出發點為；假設",en:"assume / start from"},
+  ex:[
+    {type:"V",praep:"von + D",de:"Wir gehen davon aus, dass der Vertrag nächste Woche unterzeichnet wird.",zh:"我們假設合約將在下週簽署。"},
+]},
+{ id:26, v:"sich auskennen", n:"", adj:"", praep:["mit + D"],
+  trans:{zh:"熟悉；擅長",en:"be familiar with / know one's way around"},
+  ex:[
+    {type:"V",praep:"mit + D",de:"Sie kennt sich gut mit dem neuen Buchhaltungsprogramm aus.",zh:"她很熟悉新的會計程式。"},
+]},
+{ id:27, v:"sich austauschen", n:"der Austausch", adj:"", praep:["mit + D","über + A"],
+  trans:{zh:{"mit + D":"與某人交流","über + A":"就某主題交流"},en:"exchange ideas with / discuss about"},
+  ex:[
+    {type:"V",praep:"mit + D",de:"Die Kollegen tauschen sich regelmäßig miteinander aus.",zh:"同事們定期相互交流。"},
+    {type:"V",praep:"über + A",de:"Wir tauschen uns über die Ergebnisse des Projekts aus.",zh:"我們就專案的成果進行交流。"},
+    {type:"N",praep:"mit + D",de:"Der Austausch mit erfahrenen Kollegen hilft bei der Einarbeitung.",zh:"與有經驗的同事交流有助於入職培訓。"},
+    {type:"N",praep:"über + A",de:"Der Austausch über Best Practices verbessert die Arbeitsqualität.",zh:"就最佳實踐進行交流能提升工作質量。"},
+]},
+{ id:28, v:"sich auswirken", n:"die Auswirkung", adj:"", praep:["auf + A"],
+  trans:{zh:"影響；對…產生影響",en:"affect / impact on"},
+  ex:[
+    {type:"V",praep:"auf + A",de:"Der Stress wirkt sich negativ auf die Gesundheit der Mitarbeiter aus.",zh:"壓力對員工健康產生負面影響。"},
+    {type:"N",praep:"auf + A",de:"Die Auswirkung auf die Teamdynamik ist schwer zu messen.",zh:"對團隊動態的影響難以衡量。"},
+]},
+{ id:29, v:"sich befassen", n:"", adj:"", praep:["mit + D"],
+  trans:{zh:"處理；從事；研究",en:"deal with / be concerned with"},
+  ex:[
+    {type:"V",praep:"mit + D",de:"Die Abteilung befasst sich mit der Entwicklung nachhaltiger Produkte.",zh:"該部門從事永續產品的開發工作。"},
+]},
+{ id:30, v:"sich befinden", n:"", adj:"", praep:["in + D"],
+  trans:{zh:"位於；處於（某狀態）",en:"be located in / be in a state"},
+  ex:[
+    {type:"V",praep:"in + D",de:"Das Unternehmen befindet sich in einer Wachstumsphase.",zh:"公司正處於成長階段。"},
+]},
+{ id:31, v:"beginnen", n:"", adj:"", praep:["mit + D"],
+  trans:{zh:"開始（做某事）",en:"begin with"},
+  ex:[
+    {type:"V",praep:"mit + D",de:"Das Meeting beginnt mit einer kurzen Zusammenfassung der letzten Sitzung.",zh:"會議以上次會議的簡短總結開始。"},
+]},
+{ id:32, v:"beharren", n:"", adj:"", praep:["auf + D"],
+  trans:{zh:"堅持（某立場）",en:"insist on / persist in"},
+  ex:[
+    {type:"V",praep:"auf + D",de:"Er beharrt auf seiner Forderung nach einer Gehaltserhöhung.",zh:"他堅持要求加薪。"},
+]},
+{ id:33, v:"behindern", n:"die Behinderung", adj:"behindert", praep:["bei + D"],
+  trans:{zh:"阻礙（某人做某事）",en:"hinder at / obstacle / impaired"},
+  ex:[
+    {type:"V",praep:"bei + D",de:"Die technischen Probleme behindern uns bei der Arbeit.",zh:"技術問題阻礙了我們的工作。"},
+    {type:"N",praep:"bei + D",de:"Die Behinderung bei der Projektdurchführung muss beseitigt werden.",zh:"必須消除專案執行中的阻礙。"},
+]},
+{ id:34, v:"beitragen", n:"der Beitrag", adj:"", praep:["zu + D"],
+  trans:{zh:"貢獻（於某事）",en:"contribute to / contribution"},
+  ex:[
+    {type:"V",praep:"zu + D",de:"Jeder Mitarbeiter kann zum Erfolg des Teams beitragen.",zh:"每位員工都能為團隊的成功做出貢獻。"},
+    {type:"N",praep:"zu + D",de:"Ihr Beitrag zum Projekt war entscheidend für das Ergebnis.",zh:"她對專案的貢獻對最終結果至關重要。"},
+]},
+{ id:35, v:"", n:"die Bekanntschaft", adj:"bekannt", praep:["für + A","mit + D"],
+  trans:{zh:{"für + A":"因…而知名","mit + D":"與…相識"},en:"known for / acquainted with"},
+  ex:[
+    {type:"Adj",praep:"für + A",de:"Das Unternehmen ist bekannt für seine innovative Unternehmenskultur.",zh:"這家公司以其創新的企業文化而聞名。"},
+    {type:"N",praep:"mit + D",de:"Die Bekanntschaft mit dem neuen Kollegen erleichtert die Zusammenarbeit.",zh:"與新同事的相識使合作更加順暢。"},
+    {type:"Adj",praep:"mit + D",de:"Er ist bereits mit dem internen System bekannt.",zh:"他已經熟悉了內部系統。"},
+]},
+{ id:36, v:"sich beklagen", n:"die Klage", adj:"", praep:["über + A"],
+  trans:{zh:"抱怨（某事）",en:"complain about / complaint"},
+  ex:[
+    {type:"V",praep:"über + A",de:"Er beklagt sich über die unklaren Arbeitsanweisungen.",zh:"他抱怨工作指示不清楚。"},
+    {type:"N",praep:"über + A",de:"Die Klage über schlechte Arbeitsbedingungen wurde dem Management gemeldet.",zh:"對惡劣工作條件的投訴已向管理層反映。"},
+]},
+{ id:37, v:"", n:"die Beliebtheit", adj:"beliebt", praep:["bei + D"],
+  trans:{zh:"受…歡迎；在…中有人緣",en:"popularity / popular with"},
+  ex:[
+    {type:"N",praep:"bei + D",de:"Die Beliebtheit bei den Kunden ist ein wichtiger Erfolgsfaktor.",zh:"在客戶中的受歡迎程度是重要的成功因素。"},
+    {type:"Adj",praep:"bei + D",de:"Sie ist sehr beliebt bei ihren Kollegen wegen ihrer Hilfsbereitschaft.",zh:"她因樂於助人而在同事中很受歡迎。"},
+]},
+{ id:38, v:"sich bemühen", n:"die Bemühung", adj:"bemüht", praep:["um + A"],
+  trans:{zh:"努力爭取；盡力",en:"strive for / effort / endeavoring"},
+  ex:[
+    {type:"V",praep:"um + A",de:"Das Team bemüht sich um eine bessere Arbeitsatmosphäre.",zh:"團隊努力爭取更好的工作氛圍。"},
+    {type:"N",praep:"um + A",de:"Ihre Bemühungen um eine Lösung werden von allen geschätzt.",zh:"她為解決問題所付出的努力受到大家的讚賞。"},
+    {type:"Adj",praep:"um + A",de:"Er ist stets bemüht um eine pünktliche Abgabe der Berichte.",zh:"他始終努力確保報告按時提交。"},
+]},
+{ id:39, v:"", n:"die Bereitschaft", adj:"bereit", praep:["zu + D"],
+  trans:{zh:"願意；準備好（做某事）",en:"willingness / ready to"},
+  ex:[
+    {type:"N",praep:"zu + D",de:"Die Bereitschaft zur Zusammenarbeit ist im Team sehr hoch.",zh:"團隊中合作的意願非常高。"},
+    {type:"Adj",praep:"zu + D",de:"Sie ist bereit zu Überstunden, wenn das Projekt es erfordert.",zh:"如果專案有需要，她願意加班。"},
+]},
+{ id:40, v:"berichten", n:"der Bericht", adj:"", praep:["über + A","von + D"],
+  trans:{zh:{"über + A":"就某議題做報告","von + D":"講述某事（口語）"},en:"report on / tell about"},
+  ex:[
+    {type:"V",praep:"über + A",de:"Der Projektleiter berichtet wöchentlich über den Fortschritt.",zh:"專案經理每週就進度進行報告。"},
+    {type:"V",praep:"von + D",de:"Er berichtet von seinen Erfahrungen beim letzten Kundentermin.",zh:"他講述了上次拜訪客戶的經歷。"},
+    {type:"N",praep:"über + A",de:"Der Bericht über die Quartalsergebnisse wurde dem Vorstand vorgelegt.",zh:"關於季度業績的報告已提交給董事會。"},
+]},
+{ id:41, v:"sich beschäftigen", n:"die Beschäftigung", adj:"beschäftigt", praep:["mit + D"],
+  trans:{zh:"從事；忙於",en:"deal with / be busy with / employment"},
+  ex:[
+    {type:"V",praep:"mit + D",de:"Sie beschäftigt sich intensiv mit dem neuen Forschungsprojekt.",zh:"她正在全力投入新的研究專案。"},
+    {type:"N",praep:"mit + D",de:"Die Beschäftigung mit diesem Thema hat ihr neue Perspektiven eröffnet.",zh:"對這個主題的研究為她開闢了新的視角。"},
+    {type:"Adj",praep:"mit + D",de:"Er ist gerade beschäftigt mit der Vorbereitung der Präsentation.",zh:"他正忙於準備演示文稿。"},
+]},
+{ id:42, v:"sich beschweren", n:"die Beschwerde", adj:"", praep:["über + A","bei + D"],
+  trans:{zh:{"über + A":"投訴某事","bei + D":"向某人投訴"},en:"complain about / complain to"},
+  ex:[
+    {type:"V",praep:"über + A",de:"Die Mitarbeiterin beschwert sich über den Lärm im Großraumbüro.",zh:"這位員工投訴開放式辦公室的噪音問題。"},
+    {type:"V",praep:"bei + D",de:"Er beschwert sich bei der Personalabteilung über die Arbeitsbedingungen.",zh:"他向人資部門投訴工作條件問題。"},
+    {type:"N",praep:"über + A",de:"Die Beschwerde über die Überstunden wurde schriftlich eingereicht.",zh:"關於加班問題的投訴已書面提交。"},
+]},
+{ id:43, v:"bestehen", n:"", adj:"", praep:["aus + D"],
+  trans:{zh:"由…組成",en:"consist of"},
+  ex:[
+    {type:"V",praep:"aus + D",de:"Das Team besteht aus fünf erfahrenen Fachkräften.",zh:"團隊由五名有經驗的專業人員組成。"},
+]},
+{ id:44, v:"sich beteiligen", n:"die Beteiligung", adj:"beteiligt", praep:["an + D"],
+  trans:{zh:"參與（某事）",en:"participate in / participation"},
+  ex:[
+    {type:"V",praep:"an + D",de:"Alle Abteilungen beteiligen sich an der Jahresplanung.",zh:"所有部門都參與了年度規劃。"},
+    {type:"N",praep:"an + D",de:"Die Beteiligung an dem Entscheidungsprozess stärkt das Engagement.",zh:"參與決策過程能增強員工的投入感。"},
+    {type:"Adj",praep:"an + D",de:"Sie ist an mehreren laufenden Projekten beteiligt.",zh:"她參與了多個進行中的專案。"},
+]},
+{ id:45, v:"", n:"die Beunruhigung", adj:"beunruhigt", praep:["über + A"],
+  trans:{zh:"對…感到不安；憂慮",en:"concern / worried about"},
+  ex:[
+    {type:"N",praep:"über + A",de:"Die Beunruhigung über die wirtschaftliche Lage des Unternehmens ist spürbar.",zh:"對公司經濟狀況的不安情緒是明顯可感的。"},
+    {type:"Adj",praep:"über + A",de:"Der Manager ist beunruhigt über die sinkenden Verkaufszahlen.",zh:"經理對下滑的銷售數字感到憂慮。"},
+]},
+{ id:46, v:"sich bewerben", n:"die Bewerbung", adj:"", praep:["um + A","bei + D"],
+  trans:{zh:{"um + A":"申請某職位","bei + D":"向某機構求職"},en:"apply for (position) / apply at (company)"},
+  ex:[
+    {type:"V",praep:"um + A",de:"Er bewirbt sich um die Stelle als Projektmanager.",zh:"他申請了專案經理的職位。"},
+    {type:"V",praep:"bei + D",de:"Sie bewirbt sich bei einem internationalen Unternehmen.",zh:"她向一家國際企業求職。"},
+    {type:"N",praep:"um + A",de:"Die Bewerbung um die Führungsposition erfordert viel Vorbereitung.",zh:"申請管理職位需要充分的準備。"},
+]},
+{ id:47, v:"", n:"die Bezeichnung", adj:"bezeichnend", praep:["für + A"],
+  trans:{zh:"稱呼；典型的；說明特徵的",en:"designation / characteristic of"},
+  ex:[
+    {type:"N",praep:"für + A",de:"Die offizielle Bezeichnung für diese Stelle lautet Senior Developer.",zh:"這個職位的官方稱呼是資深開發工程師。"},
+    {type:"Adj",praep:"für + A",de:"Es ist bezeichnend für ihn, dass er immer pünktlich erscheint.",zh:"他總是準時出現，這正是他的典型特徵。"},
+]},
+{ id:48, v:"sich beziehen", n:"der Bezug", adj:"bezugnehmend", praep:["auf + A"],
+  trans:{zh:"指的是；涉及；以…為依據",en:"refer to / reference / with reference to"},
+  ex:[
+    {type:"V",praep:"auf + A",de:"Das Anschreiben bezieht sich auf die ausgeschriebene Stelle.",zh:"求職信涉及的是該招聘職位。"},
+    {type:"N",praep:"auf + A",de:"Ihr Bezug auf das Gespräch vom letzten Monat war sehr hilfreich.",zh:"她對上個月談話的引用非常有幫助。"},
+    {type:"Adj",praep:"auf + A",de:"Bezugnehmend auf unsere letzte Besprechung möchte ich folgendes ergänzen.",zh:"就我們上次的討論，我想補充以下內容。"},
+]},
+{ id:49, v:"bitten", n:"die Bitte", adj:"", praep:["um + A"],
+  trans:{zh:"請求（某物/某事）",en:"ask for / request"},
+  ex:[
+    {type:"V",praep:"um + A",de:"Er bittet seinen Vorgesetzten um ein Feedbackgespräch.",zh:"他請求上司給予一次反饋面談。"},
+    {type:"N",praep:"um + A",de:"Seine Bitte um mehr Verantwortung wurde positiv aufgenommen.",zh:"他請求承擔更多責任的要求被積極回應。"},
+]},
+{ id:50, v:"", n:"", adj:"böse", praep:["auf + A"],
+  trans:{zh:"對…生氣",en:"angry at"},
+  ex:[
+    {type:"Adj",praep:"auf + A",de:"Der Chef ist böse auf den Mitarbeiter wegen der Verspätung.",zh:"主管因為員工遲到而生氣。"},
+]},
+{ id:51, v:"bringen", n:"", adj:"", praep:["zu + D"],
+  trans:{zh:"使…達到；帶來（某結果）",en:"bring to / lead to"},
+  ex:[
+    {type:"V",praep:"zu + D",de:"Gute Führung bringt das Team zu Höchstleistungen.",zh:"良好的領導能使團隊達到最佳表現。"},
+]},
+{ id:52, v:"", n:"", adj:"charakteristisch", praep:["für + A"],
+  trans:{zh:"典型的；特徵性的",en:"characteristic of"},
+  ex:[
+    {type:"Adj",praep:"für + A",de:"Pünktlichkeit ist charakteristisch für die deutsche Arbeitskultur.",zh:"準時是德國職場文化的典型特徵。"},
+]},
+{ id:53, v:"danken", n:"der Dank", adj:"dankbar", praep:["für + A"],
+  trans:{zh:"感謝（某事）；感激的",en:"thank for / thanks / grateful for"},
+  ex:[
+    {type:"V",praep:"für + A",de:"Er dankt seinem Mentor für die wertvolle Unterstützung.",zh:"他感謝導師提供的寶貴支持。"},
+    {type:"N",praep:"für + A",de:"Als Dank für die gute Zusammenarbeit gab es ein gemeinsames Essen.",zh:"為感謝良好的合作，大家一起吃了一頓飯。"},
+    {type:"Adj",praep:"für + A",de:"Sie ist dankbar für das ehrliche Feedback ihres Vorgesetzten.",zh:"她對上司誠懇的反饋感到感激。"},
+]},
+{ id:54, v:"denken", n:"der Gedanke", adj:"", praep:["an + A"],
+  trans:{zh:"想到；考慮",en:"think of / thought"},
+  ex:[
+    {type:"V",praep:"an + A",de:"Er denkt oft an die nächste Karrierestufe.",zh:"他經常考慮下一個職業發展階段。"},
+    {type:"N",praep:"an + A",de:"Der Gedanke an einen Jobwechsel lässt ihn nicht los.",zh:"換工作的念頭一直在他腦海中縈繞。"},
+]},
+{ id:55, v:"diskutieren", n:"die Diskussion", adj:"", praep:["mit + D","über + A"],
+  trans:{zh:{"mit + D":"與某人討論","über + A":"就某事討論"},en:"discuss with / discuss about"},
+  ex:[
+    {type:"V",praep:"mit + D",de:"Er diskutiert regelmäßig mit seinem Team über aktuelle Projekte.",zh:"他定期與團隊討論當前的專案。"},
+    {type:"V",praep:"über + A",de:"Im Meeting diskutieren wir über die neuen Arbeitszeitregelungen.",zh:"在會議中，我們討論新的工時規定。"},
+    {type:"N",praep:"über + A",de:"Die Diskussion über das Budget dauerte fast zwei Stunden.",zh:"關於預算的討論持續了將近兩個小時。"},
+]},
+{ id:56, v:"sich eignen", n:"die Eignung", adj:"geeignet", praep:["zu + D","für + A"],
+  trans:{zh:{"zu + D":"適合擔任某職（書面）","für + A":"適合某用途"},en:"be suited to / suitable for"},
+  ex:[
+    {type:"V",praep:"zu + D",de:"Sie eignet sich gut zur Teamleiterin.",zh:"她很適合擔任團隊負責人。"},
+    {type:"V",praep:"für + A",de:"Er eignet sich gut für diese anspruchsvolle Stelle.",zh:"他很適合這個要求較高的職位。"},
+    {type:"N",praep:"für + A",de:"Die Eignung für die Führungsposition wird im Assessment-Center geprüft.",zh:"擔任管理職位的適合程度將在評估中心進行測試。"},
+    {type:"Adj",praep:"für + A",de:"Er ist gut geeignet für eine Position in der internationalen Abteilung.",zh:"他非常適合國際部門的職位。"},
+]},
+{ id:57, v:"eingehen", n:"", adj:"", praep:["auf + A"],
+  trans:{zh:"回應；針對；深入討論",en:"respond to / address"},
+  ex:[
+    {type:"V",praep:"auf + A",de:"Der Vorgesetzte geht in der Besprechung auf alle Fragen ein.",zh:"上司在會議中針對所有問題一一回應。"},
+]},
+// ═══════════════════ S. 344 ═══════════════════
+{ id:58, v:"einladen", n:"die Einladung", adj:"", praep:["zu + D"],
+  trans:{zh:"邀請（參加某事）",en:"invite to / invitation"},
+  ex:[
+    {type:"V",praep:"zu + D",de:"Der Chef lädt das Team zu einem gemeinsamen Mittagessen ein.",zh:"主管邀請團隊一起共進午餐。"},
+    {type:"N",praep:"zu + D",de:"Die Einladung zu einem Vorstellungsgespräch kam per E-Mail.",zh:"面試邀請透過電子郵件寄來。"},
+]},
+{ id:59, v:"", n:"die Einstellung", adj:"eingestellt", praep:["zu + D"],
+  trans:{zh:"態度（對某事）；被錄用的",en:"attitude towards / hired"},
+  ex:[
+    {type:"N",praep:"zu + D",de:"Seine Einstellung zur Arbeit ist sehr positiv.",zh:"他對工作的態度非常積極。"},
+    {type:"Adj",praep:"zu + D",de:"Die neu eingestellten Mitarbeiter werden zuerst eingearbeitet.",zh:"新錄用的員工首先接受入職培訓。"},
+]},
+{ id:60, v:"", n:"das Einverständnis", adj:"einverstanden", praep:["mit + D"],
+  trans:{zh:"同意；對…表示贊同",en:"agreement / in agreement with"},
+  ex:[
+    {type:"N",praep:"mit + D",de:"Das Einverständnis mit dem neuen Arbeitsplan liegt schriftlich vor.",zh:"對新工作計畫的同意已以書面形式確認。"},
+    {type:"Adj",praep:"mit + D",de:"Alle Kollegen sind einverstanden mit der neuen Regelung.",zh:"所有同事都同意這項新規定。"},
+]},
+{ id:61, v:"", n:"die Empörung", adj:"empört", praep:["über + A"],
+  trans:{zh:"對…感到義憤；憤慨",en:"indignation / outraged at"},
+  ex:[
+    {type:"N",praep:"über + A",de:"Die Empörung über die ungerechtfertigte Kündigung war groß.",zh:"對不公正解雇的憤慨情緒非常強烈。"},
+    {type:"Adj",praep:"über + A",de:"Die Mitarbeiter sind empört über die kurzfristige Gehaltskürzung.",zh:"員工對臨時減薪感到憤慨。"},
+]},
+{ id:62, v:"sich engagieren", n:"das Engagement", adj:"engagiert", praep:["für + A","gegen + A"],
+  trans:{zh:{"für + A":"投入支持某事","gegen + A":"積極反對某事"},en:"commit to / engage against / commitment / committed"},
+  ex:[
+    {type:"V",praep:"für + A",de:"Er engagiert sich sehr für eine bessere Vereinbarkeit von Beruf und Familie.",zh:"他非常投入地支持更好地平衡工作與家庭。"},
+    {type:"V",praep:"gegen + A",de:"Das Team engagiert sich gegen Diskriminierung am Arbeitsplatz.",zh:"團隊積極反對職場歧視。"},
+    {type:"N",praep:"für + A",de:"Ihr Engagement für das Projekt ist für alle sichtbar.",zh:"她對專案的投入對所有人都是顯而易見的。"},
+    {type:"Adj",praep:"für + A",de:"Sie ist eine engagierte Mitarbeiterin, die stets über ihre Pflichten hinausgeht.",zh:"她是一位投入的員工，總是超越自己的職責。"},
+]},
+{ id:63, v:"(sich) entfernen", n:"die Entfernung", adj:"entfernt", praep:["von + D"],
+  trans:{zh:"（使）遠離；距離；遙遠的",en:"remove from / distance / distant from"},
+  ex:[
+    {type:"V",praep:"von + D",de:"Er hat sich schrittweise von seiner ursprünglichen Idee entfernt.",zh:"他逐漸偏離了自己最初的想法。"},
+    {type:"N",praep:"von + D",de:"Die Entfernung vom Hauptstandort beträgt nur zehn Kilometer.",zh:"距離主要辦公地點只有十公里。"},
+    {type:"Adj",praep:"von + D",de:"Diese Lösung ist weit entfernt von den ursprünglichen Anforderungen.",zh:"這個解決方案與最初的要求相差甚遠。"},
+]},
+{ id:64, v:"sich entscheiden", n:"die Entscheidung", adj:"entscheidend", praep:["für + A","gegen + A"],
+  trans:{zh:{"für + A":"決定支持某事","gegen + A":"決定反對某事"},en:"decide for / against / decision / decisive"},
+  ex:[
+    {type:"V",praep:"für + A",de:"Er hat sich für eine Stelle im Ausland entschieden.",zh:"他決定接受海外的職位。"},
+    {type:"V",praep:"gegen + A",de:"Das Unternehmen hat sich gegen eine Fusion entschieden.",zh:"公司決定反對合併。"},
+    {type:"N",praep:"für + A",de:"Die Entscheidung für diesen Bewerber wurde einstimmig getroffen.",zh:"支持這位應聘者的決定是一致通過的。"},
+    {type:"Adj",praep:"für + A",de:"Der erste Eindruck ist entscheidend für den Erfolg im Vorstellungsgespräch.",zh:"第一印象對面試的成功至關重要。"},
+]},
+{ id:65, v:"sich entschließen", n:"der Entschluss / die Entschlossenheit", adj:"entschlossen", praep:["zu + D"],
+  trans:{zh:"下定決心（做某事）；果斷的",en:"decide to / resolution / determined"},
+  ex:[
+    {type:"V",praep:"zu + D",de:"Sie hat sich dazu entschlossen, die Stelle zu wechseln.",zh:"她下定決心換工作。"},
+    {type:"N",praep:"zu + D",de:"Der Entschluss zu einer Neuorientierung kam nach langem Nachdenken.",zh:"重新定向職業方向的決心是經過長時間思考後做出的。"},
+    {type:"Adj",praep:"zu + D",de:"Ein entschlossener Auftritt im Gespräch hinterlässt einen guten Eindruck.",zh:"在面試中表現果斷會留下好印象。"},
+]},
+{ id:66, v:"sich entschuldigen", n:"die Entschuldigung", adj:"", praep:["für + A","bei + D"],
+  trans:{zh:{"für + A":"為某事道歉","bei + D":"向某人道歉"},en:"apologize for / apologize to / apology"},
+  ex:[
+    {type:"V",praep:"für + A",de:"Er entschuldigt sich für den Fehler im Bericht.",zh:"他為報告中的錯誤道歉。"},
+    {type:"V",praep:"bei + D",de:"Sie entschuldigt sich beim Vorgesetzten für die Verspätung.",zh:"她向上司為遲到道歉。"},
+    {type:"N",praep:"für + A",de:"Eine aufrichtige Entschuldigung für den Fehler ist wichtig.",zh:"為錯誤真誠道歉是很重要的。"},
+]},
+{ id:67, v:"sich entwickeln", n:"die Entwicklung", adj:"", praep:["zu + D"],
+  trans:{zh:"發展成為；進步",en:"develop into / development"},
+  ex:[
+    {type:"V",praep:"zu + D",de:"Er hat sich zu einem kompetenten Projektleiter entwickelt.",zh:"他已發展成為一名稱職的專案負責人。"},
+    {type:"N",praep:"zu + D",de:"Die Entwicklung zu einem globalen Unternehmen dauerte zehn Jahre.",zh:"發展成為一家全球性企業花了十年時間。"},
+]},
+{ id:68, v:"", n:"die Erfahrung", adj:"erfahren", praep:["in + D"],
+  trans:{zh:"在某領域的經驗；有經驗的",en:"experience in / experienced in"},
+  ex:[
+    {type:"N",praep:"in + D",de:"Die Erfahrung in der Projektleitung ist eine wichtige Voraussetzung.",zh:"專案管理方面的經驗是重要的前提條件。"},
+    {type:"Adj",praep:"in + D",de:"Sie ist sehr erfahren in der internationalen Vertragsverhandlung.",zh:"她在國際合約談判方面非常有經驗。"},
+]},
+{ id:69, v:"", n:"der Erfolg", adj:"erfolgreich", praep:["in + D"],
+  trans:{zh:"在某領域的成功；成功的",en:"success in / successful in"},
+  ex:[
+    {type:"N",praep:"in + D",de:"Der Erfolg in der Forschung setzt viel Ausdauer voraus.",zh:"研究方面的成功需要大量的毅力。"},
+    {type:"Adj",praep:"in + D",de:"Das Team ist sehr erfolgreich in der Entwicklung neuer Produkte.",zh:"團隊在新產品開發方面非常成功。"},
+]},
+{ id:70, v:"sich erholen", n:"die Erholung", adj:"erholt", praep:["von + D"],
+  trans:{zh:"從…中恢復；休息",en:"recover from / recovery / recovered"},
+  ex:[
+    {type:"V",praep:"von + D",de:"Nach dem intensiven Projekt muss er sich von der Erschöpfung erholen.",zh:"在高強度的專案結束後，他必須從疲憊中恢復。"},
+    {type:"N",praep:"von + D",de:"Die Erholung vom Stress ist für die Arbeitsleistung entscheidend.",zh:"從壓力中恢復對工作表現至關重要。"},
+    {type:"Adj",praep:"von + D",de:"Nach dem Urlaub kam er erholt von der Arbeit zurück.",zh:"度假後，他從工作中恢復精神回來了。"},
+]},
+{ id:71, v:"sich erinnern", n:"die Erinnerung", adj:"", praep:["an + A"],
+  trans:{zh:"記得；回憶起",en:"remember / memory of"},
+  ex:[
+    {type:"V",praep:"an + A",de:"Er erinnert sich an das erste Gespräch mit dem Kunden.",zh:"他記得與客戶的第一次談話。"},
+    {type:"N",praep:"an + A",de:"Die Erinnerung an das erfolgreiche Projekt motiviert das Team.",zh:"對成功專案的回憶激勵著整個團隊。"},
+]},
+{ id:72, v:"sich erkundigen", n:"die Erkundigung", adj:"", praep:["bei + D","nach + D"],
+  trans:{zh:{"bei + D":"向某人詢問","nach + D":"詢問某事"},en:"inquire at / inquire about"},
+  ex:[
+    {type:"V",praep:"bei + D",de:"Er erkundigt sich bei der Personalabteilung nach dem Verfahren.",zh:"他向人資部門詢問相關程序。"},
+    {type:"V",praep:"nach + D",de:"Sie erkundigt sich nach den Aufstiegsmöglichkeiten im Unternehmen.",zh:"她詢問公司內部的晉升機會。"},
+    {type:"N",praep:"nach + D",de:"Die Erkundigung nach den Gehaltsmöglichkeiten ist beim Gespräch üblich.",zh:"在面試中詢問薪資水準是很正常的。"},
+]},
+{ id:73, v:"", n:"das Erstaunen", adj:"erstaunt", praep:["über + A"],
+  trans:{zh:"對…感到驚訝",en:"amazement / amazed at"},
+  ex:[
+    {type:"N",praep:"über + A",de:"Das Erstaunen über die schnelle Karriereentwicklung war allgemein.",zh:"對快速職業發展的驚訝是普遍的。"},
+    {type:"Adj",praep:"über + A",de:"Die Vorgesetzte war erstaunt über die Qualität der Arbeit.",zh:"上司對工作品質感到驚訝。"},
+]},
+{ id:74, v:"erwarten", n:"die Erwartung", adj:"", praep:["an + A","von + D"],
+  trans:{zh:{"an + A":"對某事的期待","von + D":"對某人的期待"},en:"expectation of / expect from"},
+  ex:[
+    {type:"V",praep:"von + D",de:"Der Chef erwartet von seinen Mitarbeitern Pünktlichkeit.",zh:"主管期望員工做到準時。"},
+    {type:"N",praep:"an + A",de:"Die Erwartungen an das neue Projekt sind sehr hoch.",zh:"對新專案的期待非常高。"},
+    {type:"N",praep:"von + D",de:"Die Erwartungen von der Führungskraft sind klar kommuniziert.",zh:"對領導者的期待已清楚地溝通。"},
+]},
+{ id:75, v:"erzählen", n:"die Erzählung", adj:"", praep:["über + A","von + D"],
+  trans:{zh:{"über + A":"講述某主題","von + D":"講述某事（口語）"},en:"tell about / narrate"},
+  ex:[
+    {type:"V",praep:"über + A",de:"Im Interview erzählt sie über ihre bisherigen Berufserfahrungen.",zh:"在面試中，她講述了自己的工作經歷。"},
+    {type:"V",praep:"von + D",de:"Er erzählt von einem schwierigen Projekt, das er erfolgreich abgeschlossen hat.",zh:"他講述了一個他成功完成的困難專案。"},
+]},
+{ id:76, v:"", n:"die Fähigkeit", adj:"fähig", praep:["zu + D"],
+  trans:{zh:"能力；有能力（做某事）",en:"ability / capable of"},
+  ex:[
+    {type:"N",praep:"zu + D",de:"Die Fähigkeit zur Teamarbeit ist in modernen Unternehmen unverzichtbar.",zh:"在現代企業中，團隊合作的能力是不可缺少的。"},
+    {type:"Adj",praep:"zu + D",de:"Sie ist fähig zu eigenständigen Entscheidungen.",zh:"她有能力做出獨立的決策。"},
+]},
+{ id:77, v:"fragen", n:"die Frage", adj:"", praep:["nach + D"],
+  trans:{zh:"詢問（某事）",en:"ask about / question about"},
+  ex:[
+    {type:"V",praep:"nach + D",de:"Im Vorstellungsgespräch fragte er nach dem Urlaubsanspruch.",zh:"在面試中，他詢問了休假規定。"},
+    {type:"N",praep:"nach + D",de:"Die Frage nach dem Gehalt kommt oft am Ende des Gesprächs.",zh:"關於薪資的問題通常在面試末尾提出。"},
+]},
+{ id:78, v:"sich freuen", n:"die Freude", adj:"", praep:["auf + A"],
+  trans:{zh:"期待（某事）",en:"look forward to"},
+  ex:[
+    {type:"V",praep:"auf + A",de:"Er freut sich auf die neuen Herausforderungen in seiner neuen Stelle.",zh:"他期待在新職位中迎接新的挑戰。"},
+    {type:"N",praep:"auf + A",de:"Die Freude auf das neue Projekt ist im ganzen Team spürbar.",zh:"整個團隊對新專案的期待是顯而易見的。"},
+]},
+{ id:79, v:"sich freuen", n:"die Freude", adj:"erfreut", praep:["über + A"],
+  trans:{zh:"對某事感到高興",en:"be happy about / joy / pleased"},
+  ex:[
+    {type:"V",praep:"über + A",de:"Sie freut sich sehr über das positive Feedback ihrer Vorgesetzten.",zh:"她對上司的正面評價非常高興。"},
+    {type:"Adj",praep:"über + A",de:"Er ist erfreut über die erfolgreiche Zusammenarbeit.",zh:"他對成功的合作感到高興。"},
+]},
+{ id:80, v:"", n:"", adj:"freundlich", praep:["zu + D"],
+  trans:{zh:"對…友善；親切",en:"friendly towards"},
+  ex:[
+    {type:"Adj",praep:"zu + D",de:"Es ist wichtig, freundlich zu Kollegen und Kunden zu sein.",zh:"對同事和客戶保持友善是很重要的。"},
+]},
+{ id:81, v:"", n:"", adj:"froh", praep:["über + A"],
+  trans:{zh:"對…感到開心；高興的",en:"glad about"},
+  ex:[
+    {type:"Adj",praep:"über + A",de:"Sie ist froh über die schnelle Lösung des Problems.",zh:"她為問題得到迅速解決而感到高興。"},
+]},
+{ id:82, v:"führen", n:"", adj:"", praep:["zu + D"],
+  trans:{zh:"導致；帶來（某結果）",en:"lead to"},
+  ex:[
+    {type:"V",praep:"zu + D",de:"Eine gute Kommunikation führt zu besseren Arbeitsergebnissen.",zh:"良好的溝通能帶來更好的工作成果。"},
+]},
+{ id:83, v:"sich fürchten", n:"die Furcht", adj:"", praep:["vor + D"],
+  trans:{zh:"害怕；恐懼",en:"be afraid of / fear"},
+  ex:[
+    {type:"V",praep:"vor + D",de:"Er fürchtet sich vor einem negativen Ergebnis der Prüfung.",zh:"他害怕考核結果不理想。"},
+    {type:"N",praep:"vor + D",de:"Die Furcht vor dem Scheitern blockiert manchmal die Kreativität.",zh:"對失敗的恐懼有時會阻礙創造力。"},
+]},
+{ id:84, v:"gehören", n:"", adj:"", praep:["zu + D"],
+  trans:{zh:"屬於；是…的一部分",en:"belong to / be part of"},
+  ex:[
+    {type:"V",praep:"zu + D",de:"Pünktlichkeit gehört zu den wichtigsten Tugenden im Berufsleben.",zh:"準時是職業生涯中最重要的品德之一。"},
+]},
+{ id:85, v:"sich gewöhnen", n:"die Gewöhnung", adj:"gewöhnt", praep:["an + A"],
+  trans:{zh:"習慣；適應",en:"get used to / habituation / accustomed to"},
+  ex:[
+    {type:"V",praep:"an + A",de:"Es dauert eine Weile, bis man sich an den neuen Arbeitsrhythmus gewöhnt.",zh:"適應新的工作節奏需要一段時間。"},
+    {type:"N",praep:"an + A",de:"Die Gewöhnung an das neue System geht bei allen unterschiedlich schnell.",zh:"每個人適應新系統的速度各不相同。"},
+    {type:"Adj",praep:"an + A",de:"Nach einem Monat ist er schon gewöhnt an die Unternehmenskultur.",zh:"一個月後，他已經習慣了公司文化。"},
+]},
+{ id:86, v:"glauben", n:"der Glaube", adj:"", praep:["an + A"],
+  trans:{zh:"相信（某事/某人）",en:"believe in / belief in"},
+  ex:[
+    {type:"V",praep:"an + A",de:"Er glaubt an seine eigenen Fähigkeiten und tritt selbstbewusst auf.",zh:"他相信自己的能力，並自信地出現。"},
+    {type:"N",praep:"an + A",de:"Der Glaube an den Erfolg des Projekts motiviert das gesamte Team.",zh:"對專案成功的信念激勵著整個團隊。"},
+]},
+{ id:87, v:"", n:"die Gleichgültigkeit", adj:"gleichgültig", praep:["gegenüber + D"],
+  trans:{zh:"對…漠不關心；無所謂",en:"indifference / indifferent towards"},
+  ex:[
+    {type:"N",praep:"gegenüber + D",de:"Gleichgültigkeit gegenüber Kundenbeschwerden schadet dem Unternehmen.",zh:"對客戶投訴漠不關心會損害公司形象。"},
+    {type:"Adj",praep:"gegenüber + D",de:"Er ist gleichgültig gegenüber den neuen Richtlinien.",zh:"他對新的指導方針漠不關心。"},
+]},
+{ id:88, v:"", n:"", adj:"glücklich", praep:["über + A"],
+  trans:{zh:"對…感到幸福；高興的",en:"happy about"},
+  ex:[
+    {type:"Adj",praep:"über + A",de:"Sie ist glücklich über die Beförderung zur Abteilungsleiterin.",zh:"她對晉升為部門主管感到非常高興。"},
+]},
+{ id:89, v:"gratulieren", n:"die Gratulation", adj:"", praep:["zu + D"],
+  trans:{zh:"祝賀（某人某事）",en:"congratulate on / congratulation"},
+  ex:[
+    {type:"V",praep:"zu + D",de:"Das Team gratuliert ihr zu ihrer erfolgreichen Präsentation.",zh:"團隊祝賀她成功地完成了演示。"},
+    {type:"N",praep:"zu + D",de:"Die Gratulation zur Beförderung kam von allen Kollegen.",zh:"所有同事都祝賀她的晉升。"},
+]},
+{ id:90, v:"halten", n:"", adj:"", praep:["von + D"],
+  trans:{zh:"對…有某種看法；評價",en:"think of / have an opinion on"},
+  ex:[
+    {type:"V",praep:"von + D",de:"Was halten Sie von dem neuen Vorschlag?",zh:"您對這個新提案有什麼看法？"},
+]},
+{ id:91, v:"sich halten", n:"", adj:"", praep:["an + A","für + A"],
+  trans:{zh:{"an + A":"遵守某規定","für + A":"自認為是…"},en:"keep to (rules) / consider oneself as"},
+  ex:[
+    {type:"V",praep:"an + A",de:"Alle Mitarbeiter müssen sich an die internen Richtlinien halten.",zh:"所有員工必須遵守內部指導方針。"},
+    {type:"V",praep:"für + A",de:"Er hält sich für einen guten Kommunikator.",zh:"他認為自己是一個很好的溝通者。"},
+]},
+{ id:92, v:"handeln", n:"der Handel", adj:"", praep:["mit + D"],
+  trans:{zh:"與…做生意；交易",en:"trade with / trade"},
+  ex:[
+    {type:"V",praep:"mit + D",de:"Das Unternehmen handelt mit Industriemaschinen aus dem Ausland.",zh:"這家公司與國外進行工業機械的貿易。"},
+    {type:"N",praep:"mit + D",de:"Der Handel mit asiatischen Partnern wächst stetig.",zh:"與亞洲夥伴的貿易持續增長。"},
+]},
+{ id:93, v:"sich handeln", n:"", adj:"", praep:["um + A"],
+  trans:{zh:"涉及；是關於",en:"be about / concern"},
+  ex:[
+    {type:"V",praep:"um + A",de:"Bei diesem Projekt handelt es sich um eine wichtige Kooperation.",zh:"這個專案涉及一項重要的合作。"},
+]},
+{ id:94, v:"helfen", n:"die Hilfe", adj:"behilflich / hilfreich", praep:["bei + D"],
+  trans:{zh:"幫助（做某事）；有幫助的",en:"help with / help / helpful"},
+  ex:[
+    {type:"V",praep:"bei + D",de:"Er hilft seinen Kollegen bei der Einarbeitung in das neue System.",zh:"他幫助同事熟悉新系統。"},
+    {type:"N",praep:"bei + D",de:"Die Hilfe bei komplexen Aufgaben wird sehr geschätzt.",zh:"在複雜任務上的幫助非常受到讚賞。"},
+    {type:"Adj",praep:"bei + D",de:"Sie ist immer behilflich bei der Organisation von Veranstaltungen.",zh:"她在組織活動時總是給予幫助。"},
+]},
+{ id:95, v:"hinweisen", n:"der Hinweis", adj:"", praep:["auf + A"],
+  trans:{zh:"指出；提示",en:"point out / hint / note"},
+  ex:[
+    {type:"V",praep:"auf + A",de:"Die Führungskraft weist auf die wichtigen Deadlines hin.",zh:"領導者指出了重要的截止日期。"},
+    {type:"N",praep:"auf + A",de:"Der Hinweis auf mögliche Risiken wurde rechtzeitig gegeben.",zh:"對可能風險的提示是及時給出的。"},
+]},
+{ id:96, v:"hoffen", n:"die Hoffnung", adj:"", praep:["auf + A"],
+  trans:{zh:"希望（得到某事）",en:"hope for / hope"},
+  ex:[
+    {type:"V",praep:"auf + A",de:"Das Team hofft auf eine positive Rückmeldung vom Kunden.",zh:"團隊希望得到客戶的正面回饋。"},
+    {type:"N",praep:"auf + A",de:"Die Hoffnung auf eine Gehaltserhöhung motiviert ihn.",zh:"對加薪的希望激勵著他。"},
+]},
+{ id:97, v:"sich informieren", n:"die Information", adj:"informiert", praep:["über + A"],
+  trans:{zh:"了解（某事）；資訊；了解情況的",en:"inform oneself about / information / informed"},
+  ex:[
+    {type:"V",praep:"über + A",de:"Vor dem Vorstellungsgespräch sollte man sich über das Unternehmen informieren.",zh:"面試前應該充分了解公司的相關資訊。"},
+    {type:"N",praep:"über + A",de:"Die Information über die Stelle steht in der Ausschreibung.",zh:"有關職位的資訊列在招聘公告中。"},
+    {type:"Adj",praep:"über + A",de:"Ein gut informierter Bewerber wirkt überzeugender.",zh:"準備充分的應聘者顯得更有說服力。"},
+]},
+{ id:98, v:"interagieren", n:"die Interaktion", adj:"", praep:["mit + D"],
+  trans:{zh:"互動；與…交流",en:"interact with / interaction"},
+  ex:[
+    {type:"V",praep:"mit + D",de:"Im Kundengespräch muss man aktiv mit dem Gegenüber interagieren.",zh:"在客戶對話中必須積極地與對方互動。"},
+    {type:"N",praep:"mit + D",de:"Die Interaktion mit internationalen Partnern erfordert interkulturelle Kompetenz.",zh:"與國際夥伴的互動需要跨文化能力。"},
+]},
+{ id:99, v:"sich interessieren", n:"das Interesse", adj:"interessiert", praep:["für + A","an + D"],
+  trans:{zh:{"für + A":"對某事感興趣（主動）","an + D":"對某事有興趣（狀態）"},en:"be interested in / interest / interested"},
+  ex:[
+    {type:"V",praep:"für + A",de:"Sie interessiert sich sehr für die ausgeschriebene Stelle.",zh:"她對這個招聘職位非常感興趣。"},
+    {type:"N",praep:"an + D",de:"Das Interesse an einer Zusammenarbeit ist auf beiden Seiten vorhanden.",zh:"雙方都有合作的興趣。"},
+    {type:"Adj",praep:"an + D",de:"Er wirkte sehr interessiert an der neuen Technologie.",zh:"他對新技術表現出非常濃厚的興趣。"},
+]},
+{ id:100, v:"investieren", n:"die Investition", adj:"", praep:["in + A"],
+  trans:{zh:"投資（於某事）",en:"invest in / investment"},
+  ex:[
+    {type:"V",praep:"in + A",de:"Das Unternehmen investiert stark in die Weiterbildung der Mitarbeiter.",zh:"公司大力投資員工培訓。"},
+    {type:"N",praep:"in + A",de:"Die Investition in neue Technologien zahlt sich langfristig aus.",zh:"對新技術的投資從長遠來看是值得的。"},
+]},
+{ id:101, v:"sich konzentrieren", n:"die Konzentration", adj:"konzentriert", praep:["auf + A"],
+  trans:{zh:"專注（於某事）",en:"concentrate on / concentration / focused"},
+  ex:[
+    {type:"V",praep:"auf + A",de:"Im Büro muss man sich auf die wichtigsten Aufgaben konzentrieren.",zh:"在辦公室必須集中精神處理最重要的任務。"},
+    {type:"N",praep:"auf + A",de:"Die Konzentration auf ein Projekt erhöht die Effizienz.",zh:"專注於一個專案能提高工作效率。"},
+    {type:"Adj",praep:"auf + A",de:"Konzentrierte Arbeit führt zu besseren Ergebnissen.",zh:"專注的工作方式能帶來更好的成果。"},
+]},
+{ id:102, v:"sich kümmern", n:"", adj:"", praep:["um + A"],
+  trans:{zh:"關心；負責照料",en:"take care of / look after"},
+  ex:[
+    {type:"V",praep:"um + A",de:"Ein guter Vorgesetzter kümmert sich um das Wohlbefinden seiner Mitarbeiter.",zh:"一個好的上司會關心員工的身心狀況。"},
+]},
+{ id:103, v:"liegen", n:"", adj:"", praep:["an + D"],
+  trans:{zh:"在於；原因是",en:"be due to / lie in"},
+  ex:[
+    {type:"V",praep:"an + D",de:"Der Misserfolg liegt an der mangelnden Kommunikation im Team.",zh:"失敗的原因在於團隊溝通不足。"},
+]},
+{ id:104, v:"", n:"das Misstrauen", adj:"misstrauisch", praep:["gegenüber + D"],
+  trans:{zh:"對…不信任；猜疑的",en:"mistrust / mistrustful towards"},
+  ex:[
+    {type:"N",praep:"gegenüber + D",de:"Das Misstrauen gegenüber neuen Methoden bremst die Innovation.",zh:"對新方法的不信任阻礙了創新。"},
+    {type:"Adj",praep:"gegenüber + D",de:"Er ist misstrauisch gegenüber Versprechungen ohne konkrete Belege.",zh:"他對沒有具體依據的承諾持懷疑態度。"},
+]},
+{ id:105, v:"motivieren", n:"die Motivation", adj:"motiviert", praep:["zu + D"],
+  trans:{zh:"激勵（做某事）；動力；有積極性的",en:"motivate to / motivation / motivated"},
+  ex:[
+    {type:"V",praep:"zu + D",de:"Ein gutes Betriebsklima motiviert die Mitarbeiter zu Höchstleistungen.",zh:"良好的職場氛圍激勵員工發揮最佳表現。"},
+    {type:"N",praep:"zu + D",de:"Die Motivation zur Weiterbildung ist bei ihm sehr ausgeprägt.",zh:"他進修的動力非常強烈。"},
+    {type:"Adj",praep:"zu + D",de:"Motivierte Mitarbeiter sind bereit zu mehr Verantwortung.",zh:"有積極性的員工願意承擔更多責任。"},
+]},
+{ id:106, v:"nachdenken", n:"", adj:"", praep:["über + A"],
+  trans:{zh:"思考；考慮",en:"think about / reflect on"},
+  ex:[
+    {type:"V",praep:"über + A",de:"Vor einer Entscheidung sollte man sorgfältig über die Konsequenzen nachdenken.",zh:"在做決定之前，應該仔細考慮後果。"},
+]},
+{ id:107, v:"", n:"die Neugier(de)", adj:"neugierig", praep:["auf + A"],
+  trans:{zh:"對…感到好奇",en:"curiosity / curious about"},
+  ex:[
+    {type:"N",praep:"auf + A",de:"Die Neugier auf neue Technologien treibt ihn in der Forschung an.",zh:"對新技術的好奇心驅使他在研究中不斷前進。"},
+    {type:"Adj",praep:"auf + A",de:"Sie ist sehr neugierig auf die neuen Kollegen.",zh:"她對新同事非常好奇。"},
+]},
+{ id:108, v:"", n:"die Notwendigkeit", adj:"notwendig", praep:["für + A"],
+  trans:{zh:"對…的必要性；有必要的",en:"necessity for / necessary for"},
+  ex:[
+    {type:"N",praep:"für + A",de:"Die Notwendigkeit für klare Kommunikation ist unbestritten.",zh:"清晰溝通的必要性是毋庸置疑的。"},
+    {type:"Adj",praep:"für + A",de:"Flexibilität ist notwendig für den Erfolg in einem internationalen Umfeld.",zh:"靈活性對在國際環境中取得成功是必要的。"},
+]},
+{ id:109, v:"", n:"der Nutzen", adj:"nützlich", praep:["für + A"],
+  trans:{zh:"對…有用；有益的",en:"use / benefit / useful for"},
+  ex:[
+    {type:"N",praep:"für + A",de:"Der Nutzen für das Unternehmen muss klar dargestellt werden.",zh:"對公司的益處必須清楚地呈現出來。"},
+    {type:"Adj",praep:"für + A",de:"Diese Fähigkeit ist sehr nützlich für die tägliche Arbeit.",zh:"這項技能對日常工作非常有用。"},
+]},
+// ═══════════════════ S. 345 ═══════════════════
+{ id:110, v:"sich orientieren", n:"die Orientierung", adj:"", praep:["an + D"],
+  trans:{zh:"以…為導向；定向",en:"orient oneself to / orientation"},
+  ex:[
+    {type:"V",praep:"an + D",de:"Das Unternehmen orientiert sich an den Bedürfnissen seiner Kunden.",zh:"公司以客戶的需求為導向。"},
+    {type:"N",praep:"an + D",de:"Die Orientierung an klaren Zielen erleichtert die Entscheidungsfindung.",zh:"以明確目標為導向使決策更容易。"},
+]},
+{ id:111, v:"", n:"die Offenheit", adj:"offen", praep:["für + A"],
+  trans:{zh:"對…開放；願意接受",en:"openness / open to"},
+  ex:[
+    {type:"N",praep:"für + A",de:"Die Offenheit für neue Ideen ist eine wichtige Eigenschaft im Team.",zh:"對新想法的開放性是團隊中的重要特質。"},
+    {type:"Adj",praep:"für + A",de:"Er ist offen für konstruktive Kritik und nutzt sie zur Verbesserung.",zh:"他對建設性批評持開放態度，並利用它來改進。"},
+]},
+{ id:112, v:"passen", n:"", adj:"passend", praep:["zu + D"],
+  trans:{zh:"適合；符合",en:"match / suit / suitable for"},
+  ex:[
+    {type:"V",praep:"zu + D",de:"Das Profil des Bewerbers passt gut zu den Anforderungen der Stelle.",zh:"應聘者的背景非常符合職位的要求。"},
+    {type:"Adj",praep:"zu + D",de:"Eine passende Antwort zu dieser Frage ist entscheidend im Gespräch.",zh:"對這個問題給出合適的答案在面試中至關重要。"},
+]},
+{ id:113, v:"profitieren", n:"", adj:"", praep:["von + D"],
+  trans:{zh:"從…中獲益",en:"profit from / benefit from"},
+  ex:[
+    {type:"V",praep:"von + D",de:"Die Mitarbeiter profitieren von den internen Weiterbildungsprogrammen.",zh:"員工從內部培訓課程中獲益。"},
+]},
+{ id:114, v:"raten", n:"", adj:"", praep:["zu + D"],
+  trans:{zh:"建議（做某事）",en:"advise to / recommend"},
+  ex:[
+    {type:"V",praep:"zu + D",de:"Der Mentor rät ihm zu einem Auslandsaufenthalt für die Karriere.",zh:"導師建議他為了職業發展去海外待一段時間。"},
+]},
+{ id:115, v:"reagieren", n:"die Reaktion", adj:"", praep:["auf + A"],
+  trans:{zh:"對…做出反應",en:"react to / reaction to"},
+  ex:[
+    {type:"V",praep:"auf + A",de:"Der Chef reagiert schnell auf alle E-Mails seiner Mitarbeiter.",zh:"主管對員工的電子郵件總是迅速回應。"},
+    {type:"N",praep:"auf + A",de:"Die Reaktion auf den neuen Vorschlag war gemischt.",zh:"對新提案的反應是褒貶不一的。"},
+]},
+{ id:116, v:"reden", n:"die Rede", adj:"", praep:["von + D","über + A"],
+  trans:{zh:{"von + D":"談及某事","über + A":"討論某主題"},en:"talk about / speech about"},
+  ex:[
+    {type:"V",praep:"von + D",de:"Im Meeting redete niemand von den eigentlichen Problemen.",zh:"在會議上，沒有人談及真正的問題。"},
+    {type:"V",praep:"über + A",de:"Wir müssen offen über die Konflikte im Team reden.",zh:"我們必須公開討論團隊中的衝突。"},
+    {type:"N",praep:"über + A",de:"Die Rede über die Unternehmensstrategie dauerte eine Stunde.",zh:"關於公司策略的演講持續了一個小時。"},
+]},
+{ id:117, v:"sich richten", n:"", adj:"", praep:["nach + D"],
+  trans:{zh:"遵照；依據；取決於",en:"be guided by / follow"},
+  ex:[
+    {type:"V",praep:"nach + D",de:"Das Gehalt richtet sich nach der Berufserfahrung und Qualifikation.",zh:"薪資取決於工作經驗和資歷。"},
+]},
+{ id:118, v:"", n:"der Schaden", adj:"schädlich", praep:["für + A"],
+  trans:{zh:"對…有害；損害",en:"damage / harmful to"},
+  ex:[
+    {type:"N",praep:"für + A",de:"Der Schaden für das Unternehmensimage ist kaum zu reparieren.",zh:"對公司形象的損害幾乎無法修復。"},
+    {type:"Adj",praep:"für + A",de:"Dauerstress ist schädlich für die Gesundheit der Mitarbeiter.",zh:"持續的壓力對員工的健康有害。"},
+]},
+{ id:119, v:"", n:"die Schuld", adj:"schuld", praep:["an + D"],
+  trans:{zh:"對某事負有責任；是…的原因",en:"guilt / responsible for / at fault for"},
+  ex:[
+    {type:"N",praep:"an + D",de:"Die Schuld an dem Missverständnis liegt auf beiden Seiten.",zh:"對這個誤解雙方都有責任。"},
+    {type:"Adj",praep:"an + D",de:"Er ist schuld an der Verspätung des Projekts.",zh:"他對專案延誤負有責任。"},
+]},
+{ id:120, v:"", n:"die Skepsis", adj:"skeptisch", praep:["gegenüber + D"],
+  trans:{zh:"對…持懷疑態度",en:"skepticism / skeptical towards"},
+  ex:[
+    {type:"N",praep:"gegenüber + D",de:"Die Skepsis gegenüber dem neuen System ist im Team verbreitet.",zh:"團隊中對新系統的懷疑態度很普遍。"},
+    {type:"Adj",praep:"gegenüber + D",de:"Sie ist skeptisch gegenüber zu optimistischen Prognosen.",zh:"她對過於樂觀的預測持懷疑態度。"},
+]},
+{ id:121, v:"sorgen", n:"", adj:"", praep:["für + A"],
+  trans:{zh:"負責提供；確保",en:"ensure / provide for"},
+  ex:[
+    {type:"V",praep:"für + A",de:"Der Personalchef sorgt für eine gute Einarbeitung neuer Mitarbeiter.",zh:"人資主管負責確保新員工的妥善入職培訓。"},
+]},
+{ id:122, v:"sich sorgen", n:"die Sorge", adj:"besorgt", praep:["um + A"],
+  trans:{zh:"擔心（某人/某事）",en:"worry about / worry / worried"},
+  ex:[
+    {type:"V",praep:"um + A",de:"Die Chefin sorgt sich um das Wohlbefinden ihrer Mitarbeiter.",zh:"主管擔心員工的身心健康。"},
+    {type:"N",praep:"um + A",de:"Die Sorge um die Arbeitsplatzsicherheit ist bei vielen groß.",zh:"許多人對工作保障的擔憂很大。"},
+    {type:"Adj",praep:"um + A",de:"Er ist besorgt um die Qualität der Arbeit.",zh:"他擔心工作的品質。"},
+]},
+{ id:123, v:"sich spezialisieren", n:"die Spezialisierung", adj:"spezialisiert", praep:["auf + A"],
+  trans:{zh:"專攻（某領域）；專業化",en:"specialize in / specialization / specialized"},
+  ex:[
+    {type:"V",praep:"auf + A",de:"Er hat sich auf Personalmanagement spezialisiert.",zh:"他專攻人力資源管理領域。"},
+    {type:"N",praep:"auf + A",de:"Die Spezialisierung auf ein Fachgebiet erhöht die Berufsaussichten.",zh:"在某一專業領域的深耕能提升就業前景。"},
+    {type:"Adj",praep:"auf + A",de:"Spezialisierte Fachkräfte sind auf dem Arbeitsmarkt sehr gefragt.",zh:"專業化的技術人才在就業市場上非常搶手。"},
+]},
+{ id:124, v:"(sich) streiten", n:"der Streit", adj:"", praep:["über + A","um + A","mit + D"],
+  trans:{zh:{"über + A":"為某事爭論","um + A":"爭奪某事","mit + D":"與某人爭吵"},en:"argue about / compete for / quarrel with"},
+  ex:[
+    {type:"V",praep:"über + A",de:"Die Kollegen streiten sich über die beste Lösung für das Problem.",zh:"同事們為問題的最佳解決方案爭論。"},
+    {type:"V",praep:"um + A",de:"Zwei Abteilungen streiten um das Budget.",zh:"兩個部門在爭奪預算。"},
+    {type:"N",praep:"über + A",de:"Ein Streit über die Zuständigkeiten muss schnell geklärt werden.",zh:"關於職責劃分的爭議必須迅速解決。"},
+]},
+{ id:125, v:"suchen", n:"die Suche", adj:"", praep:["nach + D"],
+  trans:{zh:"尋找（某物/某人）",en:"search for / look for"},
+  ex:[
+    {type:"V",praep:"nach + D",de:"Das Unternehmen sucht nach qualifizierten Fachkräften.",zh:"公司正在尋找合格的專業人員。"},
+    {type:"N",praep:"nach + D",de:"Die Suche nach einer geeigneten Stelle dauert manchmal Monate.",zh:"尋找合適職位有時需要幾個月的時間。"},
+]},
+{ id:126, v:"", n:"die Tätigkeit", adj:"tätig", praep:["als + N"],
+  trans:{zh:"以…身份工作；從事某職業",en:"activity / work as / employed as"},
+  ex:[
+    {type:"N",praep:"als + N",de:"Die Tätigkeit als Projektleiterin erfordert viel Organisationsgeschick.",zh:"擔任專案負責人的工作需要很強的組織能力。"},
+    {type:"Adj",praep:"als + N",de:"Er ist seit zehn Jahren als Ingenieur tätig.",zh:"他已擔任工程師職位十年了。"},
+]},
+{ id:127, v:"tauschen", n:"der Tausch", adj:"", praep:["gegen + A","mit + D"],
+  trans:{zh:{"gegen + A":"用…換取某物","mit + D":"與某人交換"},en:"exchange for / swap with"},
+  ex:[
+    {type:"V",praep:"gegen + A",de:"Er tauscht seinen Urlaubstag gegen einen freien Montag.",zh:"他用假日換取一個週一休息日。"},
+    {type:"V",praep:"mit + D",de:"Sie tauscht ihre Schicht mit einem Kollegen.",zh:"她與同事交換班次。"},
+    {type:"N",praep:"gegen + A",de:"Der Tausch gegen Überstunden ist im Betrieb geregelt.",zh:"以加班換假的做法在公司有明確規定。"},
+]},
+{ id:128, v:"teilnehmen", n:"die Teilnahme", adj:"", praep:["an + D"],
+  trans:{zh:"參加（某活動）",en:"participate in / participation"},
+  ex:[
+    {type:"V",praep:"an + D",de:"Alle Mitarbeiter müssen an der Pflichtschulung teilnehmen.",zh:"所有員工必須參加強制培訓。"},
+    {type:"N",praep:"an + D",de:"Die Teilnahme an Fortbildungen ist für die Karriere sehr wichtig.",zh:"參加進修課程對職業發展非常重要。"},
+]},
+{ id:129, v:"tendieren", n:"die Tendenz", adj:"", praep:["zu + D"],
+  trans:{zh:"傾向於（某事）",en:"tend towards / tendency"},
+  ex:[
+    {type:"V",praep:"zu + D",de:"Er tendiert zu einem konservativen Führungsstil.",zh:"他傾向於保守的領導風格。"},
+    {type:"N",praep:"zu + D",de:"Die Tendenz zu mehr Homeoffice setzt sich in vielen Unternehmen durch.",zh:"更多居家辦公的趨勢在許多公司中持續發展。"},
+]},
+{ id:130, v:"sich treffen", n:"das Treffen", adj:"", praep:["mit + D"],
+  trans:{zh:"與某人會面",en:"meet with / meeting"},
+  ex:[
+    {type:"V",praep:"mit + D",de:"Er trifft sich wöchentlich mit seinem Mentor.",zh:"他每週與導師會面。"},
+    {type:"N",praep:"mit + D",de:"Das Treffen mit dem Kunden verlief sehr positiv.",zh:"與客戶的會面進行得非常順利。"},
+]},
+{ id:131, v:"", n:"", adj:"typisch", praep:["für + A"],
+  trans:{zh:"典型的；有代表性的",en:"typical of"},
+  ex:[
+    {type:"Adj",praep:"für + A",de:"Diese Arbeitsweise ist typisch für die deutsche Unternehmenskultur.",zh:"這種工作方式是德國企業文化的典型特徵。"},
+]},
+{ id:132, v:"", n:"die Überraschung", adj:"überrascht", praep:["über + A"],
+  trans:{zh:"對…感到驚訝",en:"surprise / surprised at"},
+  ex:[
+    {type:"N",praep:"über + A",de:"Die Überraschung über den unerwarteten Erfolg war groß.",zh:"對意外成功的驚喜非常大。"},
+    {type:"Adj",praep:"über + A",de:"Er war überrascht über das positive Ergebnis der Bewerbung.",zh:"他對求職的正面結果感到驚訝。"},
+]},
+{ id:133, v:"überreden", n:"", adj:"", praep:["zu + D"],
+  trans:{zh:"說服（做某事）",en:"persuade to"},
+  ex:[
+    {type:"V",praep:"zu + D",de:"Er überredet seinen Kollegen zu einer Zusammenarbeit am Projekt.",zh:"他說服同事合作這個專案。"},
+]},
+{ id:134, v:"(sich) überzeugen", n:"", adj:"überzeugt", praep:["von + D"],
+  trans:{zh:"確信；說服；相信",en:"be convinced of / convinced"},
+  ex:[
+    {type:"V",praep:"von + D",de:"Im Vorstellungsgespräch muss man den Arbeitgeber von seinen Fähigkeiten überzeugen.",zh:"在面試中必須讓雇主相信自己的能力。"},
+    {type:"Adj",praep:"von + D",de:"Er ist überzeugt von der Richtigkeit seiner Entscheidung.",zh:"他確信自己的決定是正確的。"},
+]},
+{ id:135, v:"umgehen", n:"der Umgang", adj:"", praep:["mit + D"],
+  trans:{zh:"應對；處理（與某人的關係）",en:"deal with / handle / dealing with"},
+  ex:[
+    {type:"V",praep:"mit + D",de:"Professionell mit Kritik umzugehen ist eine wichtige Kompetenz.",zh:"專業地應對批評是一項重要的能力。"},
+    {type:"N",praep:"mit + D",de:"Der Umgang mit schwierigen Kunden erfordert viel Geduld.",zh:"應對棘手客戶需要很大的耐心。"},
+]},
+{ id:136, v:"unterbrechen", n:"die Unterbrechung", adj:"unterbrochen", praep:["bei + D"],
+  trans:{zh:"在某事中打斷；中斷",en:"interrupt at / interruption"},
+  ex:[
+    {type:"V",praep:"bei + D",de:"Man sollte den Kollegen nicht bei der Arbeit unterbrechen.",zh:"不應該在同事工作時打擾他。"},
+    {type:"N",praep:"bei + D",de:"Die Unterbrechung bei einer wichtigen Aufgabe kostet Zeit.",zh:"在重要任務中被打斷會浪費時間。"},
+    {type:"Adj",praep:"bei + D",de:"Er wurde mitten bei der Präsentation unterbrochen.",zh:"他在演示進行中途被打斷了。"},
+]},
+{ id:137, v:"sich unterhalten", n:"die Unterhaltung", adj:"", praep:["mit + D","über + A"],
+  trans:{zh:{"mit + D":"與某人交談","über + A":"就某主題聊天"},en:"chat with / talk about"},
+  ex:[
+    {type:"V",praep:"mit + D",de:"Er unterhält sich gerne mit neuen Kollegen über ihre Erfahrungen.",zh:"他喜歡與新同事聊他們的經歷。"},
+    {type:"V",praep:"über + A",de:"Sie unterhalten sich über die Möglichkeiten einer Beförderung.",zh:"他們就晉升的可能性進行了交談。"},
+    {type:"N",praep:"mit + D",de:"Die Unterhaltung mit dem Kunden verlief sehr angenehm.",zh:"與客戶的交談進行得非常愉快。"},
+]},
+{ id:138, v:"(sich) unterscheiden", n:"die Unterscheidung", adj:"unterscheidbar", praep:["nach + D","von + D"],
+  trans:{zh:{"nach + D":"依據某標準區分","von + D":"與某人/事不同"},en:"differentiate by / differ from"},
+  ex:[
+    {type:"V",praep:"nach + D",de:"Die Stellen werden nach Qualifikation und Erfahrung unterschieden.",zh:"職位依資格和經驗加以區分。"},
+    {type:"V",praep:"von + D",de:"Das Arbeitsklima hier unterscheidet sich stark von dem in Taiwan.",zh:"這裡的工作氛圍與台灣的大相徑庭。"},
+    {type:"N",praep:"nach + D",de:"Die Unterscheidung nach Vollzeit und Teilzeit ist im Vertrag klar.",zh:"合約中全職和兼職的區分非常清楚。"},
+]},
+{ id:139, v:"unterstützen", n:"die Unterstützung", adj:"", praep:["bei + D"],
+  trans:{zh:"在某事上提供支援；支持",en:"support in / support"},
+  ex:[
+    {type:"V",praep:"bei + D",de:"Der Mentor unterstützt ihn bei der Einarbeitung.",zh:"導師在他入職培訓期間提供支援。"},
+    {type:"N",praep:"bei + D",de:"Die Unterstützung bei der Jobsuche kommt vom Jobcenter.",zh:"求職方面的支援來自就業中心。"},
+]},
+{ id:140, v:"sich verabreden", n:"die Verabredung", adj:"verabredet", praep:["mit + D"],
+  trans:{zh:"與某人約定見面",en:"arrange to meet / appointment / arranged"},
+  ex:[
+    {type:"V",praep:"mit + D",de:"Sie verabredet sich mit dem Personaler für Montag.",zh:"她與人資人員約好週一見面。"},
+    {type:"N",praep:"mit + D",de:"Die Verabredung mit dem Kunden wurde per E-Mail bestätigt.",zh:"與客戶的會面預約已透過電子郵件確認。"},
+    {type:"Adj",praep:"mit + D",de:"Der Termin ist verabredet mit allen Beteiligten.",zh:"這個時間已與所有相關人員確認。"},
+]},
+{ id:141, v:"sich verabschieden", n:"die Verabschiedung", adj:"", praep:["von + D"],
+  trans:{zh:"與某人道別；告辭",en:"say goodbye to / farewell"},
+  ex:[
+    {type:"V",praep:"von + D",de:"Am Ende des Gesprächs verabschiedete er sich höflich von der Personalchefin.",zh:"在面試結束時，他有禮貌地向人資主管道別。"},
+    {type:"N",praep:"von + D",de:"Die Verabschiedung von den Kollegen nach der Kündigung fiel ihm schwer.",zh:"辭職後與同事道別對他來說很難。"},
+]},
+{ id:142, v:"", n:"die Verantwortung", adj:"verantwortlich", praep:["für + A"],
+  trans:{zh:"對某事負責；有責任的",en:"responsibility for / responsible for"},
+  ex:[
+    {type:"N",praep:"für + A",de:"Die Verantwortung für das Projekt liegt beim Teamleiter.",zh:"專案的責任由團隊負責人承擔。"},
+    {type:"Adj",praep:"für + A",de:"Er ist verantwortlich für die Qualitätssicherung im Betrieb.",zh:"他負責公司的品質保障工作。"},
+]},
+{ id:143, v:"verbinden", n:"die Verbindung", adj:"verbunden", praep:["mit + D"],
+  trans:{zh:"與某事相連；聯繫；感激",en:"connect with / connection / connected"},
+  ex:[
+    {type:"V",praep:"mit + D",de:"Er verbindet seine Arbeit mit einem sozialen Engagement.",zh:"他將工作與社會參與相結合。"},
+    {type:"N",praep:"mit + D",de:"Die Verbindung mit internationalen Partnern stärkt das Netzwerk.",zh:"與國際夥伴的聯繫加強了人脈網絡。"},
+    {type:"Adj",praep:"mit + D",de:"Er ist eng verbunden mit der Unternehmenskultur.",zh:"他與公司文化緊密相連。"},
+]},
+{ id:144, v:"vereinbaren", n:"die Vereinbarkeit", adj:"vereinbar", praep:["mit + D"],
+  trans:{zh:"與某事相容；協調安排",en:"arrange / compatibility / compatible with"},
+  ex:[
+    {type:"V",praep:"mit + D",de:"Einen Termin mit dem Kunden zu vereinbaren ist Aufgabe der Assistenz.",zh:"與客戶預約是助理的職責。"},
+    {type:"N",praep:"mit + D",de:"Die Vereinbarkeit von Familie und Beruf ist ein wichtiges Thema.",zh:"工作與家庭的平衡是一個重要的話題。"},
+    {type:"Adj",praep:"mit + D",de:"Diese Lösung ist vereinbar mit den geltenden Vorschriften.",zh:"這個解決方案與現行規定相符。"},
+]},
+{ id:145, v:"vergleichen", n:"der Vergleich", adj:"vergleichbar", praep:["mit + D"],
+  trans:{zh:"與某事比較；類似的",en:"compare with / comparison / comparable"},
+  ex:[
+    {type:"V",praep:"mit + D",de:"Man sollte verschiedene Angebote miteinander vergleichen.",zh:"應該比較不同的工作機會。"},
+    {type:"N",praep:"mit + D",de:"Im Vergleich mit anderen Bewerbern hat sie mehr Erfahrung.",zh:"與其他應聘者相比，她擁有更多的經驗。"},
+    {type:"Adj",praep:"mit + D",de:"Die Anforderungen sind vergleichbar mit meiner bisherigen Tätigkeit.",zh:"這些要求與我以前的工作內容相當。"},
+]},
+{ id:146, v:"verlangen", n:"", adj:"", praep:["von + D"],
+  trans:{zh:"向某人要求；期望",en:"demand from / expect of"},
+  ex:[
+    {type:"V",praep:"von + D",de:"Der Arbeitgeber verlangt von seinen Mitarbeitern Zuverlässigkeit.",zh:"雇主對員工要求可靠性。"},
+]},
+{ id:147, v:"sich verlassen", n:"", adj:"", praep:["auf + A"],
+  trans:{zh:"依靠；信賴",en:"rely on / count on"},
+  ex:[
+    {type:"V",praep:"auf + A",de:"Man kann sich auf ihn verlassen – er hält immer seine Versprechen.",zh:"可以依靠他，他總是遵守承諾。"},
+]},
+{ id:148, v:"sich verpflichten", n:"die Verpflichtung", adj:"verpflichtet", praep:["zu + D"],
+  trans:{zh:"承擔義務；有責任（做某事）",en:"commit to / obligation / obligated"},
+  ex:[
+    {type:"V",praep:"zu + D",de:"Der Arbeitnehmer verpflichtet sich zur Einhaltung der Arbeitszeiten.",zh:"員工有義務遵守工作時間規定。"},
+    {type:"N",praep:"zu + D",de:"Die Verpflichtung zur Vertraulichkeit ist im Arbeitsvertrag festgelegt.",zh:"保密義務在勞動合約中有明確規定。"},
+    {type:"Adj",praep:"zu + D",de:"Als verpflichteter Mitarbeiter muss er an allen Pflichtschulungen teilnehmen.",zh:"作為有義務的員工，他必須參加所有強制培訓。"},
+]},
+{ id:149, v:"sich verständigen", n:"die Verständigung", adj:"", praep:["mit + D"],
+  trans:{zh:"與某人溝通；相互理解",en:"communicate with / communication"},
+  ex:[
+    {type:"V",praep:"mit + D",de:"Im multikulturellen Team muss man sich klar mit allen verständigen.",zh:"在多元文化的團隊中，必須與所有人清楚地溝通。"},
+    {type:"N",praep:"mit + D",de:"Eine gute Verständigung mit dem Kunden ist Voraussetzung für Erfolg.",zh:"與客戶的良好溝通是成功的前提。"},
+]},
+{ id:150, v:"vertrauen", n:"das Vertrauen", adj:"", praep:["auf + A"],
+  trans:{zh:"信任；依賴",en:"trust in / confidence"},
+  ex:[
+    {type:"V",praep:"auf + A",de:"Er vertraut auf die Kompetenz seines Teams.",zh:"他信任自己團隊的能力。"},
+    {type:"N",praep:"auf + A",de:"Das Vertrauen auf bewährte Methoden hilft in unsicheren Zeiten.",zh:"在不確定的時期，信任久經考驗的方法是有幫助的。"},
+]},
+{ id:151, v:"verweisen", n:"der Verweis", adj:"", praep:["auf + A","an + A"],
+  trans:{zh:{"auf + A":"指出；引用","an + A":"轉介給某人"},en:"refer to / refer to person"},
+  ex:[
+    {type:"V",praep:"auf + A",de:"Der Vorgesetzte verweist auf die internen Richtlinien.",zh:"上司引用了內部指導方針。"},
+    {type:"V",praep:"an + A",de:"Bei Fragen verweist er an die zuständige Abteilung.",zh:"有問題時，他將人轉介給相關部門。"},
+    {type:"N",praep:"auf + A",de:"Der Verweis auf frühere Erfolge stärkt das Argument.",zh:"引用過去的成功案例能增強論點。"},
+]},
+{ id:152, v:"verzichten", n:"der Verzicht", adj:"", praep:["auf + A"],
+  trans:{zh:"放棄（某事）",en:"forgo / give up / renunciation"},
+  ex:[
+    {type:"V",praep:"auf + A",de:"Er verzichtet auf Überstunden, um mehr Zeit für die Familie zu haben.",zh:"他放棄加班，以便有更多時間陪伴家人。"},
+    {type:"N",praep:"auf + A",de:"Der Verzicht auf Urlaub ist langfristig nicht gesund.",zh:"長期放棄假期對健康不利。"},
+]},
+{ id:153, v:"sich vorbereiten", n:"die Vorbereitung", adj:"vorbereitet", praep:["auf + A"],
+  trans:{zh:"為某事做準備",en:"prepare for / preparation / prepared"},
+  ex:[
+    {type:"V",praep:"auf + A",de:"Er hat sich gründlich auf das Vorstellungsgespräch vorbereitet.",zh:"他為面試做了充分的準備。"},
+    {type:"N",praep:"auf + A",de:"Eine gute Vorbereitung auf das Gespräch ist der Schlüssel zum Erfolg.",zh:"充分的面試準備是成功的關鍵。"},
+    {type:"Adj",praep:"auf + A",de:"Gut vorbereitete Kandidaten wirken selbstsicherer.",zh:"準備充分的候選人顯得更有自信。"},
+]},
+{ id:154, v:"warnen", n:"die Warnung", adj:"", praep:["vor + D"],
+  trans:{zh:"警告（注意某事）",en:"warn of / warning"},
+  ex:[
+    {type:"V",praep:"vor + D",de:"Der Vorgesetzte warnt vor den Risiken des neuen Projekts.",zh:"上司對新專案的風險提出警告。"},
+    {type:"N",praep:"vor + D",de:"Die Warnung vor Überlastung wurde nicht ernst genommen.",zh:"對超負荷工作的警告沒有被認真對待。"},
+]},
+{ id:155, v:"warten", n:"", adj:"", praep:["auf + A"],
+  trans:{zh:"等待（某人/某事）",en:"wait for"},
+  ex:[
+    {type:"V",praep:"auf + A",de:"Er wartet auf eine Rückmeldung von der Personalabteilung.",zh:"他正在等待人資部門的回覆。"},
+]},
+{ id:156, v:"weiterleiten", n:"die Weiterleitung", adj:"", praep:["an + A"],
+  trans:{zh:"轉發；轉交（給某人）",en:"forward to / redirect"},
+  ex:[
+    {type:"V",praep:"an + A",de:"Er leitet die E-Mail an die zuständige Abteilung weiter.",zh:"他將電子郵件轉發給相關部門。"},
+    {type:"N",praep:"an + A",de:"Die Weiterleitung an den Vorgesetzten erfolgte sofort.",zh:"轉交給上司的工作立即完成。"},
+]},
+{ id:157, v:"sich wenden", n:"", adj:"", praep:["an + A"],
+  trans:{zh:"向某人求助；聯繫某人",en:"turn to / contact"},
+  ex:[
+    {type:"V",praep:"an + A",de:"Bei Fragen wenden Sie sich bitte an die Personalabteilung.",zh:"如有問題，請聯繫人資部門。"},
+]},
+{ id:158, v:"werben", n:"die Werbung", adj:"", praep:["für + A"],
+  trans:{zh:"為某事做廣告；宣傳",en:"advertise for / promote / advertising"},
+  ex:[
+    {type:"V",praep:"für + A",de:"Das Unternehmen wirbt für offene Stellen auf Jobmessen.",zh:"公司在招聘博覽會上為空缺職位做宣傳。"},
+    {type:"N",praep:"für + A",de:"Die Werbung für die Marke muss zur Zielgruppe passen.",zh:"品牌宣傳必須符合目標群體。"},
+]},
+{ id:159, v:"wirken", n:"die Wirkung", adj:"", praep:["auf + A"],
+  trans:{zh:"對…產生影響；作用",en:"have an effect on / effect"},
+  ex:[
+    {type:"V",praep:"auf + A",de:"Eine professionelle Kleidung wirkt positiv auf den ersten Eindruck.",zh:"專業的穿著對第一印象有積極影響。"},
+    {type:"N",praep:"auf + A",de:"Die Wirkung auf das Team war sofort spürbar.",zh:"對團隊的影響立竿見影。"},
+]},
+{ id:160, v:"sich wundern", n:"die Verwunderung", adj:"verwundert", praep:["über + A"],
+  trans:{zh:"對某事感到驚訝",en:"be surprised at / wonder / surprised"},
+  ex:[
+    {type:"V",praep:"über + A",de:"Sie wundert sich über die schnelle Zusage.",zh:"她對迅速得到錄取通知感到驚訝。"},
+    {type:"N",praep:"über + A",de:"Die Verwunderung über das Ergebnis war allgemein.",zh:"對這個結果的驚訝是普遍的。"},
+    {type:"Adj",praep:"über + A",de:"Er war verwundert über die unerwartete Reaktion.",zh:"他對意外的反應感到驚訝。"},
+]},
+{ id:161, v:"zählen", n:"", adj:"", praep:["zu + D"],
+  trans:{zh:"屬於（某類別）；算是",en:"count as / be among"},
+  ex:[
+    {type:"V",praep:"zu + D",de:"Er zählt zu den besten Kandidaten für diese Stelle.",zh:"他被認為是這個職位最優秀的候選人之一。"},
+]},
+{ id:162, v:"", n:"die Zufriedenheit", adj:"zufrieden", praep:["mit + D"],
+  trans:{zh:"對某事感到滿意",en:"satisfaction / satisfied with"},
+  ex:[
+    {type:"N",praep:"mit + D",de:"Die Zufriedenheit mit den Arbeitsbedingungen ist hoch.",zh:"對工作條件的滿意度很高。"},
+    {type:"Adj",praep:"mit + D",de:"Sie ist zufrieden mit dem Ergebnis des Gesprächs.",zh:"她對面談的結果感到滿意。"},
+]},
+{ id:163, v:"", n:"die Zurückhaltung", adj:"zurückhaltend", praep:["gegenüber + D"],
+  trans:{zh:"對…保持克制；內斂的",en:"restraint / reserved towards"},
+  ex:[
+    {type:"N",praep:"gegenüber + D",de:"Die Zurückhaltung gegenüber neuen Kollegen ist anfangs normal.",zh:"對新同事的謹慎態度最初是正常的。"},
+    {type:"Adj",praep:"gegenüber + D",de:"Er ist zurückhaltend gegenüber Risiken ohne ausreichende Daten.",zh:"他對沒有充分數據支撐的風險持保守態度。"},
+]},
+{ id:164, v:"", n:"die Zuständigkeit", adj:"zuständig", praep:["für + A"],
+  trans:{zh:"對…有管轄權；負責某事",en:"jurisdiction / responsible / in charge of"},
+  ex:[
+    {type:"N",praep:"für + A",de:"Die Zuständigkeit für diesen Bereich liegt bei der IT-Abteilung.",zh:"這個領域的管轄權在IT部門。"},
+    {type:"Adj",praep:"für + A",de:"Sie ist zuständig für die gesamte Personalplanung.",zh:"她負責所有的人員規劃工作。"},
+]},
+{ id:165, v:"zweifeln", n:"der Zweifel", adj:"verzweifelt", praep:["an + D"],
+  trans:{zh:"對…產生懷疑；絕望的",en:"doubt / doubt / desperate"},
+  ex:[
+    {type:"V",praep:"an + D",de:"Er zweifelt an seiner eigenen Entscheidung.",zh:"他對自己的決定產生了懷疑。"},
+    {type:"N",praep:"an + D",de:"Zweifel an der eigenen Eignung sind in der Bewerbungsphase normal.",zh:"在求職階段對自身能力的懷疑是很正常的。"},
+    {type:"Adj",praep:"an + D",de:"Verzweifelte Bewerber neigen dazu, jeden Kompromiss einzugehen.",zh:"走投無路的求職者往往傾向於接受任何妥協。"},
+]},
+{ id:166, v:"zwingen", n:"der Zwang", adj:"gezwungen", praep:["zu + D"],
+  trans:{zh:"強迫（做某事）；強迫的",en:"force to / compulsion / forced"},
+  ex:[
+    {type:"V",praep:"zu + D",de:"Niemand sollte gezwungen werden, unbezahlte Überstunden zu leisten.",zh:"任何人都不應被迫進行無薪加班。"},
+    {type:"N",praep:"zu + D",de:"Der Zwang zu ständiger Erreichbarkeit belastet viele Arbeitnehmer.",zh:"隨時保持聯繫的強迫性要求給許多員工帶來壓力。"},
+    {type:"Adj",praep:"zu + D",de:"Er fühlte sich gezwungen zu einer Entscheidung ohne genügend Zeit.",zh:"他感到被迫在沒有足夠時間的情況下做出決定。"},
+]},
+];
+
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+const state = { review: new Set(), key: new Set(), filter: 'all' };
+
+// ── TTS ───────────────────────────────────────────────────────────────────────
+function speak(text) {
+  if (!text || !window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'de-DE'; u.rate = 0.92;
+  const badge = document.getElementById('speakingBadge');
+  badge.classList.add('active');
+  u.onend = u.onerror = () => badge.classList.remove('active');
+  window.speechSynthesis.speak(u);
+}
+
+function esc(s) { return (s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function buildTransCell(entry) {
+  const t = entry.trans;
+  if (typeof t.zh === 'object') {
+    return entry.praep.map(p =>
+      `<span class="trans-note">[${p}]</span><span class="trans-zh">${t.zh[p]||''}</span>`
+    ).join('') + `<span class="trans-en">${t.en}</span>`;
+  }
+  return `<span class="trans-zh">${t.zh}</span><span class="trans-en">${t.en}</span>`;
+}
+
+function buildExCell(entry) {
+  const mkItem = e =>
+    `<div class="ex-item ${e.type}" onclick="speak('${esc(e.de)}')">
+      <span class="ex-type ${e.type}">[${e.type}]</span><span class="ex-de">${e.de}</span>
+      <span class="ex-zh">${e.zh}</span>
+    </div>`;
+  if (entry.praep.length === 1) return entry.ex.map(mkItem).join('');
+  const groups = {};
+  entry.praep.forEach(p => { groups[p] = []; });
+  entry.ex.forEach(e => { if (groups[e.praep]) groups[e.praep].push(e); });
+  return entry.praep.map(p =>
+    `<div class="ex-group"><span class="ex-praep-label">${p}</span>${groups[p].map(mkItem).join('')}</div>`
+  ).join('');
+}
+
+function buildRow(entry) {
+  const isRev = state.review.has(entry.id);
+  const isKey = state.key.has(entry.id);
+  const cls = [isRev?'review':'', isKey?'key':''].filter(Boolean).join(' ');
+  const praepHtml = entry.praep.map(p => `<span class="word-praep">${p}</span>`).join('');
+  return `<tr class="${cls}">
+    <td class="mark-review col-rev" onclick="toggleMark(${entry.id},'review')"><span class="mark-box"></span></td>
+    <td class="mark-key col-key" onclick="toggleMark(${entry.id},'key')"><span class="mark-box"></span></td>
+    <td class="speak-v col-v" ${entry.v?`onclick="speak('${esc(entry.v)}')"`:''}>
+      ${entry.v?`<span class="word-v">${entry.v}</span>`:'<span class="word-empty">—</span>'}
+    </td>
+    <td class="speak-n col-n" ${entry.n?`onclick="speak('${esc(entry.n)}')"`:''}>
+      ${entry.n?`<span class="word-n">${entry.n}</span>`:'<span class="word-empty">—</span>'}
+    </td>
+    <td class="speak-adj col-adj" ${entry.adj?`onclick="speak('${esc(entry.adj)}')"`:''}>
+      ${entry.adj?`<span class="word-adj">${entry.adj}</span>`:'<span class="word-empty">—</span>'}
+    </td>
+    <td class="col-praep">${praepHtml}</td>
+    <td class="col-trans">${buildTransCell(entry)}</td>
+    <td>${buildExCell(entry)}</td>
+  </tr>`;
+}
+
+// ── SECTION DIVIDERS ──────────────────────────────────────────────────────────
+const PAGE_STARTS = { 58: 'S. 344', 110: 'S. 345' };
+
+function render() {
+  let list = VOCAB;
+  if (state.filter === 'review') list = VOCAB.filter(v => state.review.has(v.id));
+  else if (state.filter === 'key') list = VOCAB.filter(v => state.key.has(v.id));
+
+  document.getElementById('stats').textContent =
+    `共 ${VOCAB.length} 筆　待複習 ${state.review.size}　重點 ${state.key.size}`;
+
+  if (!list.length) {
+    document.getElementById('mainContent').innerHTML = '<div class="empty">沒有符合條件的詞彙</div>';
+    return;
+  }
+
+  const thead = `<thead><tr>
+    <th class="col-rev">待複習</th><th class="col-key">重點</th>
+    <th class="col-v">Verb</th><th class="col-n">Nomen</th>
+    <th class="col-adj">Adjektiv</th><th class="col-praep">Präp + Kasus</th>
+    <th class="col-trans">中文 / English</th><th>例句</th>
+  </tr></thead>`;
+
+  // Group into sections by page
+  let html = '';
+  let currentPage = 'S. 343';
+  let rows = '';
+
+  function closeSection() {
+    if (rows) {
+      html += `<div class="section-block">
+        <div class="section-title">${currentPage}</div>
+        <table>${thead}<tbody>${rows}</tbody></table>
+      </div>`;
+      rows = '';
+    }
+  }
+
+  list.forEach(entry => {
+    if (PAGE_STARTS[entry.id]) {
+      closeSection();
+      currentPage = PAGE_STARTS[entry.id];
+    }
+    rows += buildRow(entry);
+  });
+  closeSection();
+
+  document.getElementById('mainContent').innerHTML = html;
+}
+
+function toggleMark(id, type) {
+  const s = state[type];
+  if (s.has(id)) s.delete(id); else s.add(id);
+  render();
+}
+
+function setFilter(f, btn) {
+  state.filter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+render();
+</script>
+</body>
+</html>
