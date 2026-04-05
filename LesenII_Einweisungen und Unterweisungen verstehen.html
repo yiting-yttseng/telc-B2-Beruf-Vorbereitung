@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DTB B2: Lesen Teil 2 – Wortschatz Tracker</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#f0f0ee;color:#1a1a1a;font-size:14px}
+
+/* Nav */
+.nav-bar{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid #ddd;
+  padding:8px 14px;display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+.nav-title{font-size:12px;font-weight:700;color:#555;margin-right:4px;white-space:nowrap;letter-spacing:.01em}
+.nav-btn{padding:4px 10px;border-radius:16px;border:1.5px solid #ccc;background:#fff;
+  color:#444;font-size:11px;font-weight:500;cursor:pointer;white-space:nowrap;transition:all .15s}
+.nav-btn:hover{border-color:#888;color:#1a1a1a}
+.nav-btn.active{color:#fff;border-color:transparent}
+.nav-right{margin-left:auto;display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.filter-btn{padding:4px 10px;border-radius:14px;border:0.5px solid #ccc;background:#fff;color:#333;font-size:11px;cursor:pointer}
+.filter-btn.active{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+.clear-btn{padding:4px 9px;border-radius:14px;border:0.5px solid #f0c0c0;background:#fff;color:#c0392b;font-size:11px;cursor:pointer}
+.export-btn-nav{padding:4px 10px;border-radius:14px;border:0.5px solid #ccc;background:#fff;color:#333;font-size:11px;cursor:pointer}
+.export-btn-nav:disabled{opacity:.35;cursor:default}
+
+/* Page */
+.page{max-width:1200px;margin:0 auto;padding:18px 16px 60px}
+.page-header{margin-bottom:16px}
+.page-header h1{font-size:17px;font-weight:600;color:#1F4E79;margin-bottom:3px}
+.page-header p{font-size:11px;color:#999;line-height:1.7}
+
+/* Section */
+.section-block{margin-bottom:30px;scroll-margin-top:65px}
+.section-title{font-size:13px;font-weight:700;color:#fff;padding:7px 13px;
+  border-radius:8px 8px 0 0;letter-spacing:.02em}
+
+/* Vocab toolbar */
+.vocab-toolbar{display:flex;align-items:center;gap:8px;padding:7px 12px;
+  background:#f5f5f3;border:0.5px solid #ccc;border-bottom:none;margin-top:0}
+.vocab-count{font-size:11px;color:#888}
+
+/* Vocab table */
+.vocab-wrap{border:0.5px solid #ccc;border-radius:0 0 8px 8px;overflow:hidden;margin-bottom:0}
+table{width:100%;border-collapse:collapse;background:#fff;table-layout:fixed}
+th{text-align:left;padding:6px 10px;background:#f5f5f3;color:#777;font-weight:500;
+  font-size:11px;border-bottom:0.5px solid #e0e0e0;letter-spacing:.03em}
+td{padding:7px 10px;border-bottom:0.5px solid #efefed;vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr.unfamiliar td{background:#fff6f6}
+.dot-cell{width:26px;cursor:pointer;user-select:none}
+.dot-cell:hover .dot{border-color:#e24b4a}
+.dot{display:block;width:9px;height:9px;border-radius:50%;border:1.5px solid #ccc;margin-top:4px;transition:all .15s}
+tr.unfamiliar .dot{background:#e24b4a;border-color:#e24b4a}
+.speak-td{cursor:pointer}
+.speak-td:hover{background:#f0f6ff!important}
+tr.unfamiliar .speak-td:hover{background:#ffe4e4!important}
+.col-dot{width:26px}.col-de{width:14%}.col-enzh{width:17%}.col-koll{width:26%}.col-satz{width:43%}
+.artikel{font-size:11px;color:#aaa;font-style:italic;display:block;line-height:1.4}
+.word-de{font-weight:700;font-size:13px;color:#1a5fc8;display:block}
+.plural{font-size:11px;color:#bbb;display:block;line-height:1.4}
+.word-en{font-size:12px;color:#222;line-height:1.6;display:block}
+.word-zh{font-size:11px;color:#999;font-style:italic;display:block}
+.koll-de{font-size:12px;color:#222;line-height:1.6;display:block}
+.koll-verb{color:#1a5fc8;font-weight:700}
+.koll-zh{font-size:11px;color:#999;font-style:italic;display:block}
+.satz-de{font-size:12px;color:#222;line-height:1.6;display:block}
+.satz-zh{font-size:11px;color:#999;font-style:italic;display:block}
+
+/* Text card */
+.text-card{background:#fff;border:0.5px solid #ccc;border-top:none;overflow:hidden}
+.text-card:last-child{border-radius:0 0 8px 8px}
+.text-card-header{display:flex;align-items:center;gap:8px;padding:8px 13px;
+  background:#fafaf8;border-bottom:0.5px solid #eee;border-top:1px solid #e0e0e0}
+.badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:9px;white-space:nowrap}
+.badge-klett{background:#ddeafb;color:#1F4E79}
+.badge-cornelsen{background:#dff0df;color:#2E7D32}
+.badge-telc{background:#fde8e8;color:#B71C1C}
+.text-src{font-size:12px;color:#444;font-weight:500}
+
+.text-body{padding:10px 14px 4px}
+
+/* Paragraph — click to speak, ZH below */
+.para-block{margin-bottom:8px}
+.para-de{font-size:13px;color:#1a1a1a;line-height:1.75;cursor:pointer;
+  padding:3px 7px;margin:-3px -7px;border-radius:5px;transition:background .1s;display:inline-block;width:calc(100% + 14px)}
+.para-de:hover{background:#eef4ff}
+.para-de.speaking{background:#deeafc;outline:2px solid #1a5fc8;outline-offset:-1px}
+.para-zh{font-size:11px;color:#999;font-style:italic;line-height:1.6;margin-top:3px;padding-left:2px}
+
+/* QA */
+.qa-block{border-top:0.5px solid #e8e8e8;padding:10px 14px 14px;background:#fafaf8}
+.qa-label{font-size:10px;font-weight:700;color:#999;letter-spacing:.07em;margin-bottom:8px;text-transform:uppercase}
+.qa-item{margin-bottom:14px}
+.qa-item:last-child{margin-bottom:0}
+.qa-q{font-size:13px;color:#1a1a1a;font-weight:500;margin-bottom:6px;line-height:1.5}
+.qa-options{display:flex;flex-direction:column;gap:3px;margin-bottom:6px}
+.qa-opt{font-size:12px;color:#444;padding:4px 10px;border-radius:6px;
+  border:0.5px solid #ddd;background:#fff;line-height:1.5}
+.qa-opt.correct{background:#e8f5e9;border-color:#66bb6a;color:#2e7d32;font-weight:600}
+.reveal-btn{font-size:11px;color:#888;border:0.5px solid #ccc;background:#fff;
+  border-radius:6px;padding:3px 10px;cursor:pointer;transition:all .15s}
+.reveal-btn:hover{border-color:#1a5fc8;color:#1a5fc8}
+.answer-row{display:flex;align-items:flex-start;gap:8px;flex-wrap:wrap}
+.answer-badge{font-size:11px;font-weight:700;padding:2px 10px;border-radius:10px;
+  background:#e8f5e9;color:#2e7d32;border:0.5px solid #a5d6a7;white-space:nowrap}
+.explain-text{font-size:11px;color:#888;font-style:italic;line-height:1.5;
+  margin-top:5px;padding:5px 10px;background:#f5f5f3;border-radius:5px;width:100%}
+.hidden{display:none}
+
+/* Speaking badge */
+.speaking-badge{position:fixed;bottom:18px;right:18px;display:none;align-items:center;gap:6px;
+  font-size:12px;color:#fff;padding:6px 14px;border-radius:20px;
+  background:#1a5fc8;box-shadow:0 2px 10px rgba(26,95,200,.35);z-index:200}
+.speaking-badge.active{display:flex}
+.speaking-dot{width:7px;height:7px;border-radius:50%;background:#fff;animation:pulse .9s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* Export panel */
+.export-panel{display:none;margin-top:20px;background:#fff;border:0.5px solid #ddd;border-radius:10px;padding:18px}
+.export-panel.visible{display:block}
+.export-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.export-top h2{font-size:14px;font-weight:600}
+.export-actions{display:flex;gap:8px;align-items:center}
+.print-btn{padding:5px 14px;border-radius:6px;border:none;background:#1a1a1a;color:#fff;font-size:12px;cursor:pointer}
+.close-btn{padding:5px 12px;border-radius:6px;border:0.5px solid #ccc;background:#fff;color:#555;font-size:12px;cursor:pointer}
+.export-count{font-size:11px;color:#888;background:#f5f5f3;padding:2px 10px;border-radius:14px}
+
+@media print{
+  @page{size:A4 portrait;margin:12mm 10mm}
+  body *{visibility:hidden}
+  #exportPanel,#exportPanel *{visibility:visible}
+  #exportPanel{position:absolute;top:0;left:0;width:100%;height:auto!important;border:none!important;padding:0!important;overflow:visible!important}
+  html,body{height:auto!important;overflow:hidden!important}
+  .export-top{display:none!important}
+  table{width:100%!important;table-layout:fixed!important;font-size:9pt!important;border-collapse:collapse!important}
+  tr{page-break-inside:avoid}
+  td,th{padding:4px 6px!important;border:0.5px solid #ddd!important}
+  .artikel{display:block;font-size:8pt;color:#999;font-style:italic}
+  .word-de{display:block;font-size:10pt;font-weight:bold;color:#1a5fc8;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .plural{display:block;font-size:8pt;color:#bbb}
+  .word-en{display:block;font-size:8pt;color:#222}
+  .word-zh{display:block;font-size:7pt;color:#888;font-style:italic}
+  .koll-de,.satz-de{display:block;font-size:8pt;color:#222}
+  .koll-verb{color:#1a5fc8;font-weight:bold;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .koll-zh,.satz-zh{display:block;font-size:7pt;color:#888;font-style:italic}
+  td{background:#fff!important}
+  tr.unfamiliar td{background:#fff0f0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  th{background:#f0f0f0!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .section-title{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .col-de{width:14%}.col-enzh{width:17%}.col-koll{width:26%}.col-satz{width:43%}
+}
+</style>
+</head>
+<body>
+
+<div class="nav-bar">
+  <span class="nav-title">DTB B2 Lesen Teil 2</span>
+  <div id="navBtns" style="display:contents"></div>
+  <div class="nav-right">
+    <button class="filter-btn active" onclick="setFilter('all',this)">全部單字</button>
+    <button class="filter-btn" onclick="setFilter('unfamiliar',this)">不熟悉</button>
+    <button class="filter-btn" onclick="setFilter('familiar',this)">已掌握</button>
+    <button class="clear-btn" onclick="clearAll()">清除標記</button>
+    <button class="export-btn-nav" id="exportBtn" onclick="toggleExport()" disabled>匯出 ↗</button>
+  </div>
+</div>
+
+<div class="speaking-badge" id="speakingBadge">
+  <span class="speaking-dot"></span><span id="speakLabel">朗讀中…</span>
+</div>
+
+<div class="page">
+  <div class="page-header">
+    <h1>DTB B2: Lesen Teil 2 – Einweisungen und Unterweisungen verstehen</h1>
+    <p>⭕ 點圓圈標記不熟悉 &nbsp;|&nbsp; 🔊 點德文／英文／搭配／例句欄念對應內容 &nbsp;|&nbsp; 📖 點段落念該段德文（中文顯示但不念） &nbsp;|&nbsp; 答案點「顯示答案」才出現</p>
+  </div>
+  <div id="mainContent"></div>
+  <div class="export-panel" id="exportPanel">
+    <div class="export-top">
+      <h2>不熟悉單字清單</h2>
+      <div class="export-actions">
+        <span class="export-count" id="exportCount"></span>
+        <button class="print-btn" onclick="window.print()">列印／PDF</button>
+        <button class="close-btn" onclick="toggleExport()">關閉</button>
+      </div>
+    </div>
+    <div id="exportContent"></div>
+  </div>
+</div>
+
+<script>
+const VOCAB=[
+{s:`T1a: Allgemeine Regelungen am Arbeitsplatz（工作場所一般規定）`,a:`die`,w:`Regelung`,p:`-en`,en:`regulation / rule`,zh:`規定／規則`,k:`Regelungen einhalten`,kz:`遵守規定`,ex:`Es ist wichtig, dass alle Massnahmen eingehalten werden, damit Sie sich und andere nicht gefaehrden.`,ez:`所有措施都必須被遵守，以免傷害自己和他人。`},
+{s:`T1a: Allgemeine Regelungen am Arbeitsplatz（工作場所一般規定）`,a:`die`,w:`Massnahme`,p:`-n`,en:`measure / step`,zh:`措施`,k:`Massnahmen einhalten`,kz:`遵守措施`,ex:`Bei der Bedienung der Maschinen sind alle Massnahmen einzuhalten.`,ez:`操作機器時必須遵守所有措施。`},
+{s:`T1a: Allgemeine Regelungen am Arbeitsplatz（工作場所一般規定）`,a:`die`,w:`Sicherheitsbestimmung`,p:`-en`,en:`safety regulation`,zh:`安全規定`,k:`Sicherheitsbestimmungen befolgen`,kz:`遵守安全規定`,ex:`Die Sicherheitsbestimmungen wurden angepasst an die neuen Richtlinien laut Arbeitsschutzgesetz.`,ez:`安全規定已依勞動保護法的新指導方針進行調整。`},
+{s:`T1a: Allgemeine Regelungen am Arbeitsplatz（工作場所一般規定）`,a:``,w:`angepasst an + Akk.`,p:``,en:`adapted to / updated according to`,zh:`調整為、依照…更新`,k:`angepasst an die neuen Richtlinien`,kz:`依照新規定調整`,ex:`Die Sicherheitsbestimmungen sind angepasst an die neuen Richtlinien laut Arbeitsschutzgesetz.`,ez:`安全規定已依照勞動保護法的新指導方針進行調整。`},
+{s:`T1a: Allgemeine Regelungen am Arbeitsplatz（工作場所一般規定）`,a:``,w:`sich in Verbindung setzen`,p:``,en:`to contact / get in touch`,zh:`與…聯繫`,k:`sich mit jmdm. in Verbindung setzen`,kz:`與某人取得聯繫`,ex:`Sollten Sie Fragen haben, setzen Sie sich bitte mit unserer Sicherheitsbeauftragten in Verbindung.`,ez:`如有疑問，請與我們的安全負責人聯繫。`},
+{s:`T1a: Allgemeine Regelungen am Arbeitsplatz（工作場所一般規定）`,a:``,w:`ordnungsgemass`,p:``,en:`properly / as per regulations`,zh:`按規定地`,k:`ordnungsgemass abschliessen`,kz:`按規定關閉`,ex:`Nach Verlassen der Werkstaetten sind diese immer ordnungsgemass abzuschliessen.`,ez:`離開車間後必須按規定鎖好。`},
+{s:`T1a: Allgemeine Regelungen am Arbeitsplatz（工作場所一般規定）`,a:`die`,w:`Gefahrenquelle`,p:`-n`,en:`source of danger / hazard`,zh:`危險源`,k:`zur Gefahrenquelle werden`,kz:`成為危險源`,ex:`Umherliegender Unrat kann zur Gefahrenquelle werden.`,ez:`散落的垃圾可能成為危險源。`},
+{s:`T1a: Allgemeine Regelungen am Arbeitsplatz（工作場所一般規定）`,a:`die`,w:`Trennung`,p:`(-)`,en:`separation / sorting`,zh:`分類、分離`,k:`die Trennung der Abfaelle beachten`,kz:`遵守垃圾分類`,ex:`Achten Sie auf die vorgeschriebene Trennung der Abfaelle in die vorgesehenen Container.`,ez:`請注意按規定將垃圾分類投入指定容器。`},
+{s:`T1a: Allgemeine Regelungen am Arbeitsplatz（工作場所一般規定）`,a:``,w:`nicht gestattet`,p:``,en:`not permitted / not allowed`,zh:`不被允許`,k:`ist nicht gestattet`,kz:`不被允許`,ex:`Auf dem Betriebsgelaende ist der Konsum von Alkohol und Zigaretten nicht gestattet.`,ez:`在廠區內禁止飲酒和吸菸。`},
+{s:`T1a: Allgemeine Regelungen am Arbeitsplatz（工作場所一般規定）`,a:`die`,w:`Einhaltung`,p:`(-)`,en:`compliance / observance`,zh:`遵守、執行`,k:`die Einhaltung der Hygieneregeln`,kz:`遵守衛生規定`,ex:`Die Einhaltung der Hygieneregeln wird durch den Abteilungsleiter kontrolliert.`,ez:`衛生規定的遵守情況由部門主管負責監督。`},
+{s:`T1a: Allgemeine Regelungen am Arbeitsplatz（工作場所一般規定）`,a:`die`,w:`Hygieneschleuse`,p:`-n`,en:`hygiene airlock / entry checkpoint`,zh:`衛生閘口`,k:`Eintritt ueber die Hygieneschleuse`,kz:`經由衛生閘口進入`,ex:`Der Eintritt in den Produktionsbereich erfolgt immer ueber die Hygieneschleuse.`,ez:`進入生產區域必須經由衛生閘口。`},
+{s:`T1a: Allgemeine Regelungen am Arbeitsplatz（工作場所一般規定）`,a:``,w:`zentral geregelt`,p:``,en:`centrally regulated`,zh:`由中央統一調節的`,k:`zentral geregelt sein`,kz:`由中央統一調節`,ex:`Die Temperatur und Luftfeuchtigkeit in den Raeumen wird zentral geregelt.`,ez:`房間的溫度和濕度由中央統一調節。`},
+{s:`T1a: Allgemeine Regelungen am Arbeitsplatz（工作場所一般規定）`,a:``,w:`ermoeglichen`,p:``,en:`to enable / make possible`,zh:`使成為可能`,k:`konzentriertes Arbeiten ermoeglichen`,kz:`使專注工作成為可能`,ex:`Um allen ein konzentriertes Arbeiten zu ermoeglichen, sollte der Laermpegel moeglichst niedrig gehalten werden.`,ez:`為了讓所有人都能專注工作，噪音應盡量保持在低水平。`},
+{s:`T1b: Laborkleidung & Sicherheit（實驗室服裝與安全）`,a:`die`,w:`Laborkleidung`,p:`(-)`,en:`lab clothing / protective clothing`,zh:`實驗室服裝`,k:`Laborkleidung tragen`,kz:`穿戴實驗室服裝`,ex:`Beim Arbeiten im Labor muss eine angemessene Kleidung getragen werden.`,ez:`在實驗室工作時必須穿著合適的服裝。`},
+{s:`T1b: Laborkleidung & Sicherheit（實驗室服裝與安全）`,a:``,w:`angemessen`,p:``,en:`appropriate / suitable`,zh:`合適的`,k:`angemessene Kleidung tragen`,kz:`穿著合適的服裝`,ex:`Beim Arbeiten im Labor muss eine angemessene Kleidung getragen werden, um sich selbst zu schuetzen.`,ez:`在實驗室工作時必須穿著合適的服裝來保護自己。`},
+{s:`T1b: Laborkleidung & Sicherheit（實驗室服裝與安全）`,a:``,w:`einerseits ... andererseits`,p:``,en:`on one hand ... on the other hand`,zh:`一方面…另一方面`,k:`einerseits ... andererseits schuetzen`,kz:`一方面…另一方面保護`,ex:`Die Kleidung dient dazu, einerseits sich selbst, andererseits auch bestimmte Materialien zu schuetzen.`,ez:`服裝的作用是一方面保護自己，另一方面保護某些材料。`},
+{s:`T1b: Laborkleidung & Sicherheit（實驗室服裝與安全）`,a:`der`,w:`Kittel`,p:`-`,en:`lab coat / work coat`,zh:`實驗衣、工作服`,k:`Kittel geschlossen tragen`,kz:`穿著扣好的實驗衣`,ex:`Da ein Kittel nicht den ganzen Koerper schuetzt, ist darauf zu achten, stets geschlossenes Schuhwerk zu tragen.`,ez:`由於實驗衣不能保護全身，必須注意始終穿著密閉的鞋類。`},
+{s:`T1b: Laborkleidung & Sicherheit（實驗室服裝與安全）`,a:`festes`,w:`Schuhwerk`,p:`(-)`,en:`sturdy / closed footwear`,zh:`固定鞋類`,k:`festes Schuhwerk tragen`,kz:`穿固定鞋類`,ex:`Es sind stets geschlossenes, festes Schuhwerk sowie lange Hosen zu tragen.`,ez:`必須始終穿著密閉的固定鞋類及長褲。`},
+{s:`T1b: Laborkleidung & Sicherheit（實驗室服裝與安全）`,a:``,w:`nebenbei`,p:``,en:`additionally / incidentally`,zh:`此外、順帶`,k:`nebenbei auch dem Zweck dienen`,kz:`此外也服務於某目的`,ex:`Das feste Schuhwerk dient nebenbei auch dem Zweck, in Notsituationen das Labor zuegig verlassen zu koennen.`,ez:`固定鞋類此外也有助於在緊急情況下迅速離開實驗室。`},
+{s:`T1b: Laborkleidung & Sicherheit（實驗室服裝與安全）`,a:`der`,w:`Zweck`,p:`-e`,en:`purpose / aim`,zh:`目的`,k:`dem Zweck dienen`,kz:`服務於某目的`,ex:`Das feste Schuhwerk dient dem Zweck, in Notsituationen das Labor zuegig verlassen zu koennen.`,ez:`固定鞋類的目的是能夠在緊急情況下迅速離開實驗室。`},
+{s:`T1b: Laborkleidung & Sicherheit（實驗室服裝與安全）`,a:``,w:`zuegig`,p:``,en:`quickly / rapidly / without delay`,zh:`迅速地`,k:`das Labor zuegig verlassen`,kz:`迅速離開實驗室`,ex:`In Notsituationen muss man das Labor zuegig verlassen koennen.`,ez:`在緊急情況下必須能夠迅速離開實驗室。`},
+{s:`T1b: Laborkleidung & Sicherheit（實驗室服裝與安全）`,a:`die`,w:`Haube`,p:`-n`,en:`cap / hair net`,zh:`帽子、髮網`,k:`Haare durch eine Haube bedecken`,kz:`用帽子蓋住頭髮`,ex:`Aus hygienischen Gruenden muessen die Haare durch eine Haube bedeckt sein.`,ez:`出於衛生原因，頭髮必須用帽子蓋住。`},
+{s:`T1b: Laborkleidung & Sicherheit（實驗室服裝與安全）`,a:``,w:`zusaetzlich`,p:``,en:`additionally / in addition`,zh:`額外地、另外`,k:`zusaetzlich zu einem Zopf zusammenbinden`,kz:`另外綁成馬尾`,ex:`Lange Haare muessen zusaetzlich zu einem Zopf zusammengebunden werden.`,ez:`長頭髮必須另外綁成馬尾。`},
+{s:`T1b: Laborkleidung & Sicherheit（實驗室服裝與安全）`,a:``,w:`zum Einsatz kommen`,p:``,en:`to be used / deployed`,zh:`被使用、被採用`,k:`haeufig zum Einsatz kommen`,kz:`常被使用`,ex:`Haeufig kommt auch noch eine Schutzbrille zum Einsatz.`,ez:`通常還會使用護目鏡。`},
+{s:`T1b: Laborkleidung & Sicherheit（實驗室服裝與安全）`,a:``,w:`beim Hantieren mit`,p:``,en:`when handling / working with`,zh:`在處理…時`,k:`beim Hantieren mit gefaehrlichen Substanzen`,kz:`在處理危險物質時`,ex:`Beim Hantieren mit empfindlichen oder gefaehrlichen Substanzen sind Handschuhe zu tragen.`,ez:`在處理敏感或危險物質時必須佩戴手套。`},
+{s:`T1b: Laborkleidung & Sicherheit（實驗室服裝與安全）`,a:``,w:`empfindlich`,p:``,en:`sensitive / delicate`,zh:`敏感的、精細的`,k:`empfindliche Substanzen`,kz:`敏感物質`,ex:`Beim Hantieren mit empfindlichen Substanzen sind Handschuhe zu tragen.`,ez:`處理敏感物質時必須佩戴手套。`},
+{s:`T1b: Laborkleidung & Sicherheit（實驗室服裝與安全）`,a:`die`,w:`Kontamination`,p:`-en`,en:`contamination`,zh:`污染`,k:`vor Kontamination schuetzen`,kz:`保護免受污染`,ex:`Beim Hantieren mit gefaehrlichen Substanzen sind Handschuhe zu tragen, um die Haende vor Kontamination zu schuetzen.`,ez:`處理危險物質時必須佩戴手套，以保護雙手免受污染。`},
+{s:`T1b: Laborkleidung & Sicherheit（實驗室服裝與安全）`,a:``,w:`verunreinigt`,p:``,en:`contaminated / soiled`,zh:`被污染的`,k:`durch Substanzen verunreinigt sein`,kz:`被物質污染`,ex:`Da die Handschuhe durch die Arbeit mit chemischen Substanzen verunreinigt sein koennten, sollten sie abgelegt werden.`,ez:`由於手套可能被化學物質污染，應將其脫下。`},
+{s:`T1b: Laborkleidung & Sicherheit（實驗室服裝與安全）`,a:``,w:`durchgefuehrt`,p:``,en:`carried out / completed`,zh:`執行完成的`,k:`nach durchgefuehrter Arbeit`,kz:`在完成工作之後`,ex:`Nach durchgefuehrter Arbeit sollten die Handschuhe stets abgelegt werden.`,ez:`完成工作後應立即脫下手套。`},
+{s:`T1b: Laborkleidung & Sicherheit（實驗室服裝與安全）`,a:``,w:`ablegen`,p:``,en:`to take off / discard`,zh:`脫下、丟棄`,k:`Handschuhe ablegen`,kz:`脫下手套`,ex:`Die Handschuhe sollten nach durchgefuehrter Arbeit stets abgelegt werden und nicht auch noch waehrend anderer Taetigkeiten getragen werden.`,ez:`手套應在完成工作後立即脫下，不應在從事其他活動時繼續佩戴。`},
+{s:`T2: Betriebliche Veranstaltungen & Sport（公司活動與運動）`,a:`die`,w:`Gemeinschaftsveranstaltung`,p:`-en`,en:`company / community event`,zh:`公司集體活動`,k:`eine Gemeinschaftsveranstaltung organisieren`,kz:`籌辦集體活動`,ex:`Neben zahlreichen Sozialleistungen bietet unser Unternehmen alljaehrlich zwei Gemeinschaftsveranstaltungen an.`,ez:`除眾多員工福利外，我們公司每年還提供兩次集體活動。`},
+{s:`T2: Betriebliche Veranstaltungen & Sport（公司活動與運動）`,a:`die`,w:`Sozialleistung`,p:`-en`,en:`employee benefit / welfare benefit`,zh:`員工福利`,k:`Sozialleistungen anbieten`,kz:`提供員工福利`,ex:`Neben zahlreichen Sozialleistungen bietet unser Unternehmen alljaehrlich zwei Gemeinschaftsveranstaltungen an.`,ez:`除了眾多員工福利之外，公司每年還舉辦兩次集體活動。`},
+{s:`T2: Betriebliche Veranstaltungen & Sport（公司活動與運動）`,a:`der`,w:`Betriebsausflug`,p:`Betriebsausfluege`,en:`company outing / team excursion`,zh:`公司郊遊`,k:`einen Betriebsausflug veranstalten`,kz:`舉辦公司郊遊`,ex:`Immer am dritten Mittwoch im Mai findet unser eintaegiger Betriebsausflug statt.`,ez:`每年五月第三個星期三舉行我們的一日公司郊遊。`},
+{s:`T2: Betriebliche Veranstaltungen & Sport（公司活動與運動）`,a:``,w:`festgelegt`,p:``,en:`fixed / established / set`,zh:`固定的、規定的`,k:`vertraglich festgelegt`,kz:`合約規定的`,ex:`Die Geschaeftsleitung stellt ein festgelegtes Budget zur Verfuegung.`,ez:`管理層提供一筆固定預算。`},
+{s:`T2: Betriebliche Veranstaltungen & Sport（公司活動與運動）`,a:`die`,w:`Arbeitsdichte`,p:`(-)`,en:`workload density`,zh:`工作密度`,k:`aufgrund der hohen Arbeitsdichte`,kz:`由於高工作密度`,ex:`Aufgrund der Arbeitsdichte zum Jahresabschluss haben wir uns entschieden, ein Sommerfest zu veranstalten.`,ez:`由於年底工作密度高，我們決定舉辦夏日派對。`},
+{s:`T2: Betriebliche Veranstaltungen & Sport（公司活動與運動）`,a:``,w:`veranstalten`,p:``,en:`to organize / hold (an event)`,zh:`舉辦`,k:`ein Fest veranstalten`,kz:`舉辦慶典`,ex:`Wir entschieden uns, ein Sommerfest statt einer Weihnachtsfeier zu veranstalten.`,ez:`我們決定舉辦夏日派對而非聖誕晚會。`},
+{s:`T2: Betriebliche Veranstaltungen & Sport（公司活動與運動）`,a:`der`,w:`Infotag`,p:`-e`,en:`information day / open day`,zh:`資訊日`,k:`einen Infotag veranstalten`,kz:`舉辦資訊日`,ex:`Der Infotag dient der Aussenpraesentation und Unterhaltung.`,ez:`資訊日的目的是對外展示與娛樂。`},
+{s:`T2: Betriebliche Veranstaltungen & Sport（公司活動與運動）`,a:``,w:`laengerfristig`,p:``,en:`long-term / well in advance`,zh:`提早、長遠地`,k:`laengerfristig planen`,kz:`提前規劃`,ex:`Nach den Erfahrungen des letzten Info-Tags moechten wir dieses Mal laengerfristig planen.`,ez:`根據上次資訊日的經驗，我們這次希望提早做好規劃。`},
+{s:`T2: Betriebliche Veranstaltungen & Sport（公司活動與運動）`,a:``,w:`mitbeziehen`,p:``,en:`to include / involve`,zh:`納入、讓…參與`,k:`alle Mitarbeitenden in die Planung mitbeziehen`,kz:`讓所有員工參與策劃`,ex:`Wir moechten alle Mitarbeitenden in die Planung dieser Veranstaltung mitbeziehen.`,ez:`我們希望讓所有員工參與此次活動的策劃。`},
+{s:`T2: Betriebliche Veranstaltungen & Sport（公司活動與運動）`,a:`die`,w:`Projektgruppe`,p:`-n`,en:`project group / task force`,zh:`專案小組`,k:`eine Projektgruppe ins Leben rufen`,kz:`成立專案小組`,ex:`Dazu haben wir eine Projektgruppe ins Leben gerufen.`,ez:`為此，我們成立了一個專案小組。`},
+{s:`T2: Betriebliche Veranstaltungen & Sport（公司活動與運動）`,a:`das`,w:`Preisausschreiben`,p:`(-)`,en:`competition / prize draw`,zh:`有獎競賽`,k:`ein Preisausschreiben veranstalten`,kz:`舉辦有獎競賽`,ex:`Vielleicht koennen wir ein Preisausschreiben oder Gewinnspiele veranstalten.`,ez:`也許我們可以舉辦有獎競賽或抽獎活動。`},
+{s:`T3: Arbeitszeiten（工作時間）`,a:`die`,w:`Arbeitszeit`,p:`-en`,en:`working hours`,zh:`工作時間`,k:`flexible Arbeitszeiten haben`,kz:`實行彈性工時`,ex:`Die woechentliche Arbeitszeit betraegt 40 Stunden, wobei die Pausen nicht mitgerechnet werden.`,ez:`每週工作時間為40小時，不含休息時間。`},
+{s:`T3: Arbeitszeiten（工作時間）`,a:``,w:`betragen`,p:``,en:`to amount to / to be (quantities)`,zh:`達到、為（數量）`,k:`40 Stunden betragen`,kz:`達到40小時`,ex:`Die woechentliche Arbeitszeit betraegt 40 Stunden bei einem Arbeitstag von acht Stunden.`,ez:`每週工作時間為40小時，每工作日8小時。`},
+{s:`T3: Arbeitszeiten（工作時間）`,a:``,w:`betriebsbedingt`,p:``,en:`due to operational reasons`,zh:`因公司業務需要`,k:`betriebsbedingt moeglich sein`,kz:`因業務需要而可行`,ex:`Betriebsbedingt ist es moeglich, dass Sie bis zu zehn Stunden pro Tag arbeiten.`,ez:`因業務需要，您可能每天工作最多十小時。`},
+{s:`T3: Arbeitszeiten（工作時間）`,a:`die`,w:`Mehrarbeit`,p:`(-)`,en:`extra work / overtime`,zh:`額外工作、加班`,k:`Mehrarbeit ausgleichen`,kz:`補償加班`,ex:`Diese Mehrarbeit ist aber nur in Ausnahmefaellen erlaubt und muss innerhalb von sechs Monaten ausgeglichen werden.`,ez:`但這些額外工作只在特殊情況下才被允許，必須在六個月內補回。`},
+{s:`T3: Arbeitszeiten（工作時間）`,a:`die`,w:`Gleitzeitregelung`,p:`-en`,en:`flexitime policy`,zh:`彈性工時規定`,k:`Gleitzeitregelung aussetzen`,kz:`暫停彈性工時`,ex:`Aus betrieblichen Gruenden kann der Arbeitgeber die Gleitzeitregelung fuer eine gewisse Zeit aussetzen.`,ez:`基於業務原因，雇主可暫時暫停彈性工時規定。`},
+{s:`T3: Arbeitszeiten（工作時間）`,a:`die`,w:`Kernzeit`,p:`-en`,en:`core hours`,zh:`核心工作時間`,k:`in der Kernzeit anwesend sein`,kz:`在核心時間出勤`,ex:`Zwischen 10 und 15 Uhr, in der sogenannten Kernzeit, muessen Sie anwesend sein.`,ez:`上午10點至下午3點的核心時間內，您必須出勤。`},
+{s:`T3: Arbeitszeiten（工作時間）`,a:`das`,w:`Zeiterfassungssystem`,p:`-e`,en:`time tracking system`,zh:`工時記錄系統`,k:`das Zeiterfassungssystem nutzen`,kz:`使用工時記錄系統`,ex:`Unser elektronisches Zeiterfassungssystem registriert taeglich die geleisteten Arbeitsstunden auf Ihrem Arbeitszeitkonto.`,ez:`我們的電子工時記錄系統每天將完成的工時記錄在您的工時帳戶中。`},
+{s:`T3: Arbeitszeiten（工作時間）`,a:`die`,w:`Ueberstunde`,p:`-n`,en:`overtime hour`,zh:`加班時數`,k:`Ueberstunden abbauen`,kz:`消化加班時數`,ex:`Ihre Ueberstunden sollten bereits vor Monatsende durch weniger Arbeit abgebaut werden.`,ez:`您的加班時數應在月底前透過減少工作消化完畢。`},
+{s:`T3: Arbeitszeiten（工作時間）`,a:`die`,w:`Geschaeftsfuehrung`,p:`(-)`,en:`management / executive board`,zh:`管理層`,k:`mit der Geschaeftsfuehrung besprechen`,kz:`與管理層討論`,ex:`Wenn ein Abbau nicht moeglich ist, wird mit der Geschaeftsfuehrung eine rasche Loesung besprochen.`,ez:`若無法消化，將與管理層討論快速解決方案。`},
+{s:`T4: Datenschutz（資料保護）`,a:`der`,w:`Datenschutz`,p:`(-)`,en:`data protection`,zh:`個人資料保護`,k:`auf Datenschutz Wert legen`,kz:`重視資料保護`,ex:`Unser Betrieb legt auf Datenschutz grossen Wert.`,ez:`我們公司非常重視資料保護。`},
+{s:`T4: Datenschutz（資料保護）`,a:``,w:`vertraulich behandeln`,p:``,en:`to treat confidentially`,zh:`保密處理`,k:`Firmenereignisse vertraulich behandeln`,kz:`保密公司事務`,ex:`Die Mitarbeitenden sind verpflichtet, alle Firmenereignisse vertraulich zu behandeln.`,ez:`員工有義務將所有公司事務保密處理。`},
+{s:`T4: Datenschutz（資料保護）`,a:``,w:`weitergeben`,p:``,en:`to pass on / share`,zh:`傳遞、共享（資訊）`,k:`Daten nicht weitergeben`,kz:`不傳遞資料`,ex:`Ihre bei der Personalstelle gespeicherten Daten werden an niemand anderen weitergegeben.`,ez:`您在人事部門儲存的資料不會被轉交給任何其他人。`},
+{s:`T4: Datenschutz（資料保護）`,a:`die`,w:`Zustimmung`,p:`-en`,en:`consent / approval`,zh:`同意`,k:`persoenliche Zustimmung geben`,kz:`給予個人同意`,ex:`Sollte der Betrieb Fotos fuer Werbezwecke machen wollen, geht das nur mit Ihrer persoenlichen Zustimmung.`,ez:`若公司欲拍攝廣告照片，必須取得您的個人同意。`},
+{s:`T4: Datenschutz（資料保護）`,a:`die`,w:`Cyberkriminalitaet`,p:`(-)`,en:`cybercrime`,zh:`網路犯罪`,k:`zunehmende Cyberkriminalitaet`,kz:`日益增加的網路犯罪`,ex:`Gerade in Zeiten zunehmender Cyberkriminalitaet ist eine Schulung zur IT-Sicherheit absolut notwendig.`,ez:`尤其在網路犯罪日益猖獗的時代，IT安全培訓是絕對必要的。`},
+{s:`T4: Datenschutz（資料保護）`,a:`der`,w:`Zugangscode`,p:`-s`,en:`access code`,zh:`存取碼`,k:`spezielle Zugangscodes benoetigen`,kz:`需要特殊存取碼`,ex:`In den Seminaren erfahren Sie, in welchen Abteilungen Sie spezielle Zugangscodes benoetigen.`,ez:`在研討會上，您將了解在哪些部門需要特殊存取碼。`},
+{s:`T4: Datenschutz（資料保護）`,a:`die`,w:`Datenschutzbeauftragte`,p:`-n`,en:`data protection officer`,zh:`資料保護負責人`,k:`die Datenschutzbeauftragte kontaktieren`,kz:`聯繫資料保護負責人`,ex:`Weitere Informationen erhalten Sie von unserer Datenschutzbeauftragten Frau Herz, Durchwahl -111.`,ez:`更多資訊請向資料保護負責人Herz女士（分機-111）查詢。`},
+{s:`T5: Fortbildungen & Schulungen（進修與培訓）`,a:`die`,w:`Fortbildung`,p:`-en`,en:`further training / professional development`,zh:`進修、繼續教育`,k:`ein Fortbildungsprogramm entwickeln`,kz:`制訂進修計劃`,ex:`Wir haben ein umfassendes Fortbildungsprogramm entwickelt.`,ez:`我們制訂了一套全面的進修計劃。`},
+{s:`T5: Fortbildungen & Schulungen（進修與培訓）`,a:``,w:`befaehigen`,p:``,en:`to enable / qualify`,zh:`使有能力、使具備資格`,k:`sich weiterzuqualifizieren befaehigen`,kz:`使得以持續提升資格`,ex:`Wir haben Kurse entwickelt, die Sie befaehigen, sich fuer Ihre Arbeit weiterzuqualifizieren.`,ez:`我們開發了課程，使您能夠持續提升工作所需資格。`},
+{s:`T5: Fortbildungen & Schulungen（進修與培訓）`,a:``,w:`erforderlich`,p:``,en:`required / necessary`,zh:`必要的`,k:`Teilnahme ist erforderlich`,kz:`參加是必要的`,ex:`Ihre Teilnahme an diesen Fortbildungen ist erforderlich – sie finden waehrend der Arbeitszeit statt.`,ez:`您參加這些進修活動是必要的——在工作時間內進行。`},
+{s:`T5: Fortbildungen & Schulungen（進修與培訓）`,a:``,w:`selbstverstaendlich`,p:``,en:`of course / naturally`,zh:`當然地`,k:`selbstverstaendlich die Kosten uebernehmen`,kz:`理所當然地承擔費用`,ex:`Wir uebernehmen selbstverstaendlich die Kosten fuer die Teilnahme.`,ez:`我們當然會承擔參加費用。`},
+{s:`T5: Fortbildungen & Schulungen（進修與培訓）`,a:`die`,w:`Gesundheitsfoerderung`,p:`(-)`,en:`health promotion`,zh:`健康促進`,k:`betriebliche Gesundheitsfoerderung`,kz:`公司健康促進`,ex:`Im Rahmen der betrieblichen Gesundheitsfoerderung gibt es ein reichhaltiges Angebot an Seminaren.`,ez:`在公司健康促進計劃框架內，有豐富的研討會供選擇。`},
+{s:`T5: Fortbildungen & Schulungen（進修與培訓）`,a:``,w:`bezuschussen`,p:``,en:`to subsidize / co-fund`,zh:`補貼、資助`,k:`Veranstaltungen bezuschussen`,kz:`資助活動`,ex:`Diese Veranstaltungen werden von uns bezuschusst und finden zum Teil ausserhalb der Arbeitszeit statt.`,ez:`這些活動由我們資助，部分也在工作時間以外舉行。`},
+{s:`T5: Fortbildungen & Schulungen（進修與培訓）`,a:`der`,w:`Ueberblick`,p:`-e`,en:`overview / summary`,zh:`概覽、總覽`,k:`einen Ueberblick geben`,kz:`提供概覽`,ex:`In unserer Broschuere geben wir einen Ueberblick ueber die im naechsten Halbjahr stattfindenden Gesundheitskurse.`,ez:`在我們的小冊子中，提供了下半年健康課程的概覽。`},
+{s:`T6: Fuhrpark & Firmenparkplatz（公務車隊與停車場）`,a:`der`,w:`Fuhrpark`,p:`-s`,en:`company vehicle fleet`,zh:`公務車隊`,k:`Fahrzeuge aus dem Fuhrpark nutzen`,kz:`使用公務車隊`,ex:`Fuer notwendige Fahrten stehen den Mitarbeitenden zehn Firmenwagen und drei E-Bikes zur Verfuegung.`,ez:`公司有十輛公務車和三輛電動自行車供員工用於必要出行。`},
+{s:`T6: Fuhrpark & Firmenparkplatz（公務車隊與停車場）`,a:``,w:`dienstlich`,p:``,en:`for official / business purposes`,zh:`公務的、因公的`,k:`dienstlich genutzt werden`,kz:`供公務使用`,ex:`Die Fahrzeuge duerfen nur dienstlich genutzt werden.`,ez:`車輛只能用於公務目的。`},
+{s:`T6: Fuhrpark & Firmenparkplatz（公務車隊與停車場）`,a:`die`,w:`Parkgebuehr`,p:`-en`,en:`parking fee`,zh:`停車費`,k:`ohne Parkgebuehr abstellen`,kz:`免費停車`,ex:`Auf dem Firmenparkplatz im Innenhof koennen Sie Ihr Auto ohne Parkgebuehr abstellen.`,ez:`在內院的公司停車場，您可以免費停放私家車。`},
+{s:`T6: Fuhrpark & Firmenparkplatz（公務車隊與停車場）`,a:``,w:`begrenzt`,p:``,en:`limited`,zh:`有限的`,k:`eine begrenzte Anzahl`,kz:`有限的數量`,ex:`Es gibt allerdings nur eine begrenzte Anzahl Parkplaetze.`,ez:`但停車位數量有限。`},
+{s:`T6: Fuhrpark & Firmenparkplatz（公務車隊與停車場）`,a:``,w:`reserviert`,p:``,en:`reserved`,zh:`預留的`,k:`fuer Kunden reserviert`,kz:`為客戶預留`,ex:`Die Parkplaetze mit den Nummern 15-20 sind fuer unsere Kunden reserviert. Bitte lassen Sie diese frei.`,ez:`15至20號停車位為客戶保留，請勿占用。`},
+{s:`T6: Fuhrpark & Firmenparkplatz（公務車隊與停車場）`,a:``,w:`ueberdacht`,p:``,en:`covered / roofed`,zh:`有頂棚的`,k:`ueberdachte Fahrradstellplaetze`,kz:`有頂棚的自行車停放點`,ex:`An beiden Seiten des Firmenparkplatzes gibt es ueberdachte Fahrradstellplaetze.`,ez:`公司停車場兩側有帶頂棚的自行車停放點。`},
+{s:`T6: Fuhrpark & Firmenparkplatz（公務車隊與停車場）`,a:`der`,w:`Engpass`,p:`Engpaesse`,en:`bottleneck / shortage`,zh:`瓶頸、緊缺`,k:`keine groesseren Engpaesse geben`,kz:`沒有嚴重短缺`,ex:`Die Nutzung des Firmenparkplatzes ist kostenlos, da es im Augenblick keine groesseren Engpaesse gibt.`,ez:`停車場目前免費使用，因為目前沒有嚴重的停車位不足問題。`},
+{s:`T6: Fuhrpark & Firmenparkplatz（公務車隊與停車場）`,a:``,w:`umsteigen auf`,p:``,en:`to switch to / change over to`,zh:`轉換為、改乘`,k:`auf das Fahrrad umsteigen`,kz:`改騎自行車`,ex:`Immer mehr Mitarbeitende sind auf das Fahrrad umgestiegen.`,ez:`越來越多員工改騎自行車上班。`},
+{s:`T7: Mitarbeitersuche（招募人才）`,a:`die`,w:`Filiale`,p:`-n`,en:`branch / subsidiary`,zh:`分公司、分店`,k:`ein Netz aus Filialen aufbauen`,kz:`建立分公司網絡`,ex:`Bundesweit haben wir mittlerweile ein Netz aus 32 Filialen mit etwa 400 Mitarbeitenden aufgebaut.`,ez:`我們在全國已建立了一個擁有約400名員工的32家分公司網絡。`},
+{s:`T7: Mitarbeitersuche（招募人才）`,a:``,w:`vergroessern`,p:``,en:`to expand / enlarge`,zh:`擴大`,k:`das Unternehmen vergroessern`,kz:`擴大公司規模`,ex:`In den naechsten Jahren ist unser grosses Ziel, uns auf den internationalen Markt zu vergroessern.`,ez:`未來幾年，我們的重大目標是向國際市場擴展。`},
+{s:`T7: Mitarbeitersuche（招募人才）`,a:``,w:`qualifiziert`,p:``,en:`qualified / skilled`,zh:`有資格的、有能力的`,k:`qualifizierte Mitarbeiter suchen`,kz:`尋找有資格的員工`,ex:`Unser Unternehmen ist staendig auf der Suche nach qualifizierten und motivierten Mitarbeitenden.`,ez:`我們公司一直在尋找有資格且有積極性的員工。`},
+{s:`T7: Mitarbeitersuche（招募人才）`,a:``,w:`motiviert`,p:``,en:`motivated`,zh:`有積極性的`,k:`motivierte Mitarbeitende gewinnen`,kz:`吸引有積極性的員工`,ex:`Wir sind auf der Suche nach qualifizierten und motivierten Mitarbeitenden.`,ez:`我們正在尋找有資格且有積極性的員工。`},
+{s:`T7: Mitarbeitersuche（招募人才）`,a:`die`,w:`Bewerbung`,p:`-en`,en:`application (job)`,zh:`求職申請`,k:`eine Bewerbung einreichen`,kz:`遞交求職申請`,ex:`Auch im Nachbarland sind bereits Stellen ausgeschrieben und Bewerbungsprozesse laufen.`,ez:`在鄰國也已發布職缺並啟動了招募流程。`},
+{s:`T7: Mitarbeitersuche（招募人才）`,a:`das`,w:`Stellenangebot`,p:`-e`,en:`job offer / vacancy`,zh:`職缺、求才廣告`,k:`Stellenangebote ausschreiben`,kz:`發布職缺`,ex:`Machen Sie Freunde und Bekannte auf unsere Stellenanzeigen aufmerksam!`,ez:`請讓朋友和熟人注意我們的徵才廣告！`},
+{s:`T7: Mitarbeitersuche（招募人才）`,a:`die`,w:`Praemie`,p:`-n`,en:`bonus / premium / reward`,zh:`獎金`,k:`eine Praemie erhalten`,kz:`獲得獎金`,ex:`Als Dank erhalten Sie eine Vermittlungspraemie von bis zu 300 Euro.`,ez:`作為感謝，您將獲得高達300歐元的介紹獎金。`},
+{s:`T7: Mitarbeitersuche（招募人才）`,a:`die`,w:`Voraussetzung`,p:`-en`,en:`prerequisite / requirement`,zh:`前提條件`,k:`Voraussetzungen fuer die Praemie`,kz:`獎金的前提條件`,ex:`Die genauen Voraussetzungen koennen Sie dem Dokument im Intranet entnehmen.`,ez:`獎金領取的詳細前提條件，您可以從內網文件中查閱。`},
+{s:`T7: Mitarbeitersuche（招募人才）`,a:``,w:`entnehmen`,p:``,en:`to find in / take from a source`,zh:`從…中查閱、取得`,k:`dem Dokument entnehmen`,kz:`從文件中查閱`,ex:`Die genauen Voraussetzungen koennen Sie dem Dokument Mitarbeiter_innen_werben im Intranet entnehmen.`,ez:`您可以從內網文件中查閱詳細的前提條件。`}
+];
+
+const SECTIONS=[
+{title:`T1a: Allgemeine Regelungen am Arbeitsplatz（工作場所一般規定）`,color:`#1F4E79`,texts:[{src:`[課本 Klett] Text 1 – Gesundheit am Arbeitsplatz`,badgeCls:`klett`,badgeLabel:`[課本 Klett]`,paragraphs:[`Die Gesundheit unserer Mitarbeiterinnen und Mitarbeiter ist uns ein grosses Anliegen. So sind in allen Bueros moderne, ergonomische Arbeitsplaetze eingerichtet.`,`Um die Schreibtischhoehe, den Buerostuhl und den Abstand zum Bildschirm auf Ihre Koerpergroesse einstellen zu lassen, kontaktieren Sie bitte bereits in der ersten Arbeitswoche unseren Gesundheitsbeauftragten Anton Meisner unter der Durchwahl -039.`,`Die Temperatur und Luftfeuchtigkeit in den Raeumen wird zentral geregelt. Bei Aenderungsgruenschen kontaktieren Sie bitte umgehend Herrn Meisner. Fuer ein besseres Raumklima und eine angenehme Arbeitsatmosphaere sorgen ausserdem unsere Pflanzen.`,`Um allen ein konzentriertes Arbeiten zu ermoeglichen, sollte der Laermpegel in den Bueros moeglichst niedrig gehalten werden. Sollten Sie Gespraeche fuehren muessen, die laenger dauern, suchen Sie eine der Kommunikationsboxen auf, die sich in jedem Stockwerk befinden.`],paragraphs_zh:[`我們非常重視員工的健康。因此所有辦公室都配備了現代化的人體工學工作站。`,`如需調整書桌高度、辦公椅和螢幕距離，請在第一週工作期間聯繫我們的健康專員Anton Meisner，分機-039。`,`房間的溫度和濕度由中央統一調節。如需更改，請立即聯繫Meisner先生。我們的植栽也有助於改善室內環境。`,`為了讓所有人都能專注工作，辦公室的噪音應盡量保持低水平。如需進行較長的對話，請使用每層樓都設有的溝通隔間。`],qa:[{q:`1. Die Mitarbeiter/innen richten sich ihren Arbeitsplatz bei Arbeitsbeginn selbst ein.`,type:`tf`,options:[`richtig`,`falsch`],answer:1,label:`falsch`,explain:`Der Gesundheitsbeauftragte hilft dabei – man soll ihn in der ersten Arbeitswoche kontaktieren.`},{q:`2. Die Firma bittet die Mitarbeiter/innen, ...`,type:`mc`,options:[`a) die Temperatur in den Büros selbst einzustellen.`,`b) ihre Schreibtische für längere Unterhaltungen zu verlassen.`,`c) sich um die Pflanzen zu kümmern.`],answer:1,label:`b`,explain:`Für längere Gespräche soll man die Kommunikationsboxen aufsuchen, also den Schreibtisch verlassen.`}]},{src:`[Cornelsen] Regelungen am Arbeitsplatz (AKO.KG)`,badgeCls:`cornelsen`,badgeLabel:`[Cornelsen]`,paragraphs:[`Es ist wichtig, dass auf dem Betriebsgelaende der AKO.KG alle Massnahmen eingehalten werden, damit Sie sich selbst und andere nicht gefaehrden. Bei der Bedienung der Maschinen sind die jeweiligen Sicherheitsbestimmungen zu befolgen, angepasst an die neuen Richtlinien laut Arbeitsschutzgesetz vom Januar dieses Jahres.`,`Die Sicherheitsbestimmungen finden Sie in der Anlage zu dieser Willkommensmappe und zusammengefasst auch auf Informationsblaettern an den Maschinen. Sollten Sie hierzu Fragen haben, setzen Sie sich bitte mit unserer Sicherheitsbeauftragten Frau Scholz, Zimmer 122, Durchwahl -308, in Verbindung.`,`Dies ist auch die Kontaktstelle fuer alle Stoerungen, Unfaelle, Brand oder bei fuer Sie unklaren Situationen. In diesen Faellen kontaktieren Sie bitte auch immer den Empfang, Durchwahl -100.`,`Nach Verlassen der Werkstaetten sind diese immer ordnungsgemass abzuschliessen, damit sich kein Unbefugter den Anlagen und Maschinen naehern kann. Der Arbeitsplatz muss sauber gehalten werden, damit umherliegender Unrat nicht zur Gefahrenquelle werden kann. Achten Sie dabei bitte auch auf die vorgeschriebene Trennung der Abfaelle. Auf dem gesamten Betriebsgelaende ist Filmen und Fotografieren sowie der Konsum von Alkohol und Zigaretten nicht gestattet.`],paragraphs_zh:[`在AKO.KG廠區內，所有措施都必須被遵守，以免傷害自己和他人。操作機器時必須遵守相關安全規定，已依照今年一月份勞動保護法的新指導方針進行調整。`,`安全規定可在入職手冊附件及機器旁的說明頁中找到。如有疑問，請與安全負責人Scholz女士（122室，分機-308）聯繫。`,`這也是所有故障、事故、火災或不明情況的聯繫窗口。遇到這類情況，也請務必聯繫前台，分機-100。`,`離開車間後必須按規定鎖好，以防未授權人員靠近設備和機器。工作場所必須保持整潔，以免散落的垃圾成為危險源。請遵守規定的垃圾分類。整個廠區內禁止拍照錄像及飲酒和吸菸。`],qa:[{q:`6. Die Regelungen am Arbeitsplatz wurden aktualisiert.`,type:`tf`,options:[`richtig`,`falsch`],answer:0,label:`richtig`,explain:`Die Sicherheitsbestimmungen wurden angepasst an die neuen Richtlinien laut Arbeitsschutzgesetz vom Januar.`},{q:`7. Auf dem Firmengelände ...`,type:`mc`,options:[`a) darf kein Abfall entsorgt werden.`,`b) ist bei Gefahr Frau Scholz zu informieren.`,`c) ist es verboten, Nahrungsmittel zu sich zu nehmen.`],answer:1,label:`b`,explain:`Frau Scholz ist die Kontaktstelle für Störungen, Unfälle, Brand und unklare Situationen.`}]}]},
+{title:`T1b: Laborkleidung & Sicherheit（實驗室服裝與安全）`,color:`#37474F`,texts:[{src:`[課本 Klett] Text 2 – Hygiene- und Verhaltensrichtlinien in der Produktion`,badgeCls:`klett`,badgeLabel:`[課本 Klett]`,paragraphs:[`Der Eintritt in den Produktionsbereich darf nur mit entsprechender Schutzkleidung erfolgen. Die vom Betrieb zur Verfuegung gestellte Schutzkleidung ist korrekt anzuziehen: Der Kittel muss geschlossen und die Haare vom Kopfschutz vollstaendig bedeckt sein. Die Schuhe sind sauber zu halten. Ausserdem ist das Tragen von Schmuck im Produktionsbereich nicht gestattet.`,`Das Essen und Trinken ist nur in den Pausenraeumen erlaubt. Bei Arbeitsbeginn und nach den Pausen sind die Haende gruendlich zu reinigen. Wenn Sie Plastikhandschuhe tragen, muessen diese mindestens dreimal taeglich bzw. bei jedem Wechsel der Taetigkeit ausgetauscht werden.`,`Welche Taetigkeiten Plastikhandschuhe erfordern, sehen Sie auf dem Plan auf Seite 10. Der Eintritt in den Produktionsbereich erfolgt immer ueber die Hygieneschleuse. Dort werden Haende und Schuhe desinfiziert bzw. gereinigt.`,`Das Betreten des Produktionsbereichs ist nur ueber diesen Eingang erlaubt. Die gesamte Schutzkleidung muss nach Arbeitsende fuer eine professionelle Reinigung in den dafuer vorgesehenen Container geworfen werden. Die Einhaltung der Hygieneregeln wird durch den/die jeweilige/n Abteilungsleiter/in kontrolliert. In regelmaessigen Abstaenden finden Hygieneschulungen statt, die Anwesenheit ist dabei fuer alle Mitarbeiterinnen und Mitarbeiter aus dem Produktionsbereich Pflicht.`],paragraphs_zh:[`進入生產區域只能穿著相應的防護服。公司提供的防護服必須正確穿著：實驗衣必須扣好，頭髮必須完全被頭套蓋住。鞋子必須保持乾淨。此外，在生產區域不允許佩戴飾品。`,`飲食只允許在休息室進行。上班開始時及休息後必須徹底清洗雙手。如果您佩戴塑膠手套，每天至少必須更換三次，或在每次換工作任務時更換。`,`哪些工作需要佩戴塑膠手套，請參見第10頁的計劃表。進入生產區域必須經由衛生閘口。在那裡，雙手和鞋子將被消毒或清洗。`,`只允許通過這個入口進入生產區域。所有防護服在下班後必須投入指定的容器進行專業清洗。衛生規定的遵守情況由部門主管負責監督。定期舉辦衛生培訓，所有生產區域的員工均必須出席。`],qa:[{q:`3. Man darf den Produktionsbereich nur durch eine bestimmte Tür betreten.`,type:`tf`,options:[`richtig`,`falsch`],answer:0,label:`richtig`,explain:`Der Eintritt erfolgt immer über die Hygieneschleuse – das ist der einzige erlaubte Eingang.`},{q:`4. Mitarbeiter/innen im Produktionsbereich müssen ...`,type:`mc`,options:[`a) an Hygieneschulungen teilnehmen.`,`b) ihre Schutzkleidung regelmäßig waschen.`,`c) jederzeit Plastikhandschuhe anhaben.`],answer:0,label:`a`,explain:`Die Anwesenheit bei Hygieneschulungen ist für alle Mitarbeiter/innen im Produktionsbereich Pflicht.`}]},{src:`[Telc DTB] Sicherheit im Labor – Laborkleidung`,badgeCls:`telc`,badgeLabel:`[Telc DTB]`,paragraphs:[`Beim Arbeiten im Labor muss eine angemessene Kleidung getragen werden, um einerseits sich selbst, andererseits auch bestimmte Materialien zu schuetzen. Dazu gehoert zunaechst ein weisser Schutzkittel aus Baumwolle, der immer geschlossen und sauber sein muss.`,`Da ein Kittel nicht den ganzen Koerper schuetzt, ist darauf zu achten, dass stets geschlossenes, festes Schuhwerk (keine hohen Absaetze oder offene Sandalen) sowie lange Hosen zu tragen sind. Das feste, flache Schuhwerk dient nebenbei auch dem Zweck, in Notsituationen das Labor zuegig verlassen zu koennen.`,`Aus hygienischen Gruenden muessen auch die Haare durch eine Haube bedeckt sein. Lange Haare muessen zusaetzlich zu einem Zopf zusammengebunden werden. Haeufig kommt auch noch eine Schutzbrille zum Einsatz.`,`Beim Hantieren mit empfindlichen oder gefaehrlichen Substanzen sind Handschuhe zu tragen, um die Haende vor Kontamination zu schuetzen. Da die Handschuhe durch die Arbeit mit chemischen Substanzen verunreinigt sein koennten, sollten diese nach durchgefuehrter Arbeit stets abgelegt und nicht auch noch waehrend anderer Taetigkeiten im Labor getragen werden. Auf keinen Fall darf das Labor mit Handschuhen verlassen werden.`],paragraphs_zh:[`在實驗室工作時必須穿著合適的服裝，一方面保護自己，另一方面保護某些材料。首先需要一件永遠保持扣好且乾淨的白色棉質防護服。`,`由於實驗衣不能保護全身，必須注意始終穿著密閉的固定鞋類（不可穿高跟鞋或涼鞋）及長褲。固定的平底鞋此外也有助於在緊急情況下迅速離開實驗室。`,`出於衛生原因，頭髮也必須用帽子蓋住。長頭髮必須另外綁成馬尾。通常還會使用護目鏡。`,`在處理敏感或危險物質時必須佩戴手套，以保護雙手免受污染。由於手套可能被化學物質污染，應在完成工作後立即脫下，不應在從事其他活動時繼續佩戴。絕對不可以戴著手套離開實驗室。`],qa:[{q:`8. Beim Arbeiten im Labor darf man weder kurze Hosen tragen noch längere Haare offen lassen.`,type:`tf`,options:[`richtig`,`falsch`],answer:0,label:`richtig`,explain:`Es sind lange Hosen zu tragen und die Haare müssen durch eine Haube bedeckt bzw. zu einem Zopf gebunden sein.`},{q:`9. Im Labor müssen Handschuhe ...`,type:`mc`,options:[`a) bei allen Arbeiten getragen werden.`,`b) gleich bei Arbeitsantritt angelegt werden.`,`c) nach Arbeiten mit Chemikalien ausgezogen werden.`],answer:2,label:`c`,explain:`Nach durchgeführter Arbeit mit chemischen Substanzen sollten die Handschuhe stets abgelegt werden.`}]}]},
+{title:`T2: Betriebliche Veranstaltungen & Sport（公司活動與運動）`,color:`#2E7D32`,texts:[{src:`[Telc DTB] Gemeinschaftsveranstaltungen & Betriebssport`,badgeCls:`telc`,badgeLabel:`[Telc DTB]`,paragraphs:[`Neben zahlreichen Sozialleistungen bietet unser Unternehmen alljaehrlich zwei Gemeinschaftsveranstaltungen an. Immer am dritten Mittwoch im Mai findet unser eintaegiger Betriebsausflug statt, der sowohl einen kulturellen als auch einen sportlichen Teil enthaelt und mit einem Essen abschliesst.`,`Den Organisationsausschuss bilden stets zwei langjaehrige und zwei neue Mitarbeiterinnen oder Mitarbeiter. Die Geschaeftsleitung stellt ein festgelegtes Budget zur Verfuegung, die Kosten fuer alkoholische Getraenke traegt jeder Mitarbeiter selbst.`,`Nach einer Umfrage unter unseren Mitarbeiterinnen und Mitarbeitern entschieden wir uns aufgrund der Arbeitsdichte zum Jahresabschluss, der religioesen Vielfalt in unseren Teams und der hohen Termindichte in der Vorweihnachtszeit dazu, ein Sommerfest statt einer Weihnachtsfeier zu veranstalten. Feste Programmpunkte sind dabei ein gutes Essen, das Ueberreichen eines Preises an den Mitarbeiter mit der Idee des Jahres und Tanz zu Live-Musik.`,`Anders als beim Betriebsausflug koennen wichtige Geschaeftspartner als geladene Gaeste daran teilnehmen. Sportliche Aktivitaeten werden bei uns grossgeschrieben. Die Laufgruppe hat sogar schon an einem Marathon teilgenommen.`],paragraphs_zh:[`除眾多員工福利外，我們公司每年還提供兩次集體活動。每年五月第三個星期三舉行一日公司郊遊，包含文化和體育兩個環節，並以晚餐收尾。`,`組委會由兩名資深員工和兩名新員工組成。管理層提供固定預算，酒精飲料的費用由員工個人自付。`,`根據員工問卷調查，由於年底工作密度高、團隊宗教多元性以及聖誕前夕行程密集，我們決定舉辦夏日派對而非聖誕晚會。固定節目包括美食、頒發年度最佳創意獎和現場音樂舞蹈。`,`與公司郊遊不同，重要合作夥伴可作為受邀嘉賓參加夏日派對。體育活動在我們公司非常重要。跑步小組甚至已經參加過馬拉松比賽。`],qa:[{q:`6. Zu allen Gemeinschaftsveranstaltungen dürfen Gäste mitgebracht werden.`,type:`tf`,options:[`richtig`,`falsch`],answer:1,label:`falsch`,explain:`Nur beim Sommerfest können Geschäftspartner als geladene Gäste teilnehmen – beim Betriebsausflug nicht.`},{q:`7. Der Arbeitgeber veranstaltet ein Sommerfest, ...`,type:`mc`,options:[`a) da man in den Betriebsferien gut feiern kann.`,`b) das von ausgewählten Mitarbeitern organisiert wird.`,`c) weil die meisten Mitarbeiter im Dezember viele Termine haben.`],answer:2,label:`c`,explain:`Aufgrund der hohen Termindichte in der Vorweihnachtszeit wurde das Sommerfest gewählt.`}]},{src:`[Cornelsen] Betriebliche Veranstaltungen – Infotag`,badgeCls:`cornelsen`,badgeLabel:`[Cornelsen]`,paragraphs:[`Nicht nur durch unser Sommerfest und unseren Betriebsausflug moechten wir dazu beitragen, dass alle unsere Mitarbeitenden sich in unserem Unternehmen wohlfuehlen. Anfang des kommenden Jahres, im Februar oder Maerz, soll nach fuenfjaehriger Pause wieder einmal ein Infotag stattfinden.`,`Wie der Name schon sagt, wollen wir uns und unsere Produkte und Dienstleistungen der Oeffentlichkeit vorstellen. Nach den Erfahrungen unseres letzten Info-Tags moechten wir dieses Mal laengerfristig planen und alle Mitarbeitenden in die Planung dieser Veranstaltung mitbeziehen.`,`Dazu haben wir jetzt schon eine Projektgruppe ins Leben gerufen, die sich zum ersten Mal am 10. September um 12.30 Uhr in Raum 010 treffen wird. Neben einem Terminvorschlag, den die Geschaeftsleitung unterbreiten wird, sollen hier moegliche Programmschwerpunkte besprochen werden.`,`Der informative Teil, also die Praesentation unserer Produkte und Erzeugnisse, wird von der Geschaeftsleitung erstellt. Vielleicht koennen wir ein Preisausschreiben veranstalten, andere Gewinnspiele, einen Wettbewerb fuer die Kinder, Musik. Teilen Sie allen Familienangehoerigen, Freunden und Bekannten mit, dass unsere Firma ein grosses Fest plant, zu dem alle herzlich eingeladen sind.`],paragraphs_zh:[`我們不僅希望透過夏日派對和公司郊遊，讓所有員工在公司感到舒適。明年初，二月或三月，在中斷五年後，將再度舉辦一次資訊日。`,`顧名思義，我們希望向公眾介紹我們的公司、產品和服務。根據上次資訊日的經驗，我們這次希望提前規劃，並讓所有員工參與活動策劃。`,`為此，我們已成立了一個專案小組，將於9月10日中午12:30在010室首次開會。除了管理層將提出的時間提案外，還將討論可能的活動重點。`,`公司資訊和產品展示部分由管理層負責準備。也許我們可以舉辦有獎競賽、抽獎、兒童比賽或音樂活動。請通知所有家屬、朋友和熟人，我們公司正在籌辦一場大型活動，歡迎所有人參加。`],qa:[{q:`8. Der Infotag dient der Außenpräsentation und Unterhaltung.`,type:`tf`,options:[`richtig`,`falsch`],answer:0,label:`richtig`,explain:`Wir wollen uns und unsere Produkte der Öffentlichkeit vorstellen (Information) und es gibt Unterhaltungsprogramm.`},{q:`9. Die Mitarbeitenden sollen ...`,type:`mc`,options:[`a) für die Durchführung der Veranstaltung verantwortlich sein.`,`b) der Geschäftsführung ihre Terminvorschläge bekanntgeben.`,`c) aktiv bei der Vorbereitung mitmachen.`],answer:2,label:`c`,explain:`Alle Mitarbeitenden sollen in die Planung mitbezogen werden – sie sollen aktiv bei der Vorbereitung mitmachen.`}]}]},
+{title:`T3: Arbeitszeiten（工作時間）`,color:`#7B3F00`,texts:[{src:`[Cornelsen] Arbeitszeiten`,badgeCls:`cornelsen`,badgeLabel:`[Cornelsen]`,paragraphs:[`Die woechentliche Arbeitszeit betraegt 40 Stunden – bei einem Arbeitstag von acht Stunden, wobei die Pausen nicht mitgerechnet werden. Es gilt die Fuenf-Tage-Woche. Betriebsbedingt ist es moeglich, dass Sie bis zu zehn Stunden pro Tag arbeiten. Diese Mehrarbeit ist aber nur in Ausnahmefaellen erlaubt und muss innerhalb von sechs Monaten durch entsprechend kuerzere Arbeitstage ausgeglichen werden.`,`Wir haben flexible Arbeitszeiten. Sie koennen selbst bestimmen, wann Sie morgens anfangen zu arbeiten und wann Sie aufhoeren. Zwischen 10 und 15 Uhr, in der sogenannten Kernzeit, muessen Sie jedoch anwesend sein. Gleitzeitzeiten sind zwischen 8 und 10 Uhr und 15 und 17 Uhr.`,`Unser elektronisches Zeiterfassungssystem registriert taeglich die Zahl der von Ihnen geleisteten Arbeitsstunden auf Ihrem persoenlichen Arbeitszeitkonto. Haben Sie in einer Woche mehr als 40 Stunden gearbeitet, sollten Ihre Ueberstunden bereits vor Monatsende durch weniger Arbeit abgebaut werden.`,`Wenn ein Abbau nicht moeglich ist, wird mit der Geschaeftsfuehrung eine rasche Loesung besprochen. Aus betrieblichen Gruenden kann der Arbeitgeber die Gleitzeitregelung fuer eine gewisse Zeit aussetzen.`],paragraphs_zh:[`每週工作時間為40小時——每工作日8小時，不含休息時間。採五天工作制。因業務需要，您可能每天工作最多十小時。但這些額外工作只在特殊情況下才被允許，必須在六個月內以縮短工作日的方式補回。`,`我們提供彈性工時。您可以自行決定何時開始和結束工作。但上午10點至下午3點的核心時間內，您必須出勤。彈性工時時間為早上8至10點及下午3至5點。`,`我們的電子工時記錄系統每天將您完成的工時記錄在個人工時帳戶中。若某週工作超過40小時，加班時數應在月底前通過減少工作消化完畢。`,`若無法做到，將與管理層討論快速解決方案。基於業務原因，雇主可暫時暫停彈性工時規定。`],qa:[{q:`6. Die Beschäftigten dürfen mit der Arbeit anfangen, wann sie wollen.`,type:`tf`,options:[`richtig`,`falsch`],answer:1,label:`falsch`,explain:`In der Kernzeit (10–15 Uhr) müssen alle anwesend sein – man kann also nicht beliebig anfangen.`},{q:`7. Ergibt sich auf einem Arbeitszeitkonto ein Plus, ...`,type:`mc`,options:[`a) kann der Betrieb den Acht-Stunden-Tag verlängern oder verkürzen.`,`b) ist schnellstmöglich ein Ausgleich zu finden.`,`c) kann der Betrieb die Gleitzeitregelungen ändern.`],answer:1,label:`b`,explain:`Überstunden sollten vor Monatsende abgebaut werden; wenn nicht möglich, wird schnellstmöglich eine Lösung besprochen.`}]}]},
+{title:`T4: Datenschutz（資料保護）`,color:`#6A1B9A`,texts:[{src:`[Cornelsen] Datenschutz`,badgeCls:`cornelsen`,badgeLabel:`[Cornelsen]`,paragraphs:[`Unser Betrieb legt auf Datenschutz grossen Wert. Die Mitarbeitenden sind bei ihrer Arbeit verpflichtet, alle Firmenereignisse vertraulich zu behandeln. Die private E-Mail-Nutzung ist nicht erlaubt. Regeln zur Nutzung Ihres Smartphones regelt jede Abteilung nach Ruecksprache mit den dort arbeitenden Kolleginnen und Kollegen.`,`Im gesamten Betrieb duerfen aber mit dem Smartphone keine privaten Fotos gemacht werden. Genauso wichtig wie der Schutz unserer Firmendaten ist uns auch der Schutz Ihrer persoenlichen Daten. Ihre bei der Personalstelle gespeicherten Daten werden an niemand anderen weitergegeben.`,`Sollte der Betrieb fuer Werbezwecke Fotos machen wollen, auf denen Sie zu sehen sind, geht das nur mit Ihrer persoenlichen Zustimmung. Da der Datenschutz ein sehr komplexer Bereich ist, bieten wir fuer alle neuen Mitarbeitenden Datenschutzschulungen an. Die Teilnahme ist verpflichtend.`,`In den Seminaren erfahren Sie, in welchen Abteilungen des Unternehmens Sie spezielle Zugangscodes benoetigen, wie mit Passwoertern umzugehen ist und worauf Sie bei der Arbeit mit unserem Computersystem achten muessen. Gerade in Zeiten zunehmender Cyberkriminalitaet ist eine Schulung zur IT-Sicherheit absolut notwendig. Weitere Informationen zu Terminen und Inhalten der Schulung erhalten Sie von unserer Datenschutzbeauftragten Frau Herz, Durchwahl -111, Raum 15.`],paragraphs_zh:[`我們公司非常重視資料保護。員工在工作中有義務將所有公司事務保密處理。私人電子郵件的使用不被允許。智慧型手機的使用規則由每個部門與同事協商後自行規定。`,`但整個公司內不得用手機拍攝私人照片。保護員工的個人資料對我們同樣重要。您在人事部門儲存的資料不會被轉交給任何其他人。`,`若公司欲拍攝出現您的照片用於廣告目的，必須取得您的個人同意。由於資料保護是一個非常複雜的領域，我們為所有新員工提供資料保護培訓。參加是強制性的。`,`在研討會上，您將了解在哪些部門需要特殊存取碼、如何處理密碼以及在使用電腦系統時需注意哪些事項。尤其在網路犯罪日益猖獗的時代，IT安全培訓是絕對必要的。更多有關培訓時間和內容的資訊，請向資料保護負責人Herz女士查詢（分機-111，15室）。`],qa:[{q:`8. Sowohl betriebliche Daten als auch die Daten der Mitarbeitenden sollen geschützt werden.`,type:`tf`,options:[`richtig`,`falsch`],answer:0,label:`richtig`,explain:`Der Text betont sowohl den Schutz von Firmendaten als auch den Schutz persönlicher Daten der Mitarbeitenden.`},{q:`9. Die Mitarbeitenden ...`,type:`mc`,options:[`a) müssen Schulungen zum Datenschutz besuchen.`,`b) werden auf Schulungen Passwörter für ihre Arbeit bekommen.`,`c) dürfen aus Sicherheitsgründen im Betrieb weder ihre Smartphones benutzen noch persönliche E-Mails schreiben.`],answer:0,label:`a`,explain:`Die Teilnahme an den Datenschutzschulungen ist verpflichtend.`}]}]},
+{title:`T5: Fortbildungen & Schulungen（進修與培訓）`,color:`#B71C1C`,texts:[{src:`[Cornelsen] Fortbildungen, Schulungen, Seminare`,badgeCls:`cornelsen`,badgeLabel:`[Cornelsen]`,paragraphs:[`Wir freuen uns, mitteilen zu koennen, dass im September im Nebengebaeude unser eigenes Schulungs- und Seminarzentrum eroeffnet hat. Wir haben ein umfassendes Fortbildungsprogramm entwickelt, Kurse, die Sie befaehigen, sich fuer Ihre Arbeit weiterzuqualifizieren, z.B. Schulungen in neuen Softwareanwendungen.`,`Ihre Teilnahme an diesen Fortbildungen ist erforderlich. Sie finden waehrend der Arbeitszeit statt und wir uebernehmen selbstverstaendlich die Kosten. Organisiert werden die Fortbildungen von den verschiedenen Unternehmensbereichen. Die Mitarbeitenden sollen aber auch unbedingt selbst der Leitung ihrer Abteilung Vorschlaege dazu machen, in welchem Bereich sie fachlich noch unsicher sind und wo ihrer Meinung nach eine passende Fortbildung organisiert werden sollte.`,`Ausserdem gibt es im Rahmen der betrieblichen Gesundheitsfoerderung in Zusammenarbeit mit den Krankenkassen ein reichhaltiges Angebot an Seminaren. Wir empfehlen unbedingt den Besuch dieser Gesundheits- und Fitnesskurse: Waehlen Sie den Kurs aus, der Ihren eigenen Beduerfnissen entspricht.`,`Diese Veranstaltungen werden von uns bezuschusst und finden zum Teil auch nicht in unserem Betrieb und ausserhalb der Arbeitszeit statt. In unserer Broschuere Betriebliche Gesundheitsfoerderung geben wir einen Ueberblick ueber die im naechsten Halbjahr stattfindenden Gesundheitskurse.`],paragraphs_zh:[`我們很高興地通知您，九月我們自己的培訓和研討中心已在附屬樓開幕。我們制訂了全面的進修計劃，課程使您能夠持續提升工作資格，例如新軟體應用程式的培訓。`,`您參加這些進修活動是必要的。進修在工作時間內進行，我們當然承擔所有費用。進修由各部門負責組織。員工也應主動向部門管理層提出建議，說明自己在哪些方面仍感不確定、認為應安排哪些進修。`,`此外，在公司健康促進計劃框架內，與保險公司合作提供了豐富的研討會。我們強烈建議參加這些健康與健身課程——選擇符合您個人需求的課程。`,`這些活動由我們資助，部分也在工作時間以外及公司外舉行。在我們的《公司健康促進》小冊子中，提供了下半年健康課程的概覽。`],qa:[{q:`6. Die Kosten für die Kurse und Seminare übernimmt der Arbeitgeber.`,type:`tf`,options:[`richtig`,`falsch`],answer:0,label:`richtig`,explain:`Die Fortbildungen finden während der Arbeitszeit statt und der Betrieb übernimmt selbstverständlich die Kosten.`},{q:`7. Die Mitarbeitenden können selbst entscheiden, ...`,type:`mc`,options:[`a) welcher Gesundheitskurs für sie der passende ist.`,`b) welche Schulungen eingerichtet werden.`,`c) ob sie an den Fortbildungsveranstaltungen teilnehmen.`],answer:0,label:`a`,explain:`Man kann den Gesundheitskurs wählen, der den eigenen Bedürfnissen entspricht. Die Fortbildungen selbst sind verpflichtend.`}]}]},
+{title:`T6: Fuhrpark & Firmenparkplatz（公務車隊與停車場）`,color:`#00695C`,texts:[{src:`[Cornelsen] Fuhrpark und Firmenparkplatz`,badgeCls:`cornelsen`,badgeLabel:`[Cornelsen]`,paragraphs:[`Fuer notwendige Fahrten stehen den Mitarbeitenden des Aussendienstszehn Firmenwagen und drei E-Bikes (Lastenfahrraeder) zur Verfuegung. Die Fahrzeuge duerfen nur dienstlich genutzt werden. Wenn Sie einen Firmenwagen benoetigen, melden Sie sich beim Empfang bzw. tragen Sie sich dort fruehzeitig in eine Liste ein. Dort erhalten Sie auch den Schluessel und die notwendigen Fahrzeugpapiere. Ansprechpartnerin ist Frau Boenisch, Durchwahl -02.`,`Auf dem Firmenparkplatz im Innenhof koennen Sie Ihr eigenes Auto ohne Parkgebuehr abstellen, es gibt allerdings nur eine begrenzte Anzahl Parkplaetze. Zudem: Die Parkplaetze mit den Nummern 15–20 sind fuer unsere Kunden reserviert. Bitte lassen Sie diese Parkplaetze frei.`,`An beiden Seiten des Firmenparkplatzes gibt es ueberdachte Fahrradstellplaetze. Im Erdgeschoss des Gebaeudes B gibt es fuer die Kolleginnen und Kollegen, die mit dem Rad kommen, auch Moeglichkeiten, sich zu waschen und zu duschen. Ladeoptionen fuer die Akkus von E-Bikes sind neben den Duschraaeumen vorhanden.`,`Die Nutzung des Firmenparkplatzes ist zurzeit noch kostenlos, da immer mehr Mitarbeitende auf das Fahrrad umgestiegen sind und es im Augenblick keine groesseren Engpaesse gibt. Bitte schauen Sie aber immer auch nach oeffentlichen Parkplaetzen rund um den Kaiserplatz.`],paragraphs_zh:[`公司有十輛公務車和三輛電動貨運自行車供外勤員工用於必要出行。車輛只能用於公務目的。如需公務車，請到前台登記或提前填寫預約表。您也可以在那裡領取鑰匙和必要的車輛文件。聯絡人為Boenisch女士，分機-02。`,`在內院的公司停車場，您可以免費停放私家車，但停車位數量有限。此外，15至20號停車位為我們的客戶保留，請勿占用。`,`公司停車場兩側有帶頂棚的自行車停放點。B棟一樓為騎自行車上班的同事提供了洗漱設施。電動自行車電池的充電設施位於淋浴室旁。`,`公司停車場目前仍免費使用，因為越來越多員工改騎自行車，目前沒有嚴重的停車位不足問題。但也請留意凱澤廣場周邊的公共停車場。`],qa:[{q:`8. Es ist nicht sicher, ob die Nutzung des Firmenparkplatzes kostenlos bleiben kann.`,type:`tf`,options:[`richtig`,`falsch`],answer:0,label:`richtig`,explain:`Es heißt "zurzeit noch kostenlos" – das impliziert, dass es sich ändern könnte.`},{q:`9. Auf dem Firmenparkplatz ...`,type:`mc`,options:[`a) dürfen nur Mitarbeitende der Firma parken.`,`b) darf geparkt werden, wenn es keine öffentlichen Parkplätze mehr gibt.`,`c) können Fahrräder auch bei schlechtem Wetter geschützt abgestellt werden.`],answer:2,label:`c`,explain:`Es gibt überdachte Fahrradstellplätze an beiden Seiten des Firmenparkplatzes.`}]}]},
+{title:`T7: Mitarbeitersuche（招募人才）`,color:`#0277BD`,texts:[{src:`[課本 Klett] Mitarbeitersuche`,badgeCls:`klett`,badgeLabel:`[課本 Klett]`,paragraphs:[`Wir sind sehr stolz darauf, dass unsere Firma seit 20 Jahren stetig waechst. Bundesweit haben wir mittlerweile ein Netz aus 32 Filialen mit etwa 400 Mitarbeitenden aufgebaut. In den naechsten Jahren ist unser grosses Ziel, uns auf den internationalen Markt zu vergroessern. Daher ist unser Unternehmen staendig auf der Suche nach qualifizierten und motivierten Mitarbeitenden.`,`Auch in unserem Nachbarland sind bereits Stellen ausgeschrieben und Bewerbungsprozesse laufen. Wenn Sie Interesse haben, sich zu veraendern, wenden Sie sich bitte direkt an die Personalabteilung.`,`Das Vertrauen, das wir in Sie haben, haben wir auch in Ihr Netzwerk. Deshalb moechten wir Sie noch auf ein neues Angebot hinweisen: Machen Sie Freunde und Bekannte auf unsere Stellenanzeigen aufmerksam und sichern Sie sich eine Praemie! Bei erfolgreichem Abschluss eines neuen Arbeitsvertrags koennen Sie als werbende/r Mitarbeitende/r angeboten werden.`,`Als Dank erhalten Sie eine Vermittlungspraemie von bis zu 300 Euro. Die genauen Voraussetzungen fuer den Erhalt der Praemie koennen Sie dem Dokument Mitarbeiter/innen_werben_Mitarbeiter/innen im Intranet entnehmen. Weitere Fragen dazu beantwortet Ihnen gerne Frau Helga Jahn aus der Personalabteilung.`],paragraphs_zh:[`我們非常自豪，公司已穩定成長了20年。我們在全國已建立了一個擁有約400名員工的32家分公司網絡。未來幾年，我們的重大目標是向國際市場擴展。因此，我們公司一直在尋找有資格且有積極性的員工。`,`在鄰國也已發布職缺並啟動了招募流程。如果您有興趣轉換工作，請直接聯繫人事部門。`,`我們對您的信任也延伸到您的人際網絡。因此我們想向您介紹一個新優惠：請讓朋友和熟人注意我們的徵才廣告，為自己爭取一筆獎金！成功達成新勞動合約後，您可作為推薦員工獲得獎勵。`,`作為感謝，您將獲得高達300歐元的介紹獎金。詳細的領取條件，您可以從內網的「員工推薦員工」文件中查閱。如有其他問題，人事部門的Helga Jahn女士樂意為您解答。`],qa:[{q:`1. Die Firma sucht Mitarbeiter/innen im In- und Ausland.`,type:`tf`,options:[`richtig`,`falsch`],answer:0,label:`richtig`,explain:`Auch im Nachbarland sind bereits Stellen ausgeschrieben – die Firma sucht also international.`},{q:`2. Wenn man eine Belohnung bekommen will, ...`,type:`mc`,options:[`a) der Firma einem neuen Mitarbeiter/in vermittelt.`,`b) in einer neuen Filiale der Firma anfängt.`,`c) Stellenangebote der Firma weiterleitet.`],answer:0,label:`a`,explain:`Man erhält eine Vermittlungsprämie, wenn man erfolgreich neue Mitarbeitende wirbt und ein Arbeitsvertrag abgeschlossen wird.`}]}]}
+];
+const KEY='dtb_b2_v3';
+let unfamiliar=new Set();
+try{const s=localStorage.getItem(KEY);if(s)unfamiliar=new Set(JSON.parse(s));}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify([...unfamiliar]));}catch(e){}}
+
+// ── Speech ───────────────────────────────────────────────────────────────────
+const synth=window.speechSynthesis;
+let deVoice=null,enVoice=null,activePara=null;
+function loadVoices(){
+  const v=synth.getVoices();
+  deVoice=v.find(x=>x.lang.startsWith('de'))||null;
+  enVoice=v.find(x=>x.lang.startsWith('en'))||null;
+}
+loadVoices();
+if(speechSynthesis.onvoiceschanged!==undefined)speechSynthesis.onvoiceschanged=loadVoices;
+
+function speakText(text,lang){
+  synth.cancel();
+  const badge=document.getElementById('speakingBadge');
+  badge.classList.add('active');
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang=lang;u.voice=lang.startsWith('de')?deVoice:enVoice;u.rate=0.88;
+  u.onend=u.onerror=()=>{
+    badge.classList.remove('active');
+    if(activePara){activePara.classList.remove('speaking');activePara=null;}
+  };
+  synth.speak(u);
+}
+function speakWord(i){const v=VOCAB[i];speakText((v.a?v.a+' ':'')+v.w,'de-DE');}
+function speakKoll(i){speakText(VOCAB[i].k,'de-DE');}
+function speakSatz(i){speakText(VOCAB[i].ex,'de-DE');}
+function speakEn(i){speakText(VOCAB[i].en.split('/')[0].trim(),'en-US');}
+
+function speakPara(el,text){
+  if(activePara===el){
+    synth.cancel();
+    el.classList.remove('speaking');
+    activePara=null;
+    document.getElementById('speakingBadge').classList.remove('active');
+    return;
+  }
+  if(activePara)activePara.classList.remove('speaking');
+  activePara=el;
+  el.classList.add('speaking');
+  speakText(text,'de-DE');
+}
+
+// ── Mark ─────────────────────────────────────────────────────────────────────
+function toggleMark(idx){
+  if(unfamiliar.has(idx))unfamiliar.delete(idx);else unfamiliar.add(idx);
+  save();renderAll();
+  if(document.getElementById('exportPanel').classList.contains('visible'))renderExport();
+}
+let currentFilter='all';
+function setFilter(f,btn){
+  currentFilter=f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderAll();
+}
+function clearAll(){
+  if(!unfamiliar.size)return;
+  if(confirm('確定要清除所有「不熟悉」標記嗎？')){unfamiliar.clear();save();renderAll();}
+}
+
+// ── Verb highlight ────────────────────────────────────────────────────────────
+const VRE=/\b(einhalten|befolgen|anpassen|setzen|abschliessen|behandeln|weitergeben|geben|uebernehmen|besuchen|entwickeln|befaehigen|bezuschussen|nutzen|abstellen|reservieren|umsteigen|registrieren|aussetzen|ausgleichen|betragen|legen|dienen|planen|veranstalten|rufen|unterbreiten|mitbeziehen|werden|sein|haben|machen|leiten|informieren|ermoeglichen|vergroessern|erhalten|anbieten|teilnehmen|pruefen|klaeren|melden|ueben|halten|bringen|benutzen|abgeben|einrichten|regeln|wahren|schuetzen|beachten|trennen|foerdern|entnehmen|tragen|bedecken|ablegen|verlassen|binden|wenden|suchen|sichern|aufbauen|stellen)\b/g;
+function hlV(t){return t.replace(VRE,m=>`<span class="koll-verb">${m}</span>`);}
+
+// ── Vocab row ─────────────────────────────────────────────────────────────────
+function buildRow(v,i,compact){
+  const uf=unfamiliar.has(i);
+  const enP=v.en.split('/').map(s=>s.trim()).join('<br>');
+  const zhP=v.zh.split('/').map(s=>s.trim()).join('<br>');
+  const kP=hlV(v.k);
+  const dotTd=compact?'':
+    `<td class="dot-cell" onclick="event.stopPropagation();toggleMark(${i})"><span class="dot"></span></td>`;
+  const sc=compact?'':'speak-td';
+  return `<tr class="${uf?'unfamiliar':''}">
+    ${dotTd}
+    <td class="${sc}" onclick="${compact?'':`speakWord(${i})`}">
+      ${v.a?`<span class="artikel">${v.a}</span>`:''}<span class="word-de">${v.w}</span>${v.p?`<span class="plural">${v.p}</span>`:''}
+    </td>
+    <td class="${sc}" onclick="${compact?'':`speakEn(${i})`}">
+      <span class="word-en">${enP}</span><span class="word-zh">${zhP}</span>
+    </td>
+    <td class="${sc}" onclick="${compact?'':`speakKoll(${i})`}">
+      <span class="koll-de">${kP}</span><span class="koll-zh">${v.kz}</span>
+    </td>
+    <td class="${sc}" onclick="${compact?'':`speakSatz(${i})`}">
+      <span class="satz-de">${v.ex}</span><span class="satz-zh">${v.ez}</span>
+    </td>
+  </tr>`;
+}
+function buildVocabTable(items,compact){
+  const dTh=compact?'':'<th class="col-dot"></th>';
+  return `<table>
+    <thead><tr>${dTh}
+      <th class="col-de">德文</th><th class="col-enzh">英文＋中文</th>
+      <th class="col-koll">固定搭配＋中文</th><th class="col-satz">例句＋翻譯</th>
+    </tr></thead>
+    <tbody>${items.map(([v,i])=>buildRow(v,i,compact)).join('')}</tbody>
+  </table>`;
+}
+
+// ── Text card ─────────────────────────────────────────────────────────────────
+let qaState={};
+function revealAnswer(qaId){
+  document.getElementById('reveal-'+qaId).classList.add('hidden');
+  document.getElementById('answer-'+qaId).classList.remove('hidden');
+  document.getElementById('explain-'+qaId).classList.remove('hidden');
+  const correctIdx=parseInt(document.getElementById('answer-'+qaId).dataset.correct);
+  document.querySelectorAll(`.qa-opt[data-qa="${qaId}"]`).forEach((opt,i)=>{
+    if(i===correctIdx)opt.classList.add('correct');
+  });
+}
+
+function buildTextCard(tb,secIdx,textIdx){
+  const cardId=`c${secIdx}_${textIdx}`;
+  const zhArr=tb.paragraphs_zh||[];
+  let parasHtml='';
+  tb.paragraphs.forEach((para,pi)=>{
+    const pid=`${cardId}_p${pi}`;
+    const zhLine=zhArr[pi]||'';
+    // Escape backticks and $ in para for inline onclick
+    const paraEsc=para.replace(/\\/g,'\\\\').replace(/`/g,'\\`').replace(/\$/g,'\\$');
+    parasHtml+=`<div class="para-block">
+      <div class="para-de" id="${pid}" onclick="speakPara(this,\`${paraEsc}\`)">${para}</div>
+      ${zhLine?`<div class="para-zh">${zhLine}</div>`:''}
+    </div>`;
+  });
+
+  let qaHtml='';
+  if(tb.qa&&tb.qa.length){
+    let items='';
+    tb.qa.forEach((qa,qi)=>{
+      const qaId=`${cardId}_q${qi}`;
+      const optsHtml=qa.options.map((opt,oi)=>
+        `<div class="qa-opt" data-qa="${qaId}" data-idx="${oi}">${opt}</div>`
+      ).join('');
+      items+=`<div class="qa-item">
+        <div class="qa-q">${qa.q}</div>
+        <div class="qa-options">${optsHtml}</div>
+        <div class="answer-row">
+          <button class="reveal-btn" id="reveal-${qaId}" onclick="revealAnswer('${qaId}')">顯示答案</button>
+          <div class="hidden" id="answer-${qaId}" data-correct="${qa.answer}">
+            <span class="answer-badge">✓ ${qa.label}</span>
+          </div>
+        </div>
+        <div class="explain-text hidden" id="explain-${qaId}">${qa.explain}</div>
+      </div>`;
+    });
+    qaHtml=`<div class="qa-block"><div class="qa-label">📝 練習題</div>${items}</div>`;
+  }
+
+  return `<div class="text-card">
+    <div class="text-card-header">
+      <span class="badge badge-${tb.badgeCls}">${tb.badgeLabel}</span>
+      <span class="text-src">${tb.src.replace(/^\[.*?\]\s*/,'')}</span>
+    </div>
+    <div class="text-body">${parasHtml}</div>
+    ${qaHtml}
+  </div>`;
+}
+
+// ── Render ────────────────────────────────────────────────────────────────────
+function renderAll(){
+  const indexed=VOCAB.map((v,i)=>[v,i]);
+  const secVocab={};
+  indexed.forEach(([v,i])=>{if(!secVocab[v.s])secVocab[v.s]=[];secVocab[v.s].push([v,i]);});
+
+  let html='';
+  SECTIONS.forEach((sec,si)=>{
+    const col=sec.color;
+    const allV=secVocab[sec.title]||[];
+    const filtered=allV.filter(([v,i])=>{
+      if(currentFilter==='unfamiliar')return unfamiliar.has(i);
+      if(currentFilter==='familiar')return !unfamiliar.has(i);
+      return true;
+    });
+    const ufCnt=allV.filter(([v,i])=>unfamiliar.has(i)).length;
+
+    let tableHtml=filtered.length
+      ?`<div class="vocab-wrap">${buildVocabTable(filtered,false)}</div>`
+      :`<div class="vocab-wrap" style="padding:14px;text-align:center;font-size:12px;color:#aaa;background:#fff">（此篩選條件下無單字）</div>`;
+
+    let textsHtml=sec.texts.map((tb,ti)=>buildTextCard(tb,si,ti)).join('');
+
+    html+=`<div class="section-block" id="sec-${si}">
+      <div class="section-title" style="background:${col}">${sec.title}</div>
+      <div class="vocab-toolbar">
+        <span class="vocab-count">單字 ${allV.length} 個${ufCnt>0?` ‧ 不熟悉 ${ufCnt} 個`:''}</span>
+      </div>
+      ${tableHtml}
+      ${textsHtml}
+    </div>`;
+  });
+
+  document.getElementById('exportBtn').disabled=(unfamiliar.size===0);
+  document.getElementById('mainContent').innerHTML=html;
+}
+
+// ── Nav ───────────────────────────────────────────────────────────────────────
+function scrollToSection(idx,btn){
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const el=document.getElementById('sec-'+idx);
+  if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function buildNav(){
+  const c=document.getElementById('navBtns');
+  SECTIONS.forEach((sec,i)=>{
+    // Strip Chinese annotation for short nav label
+    const label=sec.title.replace(/（[^）]*）/,'').trim();
+    const btn=document.createElement('button');
+    btn.className='nav-btn';
+    btn.textContent=label;
+    btn.style.cssText=`border-color:${sec.color};`;
+    btn.onclick=()=>scrollToSection(i,btn);
+    c.appendChild(btn);
+  });
+}
+
+// ── Export ────────────────────────────────────────────────────────────────────
+function groupBySec(items){
+  const out={};
+  items.forEach(([v,i])=>{if(!out[v.s])out[v.s]=[];out[v.s].push([v,i]);});
+  return out;
+}
+function toggleExport(){
+  const p=document.getElementById('exportPanel');
+  p.classList.toggle('visible');
+  if(p.classList.contains('visible'))renderExport();
+}
+function renderExport(){
+  const words=VOCAB.map((v,i)=>[v,i]).filter(([v,i])=>unfamiliar.has(i));
+  document.getElementById('exportCount').textContent=`共 ${words.length} 個單字`;
+  if(!words.length){
+    document.getElementById('exportContent').innerHTML='<p style="color:#aaa;font-size:13px;padding:12px 0">尚未標記任何不熟悉的單字。</p>';
+    return;
+  }
+  let html='';
+  for(const [sec,ws] of Object.entries(groupBySec(words))){
+    const col=SECTIONS.find(s=>s.title===sec)?.color||'#1F4E79';
+    html+=`<div class="section-block">
+      <div class="section-title" style="background:${col}">${sec}</div>
+      <div class="vocab-wrap">${buildVocabTable(ws,true)}</div>
+    </div>`;
+  }
+  document.getElementById('exportContent').innerHTML=html;
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+buildNav();
+renderAll();
+</script>
+</body>
+</html>
