@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B2 Forumbeitrag – Redemittel</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; background: #f5f5f3; color: #1a1a1a; font-size: 14px; }
+
+.top-bar { background: #2E4057; padding: 14px 20px 10px; }
+.top-bar h1 { color: #fff; font-size: 17px; font-weight: 600; margin-bottom: 3px; }
+.top-bar .sub { color: #a8c8f0; font-size: 11px; }
+
+.page { max-width: 1200px; margin: 0 auto; padding: 20px; }
+
+.toolbar {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  margin-bottom: 16px; background: #fff; border: 0.5px solid #ddd;
+  border-radius: 10px; padding: 10px 14px;
+}
+.filter-btn { padding: 5px 14px; border-radius: 6px; border: 0.5px solid #ccc; background: #fff; color: #333; font-size: 13px; cursor: pointer; transition: all 0.15s; }
+.filter-btn.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+.stats { font-size: 12px; color: #888; margin-left: 4px; }
+.speaking-badge { display: none; align-items: center; gap: 5px; font-size: 11px; color: #666; padding: 3px 10px; border: 0.5px solid #ddd; border-radius: 20px; background: #fafaf8; }
+.speaking-badge.active { display: flex; }
+.speaking-dot { width: 7px; height: 7px; border-radius: 50%; background: #4a9eff; animation: pulse 0.9s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* ── Section ── */
+.section-block { margin-bottom: 24px; }
+.section-title {
+  font-size: 12px; font-weight: 700; color: #2E4057;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  padding: 9px 12px 7px; background: #d8e4f0;
+  border: 0.5px solid #b0c8e0; border-bottom: none;
+  border-radius: 6px 6px 0 0;
+}
+
+/* ── Table ── */
+table { width: 100%; border-collapse: collapse; background: #fff; border: 0.5px solid #ddd; border-radius: 0 0 8px 8px; overflow: hidden; table-layout: fixed; }
+th { text-align: left; padding: 7px 10px; background: #fafaf8; color: #777; font-weight: 500; font-size: 11px; border-bottom: 0.5px solid #e0e0e0; letter-spacing: 0.03em; }
+td { padding: 8px 10px; border-bottom: 0.5px solid #efefed; vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+
+/* row states */
+tr.fav td { background: #fffaf0; }
+
+/* ── Fav checkbox col ── */
+.col-fav { width: 46px; }
+td.mark-fav { width: 46px; text-align: center; cursor: pointer; user-select: none; vertical-align: middle; }
+td.mark-fav:hover { background: #fff0d0 !important; }
+td.mark-fav:hover .mark-box { border-color: #d08010; }
+.mark-box { display: inline-block; width: 11px; height: 11px; border: 1.5px solid #ccc; border-radius: 2px; margin-top: 2px; transition: all 0.15s; }
+tr.fav td.mark-fav .mark-box { background: #d08010; border-color: #d08010; }
+.fav-label { font-size: 9px; color: #ccc; display: block; margin-top: 2px; letter-spacing: 0.02em; }
+tr.fav .fav-label { color: #d08010; }
+
+/* ── Left col: Redemittel ── */
+.col-left { width: 32%; cursor: pointer; }
+.col-left:hover { background: #e8f0fe; }
+tr.fav .col-left:hover { background: #fff0d0; }
+.r-de { font-weight: 700; font-size: 13px; color: #1a3a6a; display: block; line-height: 1.55; margin-bottom: 3px; }
+.r-zh { font-size: 11px; color: #999; font-style: italic; display: block; }
+
+/* ── Right col: example ── */
+.col-right { width: 68%; }
+.ex-item {
+  cursor: pointer;
+  padding: 4px 7px; border-radius: 0 4px 4px 0;
+  border-left: 2px solid #aed6f1;
+  margin-bottom: 5px; transition: background 0.1s;
+}
+.ex-item:last-child { margin-bottom: 0; }
+.ex-item:hover { background: #e8f0fe; }
+tr.fav .ex-item:hover { background: #fff0d0; }
+.ex-de { font-size: 13px; color: #222; line-height: 1.6; display: block; }
+.ex-zh { font-size: 11px; color: #999; font-style: italic; display: block; margin-top: 1px; }
+
+/* ── Aufbau structure table ── */
+.aufbau-num { font-size: 15px; font-weight: 700; color: #c00000; text-align: center; width: 50px; }
+.aufbau-desc { font-size: 13px; color: #222; }
+tr:nth-child(even) .aufbau-num,
+tr:nth-child(even) .aufbau-desc { background: transparent; }
+
+/* ── Analysis table ── */
+.col-label { width: 160px; }
+.label-cell { background: #d9e2f3 !important; text-align: center; vertical-align: middle; }
+.label-num  { font-size: 20px; font-weight: 700; color: #c00000; display: block; }
+.label-de   { font-size: 12px; font-weight: 700; color: #1a3a6a; display: block; margin-top: 2px; }
+.label-zh   { font-size: 11px; color: #888; font-style: italic; display: block; }
+
+.analysis-item {
+  cursor: pointer;
+  padding: 4px 7px; border-radius: 0 4px 4px 0;
+  border-left: 2px solid #aed6f1;
+  margin-bottom: 5px; transition: background 0.1s;
+}
+.analysis-item:last-child { margin-bottom: 0; }
+.analysis-item:hover { background: #e8f0fe; }
+.a-de { font-size: 13px; color: #222; line-height: 1.6; display: block; }
+.a-zh { font-size: 11px; color: #999; font-style: italic; display: block; margin-top: 1px; }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <h1>B2 Forumbeitrag — Redemittel</h1>
+  <div class="sub">論壇寫作實用句型總整理（含中文翻譯）&nbsp;｜&nbsp; 🔊 點擊句型或例句朗讀德文 &nbsp;｜&nbsp; 勾選「常用」標記重要句型</div>
+</div>
+
+<div class="page">
+  <div class="toolbar">
+    <button class="filter-btn active" onclick="setFilter('all',this)">全部</button>
+    <button class="filter-btn" onclick="setFilter('fav',this)">常用</button>
+    <span class="stats" id="stats"></span>
+    <span class="speaking-badge" id="speakingBadge"><span class="speaking-dot"></span>朗讀中…</span>
+  </div>
+  <div id="mainContent"></div>
+</div>
+
+<script>
+// ── TTS ──────────────────────────────────────────────────────────────────────
+function speak(text) {
+  if (!text || !window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'de-DE'; u.rate = 0.92;
+  const badge = document.getElementById('speakingBadge');
+  badge.classList.add('active');
+  u.onend = u.onerror = () => badge.classList.remove('active');
+  window.speechSynthesis.speak(u);
+}
+function esc(s){ return (s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
+
+// ── STATE ────────────────────────────────────────────────────────────────────
+const state = { fav: new Set(), filter: 'all' };
+
+function loadState() {
+  try {
+    const f = localStorage.getItem('forum_fav');
+    if (f) JSON.parse(f).forEach(id => state.fav.add(id));
+  } catch(e){}
+}
+function saveState() {
+  try { localStorage.setItem('forum_fav', JSON.stringify([...state.fav])); } catch(e){}
+}
+loadState();
+
+// ── DATA ─────────────────────────────────────────────────────────────────────
+// Each entry: { id, section, left_de, left_zh, examples: [{de, zh}] }
+const REDEMITTEL = [
+
+// 1. Grüßen
+{id:1,  sec:"1. Grüßen（問候）",     left_de:"Hallo zusammen",                                                                          left_zh:"大家好",                                 ex:[{de:"Hallo zusammen, ich möchte heute meine Meinung zum Thema Pendeln oder Umziehen teilen.",zh:"大家好，我今天想分享我對通勤或搬家的看法。"}]},
+{id:2,  sec:"1. Grüßen（問候）",     left_de:"Hallo an alle",                                                                            left_zh:"向大家問好",                             ex:[{de:"Hallo an alle, was haltet ihr davon, für einen neuen Job 75 km zu pendeln?",zh:"大家好，你們怎麼看為了一份新工作每天通勤75公里？"}]},
+{id:3,  sec:"1. Grüßen（問候）",     left_de:"Sehr geehrte Damen und Herren",                                                            left_zh:"尊敬的女士們先生們",                     ex:[{de:"Sehr geehrte Damen und Herren, ich möchte meine Ansicht zum Thema Pendeln oder Umziehen darstellen.",zh:"尊敬的女士們先生們，我想表達我對通勤或搬家這個主題的看法。"}]},
+
+// 2. Einleitung
+{id:4,  sec:"2. Einleitung（引言）",  left_de:"Auch ich möchte meine Meinung zum Thema sagen / mitteilen / äußern.",                     left_zh:"我也想對這個主題發表看法。",             ex:[{de:"Auch ich möchte meine Meinung zum Thema Pendeln oder Umziehen äußern.",zh:"我也想對通勤或搬家這個主題發表看法。"}]},
+{id:5,  sec:"2. Einleitung（引言）",  left_de:"Ich habe gehört, dass wir in Zukunft ...",                                                 left_zh:"我聽說未來我們……",                       ex:[{de:"Ich habe gehört, dass wir in Zukunft an einem neuen Standort arbeiten sollen.",zh:"我聽說未來我們要在新的工作地點上班。"}]},
+{id:6,  sec:"2. Einleitung（引言）",  left_de:"In Zukunft sollten wir ... / In Zukunft gibt es ...",                                      left_zh:"未來我們應該……／未來會有……",             ex:[{de:"In Zukunft sollten wir überlegen, ob ein Umzug sinnvoller ist als tägliches Pendeln.",zh:"未來我們應該思考搬家是否比每天通勤更合理。"}]},
+{id:7,  sec:"2. Einleitung（引言）",  left_de:"Den Vorschlag finde ich ausgezeichnet / nicht so gut.",                                    left_zh:"我覺得這個建議很棒／不太好。",           ex:[{de:"Den Vorschlag, näher an den Arbeitsplatz zu ziehen, finde ich ausgezeichnet.",zh:"我覺得搬到工作地點附近這個建議很棒。"}]},
+{id:8,  sec:"2. Einleitung（引言）",  left_de:"Die Idee, dass ..., finde ich außerordentlich gut / problematisch.",                       left_zh:"我覺得……這個想法非常好／有問題。",       ex:[{de:"Die Idee, täglich 75 km zu pendeln, finde ich problematisch.",zh:"我覺得每天通勤75公里這個想法有問題。"}]},
+
+// 3. Meinung darstellen
+{id:9,  sec:"3. Meinung darstellen（表達立場／看法）", left_de:"Meiner Meinung nach ist das eine gute / schlechte Idee, weil ...",        left_zh:"在我看來這是一個好／壞主意，因為……",     ex:[{de:"Meiner Meinung nach ist ein Umzug eine gute Idee, weil man Zeit und Energie spart.",zh:"在我看來搬家是個好主意，因為可以節省時間和精力。"}]},
+{id:10, sec:"3. Meinung darstellen（表達立場／看法）", left_de:"Meiner Meinung nach ...",                                                  left_zh:"在我看來……",                             ex:[{de:"Meiner Meinung nach ist es sehr anstrengend, jeden Tag so weit zu pendeln.",zh:"在我看來，每天這樣長距離通勤非常累。"}]},
+{id:11, sec:"3. Meinung darstellen（表達立場／看法）", left_de:"Ich bin der Meinung, dass ...",                                            left_zh:"我認為……",                               ex:[{de:"Ich bin der Meinung, dass ein Umzug langfristig sinnvoller ist als tägliches Pendeln.",zh:"我認為從長遠來看搬家比每天通勤更合理。"}]},
+{id:12, sec:"3. Meinung darstellen（表達立場／看法）", left_de:"Ich bin der Auffassung, dass ...",                                         left_zh:"我的看法是……",                           ex:[{de:"Ich bin der Auffassung, dass man bei so einer weiten Strecke ernsthaft über einen Umzug nachdenken sollte.",zh:"我的看法是，面對如此遠的距離，應該認真考慮搬家。"}]},
+{id:13, sec:"3. Meinung darstellen（表達立場／看法）", left_de:"Ich finde die Idee gut / nicht so gut, weil ...",                          left_zh:"我覺得這個想法好／不太好，因為……",       ex:[{de:"Ich finde die Idee des Pendelns nicht so gut, weil es auf Dauer sehr anstrengend ist.",zh:"我覺得通勤這個想法不太好，因為長期來說非常累。"}]},
+{id:14, sec:"3. Meinung darstellen（表達立場／看法）", left_de:"Ich bin damit (nicht) einverstanden, weil ...",                            left_zh:"我（不）同意，因為……",                   ex:[{de:"Ich bin damit einverstanden, umzuziehen, weil ich näher bei meinen Kollegen sein möchte.",zh:"我同意搬家，因為我想更靠近我的同事。"}]},
+{id:15, sec:"3. Meinung darstellen（表達立場／看法）", left_de:"Ich finde / meine / denke / glaube, dass ...",                             left_zh:"我認為／相信……",                         ex:[{de:"Ich glaube, dass ein neuer Standort mit moderner Technik viele Vorteile bietet.",zh:"我相信配備現代技術的新地點有很多優點。"}]},
+{id:16, sec:"3. Meinung darstellen（表達立場／看法）", left_de:"Ich habe die Erfahrung gemacht, dass ...",                                 left_zh:"我的經驗是……",                           ex:[{de:"Ich habe die Erfahrung gemacht, dass tägliches Pendeln auf Dauer sehr ermüdend ist.",zh:"我的經驗是每天通勤長期下來非常累。"}]},
+{id:17, sec:"3. Meinung darstellen（表達立場／看法）", left_de:"Ich kann mir (nicht) vorstellen, dass ...",                                left_zh:"我（無法）想像……",                       ex:[{de:"Ich kann mir nicht vorstellen, dass ich jeden Tag 75 km pendeln kann.",zh:"我無法想像我每天都能通勤75公里。"}]},
+{id:18, sec:"3. Meinung darstellen（表達立場／看法）", left_de:"Ich kann mir überhaupt nicht vorstellen, ...",                             left_zh:"我完全無法想像……",                       ex:[{de:"Ich kann mir überhaupt nicht vorstellen, jeden Tag zwei Stunden im Auto zu sitzen.",zh:"我完全無法想像每天要在車上坐兩小時。"}]},
+{id:19, sec:"3. Meinung darstellen（表達立場／看法）", left_de:"Es stimmt (nicht), dass ...",                                              left_zh:"……（不）是真的。",                       ex:[{de:"Es stimmt nicht, dass Pendeln immer günstiger ist als Umziehen.",zh:"通勤一定比搬家便宜這件事並不總是正確。"}]},
+{id:20, sec:"3. Meinung darstellen（表達立場／看法）", left_de:"Einerseits ..., andererseits ...",                                         left_zh:"一方面……，另一方面……",                   ex:[{de:"Einerseits ist Pendeln flexibel, andererseits kostet es viel Zeit.",zh:"一方面通勤比較彈性，另一方面很花時間。"}]},
+{id:21, sec:"3. Meinung darstellen（表達立場／看法）", left_de:"Es klingt zunächst gut, dass ..., aber ...",                               left_zh:"乍聽之下……不錯，但……",                   ex:[{de:"Es klingt zunächst gut, dass der neue Standort moderner ist, aber der Weg ist sehr weit.",zh:"乍聽之下新地點更現代化不錯，但路程太遠。"}]},
+{id:22, sec:"3. Meinung darstellen（表達立場／看法）", left_de:"Ich befürchte, dass ...",                                                  left_zh:"我擔心……",                               ex:[{de:"Ich befürchte, dass ich durch das lange Pendeln weniger Zeit für Erholung habe.",zh:"我擔心因為長時間通勤，我休息時間會變少。"}]},
+{id:23, sec:"3. Meinung darstellen（表達立場／看法）", left_de:"Ein großer Vorteil / Nachteil wäre, dass ...",                             left_zh:"一個很大的優點／缺點是……",               ex:[{de:"Ein großer Nachteil wäre, dass ich täglich im Stau stehen könnte.",zh:"一個很大的缺點是我每天可能都會塞車。"}]},
+{id:24, sec:"3. Meinung darstellen（表達立場／看法）", left_de:"Ich vertrete den Standpunkt / die Meinung, dass ...",                      left_zh:"我的立場／看法是……",                     ex:[{de:"Ich vertrete den Standpunkt, dass ein Umzug langfristig sinnvoller ist.",zh:"我的立場是從長遠來看搬家更合理。"}]},
+{id:25, sec:"3. Meinung darstellen（表達立場／看法）", left_de:"Ich kann allen nur raten, ...",                                            left_zh:"我只能建議大家……",                       ex:[{de:"Ich kann allen nur raten, über einen Umzug nachzudenken, wenn der Arbeitsplatz sehr weit entfernt ist.",zh:"如果工作地點很遠，我只能建議大家考慮搬家。"}]},
+{id:26, sec:"3. Meinung darstellen（表達立場／看法）", left_de:"Das ist mir ... wert.",                                                    left_zh:"這對我來說值得……",                       ex:[{de:"Ein kurzer Arbeitsweg ist mir einen Umzug wert.",zh:"對我來說，為了更短的通勤距離而搬家是值得的。"}]},
+{id:27, sec:"3. Meinung darstellen（表達立場／看法）", left_de:"Das ist zwar ..., aber ...",                                               left_zh:"這雖然……，但是……",                       ex:[{de:"Das ist zwar eine gute berufliche Chance, aber der Arbeitsweg ist sehr lang.",zh:"這雖然是一個好的工作機會，但通勤距離很長。"}]},
+{id:28, sec:"3. Meinung darstellen（表達立場／看法）", left_de:"Viele denken, dass ..., aber ...",                                         left_zh:"很多人認為……，但是……",                   ex:[{de:"Viele denken, dass Pendeln günstiger ist, aber langfristig kann es sehr teuer werden.",zh:"很多人認為通勤比較便宜，但長期其實可能很貴。"}]},
+{id:29, sec:"3. Meinung darstellen（表達立場／看法）", left_de:"Ein weiterer Aspekt dabei ist, dass ...",                                  left_zh:"另一個重點是……",                         ex:[{de:"Ein weiterer Aspekt dabei ist, dass ein Umzug mehr Freizeit ermöglichen kann.",zh:"另一個重點是搬家可能讓人有更多的自由時間。"}]},
+{id:30, sec:"3. Meinung darstellen（表達立場／看法）", left_de:"..., deshalb käme ... niemals in Frage.",                                  left_zh:"……，因此……絕對不會考慮。",               ex:[{de:"Ich möchte mehr Zeit für meine Familie haben, deshalb käme tägliches Pendeln für mich niemals in Frage.",zh:"我希望有更多時間陪家人，因此每天通勤對我來說完全不會考慮。"}]},
+{id:31, sec:"3. Meinung darstellen（表達立場／看法）", left_de:"Es wäre doch völlig unlogisch.",                                           left_zh:"那樣完全不合理。",                       ex:[{de:"Es wäre doch völlig unlogisch, jeden Tag 150 Kilometer zu fahren, wenn man auch umziehen könnte.",zh:"如果可以搬家，卻每天開150公里通勤，那完全不合理。"}]},
+
+// 4. Vorteile und Nachteile
+{id:32, sec:"4. Vorteile und Nachteile benennen（列舉優缺點）", left_de:"Dafür spricht, dass ... / Dagegen spricht, dass ...",             left_zh:"支持的理由是……／反對的理由是……",         ex:[{de:"Dafür spricht, dass man beim Umzug Zeit spart; dagegen spricht, dass die Miete teurer sein kann.",zh:"支持的理由是搬家可以省時間；反對的理由是房租可能更貴。"}]},
+{id:33, sec:"4. Vorteile und Nachteile benennen（列舉優缺點）", left_de:"Ich kann zwar verstehen, dass ..., jedoch / aber ...",            left_zh:"我雖然理解……，但是……",                   ex:[{de:"Ich kann zwar verstehen, dass manche nicht umziehen wollen, jedoch ist tägliches Pendeln sehr belastend.",zh:"我雖然理解有些人不想搬家，但每天通勤真的很累。"}]},
+{id:34, sec:"4. Vorteile und Nachteile benennen（列舉優缺點）", left_de:"Hervorragend finde ich ..., weniger gut finde ich ...",           left_zh:"我覺得很棒的是……，不太好的是……",         ex:[{de:"Hervorragend finde ich die moderne Ausstattung, weniger gut finde ich die 75 km Entfernung.",zh:"我覺得現代化設備很棒，但75公里的距離不太好。"}]},
+{id:35, sec:"4. Vorteile und Nachteile benennen（列舉優缺點）", left_de:"Das wird sich positiv / negativ auf ... auswirken.",              left_zh:"這會對……造成正面／負面影響。",           ex:[{de:"Das wird sich negativ auf meine Work-Life-Balance auswirken.",zh:"這會對我的工作生活平衡造成負面影響。"}]},
+{id:36, sec:"4. Vorteile und Nachteile benennen（列舉優缺點）", left_de:"... hat den entscheidenden Vorteil, dass ...",                    left_zh:"……有決定性的優點：……",                   ex:[{de:"Ein Umzug hat den entscheidenden Vorteil, dass ich weniger Pendelzeit habe.",zh:"搬家的決定性優點是我通勤時間會變少。"}]},
+{id:37, sec:"4. Vorteile und Nachteile benennen（列舉優缺點）", left_de:"Ein Argument, das gegen ... spricht, ist ...",                    left_zh:"一個反對……的理由是……",                   ex:[{de:"Ein Argument, das gegen tägliches Pendeln spricht, ist der hohe Zeitverlust.",zh:"一個反對每天通勤的理由是時間浪費很大。"}]},
+
+// 5. Belege anführen
+{id:38, sec:"5. Belege anführen（舉例／提出證據）", left_de:"Beispielsweise ...",                                                           left_zh:"例如……",                                 ex:[{de:"Beispielsweise spare ich nach einem Umzug pro Woche etwa zehn Stunden Pendelzeit.",zh:"例如，搬家後我每週大約能省下十小時通勤時間。"}]},
+{id:39, sec:"5. Belege anführen（舉例／提出證據）", left_de:"Exemplarisch wird dies verdeutlicht an ...",                                   left_zh:"這點可由……具體看出。",                   ex:[{de:"Exemplarisch wird dies verdeutlicht an meinen Benzinkosten, die durch Pendeln stark steigen.",zh:"這點可由我的油錢看出，通勤讓花費大幅上升。"}]},
+{id:40, sec:"5. Belege anführen（舉例／提出證據）", left_de:"Dies zeigt sich zum Beispiel an ...",                                          left_zh:"這可以從……看出。",                       ex:[{de:"Dies zeigt sich zum Beispiel an den häufigen Verspätungen, wenn der Verkehr stockt.",zh:"這可以從交通堵塞時經常遲到看出。"}]},
+{id:41, sec:"5. Belege anführen（舉例／提出證據）", left_de:"Klar wird dies, wenn man sich vor Augen führt, dass ...",                      left_zh:"當你想到……就很清楚。",                   ex:[{de:"Klar wird dies, wenn man sich vor Augen führt, dass Pendeln langfristig Stress und Gesundheitsprobleme verursachen kann.",zh:"當你想到長期通勤可能帶來壓力和健康問題，就很清楚。"}]},
+
+// 6. Schluss
+{id:42, sec:"6. Schluss（結尾提問／收束）", left_de:"Was ist eure Meinung zu dem Thema?",                                                  left_zh:"你們對這個主題的看法是什麼？",           ex:[{de:"Was ist eure Meinung dazu: Lieber pendeln oder gleich umziehen?",zh:"你們怎麼看：寧願通勤還是乾脆搬家？"}]},
+{id:43, sec:"6. Schluss（結尾提問／收束）", left_de:"Was denkt ihr darüber?",                                                              left_zh:"你們怎麼想？",                           ex:[{de:"Was denkt ihr darüber, jeden Tag 75 km zu pendeln?",zh:"你們怎麼看每天通勤75公里？"}]},
+{id:44, sec:"6. Schluss（結尾提問／收束）", left_de:"Wie findet ihr das?",                                                                 left_zh:"你們覺得如何？",                         ex:[{de:"Wie findet ihr es, wegen eines neuen Standorts umzuziehen?",zh:"你們覺得因為新地點而搬家怎麼樣？"}]},
+{id:45, sec:"6. Schluss（結尾提問／收束）", left_de:"Was haltet ihr davon?",                                                               left_zh:"你們覺得這樣如何？",                     ex:[{de:"Was haltet ihr davon, erst zu pendeln und später zu entscheiden, ob man umzieht?",zh:"你們覺得先通勤、之後再決定要不要搬家如何？"}]},
+{id:46, sec:"6. Schluss（結尾提問／收束）", left_de:"Wir müssen eine andere Lösung finden. Was denkt ihr darüber?",                        left_zh:"我們必須找到另一個解決方案。你們怎麼看？", ex:[{de:"Wir müssen eine andere Lösung finden, zum Beispiel mehr Homeoffice oder Fahrgemeinschaften. Oder was denkt ihr?",zh:"我們必須找到另一個解決方案，例如更多在家工作或共乘。你們怎麼看？"}]},
+{id:47, sec:"6. Schluss（結尾提問／收束）", left_de:"Ich bin gespannt auf eure Antwort.",                                                   left_zh:"我很期待你們的回覆。",                   ex:[{de:"Ich bin gespannt auf eure Antwort: Würdet ihr pendeln oder umziehen?",zh:"我很期待你們的回覆：你們會通勤還是搬家？"}]},
+{id:48, sec:"6. Schluss（結尾提問／收束）", left_de:"Ich freue mich darauf, eure Erfahrungen zu diesem Thema zu erfahren / lesen.",        left_zh:"我很期待看到你們分享的經驗。",           ex:[{de:"Ich freue mich darauf, eure Erfahrungen zu diesem Thema zu lesen, besonders wenn ihr schon einmal vor der Entscheidung zwischen Pendeln und Umziehen standet.",zh:"我很期待閱讀你們在這個主題上的經驗，尤其是如果你們曾經面臨過通勤或搬家的選擇。"}]},
+{id:49, sec:"6. Schluss（結尾提問／收束）", left_de:"Schreibt doch mal, was ihr darüber denkt.",                                           left_zh:"請寫寫看你們怎麼想。",                   ex:[{de:"Schreibt doch mal, was ihr darüber denkt: Ist tägliches Pendeln für euch machbar?",zh:"請寫寫看你們怎麼想：每天通勤對你們來說可行嗎？"}]},
+{id:50, sec:"6. Schluss（結尾提問／收束）", left_de:"Es würde mich freuen, von euch zu hören.",                                            left_zh:"如果能聽到你們的想法我會很開心。",       ex:[{de:"Es würde mich freuen, von euch zu hören, welche Lösung ihr bevorzugt.",zh:"如果能聽到你們更偏好的解法我會很開心。"}]},
+{id:51, sec:"6. Schluss（結尾提問／收束）", left_de:"Abschließend möchte ich sagen, dass ...",                                             left_zh:"最後我想說……",                           ex:[{de:"Abschließend möchte ich sagen, dass jeder individuell entscheiden sollte, ob er pendeln oder umziehen möchte.",zh:"最後我想說，每個人都應該依自身情況決定通勤或搬家。"}]},
+{id:52, sec:"6. Schluss（結尾提問／收束）", left_de:"Zusammenfassend lässt sich sagen, dass ...",                                          left_zh:"總結來說……",                             ex:[{de:"Zusammenfassend lässt sich sagen, dass ein Umzug bei großer Entfernung oft die bessere Lösung ist.",zh:"總結來說，距離很遠時搬家往往是更好的解決方案。"}]},
+
+// 7. Gruß
+{id:53, sec:"7. Gruß（署名問候語）",  left_de:"Viele Grüße",                                                                              left_zh:"誠摯問候",                               ex:[{de:"Viele Grüße\nYi-Ting",zh:"誠摯問候　Yi-Ting"}]},
+{id:54, sec:"7. Gruß（署名問候語）",  left_de:"Mit freundlichen Grüßen",                                                                  left_zh:"此致 敬禮",                              ex:[{de:"Mit freundlichen Grüßen\nYi-Ting",zh:"此致 敬禮　Yi-Ting"}]},
+];
+
+// ── ANALYSE DATA ─────────────────────────────────────────────────────────────
+const ANALYSE = [
+  { num:"①", labelDe:"Einleitung",    labelZh:"引言",
+    blocks:[
+      {de:"Liebe Kolleginnen und Kollegen, auch ich möchte etwas zum Thema »Weniger Müll im Betrieb« schreiben. Ich habe gesehen, dass die Snackautomaten bereits entfernt wurden, weil wir Müll vermeiden sollen.",
+       zh:"親愛的同事們，我也想針對「減少職場垃圾」這個主題寫點什麼。我注意到零食販賣機已被撤除，原因是我們應該要減少垃圾。"}
+    ]},
+  { num:"②", labelDe:"Meinung äußern", labelZh:"表達立場",
+    blocks:[
+      {de:"Ich finde das gar keine schlechte Idee.", zh:"我覺得這個想法一點都不差。"}
+    ]},
+  { num:"③", labelDe:"Begründung",    labelZh:"理由說明",
+    blocks:[
+      {de:"Viele Kollegen kaufen sich zur Mittagspause etwas aus dem Snackautomaten. Dadurch wird unnötiger Müll produziert.", zh:"很多同事午休時會去零食販賣機買東西，這樣會產生多餘的垃圾。"},
+      {de:"Dies ist nicht nur für unsere Firma, sondern auch für die Umwelt schlecht.", zh:"這不只對公司不好，對環境也有害。"}
+    ]},
+  { num:"④", labelDe:"Beispiel",      labelZh:"舉例",
+    blocks:[
+      {de:"Vor allem die Mikrowelle finde ich sehr praktisch. Ich koche immer etwas mehr am Abend und kann mir die Reste dann als Mittagessen warm machen. Dadurch wird weniger Verpackungsmüll produziert.", zh:"我尤其覺得微波爐非常實用。我晚上都會多煮一點，隔天可以把剩菜熱來當午餐，這樣就能減少包裝垃圾。"},
+      {de:"Außerdem isst man dadurch häufiger gesünder und man spart Geld.", zh:"此外，這樣也能吃得更健康，還可以省錢。"}
+    ]},
+  { num:"⑥", labelDe:"Gegenargument", labelZh:"反對意見",
+    blocks:[
+      {de:"Einerseits finde ich diese Idee sehr hilfreich, andererseits gibt es diesbezüglich auch Nachteile, vor allem wenn man keine Zeit hat, zu Hause zu kochen, oder wenn man das Essen zu Hause vergisst.", zh:"一方面我覺得這個想法很有幫助，另一方面也有缺點，尤其是當你沒時間在家煮飯，或是忘記帶便當的時候。"},
+      {de:"Ohne Snackautomaten hat man so keine Möglichkeit, sich schnell etwas in der Mittagspause zu kaufen. Es bleibt dann nur die Möglichkeit, den weit entfernten Supermarkt zu besuchen.", zh:"沒有販賣機的話，午休時就沒辦法快速買到東西，只能去很遠的超市。"}
+    ]},
+  { num:"⑧", labelDe:"Schluss",       labelZh:"結尾",
+    blocks:[
+      {de:"Findet ihr diese Idee gut? Was sagt ihr denn dazu?", zh:"你們覺得這個想法好嗎？你們怎麼看？"},
+      {de:"Viele Grüße", zh:"誠摯問候"}
+    ]},
+];
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function buildRow(entry) {
+  const isFav = state.fav.has(entry.id);
+  const cls = isFav ? 'fav' : '';
+  const exHtml = entry.ex.map(e => {
+    const deFormatted = e.de.replace(/\n/g,'<br>');
+    return `<div class="ex-item" onclick="speak('${esc(e.de.replace(/\n/g,' '))}')">
+      <span class="ex-de">${deFormatted}</span>
+      <span class="ex-zh">${e.zh}</span>
+    </div>`;
+  }).join('');
+  return `<tr class="${cls}">
+    <td class="mark-fav col-fav" onclick="toggleFav(${entry.id})">
+      <span class="mark-box"></span>
+      
+    </td>
+    <td class="col-left" onclick="speak('${esc(entry.left_de)}')">
+      <span class="r-de">${entry.left_de}</span>
+      <span class="r-zh">${entry.left_zh}</span>
+    </td>
+    <td class="col-right">${exHtml}</td>
+  </tr>`;
+}
+
+function render() {
+  let list = REDEMITTEL;
+  if (state.filter === 'fav') list = REDEMITTEL.filter(e => state.fav.has(e.id));
+
+  const favCount = state.fav.size;
+  document.getElementById('stats').textContent = `共 ${REDEMITTEL.length} 句型　常用 ${favCount}`;
+
+  if (!list.length) {
+    document.getElementById('mainContent').innerHTML = '<div style="text-align:center;padding:40px;color:#aaa;font-size:13px;background:#fff;border:0.5px solid #ddd;border-radius:8px;">沒有標記為常用的句型</div>';
+    return;
+  }
+
+  // Group by section
+  const sections = {};
+  const secOrder = [];
+  list.forEach(e => {
+    if (!sections[e.sec]) { sections[e.sec] = []; secOrder.push(e.sec); }
+    sections[e.sec].push(e);
+  });
+
+  const thead = `<thead><tr>
+    <th class="col-fav">常用</th>
+    <th class="col-left">句型／Redemittel &nbsp;🔊 點擊朗讀</th>
+    <th class="col-right">主題例句：Pendeln oder Umziehen &nbsp;🔊 點擊朗讀</th>
+  </tr></thead>`;
+
+  let html = secOrder.map(sec =>
+    `<div class="section-block">
+      <div class="section-title">${sec}</div>
+      <table>${thead}<tbody>${sections[sec].map(buildRow).join('')}</tbody></table>
+    </div>`
+  ).join('');
+
+  // Aufbau section
+  html += `<div class="section-block" style="margin-top:40px;">
+    <div class="section-title" style="background:#c8d8e8;">Aufbau Forumsbeitrag &nbsp;·&nbsp; Thema: »Weniger Müll im Betrieb« &nbsp;(S.39 / 10b)</div>
+    <table>
+      <thead><tr>
+        <th style="width:50px;text-align:center;">番號</th>
+        <th>論壇文章架構（Aufbau）</th>
+      </tr></thead>
+      <tbody>
+        ${[
+          ["①","Einleitung（引言）"],
+          ["②","Meinung klar äußern（明確表達立場）"],
+          ["③","Begründung / Erklärung: warum? logisch begründen（理由說明）"],
+          ["④","Beispiel（舉例）"],
+          ["⑤","...（可繼續補充論點，自由發揮）"],
+          ["⑥","Gegenargument（反對意見）"],
+          ["⑦","Lösungsvorschlag（解決方案）"],
+          ["⑧","Schluss – Frage in die Runde（結尾提問）"],
+        ].map(([n,d],i) =>
+          `<tr style="${i%2===1?'background:#f7f9fd':''}">
+            <td class="aufbau-num">${n}</td>
+            <td class="aufbau-desc">${d}</td>
+          </tr>`
+        ).join('')}
+      </tbody>
+    </table>
+  </div>`;
+
+  // Analysis section
+  html += `<div class="section-block">
+    <div class="section-title" style="background:#c8d8e8;">文章內容分析 &nbsp;·&nbsp; ⑤ 省略；⑦ Lösungsvorschlag 本文未出現</div>
+    <table>
+      <thead><tr>
+        <th class="col-label" style="text-align:center;">段落分類</th>
+        <th>原文（Originaltext）&nbsp;🔊 點擊朗讀</th>
+      </tr></thead>
+      <tbody>
+        ${ANALYSE.map(row => {
+          const blocksHtml = row.blocks.map(b =>
+            `<div class="analysis-item" onclick="speak('${esc(b.de)}')">
+              <span class="a-de">${b.de}</span>
+              <span class="a-zh">${b.zh}</span>
+            </div>`
+          ).join('');
+          return `<tr>
+            <td class="label-cell col-label">
+              <span class="label-num">${row.num}</span>
+              <span class="label-de">${row.labelDe}</span>
+              <span class="label-zh">${row.labelZh}</span>
+            </td>
+            <td>${blocksHtml}</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>
+  </div>`;
+
+  document.getElementById('mainContent').innerHTML = html;
+}
+
+function toggleFav(id) {
+  if (state.fav.has(id)) state.fav.delete(id);
+  else state.fav.add(id);
+  saveState();
+  render();
+}
+
+function setFilter(f, btn) {
+  state.filter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+render();
+</script>
+</body>
+</html>
