@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wortfamilien Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+TC:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f7f5f0;
+  --surface: #ffffff;
+  --border: #e2ddd6;
+  --text: #1c1a17;
+  --muted: #7a7469;
+  --accent: #2d5a3d;
+  --accent-light: #eaf2ec;
+  --tag-bg: #f0ede8;
+  --root-colors: #2d5a3d, #5a2d3d, #2d3d5a, #5a4a2d, #3d2d5a;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Lora', 'Noto Sans TC', Georgia, serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* ── Header ── */
+header {
+  background: var(--text);
+  color: #f7f5f0;
+  padding: 28px 40px 24px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+header h1 {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+header .subtitle {
+  font-size: 12px;
+  opacity: 0.55;
+  font-style: italic;
+  margin-top: 3px;
+  font-family: 'Lora', serif;
+}
+
+/* ── Search ── */
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 8px;
+  padding: 8px 14px;
+  gap: 8px;
+  min-width: 240px;
+}
+.search-bar input {
+  background: none;
+  border: none;
+  outline: none;
+  color: #f7f5f0;
+  font-size: 14px;
+  font-family: 'IBM Plex Mono', monospace;
+  width: 200px;
+}
+.search-bar input::placeholder { color: rgba(247,245,240,0.4); }
+.search-bar svg { opacity: 0.5; flex-shrink: 0; }
+
+/* ── Root tabs ── */
+.root-tabs {
+  padding: 20px 40px 0;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+.root-tab {
+  padding: 8px 18px 10px;
+  border: none;
+  background: none;
+  font-size: 13px;
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+.root-tab:hover { color: var(--text); }
+.root-tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  font-weight: 500;
+}
+.root-tab .tab-count {
+  font-size: 11px;
+  opacity: 0.6;
+  margin-left: 4px;
+}
+
+/* ── Main layout ── */
+.main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 40px;
+}
+
+/* ── Root group header ── */
+.root-group { margin-bottom: 48px; }
+.root-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--border);
+}
+.root-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--accent);
+}
+.root-meaning {
+  font-size: 13px;
+  color: var(--muted);
+  font-style: italic;
+}
+.root-count {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  margin-left: auto;
+}
+
+/* ── Word cards ── */
+.word-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
+  gap: 16px;
+}
+
+.word-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+.word-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
+
+.card-header {
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+.card-header:hover { background: #faf9f6; }
+
+.word-de {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.3;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.word-de .artikel {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 400;
+  font-style: italic;
+}
+.word-de .root-highlight {
+  /* highlighted root portion */
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+.word-trans {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 3px;
+  line-height: 1.5;
+}
+.word-trans .zh { font-family: 'Noto Sans TC', sans-serif; }
+.word-trans .en { font-style: italic; }
+
+.speak-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 5px 8px;
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 14px;
+  flex-shrink: 0;
+  transition: all 0.15s;
+  line-height: 1;
+}
+.speak-btn:hover { background: var(--accent-light); color: var(--accent); border-color: var(--accent); }
+.speak-btn.speaking { background: var(--accent-light); color: var(--accent); border-color: var(--accent); }
+
+/* ── Card body (expandable) ── */
+.card-body {
+  padding: 0 20px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.2s;
+}
+.card-body.open {
+  max-height: 800px;
+  padding: 16px 20px 18px;
+}
+
+.section-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+  margin-top: 14px;
+}
+.section-label:first-child { margin-top: 0; }
+
+/* breakdown */
+.breakdown {
+  background: var(--accent-light);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: #1c1a17;
+}
+.breakdown .arrow { color: var(--accent); font-weight: 600; }
+
+/* collocations */
+.collocations { display: flex; flex-direction: column; gap: 5px; }
+.coll-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  font-size: 13.5px;
+  padding: 5px 0;
+  border-bottom: 1px dashed var(--border);
+}
+.coll-item:last-child { border-bottom: none; }
+.coll-de { font-family: 'Lora', serif; cursor: pointer; }
+.coll-de:hover { color: var(--accent); }
+.coll-zh { color: var(--muted); font-family: 'Noto Sans TC', sans-serif; font-size: 13px; }
+
+/* tags (synonyms, related) */
+.tag-list { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: var(--tag-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.tag:hover { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
+.tag.related-word { border-style: dashed; }
+
+/* examples */
+.examples { display: flex; flex-direction: column; gap: 10px; }
+.example-item { font-size: 13.5px; }
+.ex-de {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  cursor: pointer;
+  line-height: 1.6;
+}
+.ex-de:hover { color: var(--accent); }
+.ex-zh {
+  color: var(--muted);
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 13px;
+  margin-top: 1px;
+}
+
+/* expand arrow */
+.expand-icon {
+  font-size: 12px;
+  color: var(--muted);
+  transition: transform 0.25s;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+.word-card.open .expand-icon { transform: rotate(180deg); }
+
+/* ── Search results ── */
+.search-results-info {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 20px;
+  font-style: italic;
+}
+.no-results {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ── Empty state ── */
+.empty-tab {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--muted);
+}
+.empty-tab p { font-size: 14px; font-style: italic; }
+
+/* ── Highlight for search ── */
+mark {
+  background: #fff3b0;
+  border-radius: 2px;
+  padding: 0 1px;
+}
+
+@media (max-width: 640px) {
+  header { padding: 20px; }
+  .root-tabs { padding: 12px 20px 0; }
+  .main { padding: 20px; }
+  .word-grid { grid-template-columns: 1fr; }
+  .coll-item { grid-template-columns: 1fr; gap: 2px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Wortfamilien Tracker</h1>
+    <div class="subtitle">詞根族群學習工具 — Deutsch B2</div>
+  </div>
+  <div class="search-bar">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="searchInput" placeholder="搜尋單字、中文、例句…" oninput="handleSearch(this.value)">
+  </div>
+</header>
+
+<div class="root-tabs" id="rootTabs"></div>
+
+<div class="main" id="mainContent"></div>
+
+<script src="data.js"></script>
+<script>
+// ── Speech ──
+let synth = window.speechSynthesis;
+let deVoice = null;
+function loadVoices() {
+  deVoice = synth.getVoices().find(v => v.lang.startsWith('de')) || null;
+}
+loadVoices();
+if (speechSynthesis.onvoiceschanged !== undefined) speechSynthesis.onvoiceschanged = loadVoices;
+
+function speak(text, btn) {
+  synth.cancel();
+  if (btn) {
+    document.querySelectorAll('.speak-btn').forEach(b => b.classList.remove('speaking'));
+    btn.classList.add('speaking');
+    setTimeout(() => btn.classList.remove('speaking'), 2000);
+  }
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'de-DE';
+  if (deVoice) u.voice = deVoice;
+  u.rate = 0.9;
+  synth.speak(u);
+}
+
+// ── Tabs ──
+let currentTab = 'all';
+let searchQuery = '';
+
+function getRoots() {
+  const roots = {};
+  WORDS.forEach(w => {
+    if (!roots[w.root]) roots[w.root] = { label: w.root, meaning: w.rootMeaning, words: [] };
+    roots[w.root].words.push(w);
+  });
+  return roots;
+}
+
+function renderTabs() {
+  const roots = getRoots();
+  const tabs = document.getElementById('rootTabs');
+  const allCount = WORDS.length;
+  let html = `<button class="root-tab ${currentTab==='all'?'active':''}" onclick="switchTab('all')">全部 <span class="tab-count">${allCount}</span></button>`;
+  Object.entries(roots).forEach(([root, data]) => {
+    const active = currentTab === root ? ' active' : '';
+    html += `<button class="root-tab${active}" onclick="switchTab('${root}')">-${root} <span class="tab-count">${data.words.length}</span></button>`;
+  });
+  tabs.innerHTML = html;
+}
+
+function switchTab(tab) {
+  currentTab = tab;
+  searchQuery = '';
+  document.getElementById('searchInput').value = '';
+  renderTabs();
+  renderMain();
+}
+
+// ── Highlight helper ──
+function hl(text, q) {
+  if (!q || !text) return text || '';
+  const esc = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return String(text).replace(new RegExp('('+esc+')', 'gi'), '<mark>$1</mark>');
+}
+
+// ── Highlight root in word ──
+function hlRoot(word, root) {
+  if (!root) return word;
+  // Find root in word (case-insensitive) and wrap
+  const idx = word.toLowerCase().indexOf(root.toLowerCase());
+  if (idx === -1) return word;
+  return word.slice(0, idx) + '<span class="root-highlight">' + word.slice(idx, idx+root.length) + '</span>' + word.slice(idx+root.length);
+}
+
+// ── Render a word card ──
+function buildCard(w, q='') {
+  const wordId = 'card-' + w.id;
+  const deText = (w.artikel ? w.artikel + ' ' : '') + w.word;
+
+  // Highlight root in word display
+  const wordDisplay = hlRoot(hl(w.word, q), q ? '' : w.root);
+  const artikelHtml = w.artikel ? `<span class="artikel">${w.artikel}</span>` : '';
+
+  const collHtml = (w.collocations||[]).map(c => `
+    <div class="coll-item">
+      <span class="coll-de" onclick="speak('${c.de.replace(/'/g,"\\'")}',null)">${hl(c.de,q)}</span>
+      <span class="coll-zh">${hl(c.zh,q)}</span>
+    </div>`).join('');
+
+  const synHtml = (w.synonyms||[]).map(s =>
+    `<span class="tag" onclick="handleSearch('${s}')">${hl(s,q)}</span>`).join('');
+
+  const relHtml = (w.related||[]).map(r =>
+    `<span class="tag related-word" onclick="handleSearch('${r}')">${hl(r,q)}</span>`).join('');
+
+  const exHtml = (w.examples||[]).map(e => `
+    <div class="example-item">
+      <div class="ex-de" onclick="speak('${e.de.replace(/'/g,"\\'")}',null)">${hl(e.de,q)}</div>
+      <div class="ex-zh">${hl(e.zh,q)}</div>
+    </div>`).join('');
+
+  return `
+  <div class="word-card" id="${wordId}">
+    <div class="card-header" onclick="toggleCard('${wordId}')">
+      <div>
+        <div class="word-de">${artikelHtml}${wordDisplay}</div>
+        <div class="word-trans">
+          <span class="zh">${hl(w.zh,q)}</span>
+          <span style="color:#ccc;margin:0 5px;">|</span>
+          <span class="en">${hl(w.en,q)}</span>
+        </div>
+      </div>
+      <div style="display:flex;gap:6px;align-items:flex-start;">
+        <button class="speak-btn" onclick="event.stopPropagation();speak('${deText.replace(/'/g,"\\'")}',this)" title="朗讀">▶</button>
+        <span class="expand-icon">▼</span>
+      </div>
+    </div>
+    <div class="card-body" id="${wordId}-body">
+      ${w.breakdown ? `
+      <div class="section-label">拆解記憶</div>
+      <div class="breakdown">${hl(w.breakdown,q)}</div>` : ''}
+
+      ${collHtml ? `
+      <div class="section-label">常見搭配</div>
+      <div class="collocations">${collHtml}</div>` : ''}
+
+      ${synHtml ? `
+      <div class="section-label">同義字</div>
+      <div class="tag-list">${synHtml}</div>` : ''}
+
+      ${relHtml ? `
+      <div class="section-label">同根字 — 點擊查詢</div>
+      <div class="tag-list">${relHtml}</div>` : ''}
+
+      ${exHtml ? `
+      <div class="section-label">例句 — 點擊朗讀</div>
+      <div class="examples">${exHtml}</div>` : ''}
+    </div>
+  </div>`;
+}
+
+function toggleCard(id) {
+  const card = document.getElementById(id);
+  const body = document.getElementById(id+'-body');
+  card.classList.toggle('open');
+  body.classList.toggle('open');
+}
+
+// ── Render main ──
+function renderMain() {
+  const el = document.getElementById('mainContent');
+
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    const matches = WORDS.filter(w => {
+      return [w.word, w.zh, w.en, w.breakdown,
+        ...(w.collocations||[]).flatMap(c=>[c.de,c.zh]),
+        ...(w.synonyms||[]),
+        ...(w.related||[]),
+        ...(w.examples||[]).flatMap(e=>[e.de,e.zh])
+      ].some(s => s && String(s).toLowerCase().includes(q));
+    });
+
+    if (!matches.length) {
+      el.innerHTML = `<div class="no-results">找不到「${searchQuery}」的相關單字</div>`;
+      return;
+    }
+    el.innerHTML = `
+      <div class="search-results-info">找到 ${matches.length} 個結果 — 「${searchQuery}」</div>
+      <div class="word-grid">${matches.map(w => buildCard(w, searchQuery)).join('')}</div>`;
+    return;
+  }
+
+  const roots = getRoots();
+  let wordsToShow = [];
+
+  if (currentTab === 'all') {
+    // Group by root
+    let html = '';
+    Object.entries(roots).forEach(([root, data]) => {
+      html += `
+      <div class="root-group">
+        <div class="root-header">
+          <span class="root-label">-${root}</span>
+          <span class="root-meaning">${data.meaning}</span>
+          <span class="root-count">${data.words.length} 個單字</span>
+        </div>
+        <div class="word-grid">${data.words.map(w=>buildCard(w)).join('')}</div>
+      </div>`;
+    });
+    el.innerHTML = html;
+  } else {
+    const data = roots[currentTab];
+    if (!data) { el.innerHTML = '<div class="empty-tab"><p>找不到此詞根</p></div>'; return; }
+    el.innerHTML = `
+      <div class="root-group">
+        <div class="root-header">
+          <span class="root-label">-${data.label}</span>
+          <span class="root-meaning">${data.meaning}</span>
+          <span class="root-count">${data.words.length} 個單字</span>
+        </div>
+        <div class="word-grid">${data.words.map(w=>buildCard(w)).join('')}</div>
+      </div>`;
+  }
+}
+
+// ── Search ──
+let searchTimer;
+function handleSearch(val) {
+  searchQuery = val.trim();
+  if (val !== document.getElementById('searchInput').value) {
+    document.getElementById('searchInput').value = val;
+  }
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => {
+    currentTab = 'all';
+    renderTabs();
+    renderMain();
+  }, 200);
+}
+
+// ── Init ──
+renderTabs();
+renderMain();
+</script>
+</body>
+</html>
