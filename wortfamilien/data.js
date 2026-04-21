@@ -1351,8 +1351,8 @@ const WORDS = [
     synonyms: ["oder", "respektive", "genauer gesagt"],
     related: ["beziehen", "bezüglich", "bevorzugen", "vorziehen", "anziehen"],
     examples: [
-      { de: "Die Kosten betragen 200 bzw. 250 Euro, je nach Modell.", zh: "費用分別為 200 和 250 歐元，視型號而定。" },
-      { de: "Bitte wenden Sie sich an Herrn Müller bzw. seine Vertretung.", zh: "請聯繫 Müller 先生或他的代理人。" }
+      { de: "Die Proben wurden bei 200 bzw. 400 Grad Celsius getestet.", zh: "樣品分別在攝氏 200 度和 400 度下進行測試。（respectively：兩個對應值）" },
+      { de: "Bitte wenden Sie sich an Herrn Müller bzw. seine Vertretung.", zh: "請聯繫 Müller 先生或他的代理人。（or / or rather：擇一）" }
     ]
   },
 
