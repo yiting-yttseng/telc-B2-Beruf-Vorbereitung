@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DTB B2: Schreiben Teil 1 – Beschwerde beantworten</title>
+<script src="SchreibenI_Beschwerde_beantworten_data.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#f0f0ee;color:#1a1a1a;font-size:14px}
+
+/* Nav */
+.nav-bar{position:sticky;top:0;z-index:100;background:#fff;border-bottom:1px solid #ddd;
+  padding:8px 14px;display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+.nav-title{font-size:12px;font-weight:700;color:#555;margin-right:4px;white-space:nowrap}
+.nav-btn{padding:4px 10px;border-radius:16px;border:1.5px solid #ccc;background:#fff;
+  color:#444;font-size:11px;font-weight:500;cursor:pointer;white-space:nowrap;transition:all .15s}
+.nav-btn:hover{border-color:#888;color:#1a1a1a}
+.nav-btn.active{color:#fff;border-color:transparent;background:#1F4E79}
+
+/* Page */
+.page{max-width:960px;margin:0 auto;padding:18px 16px 60px}
+.page-header{margin-bottom:18px}
+.page-header h1{font-size:17px;font-weight:600;color:#1F4E79;margin-bottom:3px}
+.page-header p{font-size:11px;color:#999;line-height:1.7}
+.tab-section{display:none}.tab-section.active{display:block}
+
+/* ── Redemittel ── */
+.rm-group{margin-bottom:26px}
+.rm-label{font-size:12px;font-weight:700;color:#1F4E79;letter-spacing:.05em;text-transform:uppercase;
+  padding:9px 12px 7px;background:#d8e4f0;border:0.5px solid #b0c8e0;border-bottom:none;border-radius:6px 6px 0 0}
+table.rm{width:100%;border-collapse:collapse;background:#fff;border:0.5px solid #ddd;
+  border-radius:0 0 8px 8px;overflow:hidden;table-layout:fixed}
+table.rm th{text-align:left;padding:7px 10px;background:#fafaf8;color:#777;font-weight:500;
+  font-size:11px;border-bottom:0.5px solid #e0e0e0;letter-spacing:.03em}
+table.rm td{padding:8px 10px;border-bottom:0.5px solid #efefed;vertical-align:top}
+table.rm tr:last-child td{border-bottom:none}
+table.rm tr.fav td{background:#fffaf0}
+/* checkbox col */
+.col-fav{width:38px;text-align:center;cursor:pointer;user-select:none;vertical-align:middle}
+.col-fav:hover{background:#fff0d0 !important}
+.mark-box{display:inline-block;width:11px;height:11px;border:1.5px solid #ccc;border-radius:2px;transition:all .15s}
+tr.fav .mark-box{background:#d08010;border-color:#d08010}
+/* left col */
+.col-left{width:32%;cursor:pointer}
+.col-left:hover{background:#e8f0fe}
+tr.fav .col-left:hover{background:#fff0d0}
+.r-de{font-weight:700;font-size:13px;color:#1a3a6a;display:block;line-height:1.55;margin-bottom:3px}
+.r-zh{font-size:11px;color:#999;font-style:italic;display:block}
+/* right col */
+.col-right{width:68%}
+.ex-item{cursor:pointer;padding:4px 7px;border-radius:0 4px 4px 0;
+  border-left:2px solid #aed6f1;margin-bottom:5px;transition:background .1s}
+.ex-item:last-child{margin-bottom:0}
+.ex-item:hover{background:#e8f0fe}
+tr.fav .ex-item:hover{background:#fff0d0}
+.ex-de{font-size:13px;color:#222;line-height:1.6;display:block}
+.ex-zh{font-size:11px;color:#999;font-style:italic;display:block;margin-top:1px}
+
+/* ── Situation pages ── */
+.sit-block{margin-bottom:24px}
+.sit-header{font-size:13px;font-weight:700;color:#fff;background:#2E7D32;
+  padding:7px 13px;border-radius:8px 8px 0 0}
+.sit-body{background:#fff;border:0.5px solid #ccc;border-top:none;border-radius:0 0 8px 8px;padding:14px 16px}
+.src-label{font-size:12px;font-weight:700;color:#2E7D32;margin-bottom:10px}
+/* email */
+.email-box{background:#f9faf8;border:0.5px solid #c8d8c8;border-radius:7px;
+  padding:13px 15px;margin-bottom:10px;font-size:12.5px;line-height:1.75}
+.email-meta{font-size:11px;color:#666;margin-bottom:8px;padding-bottom:7px;border-bottom:0.5px solid #dde8dd}
+.email-meta span{display:block;margin-bottom:2px}
+.email-meta b{color:#444;min-width:60px;display:inline-block}
+.email-body p{margin-bottom:8px;color:#1a1a1a}
+.email-body p:last-child{margin-bottom:0}
+/* task */
+.task-box{background:#fffbe6;border:0.5px solid #e8d86a;border-radius:7px;
+  padding:11px 14px;margin-bottom:12px;font-size:12px;line-height:1.75}
+.task-title{font-weight:700;color:#7a6a00;margin-bottom:6px}
+.task-box ol{padding-left:18px;color:#555}
+.task-box li{margin-bottom:3px}
+/* mc */
+.mc-block{margin-bottom:12px}
+.mc-q{font-size:13px;font-weight:500;margin-bottom:6px}
+.mc-opts{display:flex;flex-direction:column;gap:3px;margin-bottom:6px}
+.mc-opt{font-size:12px;color:#444;padding:4px 10px;border-radius:6px;
+  border:0.5px solid #ddd;background:#fff;cursor:pointer;transition:all .1s}
+.mc-opt:hover{border-color:#999}
+.mc-opt.correct{background:#e8f5e9;border-color:#66bb6a;color:#2e7d32;font-weight:600}
+.mc-opt.wrong{background:#fdecea;border-color:#e57373;color:#c62828}
+.reveal-btn{font-size:11px;color:#888;border:0.5px solid #ccc;background:#fff;
+  border-radius:6px;padding:3px 10px;cursor:pointer}
+.reveal-btn:hover{border-color:#1a5fc8;color:#1a5fc8}
+/* sample */
+.sample-toggle{font-size:12px;font-weight:500;color:#1F4E79;border:0.5px solid #1F4E79;
+  background:#fff;border-radius:6px;padding:5px 13px;cursor:pointer;margin-bottom:10px}
+.sample-toggle:hover{background:#eef2fb}
+.sample-answer{display:none;background:#f0f4ff;border:0.5px solid #b3c6e8;
+  border-radius:7px;padding:13px 15px;font-size:12.5px;line-height:1.8;white-space:pre-wrap}
+.sample-answer.visible{display:block}
+.sa-note{font-size:11px;color:#7a8aaa;font-style:italic;margin-top:8px;padding-top:8px;
+  border-top:0.5px solid #c8d4ec;white-space:normal}
+/* coming soon */
+.coming-soon{text-align:center;padding:40px 20px;color:#bbb;font-size:13px;font-style:italic}
+/* speaking */
+.speaking-badge{position:fixed;bottom:18px;right:18px;display:none;align-items:center;gap:6px;
+  font-size:12px;color:#fff;padding:6px 14px;border-radius:20px;
+  background:#1a5fc8;box-shadow:0 2px 10px rgba(26,95,200,.35);z-index:200}
+.speaking-badge.active{display:flex}
+.speaking-dot{width:7px;height:7px;border-radius:50%;background:#fff;animation:pulse .9s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+</style>
+</head>
+<body>
+
+<div class="nav-bar" id="navBar">
+  <span class="nav-title">DTB B2 Schreiben Teil 1</span>
+  <!-- tabs rendered by JS -->
+</div>
+<div class="speaking-badge" id="speakBadge">
+  <span class="speaking-dot"></span><span>朗讀中…</span>
+</div>
+<div class="page">
+  <div class="page-header">
+    <h1>DTB B2: Schreiben Teil 1 – Auf eine Beschwerde antworten</h1>
+    <p>🔊 點德文句子可朗讀 &nbsp;|&nbsp; ☑ 左欄勾選常用句型（黃底持久化）&nbsp;|&nbsp; 左欄 = 句型框架，右欄 = 具體例句</p>
+  </div>
+  <div id="content"></div>
+</div>
+
+<script>
+// ── TTS ──
+function speak(text) {
+  if (!text || !window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'de-DE'; u.rate = 0.92;
+  const badge = document.getElementById('speakBadge');
+  badge.classList.add('active');
+  u.onend = u.onerror = () => badge.classList.remove('active');
+  window.speechSynthesis.speak(u);
+}
+function esc(s){ return (s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
+
+// ── Fav persistence ──
+const FAV_KEY = 'beschwerde_rm_fav';
+const favSet = new Set();
+try { (JSON.parse(localStorage.getItem(FAV_KEY)||'[]')).forEach(id => favSet.add(id)); } catch(e){}
+function saveFav() {
+  try { localStorage.setItem(FAV_KEY, JSON.stringify([...favSet])); } catch(e){}
+}
+function toggleFav(td) {
+  const row = td.closest('tr');
+  const id = row.dataset.id;
+  if (favSet.has(id)) { favSet.delete(id); row.classList.remove('fav'); }
+  else { favSet.add(id); row.classList.add('fav'); }
+  saveFav();
+}
+
+// ── Build Redemittel tab ──
+function buildRedemittel() {
+  const sections = {};
+  const order = [];
+  REDEMITTEL.forEach(e => {
+    if (!sections[e.sec]) { sections[e.sec] = []; order.push(e.sec); }
+    sections[e.sec].push(e);
+  });
+  return order.map(sec => {
+    const rows = sections[sec].map(e => {
+      const isFav = favSet.has(e.id);
+      const exHtml = e.ex.length
+        ? e.ex.map(x => `<div class="ex-item" onclick="speak('${esc(x.de)}')">
+            <span class="ex-de">${x.de}</span>
+            <span class="ex-zh">${x.zh}</span>
+          </div>`).join('')
+        : '';
+      return `<tr data-id="${e.id}"${isFav?' class="fav"':''}>
+        <td class="col-fav" onclick="toggleFav(this)"><span class="mark-box"></span></td>
+        <td class="col-left" onclick="speak('${esc(e.left_de)}')">
+          <span class="r-de">${e.left_de}</span>
+          <span class="r-zh">${e.left_zh}</span>
+        </td>
+        <td class="col-right">${exHtml}</td>
+      </tr>`;
+    }).join('');
+    return `<div class="rm-group">
+      <div class="rm-label">${sec}</div>
+      <table class="rm">
+        <thead><tr>
+          <th class="col-fav">常用</th>
+          <th class="col-left">句型框架 🔊</th>
+          <th class="col-right">具體例句 🔊</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
+  }).join('');
+}
+
+// ── Build situation tab ──
+function buildSituation(sit) {
+  if (!sit.examples.length) {
+    return `<div class="sit-block">
+      <div class="sit-header">${sit.title}（${sit.zh}）</div>
+      <div class="sit-body"><div class="coming-soon">範例題目待補充 🔧</div></div>
+    </div>`;
+  }
+  return sit.examples.map(ex => {
+    const emailsHtml = ex.emails.map(m => {
+      const bodyHtml = m.body.split('\n').filter(l=>l.trim()).map(l=>`<p>${l}</p>`).join('');
+      return `<div class="email-box">
+        <div class="email-meta">
+          <span><b>Von:</b> ${m.meta.von}</span>
+          <span><b>An:</b> ${m.meta.an}</span>
+          <span><b>Betreff:</b> ${m.meta.betreff}</span>
+        </div>
+        <div class="email-body">${bodyHtml}</div>
+      </div>`;
+    }).join('');
+
+    const taskHtml = `<div class="task-box">
+      <div class="task-title">📌 Anweisung der Teamleitung:</div>
+      <ol>${ex.task.map(t=>`<li>${t}</li>`).join('')}</ol>
+    </div>`;
+
+    const mcHtml = ex.mc.map((m,mi) => {
+      const opts = m.opts.map((o,oi) =>
+        `<div class="mc-opt" data-correct="${oi===m.correct}">${String.fromCharCode(97+oi)} &nbsp; ${o}</div>`
+      ).join('');
+      return `<div class="mc-block">
+        <div class="mc-q">${m.q}</div>
+        <div class="mc-opts">${opts}</div>
+        <button class="reveal-btn" onclick="revealMC(this)">顯示答案</button>
+      </div>`;
+    }).join('');
+
+    return `<div class="sit-block">
+      <div class="sit-header">${sit.title}（${sit.zh}）</div>
+      <div class="sit-body">
+        <p class="src-label">📄 ${ex.source}</p>
+        ${emailsHtml}
+        ${taskHtml}
+        ${mcHtml}
+        <button class="sample-toggle" onclick="toggleSample(this)">▶ 顯示示範回信</button>
+        <div class="sample-answer">${ex.sample}<div class="sa-note">${ex.note}</div></div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── Nav + render ──
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function revealMC(btn) {
+  btn.closest('.mc-block').querySelectorAll('.mc-opt').forEach(o => {
+    o.classList.add(o.dataset.correct==='true' ? 'correct' : 'wrong');
+  });
+  btn.style.display = 'none';
+}
+
+function toggleSample(btn) {
+  const ans = btn.nextElementSibling;
+  ans.classList.toggle('visible');
+  btn.textContent = ans.classList.contains('visible') ? '▼ 隱藏示範回信' : '▶ 顯示示範回信';
+}
+
+// ── Init ──
+(function init() {
+  const navBar = document.getElementById('navBar');
+  const content = document.getElementById('content');
+
+  // build redemittel tab
+  const rmDiv = document.createElement('div');
+  rmDiv.className = 'tab-section active';
+  rmDiv.id = 'tab-redemittel';
+  rmDiv.innerHTML = buildRedemittel();
+  content.appendChild(rmDiv);
+
+  // nav btn for redemittel
+  const rmBtn = document.createElement('button');
+  rmBtn.className = 'nav-btn active';
+  rmBtn.textContent = '📋 Redemittel';
+  rmBtn.onclick = () => showTab('redemittel', rmBtn);
+  navBar.appendChild(rmBtn);
+
+  // build situation tabs
+  SITUATIONS.forEach(sit => {
+    const div = document.createElement('div');
+    div.className = 'tab-section';
+    div.id = 'tab-'+sit.id;
+    div.innerHTML = buildSituation(sit);
+    content.appendChild(div);
+
+    const btn = document.createElement('button');
+    btn.className = 'nav-btn';
+    btn.textContent = sit.title;
+    btn.onclick = () => showTab(sit.id, btn);
+    navBar.appendChild(btn);
+  });
+})();
+</script>
+</body>
+</html>

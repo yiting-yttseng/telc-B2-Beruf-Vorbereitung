@@ -1560,6 +1560,402 @@ const WORDS = [
       { de: "Sie vertritt ihre Kollegin während des Urlaubs.", zh: "她在同事度假期間代理其工作。" },
       { de: "Ich vertrete die Ansicht, dass Qualität wichtiger als Geschwindigkeit ist.", zh: "我持有這樣的立場：品質比速度更重要。" }
     ]
+  },
+// ══════════════════════════════════════════════
+  //  詞根：schließen 補充
+  // ══════════════════════════════════════════════
+
+  {
+    id: 68,
+    word: "entschließen",
+    artikel: "",
+    root: "schließen",
+    rootMeaning: "關、鎖（to close / lock）",
+    zh: "決定、下決心（sich entschließen）",
+    en: "to decide, to make up one's mind",
+    breakdown: "ent-（從內部解開、釋放）+ schließen（鎖）\n→ 「把內心鎖住的東西解開放出來」= 下定決心\n→ 幾乎只用反身形式：sich entschließen zu + Inf.\n→ der Entschluss = 決定、決心（名詞）",
+    collocations: [
+      { de: "sich zu etw. entschließen", zh: "決定做某事" },
+      { de: "einen Entschluss fassen", zh: "下定決心（名詞搭配）" },
+      { de: "fest entschlossen sein", zh: "態度堅定、下定決心" },
+      { de: "kurzentschlossen", zh: "當機立斷地（副詞）" }
+    ],
+    synonyms: ["sich entscheiden", "beschließen", "sich vornehmen"],
+    related: ["ausschließen", "einschließen", "abschließen", "aufschließen", "schließen"],
+    examples: [
+      { de: "Sie hat sich entschlossen, eine neue Stelle anzutreten.", zh: "她決定接受新職位。" },
+      { de: "Der Entschluss, das Projekt abzubrechen, fiel nicht leicht.", zh: "中止項目的決定並不容易。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  詞根：weisen 補充
+  // ══════════════════════════════════════════════
+
+  {
+    id: 69,
+    word: "beweisen",
+    artikel: "",
+    root: "weisen",
+    rootMeaning: "指示、指引（to point / direct）",
+    zh: "證明、證實",
+    en: "to prove, to demonstrate",
+    breakdown: "be-（施加動作於對象）+ weisen（指引）\n→ 「指向某事並確立其為真」= 證明\n→ der Beweis = 證明、證據（名詞）\n區別：beweisen（科學/邏輯證明）vs. nachweisen（文件/資料佐證）",
+    collocations: [
+      { de: "etw. beweisen", zh: "證明某事" },
+      { de: "seine Unschuld beweisen", zh: "證明清白" },
+      { de: "der Beweis", zh: "證據、證明（名詞）" },
+      { de: "Beweise vorlegen / liefern", zh: "提出 / 提供證據" }
+    ],
+    synonyms: ["nachweisen", "belegen", "unter Beweis stellen"],
+    related: ["verweisen", "hinweisen", "nachweisen", "ausweisen", "überweisen"],
+    examples: [
+      { de: "Die Simulation beweist, dass das Modell korrekt ist.", zh: "模擬證明了該模型是正確的。" },
+      { de: "Ohne ausreichende Beweise kann keine Entscheidung getroffen werden.", zh: "沒有充分的證據，無法做出決定。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  詞根：kündigen（宣告、終止）
+  // ══════════════════════════════════════════════
+
+  {
+    id: 70,
+    word: "kündigen",
+    artikel: "",
+    root: "kündigen",
+    rootMeaning: "宣告、通知終止（to give notice）",
+    zh: "辭職；解僱；終止（合約）",
+    en: "to resign; to dismiss; to terminate (a contract)",
+    breakdown: "來自古德語 künden（宣告、通知）\n→ 「正式通知對方終止關係」\n⚠️ 方向很重要：\n→ kündigen（不及物）= 辭職（員工主動）\n→ jemandem kündigen = 解僱某人（公司→員工）\n→ den Vertrag kündigen = 終止合約\n\n⚠️ 易混淆：sich erkundigen（打聽、詢問）\n字形相似但意思完全不同！來自不同字根。",
+    collocations: [
+      { de: "kündigen（不及物）", zh: "辭職" },
+      { de: "jemandem kündigen", zh: "解僱某人" },
+      { de: "den Vertrag / die Wohnung kündigen", zh: "終止合約 / 退租" },
+      { de: "fristgerecht kündigen", zh: "按期限提前通知終止" }
+    ],
+    synonyms: ["entlassen（解僱）", "zurücktreten（辭職，較正式）"],
+    related: ["die Kündigung", "ankündigen", "verkündigen", "unkündbar"],
+    examples: [
+      { de: "Sie hat gekündigt und sucht jetzt eine neue Stelle.", zh: "她辭職了，現在正在找新工作。" },
+      { de: "Dem Mitarbeiter wurde fristlos gekündigt.", zh: "該員工被即時解僱（無需預告期）。" }
+    ]
+  },
+
+  {
+    id: 71,
+    word: "die Kündigung",
+    artikel: "die",
+    root: "kündigen",
+    rootMeaning: "宣告、通知終止（to give notice）",
+    zh: "解僱通知；辭職信；終止通知",
+    en: "dismissal notice; resignation; termination notice",
+    breakdown: "kündigen（終止）+ -ung（名詞後綴）\n→ 「宣告終止的那份文件或行為」= 解僱通知、辭職信",
+    collocations: [
+      { de: "eine Kündigung erhalten / bekommen", zh: "收到解僱通知" },
+      { de: "eine Kündigung einreichen / aussprechen", zh: "提交辭呈 / 宣布解僱" },
+      { de: "die Kündigungsfrist", zh: "預告期（名詞）" },
+      { de: "eine fristlose Kündigung", zh: "即時解僱（無預告期）" }
+    ],
+    synonyms: ["die Entlassung（解僱）", "der Rücktritt（辭職，較正式）"],
+    related: ["kündigen", "ankündigen", "verkündigen", "unkündbar"],
+    examples: [
+      { de: "Er hat die Kündigung schriftlich eingereicht.", zh: "他以書面方式提交了辭呈。" },
+      { de: "Die Kündigung muss die gesetzliche Kündigungsfrist einhalten.", zh: "解僱通知必須遵守法定預告期。" }
+    ]
+  },
+
+  {
+    id: 72,
+    word: "ankündigen",
+    artikel: "",
+    root: "kündigen",
+    rootMeaning: "宣告、通知終止（to give notice）",
+    zh: "宣布、預告、告知（即將發生的事）",
+    en: "to announce, to give advance notice of",
+    breakdown: "an-（指向、開始）+ kündigen（宣告）\n→ 「預先宣告某事即將來臨」= 宣布、預告\n→ 與 kündigen（終止）方向相反：ankündigen 是「宣布開始/即將發生」",
+    collocations: [
+      { de: "einen Besuch ankündigen", zh: "預告拜訪" },
+      { de: "Maßnahmen ankündigen", zh: "宣布措施" },
+      { de: "wie angekündigt", zh: "如事先宣布的那樣" },
+      { de: "die Ankündigung", zh: "公告、預告（名詞）" }
+    ],
+    synonyms: ["bekanntgeben", "mitteilen", "verkünden"],
+    related: ["kündigen", "die Kündigung", "verkündigen", "unkündbar"],
+    examples: [
+      { de: "Die Geschäftsführung kündigte Änderungen in der Unternehmensstruktur an.", zh: "管理層宣布了公司結構的變動。" },
+      { de: "Der Streik wurde zwei Wochen im Voraus angekündigt.", zh: "罷工在兩週前就提前宣布了。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  詞根：richten（對準、整理）
+  // ══════════════════════════════════════════════
+
+  {
+    id: 73,
+    word: "ausrichten",
+    artikel: "",
+    root: "richten",
+    rootMeaning: "對準、整理、判斷（to align / direct / judge）",
+    zh: "傳達（訊息）；舉辦；對準方向",
+    en: "to convey (a message); to organise; to align",
+    breakdown: "aus-（向外）+ richten（對準）\n→ 「向外對準某目標傳遞」= 傳達訊息\n→ 「向外把東西整理好」= 舉辦活動\n→ ausgerichtet auf = 針對……、以……為導向（形容詞用法）",
+    collocations: [
+      { de: "eine Veranstaltung ausrichten", zh: "舉辦活動" },
+      { de: "jemandem etw. ausrichten", zh: "轉告某人某事" },
+      { de: "auf etw. ausgerichtet sein", zh: "針對……、以……為導向" },
+      { de: "Richten Sie ihm bitte aus, dass …", zh: "請轉告他……" }
+    ],
+    synonyms: ["übermitteln（傳達）", "organisieren（舉辦）", "orientieren（對準）"],
+    related: ["einrichten", "errichten", "berichten", "abrichten", "richten"],
+    examples: [
+      { de: "Unser Angebot ist auf internationale Kunden ausgerichtet.", zh: "我們的服務是針對國際客戶的。" },
+      { de: "Können Sie ihm ausrichten, dass die Besprechung verschoben wird?", zh: "您能轉告他會議改期了嗎？" }
+    ]
+  },
+
+  {
+    id: 74,
+    word: "einrichten",
+    artikel: "",
+    root: "richten",
+    rootMeaning: "對準、整理、判斷（to align / direct / judge）",
+    zh: "佈置（房間）；設立；安排",
+    en: "to furnish; to set up; to arrange",
+    breakdown: "ein-（向內）+ richten（整理對準）\n→ 「把東西放進去並整理好」= 佈置、設立\n→ sich einrichten = 安頓下來、適應",
+    collocations: [
+      { de: "eine Wohnung einrichten", zh: "佈置公寓" },
+      { de: "ein Konto einrichten", zh: "開設帳戶" },
+      { de: "sich einrichten auf", zh: "為……做準備、適應" },
+      { de: "die Einrichtung", zh: "家具；設施（名詞）" }
+    ],
+    synonyms: ["ausstatten", "aufbauen", "installieren"],
+    related: ["ausrichten", "errichten", "berichten", "abrichten", "richten"],
+    examples: [
+      { de: "Sie haben ihre neue Wohnung modern eingerichtet.", zh: "她們把新公寓佈置得很現代。" },
+      { de: "Das Büro wurde mit neuen Geräten eingerichtet.", zh: "辦公室配置了新設備。" }
+    ]
+  },
+
+  {
+    id: 75,
+    word: "berichten",
+    artikel: "",
+    root: "richten",
+    rootMeaning: "對準、整理、判斷（to align / direct / judge）",
+    zh: "報告、報導、彙報",
+    en: "to report, to inform",
+    breakdown: "be-（施加動作於對象）+ richten（對準）\n→ 「把資訊對準某人傳遞」= 報告、彙報\n→ der Bericht = 報告、報導（名詞）",
+    collocations: [
+      { de: "über etw. berichten", zh: "就某事報告" },
+      { de: "jemandem berichten", zh: "向某人彙報" },
+      { de: "der Bericht", zh: "報告（名詞）" },
+      { de: "einen Bericht erstatten", zh: "提交報告（正式）" }
+    ],
+    synonyms: ["melden", "mitteilen", "schildern"],
+    related: ["ausrichten", "einrichten", "errichten", "abrichten", "richten"],
+    examples: [
+      { de: "Sie berichtet regelmäßig über den Fortschritt des Projekts.", zh: "她定期彙報項目進度。" },
+      { de: "Der Bericht enthält alle wichtigen Simulationsergebnisse.", zh: "報告包含所有重要的模擬結果。" }
+    ]
+  },
+
+  {
+    id: 76,
+    word: "errichten",
+    artikel: "",
+    root: "richten",
+    rootMeaning: "對準、整理、判斷（to align / direct / judge）",
+    zh: "建立、建造、設立",
+    en: "to erect, to establish, to set up",
+    breakdown: "er-（達成某結果）+ richten（對準豎立）\n→ 「豎立起來完成」= 建造、設立\n→ 比 aufbauen 更正式，常用於機構、建築",
+    collocations: [
+      { de: "ein Gebäude / ein Denkmal errichten", zh: "建造建築 / 立碑" },
+      { de: "ein Unternehmen errichten", zh: "設立公司" },
+      { de: "eine Barriere errichten", zh: "建立障礙" }
+    ],
+    synonyms: ["aufbauen", "gründen", "aufstellen"],
+    related: ["ausrichten", "einrichten", "berichten", "abrichten", "richten"],
+    examples: [
+      { de: "In der Innenstadt wurde ein neues Forschungszentrum errichtet.", zh: "市中心建立了一個新的研究中心。" },
+      { de: "Die Behörde errichtete eine neue Kontrollstelle.", zh: "機關設立了新的檢查站。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  詞根：drücken（壓、印）
+  // ══════════════════════════════════════════════
+
+  {
+    id: 77,
+    word: "ausdrücken",
+    artikel: "",
+    root: "drücken",
+    rootMeaning: "壓、印（to press / push）",
+    zh: "表達、表示；擠壓出來",
+    en: "to express; to squeeze out",
+    breakdown: "aus-（向外）+ drücken（壓）\n→ 「把內部的東西壓出來」= 表達（把想法擠出來說）\n→ sich ausdrücken = 表達自己\n→ der Ausdruck = 表達、詞彙、表情（名詞）",
+    collocations: [
+      { de: "sich ausdrücken", zh: "表達自己" },
+      { de: "Dankbarkeit / Bedauern ausdrücken", zh: "表達感謝 / 遺憾" },
+      { de: "der Ausdruck", zh: "表達；詞彙；表情（名詞）" },
+      { de: "zum Ausdruck bringen", zh: "表達出來（正式）" }
+    ],
+    synonyms: ["äußern", "formulieren", "zum Ausdruck bringen"],
+    related: ["eindrücken", "unterdrücken", "bedrücken", "aufdrücken", "drücken"],
+    examples: [
+      { de: "Er drückte seine Zufriedenheit mit den Ergebnissen aus.", zh: "他表達了對結果的滿意。" },
+      { de: "Zum Ausdruck bringen, dass man zufrieden ist, wirkt professionell.", zh: "表達自己的滿意，顯得很專業。" }
+    ]
+  },
+
+  {
+    id: 78,
+    word: "der Eindruck",
+    artikel: "der",
+    root: "drücken",
+    rootMeaning: "壓、印（to press / push）",
+    zh: "印象",
+    en: "impression",
+    breakdown: "ein-（向內壓進去）+ Druck（壓力）\n→ 「壓進心裡留下的痕跡」= 印象\n→ einen Eindruck machen / hinterlassen = 留下印象\n→ unter dem Eindruck stehen, dass … = 有……的感覺",
+    collocations: [
+      { de: "einen guten / schlechten Eindruck machen", zh: "留下好 / 壞印象" },
+      { de: "einen Eindruck hinterlassen", zh: "留下印象" },
+      { de: "unter dem Eindruck stehen, dass …", zh: "有……的感覺、以為……" },
+      { de: "Eindruck schinden", zh: "刻意表現、博取印象（口語）" }
+    ],
+    synonyms: ["das Gefühl", "die Wahrnehmung", "das Bild"],
+    related: ["ausdrücken", "unterdrücken", "bedrücken", "aufdrücken", "drücken"],
+    examples: [
+      { de: "Beim Vorstellungsgespräch sollte man einen professionellen Eindruck machen.", zh: "面試時應該留下專業的印象。" },
+      { de: "Ich habe den Eindruck, dass das Projekt gut vorangeht.", zh: "我有種感覺項目進展順利。" }
+    ]
+  },
+
+  {
+    id: 79,
+    word: "unterdrücken",
+    artikel: "",
+    root: "drücken",
+    rootMeaning: "壓、印（to press / push）",
+    zh: "壓制、抑制、鎮壓",
+    en: "to suppress, to oppress, to repress",
+    breakdown: "unter-（在下方）+ drücken（壓）\n→ 「從上往下壓住」= 壓制、抑制",
+    collocations: [
+      { de: "Gefühle unterdrücken", zh: "壓抑情緒" },
+      { de: "einen Aufstand unterdrücken", zh: "鎮壓暴動" },
+      { de: "Informationen unterdrücken", zh: "壓制資訊" }
+    ],
+    synonyms: ["zurückhalten", "niederschlagen", "hemmen"],
+    related: ["ausdrücken", "eindrücken", "bedrücken", "aufdrücken", "drücken"],
+    examples: [
+      { de: "Er versuchte, seine Enttäuschung zu unterdrücken.", zh: "他試圖壓抑自己的失望。" },
+      { de: "Wichtige Informationen sollten nicht unterdrückt werden.", zh: "重要資訊不應被壓制。" }
+    ]
+  },
+
+  {
+    id: 80,
+    word: "bedrücken",
+    artikel: "",
+    root: "drücken",
+    rootMeaning: "壓、印（to press / push）",
+    zh: "使心情沉重、壓抑（情感上）",
+    en: "to weigh on, to depress (emotionally)",
+    breakdown: "be-（施加動作於對象）+ drücken（壓）\n→ 「壓在某人心上」= 使心情沉重\n→ 幾乎只用於情感/心理層面",
+    collocations: [
+      { de: "etw. bedrückt jemanden", zh: "某事讓某人感到沉重" },
+      { de: "bedrückt sein", zh: "心情沉重、鬱悶" },
+      { de: "bedrückend", zh: "令人壓抑的（形容詞）" }
+    ],
+    synonyms: ["belasten", "niederdrücken", "deprimieren"],
+    related: ["ausdrücken", "eindrücken", "unterdrücken", "aufdrücken", "drücken"],
+    examples: [
+      { de: "Die Unsicherheit über die Zukunft bedrückt ihn sehr.", zh: "對未來的不確定性讓他非常沉重。" },
+      { de: "Es herrschte eine bedrückende Stille im Raum.", zh: "房間裡瀰漫著一種令人壓抑的沉默。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  詞根：wirten（待客、主持）
+  // ══════════════════════════════════════════════
+
+  {
+    id: 81,
+    word: "bewirten",
+    artikel: "",
+    root: "wirten",
+    rootMeaning: "待客、款待（to host / entertain guests）",
+    zh: "款待（賓客）、提供餐飲招待",
+    en: "to entertain, to cater for, to serve guests",
+    breakdown: "be-（施加動作於對象）+ wirten（待客）\n→ 「對客人施加待客之道」= 款待\n→ die Bewirtung = 款待、餐飲招待（名詞）\n→ der Wirt = 老闆、房東（字根）",
+    collocations: [
+      { de: "Gäste bewirten", zh: "款待賓客" },
+      { de: "die Bewirtung", zh: "款待、餐飲招待（名詞）" },
+      { de: "Bewirtungskosten", zh: "餐飲費用（商業/稅務用語）" },
+      { de: "sich bewirten lassen", zh: "接受款待" }
+    ],
+    synonyms: ["verköstigen", "beköstigen", "einladen"],
+    related: ["der Wirt", "die Wirtin", "das Gasthaus", "die Gastronomie"],
+    examples: [
+      { de: "Die Firma bewirtete ihre Geschäftspartner beim Jahresabschluss.", zh: "公司在年終設宴款待了商業合作夥伴。" },
+      { de: "Bewirtungskosten können steuerlich abgesetzt werden.", zh: "餐飲招待費用可以作為稅務抵扣。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  詞根：verzichten（放棄）
+  // ══════════════════════════════════════════════
+
+  {
+    id: 82,
+    word: "verzichten",
+    artikel: "",
+    root: "verzichten",
+    rootMeaning: "放棄、捨棄（to renounce / do without）",
+    zh: "放棄、捨棄（主動不要某事物）",
+    en: "to renounce, to forgo, to do without",
+    breakdown: "ver-（徹底）+ zichten（古德語，要求、索取）\n→ 「徹底放手不再要求」= 放棄\n⚠️ 固定搭配：verzichten auf + Akkusativ\n→ der Verzicht = 放棄（名詞）\n→ unverzichtbar = 不可或缺的（常用！）",
+    collocations: [
+      { de: "auf etw. verzichten", zh: "放棄某事物（固定搭配）" },
+      { de: "freiwillig verzichten", zh: "自願放棄" },
+      { de: "der Verzicht auf etw.", zh: "對某事物的放棄（名詞）" },
+      { de: "unverzichtbar", zh: "不可或缺的（反義形容詞，超常用）" }
+    ],
+    synonyms: ["aufgeben", "absehen von", "sich enthalten"],
+    related: ["der Verzicht", "unverzichtbar", "verzichtbar"],
+    examples: [
+      { de: "Aus Rücksicht auf ihre Kollegen verzichtete sie auf die Gehaltserhöhung.", zh: "出於對同事的體諒，她放棄了加薪。" },
+      { de: "Pünktlichkeit ist in diesem Berufsfeld unverzichtbar.", zh: "準時在這個職業領域是不可或缺的。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  詞根：erkunden（探查、打聽）
+  // ══════════════════════════════════════════════
+
+  {
+    id: 83,
+    word: "erkundigen",
+    artikel: "",
+    root: "erkunden",
+    rootMeaning: "探查、打聽（to inquire / find out）",
+    zh: "詢問、打聽（sich erkundigen）",
+    en: "to inquire, to ask about, to find out",
+    breakdown: "er-（達成某結果）+ kunden（古德語，探查、了解）\n→ 「主動去了解未知的事」= 詢問、打聽\n⚠️ 幾乎只用反身形式：sich erkundigen nach + Dativ\n\n⚠️ 易混淆：kündigen（終止合約/辭職）\n字形相似但來自不同字根，意思完全不同！\n→ kündigen = 宣告終止\n→ sich erkundigen = 主動詢問了解",
+    collocations: [
+      { de: "sich nach etw. erkundigen", zh: "打聽某事（固定搭配 nach + Dat.）" },
+      { de: "sich nach dem Stand erkundigen", zh: "詢問進度" },
+      { de: "sich telefonisch erkundigen", zh: "電話詢問" },
+      { de: "die Erkundigung", zh: "詢問、打聽（名詞）" }
+    ],
+    synonyms: ["nachfragen", "anfragen", "sich informieren über"],
+    related: ["erkunden", "die Erkundigung"],
+    examples: [
+      { de: "Ich erkundige mich nach dem Stand meiner Bewerbung.", zh: "我詢問我的申請進度。" },
+      { de: "Bitte erkundigen Sie sich beim zuständigen Amt nach den genauen Anforderungen.", zh: "請向負責機關詢問確切要求。" }
+    ]
   }  
 
 ];
