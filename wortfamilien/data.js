@@ -442,7 +442,7 @@ const WORDS = [
     rootMeaning: "拿取（to take）",
     zh: "接受、收取（正式）",
     en: "to receive, to accept",
-    breakdown: "entgegen-（朝向、迎向）+ nehmen（拿取）\n→ 伸手迎向對方來拿 → 「接收、收取」",
+    breakdown: "entgegen-（朝向、迎向）+ nehmen（拿取）\n→ 「伸手迎向對方來拿」= 接收、收取\n→ 重點是「物理上/程序上收到」，不涉及內心認同\n\n⚠️ vs. annehmen：\nentgegennehmen = 收到（客觀動作）\nannehmen = 接受（內心認同）\n→ eine Beschwerde entgegennehmen = 受理投訴（不代表同意）\n→ Kritik annehmen = 接受批評（內心認可）",
     collocations: [
       { de: "eine Bestellung entgegennehmen", zh: "接受訂單" },
       { de: "einen Anruf entgegennehmen", zh: "接聽電話" },
@@ -464,10 +464,11 @@ const WORDS = [
     rootMeaning: "拿取（to take）",
     zh: "接受；假設、推測",
     en: "to accept; to assume",
-    breakdown: "an-（靠近）+ nehmen（拿取）\n→ 把東西拿到自己身邊\n→ 引申：「假設某事為真」",
+    breakdown: "an-（靠近）+ nehmen（拿取）\n→ 「把東西拿到自己身邊並認可」= 接受\n→ 重點是內心接受、同意、認同\n\n⚠️ vs. entgegennehmen：\nannehmen = 內心接受（認同）\nentgegennehmen = 程序上收取（不代表同意）\n→ Ich nehme an, dass … = 我推測……（另一個常見用法）",
     collocations: [
       { de: "ein Angebot annehmen", zh: "接受一個提案" },
       { de: "einen Auftrag annehmen", zh: "接受一項任務" },
+      { de: "Kritik annehmen", zh: "接受批評（內心認可）" },
       { de: "Ich nehme an, dass …", zh: "我假設／我推測……" }
     ],
     synonyms: ["akzeptieren", "vermuten", "voraussetzen"],
@@ -489,8 +490,10 @@ const WORDS = [
     breakdown: "auf-（向上拿起）+ nehmen（拿取）\n→ 把東西拿起來 → 引申為「錄製」或「納入」",
     collocations: [
       { de: "in die Liste aufnehmen", zh: "納入清單" },
-      { de: "ein Video / ein Interview aufnehmen", zh: "錄製影片／採訪" },
-      { de: "Kontakt aufnehmen", zh: "取得聯繫" }
+      { de: "Daten / Informationen aufnehmen", zh: "記錄資料／資訊" },
+      { de: "Kontakt aufnehmen", zh: "取得聯繫" },
+      { de: "ein Video / ein Interview aufnehmen", zh: "錄製影片／採訪" }
+      
     ],
     synonyms: ["registrieren", "erfassen", "aufzeichnen"],
     related: ["entgegennehmen", "annehmen", "übernehmen", "wahrnehmen", "teilnehmen"],
@@ -512,13 +515,15 @@ const WORDS = [
     collocations: [
       { de: "Verantwortung übernehmen", zh: "承擔責任" },
       { de: "eine Aufgabe übernehmen", zh: "接手一項任務" },
-      { de: "die Leitung übernehmen", zh: "接管領導職位" }
+      { de: "die Leitung übernehmen", zh: "接管領導職位" },
+      { de: "Kosten übernehmen", zh: "承擔費用" }
     ],
     synonyms: ["übernehmen", "sich annehmen", "in die Hand nehmen"],
     related: ["entgegennehmen", "annehmen", "aufnehmen", "wahrnehmen", "teilnehmen"],
     examples: [
       { de: "Er hat die Verantwortung für das Projekt übernommen.", zh: "他承擔了這個項目的責任。" },
-      { de: "Die neue Kollegin übernimmt ab Montag die Abteilungsleitung.", zh: "新同事從週一起接管部門領導職位。" }
+      { de: "Die neue Kollegin übernimmt ab Montag die Abteilungsleitung.", zh: "新同事從週一起接管部門領導職位。" },
+      { de: "Wir übernehmen die Kosten für die Reparatur.", zh: "我們承擔維修費用。" }
     ]
   },
 
@@ -1005,6 +1010,7 @@ const WORDS = [
     related: ["hinweisen", "nachweisen", "ausweisen", "überweisen", "anweisen"],
     examples: [
       { de: "In diesem Fall verweisen wir auf unsere allgemeinen Geschäftsbedingungen.", zh: "在這種情況下，我們引用我們的一般交易條款。" },
+      { de: "Müller (2020) verweist darauf, dass Simulationsergebnisse stark von den Eingabeparametern abhängen.", zh: "Müller (2020) 指出，模擬結果在很大程度上取決於輸入參數。" },
       { de: "Die Kollegin wurde an die zuständige Abteilung verwiesen.", zh: "這位同事被轉介到負責的部門。" }
     ]
   },
@@ -1956,6 +1962,28 @@ const WORDS = [
       { de: "Ich erkundige mich nach dem Stand meiner Bewerbung.", zh: "我詢問我的申請進度。" },
       { de: "Bitte erkundigen Sie sich beim zuständigen Amt nach den genauen Anforderungen.", zh: "請向負責機關詢問確切要求。" }
     ]
-  }  
+  },
+  {
+    id: 84,
+    word: "entnehmen",
+    artikel: "",
+    root: "nehmen",
+    rootMeaning: "拿取（to take）",
+    zh: "從……取出；從……得知（正式）",
+    en: "to take from; to gather / infer from",
+    breakdown: "ent-（從內部取出、分離）+ nehmen（拿取）\n→ 「從某處把東西取出來」= 取出\n→ 引申：從文件/資料中「取出」資訊 = 得知\n→ 後者是書面/正式德語常用表達\n⚠️ 固定搭配：etw. etw. (Dat.) entnehmen",
+    collocations: [
+      { de: "etw. einer Tabelle / dem Anhang entnehmen", zh: "從表格／附件中查看" },
+      { de: "Entnehmen Sie bitte der folgenden Tabelle …", zh: "請從下表中查看……（正式書面）" },
+      { de: "aus etw. entnehmen, dass …", zh: "從某處得知……" },
+      { de: "eine Probe entnehmen", zh: "取樣（字面：取出樣本）" }
+    ],
+    synonyms: ["entnehmen", "herausnehmen（取出）", "ersehen aus（得知，同義正式用法）"],
+    related: ["entgegennehmen", "annehmen", "aufnehmen", "übernehmen", "wahrnehmen", "teilnehmen"],
+    examples: [
+      { de: "Die Informationen entnehmen Sie bitte dem Anhang.", zh: "請從附件中查看相關資訊。" },
+      { de: "Aus dem Bericht lässt sich entnehmen, dass die Simulation erfolgreich war.", zh: "從報告中可以得知模擬已成功完成。" }
+    ]
+  },  
 
 ];
