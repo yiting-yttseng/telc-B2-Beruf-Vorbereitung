@@ -280,8 +280,8 @@ body { padding-top: 0; }
 
 <div class="checkpoint-bar">
   <span>💾 勾選備份：</span>
-  <button class="cp-btn primary" onclick="exportCheckpoint()">匯出 checkpoint.json</button>
-  <button class="cp-btn" onclick="document.getElementById('cpFileInput').click()">匯入 checkpoint.json</button>
+  <button class="cp-btn primary" onclick="exportCheckpoint()">匯出 Wortschatz_Klett-Aspekte-Beruf-B2.json</button>
+  <button class="cp-btn" onclick="document.getElementById('cpFileInput').click()">匯入 Wortschatz_Klett-Aspekte-Beruf-B2.json</button>
   <input type="file" id="cpFileInput" accept=".json" onchange="importCheckpoint(event)">
   <span class="cp-status" id="cpStatus"></span>
 </div>
@@ -1970,10 +1970,10 @@ function exportCheckpoint() {
   const blob = new Blob([json], {type: 'application/json'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'checkpoint.json';
+  a.download = 'Wortschatz_Klett-Aspekte-Beruf-B2.json';
   a.click();
   URL.revokeObjectURL(a.href);
-  setCpStatus('✓ 已匯出 checkpoint.json');
+  setCpStatus('✓ 已匯出 Wortschatz_Klett-Aspekte-Beruf-B2.json');
 }
 
 function importCheckpoint(event) {
@@ -2018,12 +2018,12 @@ function setCpStatus(msg) {
   setTimeout(() => { el.textContent = ''; }, 4000);
 }
 
-// Auto-load checkpoint.json if served from a web server (GitHub Pages etc.)
+// Auto-load Wortschatz_Klett-Aspekte-Beruf-B2.json if served from a web server (GitHub Pages etc.)
 async function tryAutoLoadCheckpoint() {
   // Only attempt on http/https, not file://
   if (!location.protocol.startsWith('http')) return;
   try {
-    const res = await fetch('./checkpoint.json', {cache: 'no-cache'});
+    const res = await fetch('./Wortschatz_Klett-Aspekte-Beruf-B2.json', {cache: 'no-cache'});
     if (!res.ok) return;
     const data = await res.json();
     let count = 0;
@@ -2041,7 +2041,7 @@ async function tryAutoLoadCheckpoint() {
     }
     if (count > 0) setCpStatus(`✓ 已自動載入 ${count} 個標記`);
   } catch(e) {
-    // No checkpoint.json found — silent fail
+    // No Wortschatz_Klett-Aspekte-Beruf-B2.json found — silent fail
   }
 }
 
