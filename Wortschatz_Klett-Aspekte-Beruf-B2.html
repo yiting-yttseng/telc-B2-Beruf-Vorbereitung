@@ -112,6 +112,25 @@ tr.unfamiliar .speak-cell:hover td { background: #ffe0e0; }
 
 
 
+
+/* Checkpoint bar */
+.checkpoint-bar {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  padding: 8px 20px; background: #f0f4ff;
+  border-bottom: 1px solid #d0d8f0; font-size: 12px; color: #555;
+}
+.checkpoint-bar span { color: #888; margin-right: 4px; }
+.cp-btn {
+  padding: 4px 12px; border-radius: 5px; border: 1px solid #b0c0e8;
+  background: #fff; color: #1a3a6b; font-size: 12px;
+  cursor: pointer; font-weight: 500; transition: background 0.15s;
+}
+.cp-btn:hover { background: #e8f0fe; }
+.cp-btn.primary { background: #1a3a6b; color: #fff; border-color: #1a3a6b; }
+.cp-btn.primary:hover { background: #2a5a9b; }
+.cp-status { font-size: 11px; color: #5a8a5a; margin-left: 4px; }
+#cpFileInput { display: none; }
+
 mark { background:#fff3b0; border-radius:2px; padding:0 1px; }
 /* Short text (Kurztext) */
 .kurztext { margin: 10px 0 20px; background: #fff; border-left: 3px solid #1a5fc8; border-radius: 0 8px 8px 0; box-shadow: 0 1px 4px rgba(0,0,0,.04); overflow: hidden; }
@@ -259,6 +278,13 @@ body { padding-top: 0; }
   </div>
 </div>
 
+<div class="checkpoint-bar">
+  <span>💾 勾選備份：</span>
+  <button class="cp-btn primary" onclick="exportCheckpoint()">匯出 checkpoint.json</button>
+  <button class="cp-btn" onclick="document.getElementById('cpFileInput').click()">匯入 checkpoint.json</button>
+  <input type="file" id="cpFileInput" accept=".json" onchange="importCheckpoint(event)">
+  <span class="cp-status" id="cpStatus"></span>
+</div>
 <div class="page">
   <div class="page">
   <div class="toolbar">
@@ -1058,7 +1084,7 @@ const CHAPTERS = {
   { s:"Modul 1 – Mit freundlichen Grüßen", a:"die", w:"Angemessenheit", p:"", en:"appropriateness / suitability", zh:"適當性、得體", k:"auf Angemessenheit achten", kz:"注意適當性", ex:"Die Angemessenheit der Sprache entscheidet über den Erfolg einer Mail.", ez:"語言的適當性決定了一封郵件的成功。" },
   { s:"Modul 1 – Mit freundlichen Grüßen", a:"der", w:"Absatz", p:"-e", en:"paragraph / section", zh:"段落", k:"einen Absatz schreiben / gliedern", kz:"撰寫 / 劃分段落", ex:"Jeder Absatz sollte eine klare Hauptaussage enthalten.", ez:"每個段落都應包含一個清晰的主要論點。" },
   { s:"Modul 1 – Mit freundlichen Grüßen", a:"die", w:"Floskel", p:"-n", en:"hollow phrase / cliché / empty formula", zh:"套話、陳腔濫調", k:"Floskeln vermeiden / verwenden", kz:"避免 / 使用套話", ex:"Zu viele Floskeln wirken abschreckend auf den Leser.", ez:"太多套話對讀者來說顯得令人反感。" },
-  { s:"Modul 1 – Mit freundlichen Grüßen", a:"", w:"sich beziehen auf + A.", p:"", en:"to refer to / relate to", zh:"指的是、涉及", k:"sich auf etw. beziehen", kz:"指的是某事", ex:"Bezugnehmend auf Ihre Anfrage vom 24. April möchte ich Folgendes mitteilen.", ez:"就您4月24日的詢問，我謹此告知以下事項。" },
+  { s:"Modul 1 – Mit freundlichen Grüßen", a:"", w:"sich beziehen auf + A.", p:"", en:"to refer to / relate to", zh:"指的是、涉及", k:"sich auf etw. beziehen", kz:"指的是某事", ex:"Diese Mail bezieht sich auf unsere Vereinbarung vom letzten Meeting.", ez:"這封郵件是關於我們上次會議的協議。" },
   { s:"Modul 1 – Mit freundlichen Grüßen", a:"", w:"verwirren", p:"", en:"to confuse / perplex", zh:"使困惑、使迷惑", k:"jdn. verwirren", kz:"使某人困惑", ex:"Umständliche Sätze verwirren die Leserinnen und Leser.", ez:"繁瑣的句子會讓讀者感到困惑。" },
   { s:"Modul 1 – Mit freundlichen Grüßen", a:"", w:"im Zweifelsfall", p:"", en:"in case of doubt / if in doubt", zh:"如有疑問、在不確定的情況下", k:"im Zweifelsfall nachfragen", kz:"如有疑問時詢問", ex:"Im Zweifelsfall sollten Sie kurze, klare Sätze bevorzugen.", ez:"如有疑問，您應該優先選擇簡短清晰的句子。" },
   { s:"Modul 1 – Mit freundlichen Grüßen", a:"", w:"prägnant", p:"", en:"concise / succinct / to the point", zh:"簡潔有力的、精確的", k:"prägnant formulieren / schreiben", kz:"簡潔地表達 / 書寫", ex:"Schreiben Sie prägnant: Ein Satz – eine Information.", ez:"寫得簡潔有力：一個句子——一條信息。" },
@@ -1930,6 +1956,97 @@ function srToggleMark(k,i) {
   renderTabs();
 }
 
+// ── Checkpoint: export / import / auto-load ───────────────────
+function exportCheckpoint() {
+  const data = {};
+  for (let k = 1; k <= 10; k++) {
+    const key = CHAPTERS[k].key;
+    try {
+      const s = localStorage.getItem(key);
+      data[key] = s ? JSON.parse(s) : [];
+    } catch(e) { data[key] = []; }
+  }
+  const json = JSON.stringify(data, null, 2);
+  const blob = new Blob([json], {type: 'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'checkpoint.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  setCpStatus('✓ 已匯出 checkpoint.json');
+}
+
+function importCheckpoint(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      let count = 0;
+      for (const [key, indices] of Object.entries(data)) {
+        if (Array.isArray(indices)) {
+          localStorage.setItem(key, JSON.stringify(indices));
+          // Invalidate cache so it reloads
+          for (let k = 1; k <= 10; k++) {
+            if (CHAPTERS[k].key === key) {
+              delete unfamiliarCache[k];
+            }
+          }
+          count += indices.length;
+        }
+      }
+      setCpStatus(`✓ 已匯入，共 ${count} 個標記`);
+      // Refresh current view
+      if (currentChapter === 'search') {
+        renderTabs();
+      } else {
+        switchChapter(currentChapter);
+      }
+    } catch(err) {
+      setCpStatus('✗ 檔案格式錯誤');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = ''; // reset so same file can be re-imported
+}
+
+function setCpStatus(msg) {
+  const el = document.getElementById('cpStatus');
+  if (!el) return;
+  el.textContent = msg;
+  setTimeout(() => { el.textContent = ''; }, 4000);
+}
+
+// Auto-load checkpoint.json if served from a web server (GitHub Pages etc.)
+async function tryAutoLoadCheckpoint() {
+  // Only attempt on http/https, not file://
+  if (!location.protocol.startsWith('http')) return;
+  try {
+    const res = await fetch('./checkpoint.json', {cache: 'no-cache'});
+    if (!res.ok) return;
+    const data = await res.json();
+    let count = 0;
+    for (const [key, indices] of Object.entries(data)) {
+      if (Array.isArray(indices)) {
+        // Only load if localStorage doesn't already have data for this key
+        if (!localStorage.getItem(key)) {
+          localStorage.setItem(key, JSON.stringify(indices));
+          for (let k = 1; k <= 10; k++) {
+            if (CHAPTERS[k].key === key) delete unfamiliarCache[k];
+          }
+          count += indices.length;
+        }
+      }
+    }
+    if (count > 0) setCpStatus(`✓ 已自動載入 ${count} 個標記`);
+  } catch(e) {
+    // No checkpoint.json found — silent fail
+  }
+}
+
+
+tryAutoLoadCheckpoint();
 if (currentChapter === 'search') {
   switchToSearch();
 } else {
