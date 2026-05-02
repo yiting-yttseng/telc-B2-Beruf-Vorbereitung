@@ -12,7 +12,21 @@ body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-s
 .top-bar h1 { color: #fff; font-size: 17px; font-weight: 600; margin-bottom: 3px; }
 .top-bar .sub { color: #a8c8f0; font-size: 11px; }
 
-.page { max-width: 1400px; margin: 0 auto; padding: 20px; }
+.backup-bar {
+  background: #f0f4ff; border-bottom: 1px solid #d0d8f0;
+  padding: 7px 20px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.backup-bar .label { font-size: 12px; color: #3a4a7a; }
+.cp-btn {
+  padding: 4px 14px; border-radius: 6px; font-size: 12px; cursor: pointer;
+  border: 1px solid #3a5aa8; transition: all 0.15s;
+}
+.cp-btn.primary { background: #2e4fa3; color: #fff; }
+.cp-btn.primary:hover { background: #1e3a8a; }
+.cp-btn { background: #fff; color: #2e4fa3; }
+.cp-btn:hover { background: #e8eeff; }
+.import-status { font-size: 11px; color: #1a7840; display: none; }
+.import-status.show { display: inline; }
 
 .toolbar {
   display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
@@ -106,7 +120,16 @@ tr.key    .ex-item:hover { background: #fff0d0; }
   <div class="sub">Klett Aspekte Beruf · S. 343–345 &nbsp;｜&nbsp; 🔊 點德文欄位或例句朗讀 &nbsp;｜&nbsp; 點「待複習」或「重點」欄標記</div>
 </div>
 
-<div class="page">
+<div class="backup-bar">
+  <span class="label">💾 勾選備份：</span>
+  <button class="cp-btn primary" onclick="exportJSON('review')">匯出「待複習」</button>
+  <button class="cp-btn" onclick="importJSON('review')">匯入「待複習」</button>
+  <button class="cp-btn primary" onclick="exportJSON('key')">匯出「重點」</button>
+  <button class="cp-btn" onclick="importJSON('key')">匯入「重點」</button>
+  <span class="import-status" id="importStatus">✓ 匯入成功</span>
+  <input type="file" id="importFileReview" accept=".json" style="display:none" onchange="handleImport(event,'review')">
+  <input type="file" id="importFileKey"    accept=".json" style="display:none" onchange="handleImport(event,'key')">
+</div>
   <div class="toolbar">
     <button class="filter-btn active" onclick="setFilter('all',this)">全部</button>
     <button class="filter-btn" onclick="setFilter('review',this)">待複習</button>
@@ -782,6 +805,25 @@ const VOCAB = [
     {type:"N",praep:"für + A",de:"Der Nutzen für das Unternehmen muss klar dargestellt werden.",zh:"對公司的益處必須清楚地呈現出來。"},
     {type:"Adj",praep:"für + A",de:"Diese Fähigkeit ist sehr nützlich für die tägliche Arbeit.",zh:"這項技能對日常工作非常有用。"},
 ]},
+{ id:167, v:"beantragen", n:"der Antrag", adj:"", praep:["auf + A"],
+  trans:{zh:"申請（某事）；申請書",en:"apply for / application"},
+  ex:[
+    {type:"V",praep:"auf + A",de:"Er beantragt beim Arbeitgeber eine unbezahlte Auszeit.",zh:"他向雇主申請無薪假。"},
+    {type:"N",praep:"auf + A",de:"Der Antrag auf Elternzeit muss rechtzeitig eingereicht werden.",zh:"育兒假的申請必須及時提交。"},
+]},
+{ id:168, v:"sich trennen", n:"die Trennung", adj:"getrennt", praep:["von + D"],
+  trans:{zh:"與…分開；分離",en:"separate from / separation / separated"},
+  ex:[
+    {type:"V",praep:"von + D",de:"Das Unternehmen hat sich von einem Teil seiner Mitarbeiter getrennt.",zh:"公司與部分員工分道揚鑣。"},
+    {type:"N",praep:"von + D",de:"Die Trennung von der bisherigen Arbeitsstelle fiel ihm schwer.",zh:"與原來工作崗位的分離對他來說很艱難。"},
+    {type:"Adj",praep:"von + D",de:"Er arbeitet getrennt von seinem Team im Homeoffice.",zh:"他與團隊分開在家辦公。"},
+]},
+{ id:169, v:"Kontakt aufnehmen", n:"der Kontakt", adj:"", praep:["mit + D"],
+  trans:{zh:"與…聯繫；接觸",en:"contact with / get in touch with"},
+  ex:[
+    {type:"V",praep:"mit + D",de:"Sie nimmt Kontakt mit dem Personalverantwortlichen auf.",zh:"她與負責人事的主管聯繫。"},
+    {type:"N",praep:"mit + D",de:"Der Kontakt mit internationalen Kunden erfordert interkulturelle Kompetenz.",zh:"與國際客戶的聯繫需要跨文化能力。"},
+]},
 // ═══════════════════ S. 345 ═══════════════════
 { id:110, v:"sich orientieren", n:"die Orientierung", adj:"", praep:["an + D"],
   trans:{zh:"以…為導向；定向",en:"orient oneself to / orientation"},
@@ -1203,6 +1245,7 @@ function buildRow(entry) {
 
 // ── SECTION DIVIDERS ──────────────────────────────────────────────────────────
 const PAGE_STARTS = { 58: 'S. 344', 110: 'S. 345' };
+// ids 167-169 are appended to S.344 (inserted before id:110 in data array)
 
 function render() {
   let list = VOCAB;
@@ -1262,6 +1305,47 @@ function setFilter(f, btn) {
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   render();
+}
+
+// ── EXPORT / IMPORT ───────────────────────────────────────────────────────────
+const FILE_NAMES = {
+  review: 'Wortschatz_Verben-Nomen-Adjektive-mit-Praepositionen_review-checkpoint.json',
+  key:    'Wortschatz_Verben-Nomen-Adjektive-mit-Praepositionen_key-checkpoint.json',
+};
+
+function exportJSON(type) {
+  const ids = Array.from(state[type]).sort((a,b) => a-b);
+  const blob = new Blob([JSON.stringify(ids, null, 2)], {type: 'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = FILE_NAMES[type];
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function importJSON(type) {
+  document.getElementById(type === 'review' ? 'importFileReview' : 'importFileKey').click();
+}
+
+function handleImport(event, type) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const ids = JSON.parse(e.target.result);
+      if (!Array.isArray(ids) || !ids.every(x => typeof x === 'number')) throw new Error();
+      state[type] = new Set(ids);
+      render();
+      const st = document.getElementById('importStatus');
+      st.classList.add('show');
+      setTimeout(() => st.classList.remove('show'), 3000);
+    } catch {
+      alert('格式錯誤：請選擇正確的 JSON 備份檔案。');
+    }
+    event.target.value = '';
+  };
+  reader.readAsText(file);
 }
 
 render();

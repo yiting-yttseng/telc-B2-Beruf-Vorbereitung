@@ -171,35 +171,62 @@ header p { margin-top: 5px; font-size: 13px; opacity: 0.85; }
 .sent-clear-btn { margin-left: auto; padding: 7px 16px; border: 2px solid #c0392b; color: #c0392b; background: white; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
 .sent-clear-btn:hover { background: #c0392b; color: white; }
 
-.sent-row { background: white; border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); display: flex; align-items: flex-start; gap: 12px; }
-.sent-row.reply-row { border-left: 4px solid #d4844a; }
-.sent-row.forum-row { border-left: 4px solid #4a9a6a; }
-.sent-num { font-size: 11.5px; color: #b0b8c8; font-weight: 700; min-width: 24px; padding-top: 2px; }
-.sent-row-main { flex: 1; }
-.sent-nvv-tag { font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-bottom: 5px; display: inline-block; }
-.reply-row .sent-nvv-tag { background: #fff0e4; color: #a05020; }
-.forum-row .sent-nvv-tag { background: #e8f8ee; color: #2a7a4a; }
-.sent-de { font-size: 13.5px; color: #1a1a2e; line-height: 1.5; margin-bottom: 3px; cursor: pointer; border-radius: 4px; padding: 1px 3px; margin: 0 -3px 3px; transition: background 0.15s; }
-.sent-de:hover { background: rgba(0,0,0,0.04); }
-.sent-de.speaking { background: rgba(37,99,168,0.15); outline: 1px solid #4a7fd4; }
-.sent-zh { font-size: 12px; color: #666; line-height: 1.5; }
-.sent-remove-btn { padding: 4px 11px; border: 1.5px solid #c0392b; color: #c0392b; background: white; border-radius: 14px; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s; white-space: nowrap; flex-shrink: 0; }
-.sent-remove-btn:hover { background: #c0392b; color: white; }
-
 .sent-empty { text-align: center; padding: 56px 20px; color: #aaa; }
 .sent-empty .empty-icon { font-size: 44px; margin-bottom: 10px; }
 .sent-empty p { font-size: 14px; line-height: 1.9; }
 
+/* ── Full-card in sent panels ── */
+.card.in-sent-panel { position: relative; }
+.card.sent-reply-highlight { border-left-color: #d4844a !important; border-left-width: 6px; }
+.card.sent-forum-highlight { border-left-color: #2a7a4a !important; border-left-width: 6px; }
+.card.sent-reply-highlight .example.reply { outline: 2px solid #d4844a; outline-offset: 2px; border-radius: 8px; }
+.card.sent-forum-highlight .example.forum { outline: 2px solid #2a7a4a; outline-offset: 2px; border-radius: 8px; }
+.sent-panel-remove {
+  position: absolute; top: 14px; right: 14px;
+  padding: 4px 10px; border: 1.5px solid #c0392b; color: #c0392b;
+  background: white; border-radius: 12px; font-size: 11px; font-weight: 600;
+  cursor: pointer; transition: all 0.2s; z-index: 10;
+}
+.sent-panel-remove:hover { background: #c0392b; color: white; }
+
 .no-results { text-align: center; padding: 44px; color: #999; font-size: 14px; }
 
 @media print {
-  .controls, .tts-bar { display: none !important; }
+  .controls, .tts-bar, .cp-bar { display: none !important; }
   .card { break-inside: avoid; }
   .card.hidden { display: none !important; }
   #unfamiliar-panel { display: none !important; }
   .learn-check-wrap, .wp-toggle { display: none; }
   .word-parts { display: none; }
 }
+
+/* ── Checkpoint bar ── */
+.cp-bar {
+  background: #f0f4ff; border-bottom: 1px solid #d0d8f0;
+  padding: 7px 24px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  font-size: 13px; color: #2a4a80;
+}
+.cp-label { font-weight: 600; white-space: nowrap; }
+.cp-group { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.cp-group-label { font-size: 11px; color: #5a6a90; font-weight: 600; white-space: nowrap; background: #e0e8f8; padding: 2px 7px; border-radius: 8px; }
+.cp-btn {
+  padding: 4px 13px; border-radius: 14px; font-size: 12px; font-weight: 600;
+  cursor: pointer; transition: all 0.18s; white-space: nowrap;
+}
+.cp-btn.primary { background: #2563a8; color: white; border: 2px solid #2563a8; }
+.cp-btn.primary:hover { background: #1a3a6b; border-color: #1a3a6b; }
+.cp-btn.secondary { background: white; color: #2563a8; border: 2px solid #2563a8; }
+.cp-btn.secondary:hover { background: #eef4ff; }
+.cp-btn.primary.unfam { background: #c0622a; border-color: #c0622a; }
+.cp-btn.primary.unfam:hover { background: #963010; border-color: #963010; }
+.cp-btn.secondary.unfam { color: #c0622a; border-color: #c0622a; }
+.cp-btn.secondary.unfam:hover { background: #fff3ed; }
+.cp-btn.primary.forum { background: #2a7a4a; border-color: #2a7a4a; }
+.cp-btn.primary.forum:hover { background: #1a5a34; border-color: #1a5a34; }
+.cp-btn.secondary.forum { color: #2a7a4a; border-color: #2a7a4a; }
+.cp-btn.secondary.forum:hover { background: #edfaf2; }
+.cp-ok { font-size: 11.5px; color: #2a7a4a; font-weight: 600; display: none; margin-left: 4px; }
+.cp-divider { width: 1px; height: 22px; background: #c8d4ec; flex-shrink: 0; margin: 0 6px; }
 </style>
 </head>
 <body>
@@ -214,6 +241,31 @@ header p { margin-top: 5px; font-size: 13px; opacity: 0.85; }
     <div class="stat"><strong id="stat-unfam">0</strong>⚑ 不熟悉</div>
   </div>
 </header>
+
+<div class="cp-bar">
+  <span class="cp-label">💾 勾選備份：</span>
+  <div class="cp-group">
+    <span class="cp-group-label">⚑ 不熟悉</span>
+    <button class="cp-btn primary unfam" onclick="exportCP('unfamiliar')">匯出</button>
+    <button class="cp-btn secondary unfam" onclick="importCP('unfamiliar')">匯入</button>
+    <span class="cp-ok" id="cp-ok-unfamiliar">✓ 匯入成功</span>
+  </div>
+  <div class="cp-divider"></div>
+  <div class="cp-group">
+    <span class="cp-group-label">✉️ 常用回信句</span>
+    <button class="cp-btn primary" onclick="exportCP('reply')">匯出</button>
+    <button class="cp-btn secondary" onclick="importCP('reply')">匯入</button>
+    <span class="cp-ok" id="cp-ok-reply">✓ 匯入成功</span>
+  </div>
+  <div class="cp-divider"></div>
+  <div class="cp-group">
+    <span class="cp-group-label">💬 常用論壇句</span>
+    <button class="cp-btn primary forum" onclick="exportCP('forum')">匯出</button>
+    <button class="cp-btn secondary forum" onclick="importCP('forum')">匯入</button>
+    <span class="cp-ok" id="cp-ok-forum">✓ 匯入成功</span>
+    <input type="file" id="cp-file-input" accept=".json" style="display:none">
+  </div>
+</div>
 
 <div class="tts-bar">
   🔊 <span id="tts-status" class="tts-hint">點擊卡片框朗讀例句 ｜ 點擊 NVV 標題或德文解釋文字朗讀</span>
@@ -5698,24 +5750,36 @@ function renderSentPanel(type) {
   const set     = type === 'reply' ? replySentSet : forumSentSet;
   const listEl  = document.getElementById(type + '-list');
   const emptyEl = document.getElementById(type + '-empty');
-  const rowCls  = type + '-row';
   const sorted  = [...set].sort((a,b) => a-b);
   if (!sorted.length) { listEl.innerHTML=''; emptyEl.style.display='block'; return; }
   emptyEl.style.display = 'none';
-  listEl.innerHTML = sorted.map((idx,i) => {
-    const e   = NVV[idx];
-    const de  = type === 'reply' ? e.beispiel_reply  : e.beispiel_forum;
-    const zh  = type === 'reply' ? e.beispiel_reply_zh : e.beispiel_forum_zh;
-    const dej = de.replace(/'/g,"\'");
-    return `<div class="sent-row ${rowCls}">
-      <div class="sent-num">${i+1}</div>
-      <div class="sent-row-main">
-        <span class="sent-nvv-tag">${e.nvv}</span>
-        <div class="sent-de" onclick="speak('${dej}',this)" title="點擊朗讀">${de}</div>
-        <div class="sent-zh">${zh}</div>
-      </div>
-      <button class="sent-remove-btn" onclick="removeSent('${type}',${idx})">移除</button>
-    </div>`;
+
+  listEl.innerHTML = sorted.map(idx => {
+    // Clone the card from main list and return its outerHTML
+    const orig = document.querySelector(`#cards .card[data-idx="${idx}"]`);
+    if (!orig) return '';
+    const clone = orig.cloneNode(true);
+    // Mark which sentence triggered this entry
+    clone.classList.add('in-sent-panel');
+    if (type === 'reply') clone.classList.add('sent-reply-highlight');
+    else                  clone.classList.add('sent-forum-highlight');
+    // Add a remove button overlay
+    const removeBtn = document.createElement('button');
+    removeBtn.className = 'sent-panel-remove';
+    removeBtn.textContent = '✕ 從清單移除';
+    removeBtn.onclick = (ev) => { ev.stopPropagation(); removeSent(type, idx); };
+    clone.appendChild(removeBtn);
+    // Fix checkbox states in clone (they reset on cloneNode)
+    clone.querySelectorAll('.learn-check').forEach(cb => {
+      cb.checked = unfamiliarSet.has(+cb.dataset.idx);
+    });
+    clone.querySelectorAll('.reply-check').forEach(cb => {
+      cb.checked = replySentSet.has(+cb.dataset.idx);
+    });
+    clone.querySelectorAll('.forum-check').forEach(cb => {
+      cb.checked = forumSentSet.has(+cb.dataset.idx);
+    });
+    return clone.outerHTML;
   }).join('');
 }
 function removeSent(type, idx) {
@@ -5813,6 +5877,68 @@ if (typeof speechSynthesis !== 'undefined') {
   if (speechSynthesis.onvoiceschanged !== undefined)
     speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
 }
+
+// ── Checkpoint export / import ────────────────────────────────────────────────
+const CP_FILENAMES = {
+  unfamiliar: 'Wortschatz_Nomen-Verben-Verbindungen_-checkpoint.json',
+  reply:      'Wortschatz_Nomen-Verben-Verbindungen_letter-checkpoint.json',
+  forum:      'Wortschatz_Nomen-Verben-Verbindungen_Forumsbeitrag-checkpoint.json',
+};
+
+function exportCP(type) {
+  const set = type === 'unfamiliar' ? unfamiliarSet
+            : type === 'reply'      ? replySentSet
+            :                        forumSentSet;
+  const data = JSON.stringify([...set].sort((a,b) => a-b), null, 2);
+  const blob = new Blob([data], {type: 'application/json'});
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = CP_FILENAMES[type]; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importCP(type) {
+  const input = document.getElementById('cp-file-input');
+  input.value = '';
+  input.onchange = (ev) => {
+    const file = ev.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const arr = JSON.parse(e.target.result);
+        if (!Array.isArray(arr) || arr.some(x => typeof x !== 'number')) {
+          alert('格式錯誤：JSON 應為數字陣列，例如 [0, 3, 12]');
+          return;
+        }
+        const newSet = new Set(arr.filter(x => x >= 0 && x < NVV.length));
+        if (type === 'unfamiliar') {
+          unfamiliarSet = newSet; saveUnfamiliar();
+        } else if (type === 'reply') {
+          replySentSet = newSet; saveReply();
+        } else {
+          forumSentSet = newSet; saveForum();
+        }
+        syncCheckboxes();
+        updateCounters();
+        // Re-render active panel if relevant
+        if (currentFilter === type) {
+          if (type === 'unfamiliar') renderUnfamiliarPanel();
+          else renderSentPanel(type);
+        }
+        // Show success message briefly
+        const ok = document.getElementById('cp-ok-' + type);
+        ok.style.display = 'inline';
+        setTimeout(() => { ok.style.display = 'none'; }, 3000);
+      } catch(err) {
+        alert('格式錯誤：無法解析 JSON 檔案\n' + err.message);
+      }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+
 
 loadAll();
 </script>

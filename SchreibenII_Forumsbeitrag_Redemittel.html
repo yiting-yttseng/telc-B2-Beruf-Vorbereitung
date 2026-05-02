@@ -7,114 +7,154 @@
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; background: #f5f5f3; color: #1a1a1a; font-size: 14px; }
+.page { max-width: 1200px; margin: 0 auto; padding: 24px 20px; }
 
-.top-bar { background: #2E4057; padding: 14px 20px 10px; }
-.top-bar h1 { color: #fff; font-size: 17px; font-weight: 600; margin-bottom: 3px; }
-.top-bar .sub { color: #a8c8f0; font-size: 11px; }
-
-.page { max-width: 1200px; margin: 0 auto; padding: 20px; }
-
-.toolbar {
-  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-  margin-bottom: 16px; background: #fff; border: 0.5px solid #ddd;
-  border-radius: 10px; padding: 10px 14px;
+/* ── Chapter nav (top blue bar) — identical to B2 tracker ── */
+.chapter-nav { background: #1a3a6b; padding: 10px 16px 0; }
+.tab-scroll { display: flex; gap: 4px; flex-wrap: wrap; }
+.chapter-info {
+  background: #1a3a6b; padding: 8px 20px 12px;
+  border-bottom: 2px solid #2a5a9b;
 }
-.filter-btn { padding: 5px 14px; border-radius: 6px; border: 0.5px solid #ccc; background: #fff; color: #333; font-size: 13px; cursor: pointer; transition: all 0.15s; }
+#pageTitle { color: #fff; font-size: 17px; font-weight: 600; margin: 0 0 2px; }
+.page-subtitle { color: #a8c8f0; font-size: 11px; margin: 0; }
+
+/* ── Checkpoint bar — identical to B2 tracker ── */
+.checkpoint-bar {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  padding: 8px 20px; background: #f0f4ff;
+  border-bottom: 1px solid #d0d8f0; font-size: 12px; color: #555;
+}
+.checkpoint-bar span.cp-label { color: #888; margin-right: 4px; }
+.cp-btn {
+  padding: 4px 12px; border-radius: 5px; border: 1px solid #b0c0e8;
+  background: #fff; color: #1a3a6b; font-size: 12px;
+  cursor: pointer; font-weight: 500; transition: background 0.15s;
+}
+.cp-btn:hover { background: #e8f0fe; }
+.cp-btn.primary { background: #1a3a6b; color: #fff; border-color: #1a3a6b; }
+.cp-btn.primary:hover { background: #2a5a9b; }
+.cp-status { font-size: 11px; color: #5a8a5a; margin-left: 4px; }
+#cpFileInput { display: none; }
+
+/* ── Toolbar ── */
+.toolbar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap; margin-bottom: 16px;
+  background: #fff; border: 0.5px solid #ddd; border-radius: 10px;
+  padding: 10px 14px;
+}
+.toolbar-left { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.filter-btn {
+  padding: 5px 14px; border-radius: 6px;
+  border: 0.5px solid #ccc; background: #fff;
+  color: #333; font-size: 13px; cursor: pointer;
+}
 .filter-btn.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
 .stats { font-size: 12px; color: #888; margin-left: 4px; }
-.speaking-badge { display: none; align-items: center; gap: 5px; font-size: 11px; color: #666; padding: 3px 10px; border: 0.5px solid #ddd; border-radius: 20px; background: #fafaf8; }
+
+/* ── Speaking indicator ── */
+.speaking-badge {
+  display: none; align-items: center; gap: 5px;
+  font-size: 11px; color: #666; padding: 3px 10px;
+  border: 0.5px solid #ddd; border-radius: 20px; background: #fafaf8;
+}
 .speaking-badge.active { display: flex; }
 .speaking-dot { width: 7px; height: 7px; border-radius: 50%; background: #4a9eff; animation: pulse 0.9s infinite; }
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
-/* ── Section ── */
-.section-block { margin-bottom: 24px; }
-.section-title {
-  font-size: 12px; font-weight: 700; color: #2E4057;
-  letter-spacing: 0.05em; text-transform: uppercase;
-  padding: 9px 12px 7px; background: #d8e4f0;
-  border: 0.5px solid #b0c8e0; border-bottom: none;
-  border-radius: 6px 6px 0 0;
+/* ── Section header — identical to B2 tracker ── */
+.section-block { margin-bottom: 20px; }
+.section-header {
+  font-size: 11px; font-weight: 600; color: #555;
+  padding: 8px 10px 6px; letter-spacing: 0.06em; text-transform: uppercase;
+  background: #efefed; border-radius: 6px 6px 0 0;
+  border: 0.5px solid #ddd; border-bottom: none;
 }
 
-/* ── Table ── */
+/* ── Table — identical to B2 tracker ── */
 table { width: 100%; border-collapse: collapse; background: #fff; border: 0.5px solid #ddd; border-radius: 0 0 8px 8px; overflow: hidden; table-layout: fixed; }
 th { text-align: left; padding: 7px 10px; background: #fafaf8; color: #777; font-weight: 500; font-size: 11px; border-bottom: 0.5px solid #e0e0e0; letter-spacing: 0.03em; }
-td { padding: 8px 10px; border-bottom: 0.5px solid #efefed; vertical-align: top; }
+td { padding: 7px 10px; border-bottom: 0.5px solid #efefed; vertical-align: top; }
 tr:last-child td { border-bottom: none; }
+tr.fav td { background: #fff6f6; }
 
-/* row states */
-tr.fav td { background: #fffaf0; }
-
-/* ── Fav checkbox col ── */
-.col-fav { width: 46px; }
-td.mark-fav { width: 46px; text-align: center; cursor: pointer; user-select: none; vertical-align: middle; }
-td.mark-fav:hover { background: #fff0d0 !important; }
-td.mark-fav:hover .mark-box { border-color: #d08010; }
-.mark-box { display: inline-block; width: 11px; height: 11px; border: 1.5px solid #ccc; border-radius: 2px; margin-top: 2px; transition: all 0.15s; }
-tr.fav td.mark-fav .mark-box { background: #d08010; border-color: #d08010; }
-.fav-label { font-size: 9px; color: #ccc; display: block; margin-top: 2px; letter-spacing: 0.02em; }
-tr.fav .fav-label { color: #d08010; }
+/* ── Fav (常用) checkbox col ── */
+.col-fav { width: 30px; }
+td.mark-fav { width: 30px; text-align: center; cursor: pointer; user-select: none; vertical-align: middle; }
+td.mark-fav:hover { background: #ffe0e0 !important; }
+td.mark-fav:hover .mark-box { border-color: #e24b4a; }
+.mark-box { display: block; width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid #ccc; margin: 3px auto 0; transition: all 0.15s; }
+tr.fav td.mark-fav .mark-box { background: #e24b4a; border-color: #e24b4a; }
 
 /* ── Left col: Redemittel ── */
-.col-left { width: 32%; cursor: pointer; }
-.col-left:hover { background: #e8f0fe; }
-tr.fav .col-left:hover { background: #fff0d0; }
-.r-de { font-weight: 700; font-size: 13px; color: #1a3a6a; display: block; line-height: 1.55; margin-bottom: 3px; }
+.col-left { width: 30%; cursor: pointer; }
+.col-left:hover td, td.col-left:hover { background: #f0f6ff !important; }
+tr.fav .col-left:hover td, tr.fav td.col-left:hover { background: #ffe0e0 !important; }
+.r-de { font-weight: 700; font-size: 13px; color: #1a5fc8; display: block; line-height: 1.55; margin-bottom: 2px; }
 .r-zh { font-size: 11px; color: #999; font-style: italic; display: block; }
 
 /* ── Right col: example ── */
-.col-right { width: 68%; }
+.col-right { width: 70%; }
 .ex-item {
   cursor: pointer;
-  padding: 4px 7px; border-radius: 0 4px 4px 0;
-  border-left: 2px solid #aed6f1;
-  margin-bottom: 5px; transition: background 0.1s;
+  padding: 3px 6px; border-radius: 4px;
+  margin-bottom: 4px; transition: background 0.1s;
 }
 .ex-item:last-child { margin-bottom: 0; }
-.ex-item:hover { background: #e8f0fe; }
-tr.fav .ex-item:hover { background: #fff0d0; }
-.ex-de { font-size: 13px; color: #222; line-height: 1.6; display: block; }
-.ex-zh { font-size: 11px; color: #999; font-style: italic; display: block; margin-top: 1px; }
+.ex-item:hover { background: #f0f6ff; }
+tr.fav .ex-item:hover { background: #ffe0e0; }
+.ex-de { font-size: 12px; color: #222; line-height: 1.6; display: block; }
+.ex-zh { font-size: 11px; color: #999; font-style: italic; display: block; }
 
 /* ── Aufbau structure table ── */
-.aufbau-num { font-size: 15px; font-weight: 700; color: #c00000; text-align: center; width: 50px; }
-.aufbau-desc { font-size: 13px; color: #222; }
-tr:nth-child(even) .aufbau-num,
-tr:nth-child(even) .aufbau-desc { background: transparent; }
+.aufbau-num { font-size: 15px; font-weight: 700; color: #e24b4a; text-align: center; width: 50px; cursor: default; }
+.aufbau-desc { font-size: 12px; color: #222; cursor: default; }
 
 /* ── Analysis table ── */
 .col-label { width: 160px; }
-.label-cell { background: #d9e2f3 !important; text-align: center; vertical-align: middle; }
-.label-num  { font-size: 20px; font-weight: 700; color: #c00000; display: block; }
-.label-de   { font-size: 12px; font-weight: 700; color: #1a3a6a; display: block; margin-top: 2px; }
-.label-zh   { font-size: 11px; color: #888; font-style: italic; display: block; }
-
+.label-cell { background: #f5f8ff !important; text-align: center; vertical-align: middle; }
+.label-num  { font-size: 20px; font-weight: 700; color: #e24b4a; display: block; }
+.label-de   { font-size: 12px; font-weight: 700; color: #1a5fc8; display: block; margin-top: 2px; }
+.label-zh   { font-size: 11px; color: #999; font-style: italic; display: block; }
 .analysis-item {
-  cursor: pointer;
-  padding: 4px 7px; border-radius: 0 4px 4px 0;
-  border-left: 2px solid #aed6f1;
-  margin-bottom: 5px; transition: background 0.1s;
+  cursor: pointer; padding: 3px 6px; border-radius: 4px;
+  margin-bottom: 4px; transition: background 0.1s;
 }
 .analysis-item:last-child { margin-bottom: 0; }
-.analysis-item:hover { background: #e8f0fe; }
-.a-de { font-size: 13px; color: #222; line-height: 1.6; display: block; }
-.a-zh { font-size: 11px; color: #999; font-style: italic; display: block; margin-top: 1px; }
+.analysis-item:hover { background: #f0f6ff; }
+.a-de { font-size: 12px; color: #222; line-height: 1.6; display: block; }
+.a-zh { font-size: 11px; color: #999; font-style: italic; display: block; }
 </style>
 </head>
 <body>
 
-<div class="top-bar">
-  <h1>B2 Forumbeitrag — Redemittel</h1>
-  <div class="sub">論壇寫作實用句型總整理（含中文翻譯）&nbsp;｜&nbsp; 🔊 點擊句型或例句朗讀德文 &nbsp;｜&nbsp; 勾選「常用」標記重要句型</div>
+<div class="chapter-nav">
+  <div class="tab-scroll"></div>
+</div>
+<div class="chapter-info">
+  <div style="display:flex; align-items:baseline; gap:16px; flex-wrap:wrap;">
+    <p id="pageTitle" style="color:#fff;font-size:17px;font-weight:600;margin:0;">B2 Forumbeitrag — Redemittel</p>
+    <p class="page-subtitle" style="margin:0;">🔊 點擊句型或例句朗讀德文 &nbsp;&nbsp;⭕ 點圓圈標記常用句型</p>
+  </div>
+</div>
+
+<div class="checkpoint-bar">
+  <span class="cp-label">💾 勾選備份：</span>
+  <button class="cp-btn primary" onclick="exportJSON()">匯出 SchreibenI_Beschwerde_beantworten_checkpoint.json</button>
+  <button class="cp-btn" onclick="document.getElementById('cpFileInput').click()">匯入 SchreibenI_Beschwerde_beantworten_checkpoint.json</button>
+  <input type="file" id="cpFileInput" accept=".json" onchange="importJSON(event)">
+  <span class="cp-status" id="cpStatus"></span>
 </div>
 
 <div class="page">
   <div class="toolbar">
-    <button class="filter-btn active" onclick="setFilter('all',this)">全部</button>
-    <button class="filter-btn" onclick="setFilter('fav',this)">常用</button>
-    <span class="stats" id="stats"></span>
-    <span class="speaking-badge" id="speakingBadge"><span class="speaking-dot"></span>朗讀中…</span>
+    <div class="toolbar-left">
+      <button class="filter-btn active" onclick="setFilter('all',this)">全部</button>
+      <button class="filter-btn" onclick="setFilter('fav',this)">常用</button>
+      <span class="stats" id="stats"></span>
+      <span class="speaking-badge" id="speakingBadge"><span class="speaking-dot"></span>朗讀中…</span>
+    </div>
   </div>
   <div id="mainContent"></div>
 </div>
@@ -135,6 +175,45 @@ function esc(s){ return (s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
 
 // ── STATE ────────────────────────────────────────────────────────────────────
 const state = { fav: new Set(), filter: 'all' };
+
+
+// ── Export / Import JSON ──────────────────────────────────────────────────────
+function exportJSON() {
+  const payload = {
+    file: 'SchreibenI_Beschwerde_beantworten_checkpoint.json',
+    version: 1,
+    exported: new Date().toISOString(),
+    fav: [...state.fav]
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'SchreibenI_Beschwerde_beantworten_checkpoint.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function importJSON(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!data.fav || !Array.isArray(data.fav)) throw new Error('格式錯誤');
+      state.fav = new Set(data.fav.map(Number));
+      saveState();
+      render();
+      const ok = document.getElementById('cpStatus');
+      el.textContent = '✓ 匯入成功';;
+      setTimeout(() => { el.textContent = ''; }, 2500);
+    } catch(err) {
+      alert('匯入失敗：檔案格式不正確');
+    }
+    event.target.value = ''; // reset
+  };
+  reader.readAsText(file);
+}
 
 function loadState() {
   try {
@@ -312,7 +391,7 @@ function render() {
 
   // Aufbau section
   html += `<div class="section-block" style="margin-top:40px;">
-    <div class="section-title" style="background:#c8d8e8;">Aufbau Forumsbeitrag &nbsp;·&nbsp; Thema: »Weniger Müll im Betrieb« &nbsp;(S.39 / 10b)</div>
+    <div class="section-header">Aufbau Forumsbeitrag &nbsp;·&nbsp; Thema: »Weniger Müll im Betrieb« &nbsp;(S.39 / 10b)</div>
     <table>
       <thead><tr>
         <th style="width:50px;text-align:center;">番號</th>
@@ -340,7 +419,7 @@ function render() {
 
   // Analysis section
   html += `<div class="section-block">
-    <div class="section-title" style="background:#c8d8e8;">文章內容分析 &nbsp;·&nbsp; ⑤ 省略；⑦ Lösungsvorschlag 本文未出現</div>
+    <div class="section-header">文章內容分析 &nbsp;·&nbsp; ⑤ 省略；⑦ Lösungsvorschlag 本文未出現</div>
     <table>
       <thead><tr>
         <th class="col-label" style="text-align:center;">段落分類</th>

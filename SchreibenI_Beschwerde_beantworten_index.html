@@ -17,6 +17,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;ba
   color:#444;font-size:11px;font-weight:500;cursor:pointer;white-space:nowrap;transition:all .15s}
 .nav-btn:hover{border-color:#888;color:#1a1a1a}
 .nav-btn.active{color:#fff;border-color:transparent;background:#1F4E79}
+.nav-export{padding:4px 10px;border-radius:16px;border:1.5px solid #2E7D32;background:#fff;
+  color:#2E7D32;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;
+  margin-left:auto;transition:all .15s}
+.nav-export:hover{background:#2E7D32;color:#fff}
 
 /* Page */
 .page{max-width:960px;margin:0 auto;padding:18px 16px 60px}
@@ -24,6 +28,13 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;ba
 .page-header h1{font-size:17px;font-weight:600;color:#1F4E79;margin-bottom:3px}
 .page-header p{font-size:11px;color:#999;line-height:1.7}
 .tab-section{display:none}.tab-section.active{display:block}
+
+/* ── 考試提示框 ── */
+.pruefung-box{background:#fffbe6;border:1.5px solid #e8d86a;border-radius:8px;
+  padding:14px 16px;margin-bottom:22px}
+.pruefung-box h3{font-size:12px;font-weight:700;color:#7a6a00;margin-bottom:8px;letter-spacing:.03em}
+.pruefung-box ul{list-style:none;display:flex;flex-direction:column;gap:4px}
+.pruefung-box li{font-size:12px;color:#555;line-height:1.6;padding:2px 0}
 
 /* ── Redemittel ── */
 .rm-group{margin-bottom:26px}
@@ -36,18 +47,15 @@ table.rm th{text-align:left;padding:7px 10px;background:#fafaf8;color:#777;font-
 table.rm td{padding:8px 10px;border-bottom:0.5px solid #efefed;vertical-align:top}
 table.rm tr:last-child td{border-bottom:none}
 table.rm tr.fav td{background:#fffaf0}
-/* checkbox col */
 .col-fav{width:38px;text-align:center;cursor:pointer;user-select:none;vertical-align:middle}
 .col-fav:hover{background:#fff0d0 !important}
 .mark-box{display:inline-block;width:11px;height:11px;border:1.5px solid #ccc;border-radius:2px;transition:all .15s}
 tr.fav .mark-box{background:#d08010;border-color:#d08010}
-/* left col */
 .col-left{width:32%;cursor:pointer}
 .col-left:hover{background:#e8f0fe}
 tr.fav .col-left:hover{background:#fff0d0}
 .r-de{font-weight:700;font-size:13px;color:#1a3a6a;display:block;line-height:1.55;margin-bottom:3px}
 .r-zh{font-size:11px;color:#999;font-style:italic;display:block}
-/* right col */
 .col-right{width:68%}
 .ex-item{cursor:pointer;padding:4px 7px;border-radius:0 4px 4px 0;
   border-left:2px solid #aed6f1;margin-bottom:5px;transition:background .1s}
@@ -58,11 +66,20 @@ tr.fav .ex-item:hover{background:#fff0d0}
 .ex-zh{font-size:11px;color:#999;font-style:italic;display:block;margin-top:1px}
 
 /* ── Situation pages ── */
-.sit-block{margin-bottom:24px}
+.sit-block{margin-bottom:28px}
 .sit-header{font-size:13px;font-weight:700;color:#fff;background:#2E7D32;
   padding:7px 13px;border-radius:8px 8px 0 0}
 .sit-body{background:#fff;border:0.5px solid #ccc;border-top:none;border-radius:0 0 8px 8px;padding:14px 16px}
 .src-label{font-size:12px;font-weight:700;color:#2E7D32;margin-bottom:10px}
+
+/* summary box */
+.summary-box{background:#f0f7ff;border:0.5px solid #b0cce8;border-radius:7px;
+  padding:10px 13px;margin-bottom:12px;font-size:12px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.sum-col h4{font-size:11px;font-weight:700;color:#1F4E79;margin-bottom:5px;letter-spacing:.03em;text-transform:uppercase}
+.sum-col ul{padding-left:14px;color:#444;line-height:1.65}
+.sum-col li{margin-bottom:2px}
+.sum-col.gruende ul{color:#c0392b}
+
 /* email */
 .email-box{background:#f9faf8;border:0.5px solid #c8d8c8;border-radius:7px;
   padding:13px 15px;margin-bottom:10px;font-size:12.5px;line-height:1.75}
@@ -71,12 +88,7 @@ tr.fav .ex-item:hover{background:#fff0d0}
 .email-meta b{color:#444;min-width:60px;display:inline-block}
 .email-body p{margin-bottom:8px;color:#1a1a1a}
 .email-body p:last-child{margin-bottom:0}
-/* task */
-.task-box{background:#fffbe6;border:0.5px solid #e8d86a;border-radius:7px;
-  padding:11px 14px;margin-bottom:12px;font-size:12px;line-height:1.75}
-.task-title{font-weight:700;color:#7a6a00;margin-bottom:6px}
-.task-box ol{padding-left:18px;color:#555}
-.task-box li{margin-bottom:3px}
+
 /* mc */
 .mc-block{margin-bottom:12px}
 .mc-q{font-size:13px;font-weight:500;margin-bottom:6px}
@@ -89,17 +101,34 @@ tr.fav .ex-item:hover{background:#fff0d0}
 .reveal-btn{font-size:11px;color:#888;border:0.5px solid #ccc;background:#fff;
   border-radius:6px;padding:3px 10px;cursor:pointer}
 .reveal-btn:hover{border-color:#1a5fc8;color:#1a5fc8}
+
 /* sample */
-.sample-toggle{font-size:12px;font-weight:500;color:#1F4E79;border:0.5px solid #1F4E79;
-  background:#fff;border-radius:6px;padding:5px 13px;cursor:pointer;margin-bottom:10px}
+.sample-toggle,.student-toggle{font-size:12px;font-weight:500;border-radius:6px;
+  padding:5px 13px;cursor:pointer;margin-bottom:8px;display:inline-block;margin-right:6px}
+.sample-toggle{color:#1F4E79;border:0.5px solid #1F4E79;background:#fff}
 .sample-toggle:hover{background:#eef2fb}
+.student-toggle{color:#6a1a7a;border:0.5px solid #9b59b6;background:#fff}
+.student-toggle:hover{background:#f5eefa}
 .sample-answer{display:none;background:#f0f4ff;border:0.5px solid #b3c6e8;
-  border-radius:7px;padding:13px 15px;font-size:12.5px;line-height:1.8;white-space:pre-wrap}
+  border-radius:7px;padding:13px 15px;font-size:12.5px;line-height:1.8;white-space:pre-wrap;margin-bottom:8px}
 .sample-answer.visible{display:block}
+.student-answer{display:none;background:#fdf5ff;border:0.5px solid #c9a8e0;
+  border-radius:7px;padding:13px 15px;font-size:12px;line-height:1.8;white-space:pre-wrap;margin-bottom:8px}
+.student-answer.visible{display:block}
 .sa-note{font-size:11px;color:#7a8aaa;font-style:italic;margin-top:8px;padding-top:8px;
   border-top:0.5px solid #c8d4ec;white-space:normal}
+.student-note{font-size:11px;color:#8a4aaa;font-style:italic;margin-top:8px;padding-top:8px;
+  border-top:0.5px solid #c9a8e0;white-space:normal}
+
+/* Gründe tab */
+.gr-de{cursor:pointer;vertical-align:top;padding:8px 10px}
+.gr-de:hover{background:#e8f0fe}
+.g-de{font-size:13px;color:#1a3a6a;font-weight:600;display:block;line-height:1.6}
+.gr-zh{font-size:12px;color:#555;vertical-align:top;padding:8px 10px}
+
 /* coming soon */
 .coming-soon{text-align:center;padding:40px 20px;color:#bbb;font-size:13px;font-style:italic}
+
 /* speaking */
 .speaking-badge{position:fixed;bottom:18px;right:18px;display:none;align-items:center;gap:6px;
   font-size:12px;color:#fff;padding:6px 14px;border-radius:20px;
@@ -113,7 +142,7 @@ tr.fav .ex-item:hover{background:#fff0d0}
 
 <div class="nav-bar" id="navBar">
   <span class="nav-title">DTB B2 Schreiben Teil 1</span>
-  <!-- tabs rendered by JS -->
+  <button class="nav-export" onclick="exportCheckpoint()">⬇ 匯出勾選 JSON</button>
 </div>
 <div class="speaking-badge" id="speakBadge">
   <span class="speaking-dot"></span><span>朗讀中…</span>
@@ -121,7 +150,7 @@ tr.fav .ex-item:hover{background:#fff0d0}
 <div class="page">
   <div class="page-header">
     <h1>DTB B2: Schreiben Teil 1 – Auf eine Beschwerde antworten</h1>
-    <p>🔊 點德文句子可朗讀 &nbsp;|&nbsp; ☑ 左欄勾選常用句型（黃底持久化）&nbsp;|&nbsp; 左欄 = 句型框架，右欄 = 具體例句</p>
+    <p>🔊 點德文句子可朗讀 &nbsp;|&nbsp; ☑ 勾選常用句型（黃底持久化）&nbsp;|&nbsp; 左欄 = 句型框架，右欄 = 具體例句</p>
   </div>
   <div id="content"></div>
 </div>
@@ -144,9 +173,7 @@ function esc(s){ return (s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
 const FAV_KEY = 'beschwerde_rm_fav';
 const favSet = new Set();
 try { (JSON.parse(localStorage.getItem(FAV_KEY)||'[]')).forEach(id => favSet.add(id)); } catch(e){}
-function saveFav() {
-  try { localStorage.setItem(FAV_KEY, JSON.stringify([...favSet])); } catch(e){}
-}
+function saveFav() { try { localStorage.setItem(FAV_KEY, JSON.stringify([...favSet])); } catch(e){} }
 function toggleFav(td) {
   const row = td.closest('tr');
   const id = row.dataset.id;
@@ -157,13 +184,19 @@ function toggleFav(td) {
 
 // ── Build Redemittel tab ──
 function buildRedemittel() {
+  // Pruefungstipps box
+  let html = `<div class="pruefung-box">
+    <h3>📋 考試重點提示 — Prüfungstipps</h3>
+    <ul>${PRUEFUNGSTIPPS.map(t=>`<li>${t}</li>`).join('')}</ul>
+  </div>`;
+
   const sections = {};
   const order = [];
   REDEMITTEL.forEach(e => {
     if (!sections[e.sec]) { sections[e.sec] = []; order.push(e.sec); }
     sections[e.sec].push(e);
   });
-  return order.map(sec => {
+  html += order.map(sec => {
     const rows = sections[sec].map(e => {
       const isFav = favSet.has(e.id);
       const exHtml = e.ex.length
@@ -193,6 +226,48 @@ function buildRedemittel() {
       </table>
     </div>`;
   }).join('');
+  return html;
+}
+
+// ── Build Gründe tab ──
+function buildGruende() {
+  return GRUENDE.map(g => {
+    const rows = g.items.map(item => `<tr>
+      <td class="gr-de" onclick="speak('${esc(item.de)}')">
+        <span class="g-de">${item.de}</span>
+      </td>
+      <td class="gr-zh">${item.zh}</td>
+    </tr>`).join('');
+    return `<div class="rm-group">
+      <div class="rm-label">${g.kategorie} <span style="font-weight:400;opacity:.8">${g.zh}</span></div>
+      <table class="rm" style="table-layout:fixed">
+        <thead><tr>
+          <th style="width:55%">德文 🔊 點擊朗讀</th>
+          <th style="width:45%">中文說明</th>
+        </tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`;
+  }).join('');
+}
+
+// ── Build summary box ──
+function buildSummary(s) {
+  if (!s) return '';
+  return `<div class="summary-box">
+    <div class="sum-col">
+      <h4>📌 老闆要求</h4>
+      <ul>${s.boss.map(b=>`<li>${b}</li>`).join('')}</ul>
+    </div>
+    <div class="sum-col">
+      <h4>😤 顧客抱怨</h4>
+      <ul>${s.complaint.map(c=>`<li>${c}</li>`).join('')}</ul>
+    </div>
+    <div class="sum-col gruende">
+      <h4>🔍 可能原因</h4>
+      <ul>${s.gruende.map(g=>`<li>${g}</li>`).join('')}</ul>
+    </div>
+  </div>`;
 }
 
 // ── Build situation tab ──
@@ -203,7 +278,7 @@ function buildSituation(sit) {
       <div class="sit-body"><div class="coming-soon">範例題目待補充 🔧</div></div>
     </div>`;
   }
-  return sit.examples.map(ex => {
+  return sit.examples.map((ex, ei) => {
     const emailsHtml = ex.emails.map(m => {
       const bodyHtml = m.body.split('\n').filter(l=>l.trim()).map(l=>`<p>${l}</p>`).join('');
       return `<div class="email-box">
@@ -216,13 +291,8 @@ function buildSituation(sit) {
       </div>`;
     }).join('');
 
-    const taskHtml = `<div class="task-box">
-      <div class="task-title">📌 Anweisung der Teamleitung:</div>
-      <ol>${ex.task.map(t=>`<li>${t}</li>`).join('')}</ol>
-    </div>`;
-
-    const mcHtml = ex.mc.map((m,mi) => {
-      const opts = m.opts.map((o,oi) =>
+    const mcHtml = (ex.mc||[]).length ? ex.mc.map((m,mi) => {
+      const opts = m.opts.map((o,oi)=>
         `<div class="mc-opt" data-correct="${oi===m.correct}">${String.fromCharCode(97+oi)} &nbsp; ${o}</div>`
       ).join('');
       return `<div class="mc-block">
@@ -230,17 +300,26 @@ function buildSituation(sit) {
         <div class="mc-opts">${opts}</div>
         <button class="reveal-btn" onclick="revealMC(this)">顯示答案</button>
       </div>`;
+    }).join('') : '';
+
+    // student samples
+    const studentHtml = (ex.studentSamples||[]).map((ss,si) => {
+      const sid = `student-${sit.id}-${ei}-${si}`;
+      return `<button class="student-toggle" onclick="toggleSample(this,'${sid}')">▶ ${ss.label}</button>
+        <div class="student-answer" id="${sid}">${ss.text}<div class="student-note">${ss.note||''}</div></div>`;
     }).join('');
 
+    const sampleId = `sample-${sit.id}-${ei}`;
     return `<div class="sit-block">
       <div class="sit-header">${sit.title}（${sit.zh}）</div>
       <div class="sit-body">
         <p class="src-label">📄 ${ex.source}</p>
+        ${buildSummary(ex.summary||null)}
         ${emailsHtml}
-        ${taskHtml}
         ${mcHtml}
-        <button class="sample-toggle" onclick="toggleSample(this)">▶ 顯示示範回信</button>
-        <div class="sample-answer">${ex.sample}<div class="sa-note">${ex.note}</div></div>
+        ${studentHtml}
+        <button class="sample-toggle" onclick="toggleSample(this,'${sampleId}')">▶ 顯示示範回信</button>
+        <div class="sample-answer" id="${sampleId}">${ex.sample}<div class="sa-note">${ex.note||''}</div></div>
       </div>
     </div>`;
   }).join('');
@@ -262,10 +341,46 @@ function revealMC(btn) {
   btn.style.display = 'none';
 }
 
-function toggleSample(btn) {
-  const ans = btn.nextElementSibling;
+function toggleSample(btn, id) {
+  const ans = document.getElementById(id);
   ans.classList.toggle('visible');
-  btn.textContent = ans.classList.contains('visible') ? '▼ 隱藏示範回信' : '▶ 顯示示範回信';
+  btn.textContent = btn.textContent.replace(/^[▶▼] /,'') ;
+  btn.textContent = (ans.classList.contains('visible') ? '▼ ' : '▶ ') + btn.textContent;
+}
+
+// ── Export checkpoint ──
+function exportCheckpoint() {
+  const result = [];
+  REDEMITTEL.forEach(entry => {
+    if (!favSet.has(entry.id)) return;
+    result.push({
+      id: entry.id,
+      section: entry.sec,
+      framework_de: entry.left_de,
+      framework_zh: entry.left_zh,
+      examples: entry.ex
+    });
+  });
+
+  if (result.length === 0) {
+    alert('尚未勾選任何句型！請先在 Redemittel 頁面勾選常用句子。');
+    return;
+  }
+
+  const output = {
+    exported_at: new Date().toISOString().slice(0,10),
+    file: "SchreibenI_Beschwerde_beantworten",
+    total_selected: result.length,
+    items: result
+  };
+
+  const blob = new Blob([JSON.stringify(output, null, 2)], {type: 'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'SchreibenI_Beschwerde_beantworten_checkpoint.json';
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
 // ── Init ──
@@ -273,31 +388,34 @@ function toggleSample(btn) {
   const navBar = document.getElementById('navBar');
   const content = document.getElementById('content');
 
-  // build redemittel tab
+  // Redemittel
   const rmDiv = document.createElement('div');
-  rmDiv.className = 'tab-section active';
-  rmDiv.id = 'tab-redemittel';
+  rmDiv.className = 'tab-section active'; rmDiv.id = 'tab-redemittel';
   rmDiv.innerHTML = buildRedemittel();
   content.appendChild(rmDiv);
-
-  // nav btn for redemittel
   const rmBtn = document.createElement('button');
-  rmBtn.className = 'nav-btn active';
-  rmBtn.textContent = '📋 Redemittel';
+  rmBtn.className = 'nav-btn active'; rmBtn.textContent = '📋 Redemittel';
   rmBtn.onclick = () => showTab('redemittel', rmBtn);
   navBar.appendChild(rmBtn);
 
-  // build situation tabs
+  // Gründe
+  const grDiv = document.createElement('div');
+  grDiv.className = 'tab-section'; grDiv.id = 'tab-gruende';
+  grDiv.innerHTML = buildGruende();
+  content.appendChild(grDiv);
+  const grBtn = document.createElement('button');
+  grBtn.className = 'nav-btn'; grBtn.textContent = '💡 Mögliche Gründe';
+  grBtn.onclick = () => showTab('gruende', grBtn);
+  navBar.appendChild(grBtn);
+
+  // Situations
   SITUATIONS.forEach(sit => {
     const div = document.createElement('div');
-    div.className = 'tab-section';
-    div.id = 'tab-'+sit.id;
+    div.className = 'tab-section'; div.id = 'tab-'+sit.id;
     div.innerHTML = buildSituation(sit);
     content.appendChild(div);
-
     const btn = document.createElement('button');
-    btn.className = 'nav-btn';
-    btn.textContent = sit.title;
+    btn.className = 'nav-btn'; btn.textContent = sit.title;
     btn.onclick = () => showTab(sit.id, btn);
     navBar.appendChild(btn);
   });
