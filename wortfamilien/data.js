@@ -1985,5 +1985,1090 @@ const WORDS = [
       { de: "Aus dem Bericht lässt sich entnehmen, dass die Simulation erfolgreich war.", zh: "從報告中可以得知模擬已成功完成。" }
     ]
   },  
+// ══════════════════════════════════════════════
+  //  詞根：halten（持有、保持）
+  // ══════════════════════════════════════════════
+
+  {
+    id: 85,
+    word: "einhalten",
+    artikel: "",
+    root: "halten",
+    rootMeaning: "持有、保持（to hold / keep）",
+    zh: "遵守、遵循（規定、期限）",
+    en: "to comply with, to observe, to keep (a deadline)",
+    breakdown: "ein-（進入、納入）+ halten（保持）\n→ 「把規定保持在自己行為之內」= 遵守\n⚠️ 固定搭配：etw. einhalten（不加 sich）",
+    collocations: [
+      { de: "Regeln / Vorschriften einhalten", zh: "遵守規定" },
+      { de: "einen Termin / eine Frist einhalten", zh: "遵守約定時間 / 期限" },
+      { de: "die Kündigungsfrist einhalten", zh: "遵守預告期" }
+    ],
+    synonyms: ["befolgen", "beachten", "respektieren"],
+    related: ["aufhalten", "behalten", "erhalten", "verhalten", "anhalten", "festhalten"],
+    examples: [
+      { de: "Alle Mitarbeiter müssen die Sicherheitsvorschriften einhalten.", zh: "所有員工必須遵守安全規定。" },
+      { de: "Bitte halten Sie den vereinbarten Termin ein.", zh: "請遵守約定的時間。" }
+    ]
+  },
+
+  {
+    id: 86,
+    word: "festhalten",
+    artikel: "",
+    root: "halten",
+    rootMeaning: "持有、保持（to hold / keep）",
+    zh: "記錄、記下；堅持；抓住",
+    en: "to record, to note down; to hold on to; to hold fast",
+    breakdown: "fest-（牢固）+ halten（保持）\n→ 「牢固地保持」= 抓住、記錄下來\n→ 常見兩義：\n① 把想法/結果記下來（schriftlich festhalten）\n② 堅持某立場（an etw. festhalten）",
+    collocations: [
+      { de: "etw. schriftlich festhalten", zh: "書面記錄某事" },
+      { de: "an einem Plan / einer Meinung festhalten", zh: "堅持計畫／意見" },
+      { de: "im Protokoll festhalten", zh: "在會議記錄中記下" }
+    ],
+    synonyms: ["dokumentieren（記錄）", "bestehen auf（堅持）"],
+    related: ["einhalten", "aufhalten", "behalten", "erhalten", "verhalten", "anhalten"],
+    examples: [
+      { de: "Die Ergebnisse wurden im Bericht schriftlich festgehalten.", zh: "結果被書面記錄在報告中。" },
+      { de: "Sie hält an ihrem Plan fest, obwohl es Schwierigkeiten gibt.", zh: "儘管有困難，她仍堅持自己的計畫。" }
+    ]
+  },
+
+  {
+    id: 87,
+    word: "anhalten",
+    artikel: "",
+    root: "halten",
+    rootMeaning: "持有、保持（to hold / keep）",
+    zh: "停止；持續；催促（某人做某事）",
+    en: "to stop; to continue; to urge",
+    breakdown: "an-（靠近、施加）+ halten（保持）\n→ 「把動作保持在某處」= 停止\n→ 引申：「持續」（der Zustand hält an = andauern）\n→ 「施加壓力讓某人做」= 催促",
+    collocations: [
+      { de: "das Auto anhalten", zh: "把車停下來" },
+      { de: "Der Regen hält an.", zh: "雨持續下著。" },
+      { de: "jemanden zur Pünktlichkeit anhalten", zh: "督促某人守時" }
+    ],
+    synonyms: ["stoppen（停止）", "andauern（持續）", "auffordern（催促）"],
+    related: ["einhalten", "festhalten", "aufhalten", "behalten", "erhalten", "verhalten"],
+    examples: [
+      { de: "Das schlechte Wetter hält bereits seit einer Woche an.", zh: "壞天氣已經持續一週了。" },
+      { de: "Der Fahrer hielt das Fahrzeug sofort an.", zh: "司機立即將車輛停下。" }
+    ]
+  },
+
+  {
+    id: 88,
+    word: "verhalten",
+    artikel: "",
+    root: "halten",
+    rootMeaning: "持有、保持（to hold / keep）",
+    zh: "行為、舉止（sich verhalten）；抑制的",
+    en: "to behave; restrained (adj.)",
+    breakdown: "ver-（朝某方向完成）+ halten（保持）\n→ 「保持住自己的狀態」= 行為、舉止\n→ sich verhalten = 表現、行動（反身）\n→ verhalten（形容詞）= 克制的、低調的",
+    collocations: [
+      { de: "sich professionell / korrekt verhalten", zh: "表現專業 / 行為得當" },
+      { de: "das Verhalten", zh: "行為、舉止（名詞）" },
+      { de: "sich ruhig verhalten", zh: "保持冷靜" }
+    ],
+    synonyms: ["sich benehmen", "sich aufführen"],
+    related: ["einhalten", "festhalten", "anhalten", "aufhalten", "behalten", "erhalten"],
+    examples: [
+      { de: "Im Vorstellungsgespräch sollte man sich professionell verhalten.", zh: "面試時應該表現得專業。" },
+      { de: "Das Verhalten des Mitarbeiters war vorbildlich.", zh: "那位員工的行為堪稱典範。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  nehmen 補充
+  // ══════════════════════════════════════════════
+
+  {
+    id: 89,
+    word: "unternehmen",
+    artikel: "",
+    root: "nehmen",
+    rootMeaning: "拿取（to take）",
+    zh: "從事、進行（某活動）；das Unternehmen = 企業",
+    en: "to undertake, to do (something); the company (noun)",
+    breakdown: "unter-（在……之下、承擔）+ nehmen（拿取）\n→ 「把任務拿到自己身上承擔」= 從事、進行\n→ das Unternehmen = 企業（「承擔事業的單位」）\n⚠️ 兩種詞性，意思不同：\n動詞 unternehmen = 進行活動\n名詞 das Unternehmen = 企業",
+    collocations: [
+      { de: "etwas unternehmen", zh: "做點什麼、採取行動" },
+      { de: "einen Ausflug unternehmen", zh: "進行一次郊遊" },
+      { de: "das Unternehmen", zh: "企業（名詞）" },
+      { de: "unternehmerisch denken", zh: "有創業精神地思考" }
+    ],
+    synonyms: ["durchführen", "machen", "starten"],
+    related: ["entgegennehmen", "annehmen", "aufnehmen", "übernehmen", "wahrnehmen", "teilnehmen", "entnehmen"],
+    examples: [
+      { de: "Wir müssen etwas unternehmen, um das Problem zu lösen.", zh: "我們必須採取行動來解決問題。" },
+      { de: "Das Unternehmen beschäftigt über 500 Mitarbeiter.", zh: "這家企業僱用了超過500名員工。" }
+    ]
+  },
+
+  {
+    id: 90,
+    word: "genehmigen",
+    artikel: "",
+    root: "nehmen",
+    rootMeaning: "拿取（to take）",
+    zh: "批准、許可",
+    en: "to approve, to authorize, to grant",
+    breakdown: "ge- + nehm（來自 nehmen）+ -igen（動詞後綴）\n→ 「讓對方可以拿取、使用」= 批准\n→ die Genehmigung = 許可、批准（名詞）",
+    collocations: [
+      { de: "einen Antrag genehmigen", zh: "批准一份申請" },
+      { de: "die Genehmigung erteilen / einholen", zh: "給予 / 取得許可" },
+      { de: "genehmigungspflichtig", zh: "需要許可的" }
+    ],
+    synonyms: ["bewilligen", "erlauben", "zustimmen"],
+    related: ["entgegennehmen", "annehmen", "aufnehmen", "übernehmen", "wahrnehmen", "entnehmen"],
+    examples: [
+      { de: "Der Antrag wurde von der Behörde genehmigt.", zh: "申請已獲機關批准。" },
+      { de: "Ohne Genehmigung darf das Gebäude nicht betreten werden.", zh: "沒有許可不得進入該建築。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  詞根：stellen 補充
+  // ══════════════════════════════════════════════
+
+  {
+    id: 91,
+    word: "aufstellen",
+    artikel: "",
+    root: "stellen",
+    rootMeaning: "放置（to place / put）",
+    zh: "制定、建立；豎立；組建",
+    en: "to draw up, to establish; to erect; to form (a team)",
+    breakdown: "auf-（向上）+ stellen（放置）\n→ 「把東西豎立起來」= 豎立\n→ 引申：「把規則/計畫建立起來」= 制定",
+    collocations: [
+      { de: "eine Regel aufstellen", zh: "制定規則" },
+      { de: "einen Plan aufstellen", zh: "制定計畫" },
+      { de: "eine Behauptung aufstellen", zh: "提出一個主張" },
+      { de: "gut aufgestellt sein", zh: "準備充分的、佈局良好的" }
+    ],
+    synonyms: ["formulieren", "festlegen", "erarbeiten"],
+    related: ["ausstellen", "erstellen", "feststellen", "herstellen", "einstellen", "festlegen"],
+    examples: [
+      { de: "Das Team hat klare Regeln für die Zusammenarbeit aufgestellt.", zh: "團隊為合作制定了明確的規則。" },
+      { de: "Das Unternehmen ist gut aufgestellt für die Zukunft.", zh: "公司為未來做好了充分準備。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  legen 補充
+  // ══════════════════════════════════════════════
+
+  {
+    id: 92,
+    word: "ablegen",
+    artikel: "",
+    root: "legen",
+    rootMeaning: "放置（to lay / place）",
+    zh: "放下（衣物）；參加（考試）；存放（文件）",
+    en: "to take off (clothing); to sit (an exam); to file (documents)",
+    breakdown: "ab-（離開、放到一邊）+ legen（放置）\n→ 「把東西放到一邊」= 放下\n→ 引申：參加考試（Prüfung ablegen = 把考試放到一邊完成）\n→ 存放文件（Akten ablegen）",
+    collocations: [
+      { de: "eine Prüfung ablegen", zh: "參加考試（正式用語）" },
+      { de: "einen Eid ablegen", zh: "宣誓" },
+      { de: "Akten / Dokumente ablegen", zh: "歸檔文件" },
+      { de: "den Mantel ablegen", zh: "脫外套" }
+    ],
+    synonyms: ["ablegen（參加）", "archivieren（歸檔）"],
+    related: ["festlegen", "verlegen", "vorlegen", "belegen", "hinterlegen"],
+    examples: [
+      { de: "Sie hat die Abschlussprüfung erfolgreich abgelegt.", zh: "她成功地通過了畢業考試。" },
+      { de: "Bitte legen Sie die Unterlagen nach Datum ab.", zh: "請按日期歸檔文件。" }
+    ]
+  },
+
+  {
+    id: 93,
+    word: "hinterlegen",
+    artikel: "",
+    root: "legen",
+    rootMeaning: "放置（to lay / place）",
+    zh: "存放、寄存；留存（資料）",
+    en: "to deposit, to store, to leave (for safekeeping)",
+    breakdown: "hinter-（在後面、留置）+ legen（放置）\n→ 「把東西放在後面留存」= 存放、寄存",
+    collocations: [
+      { de: "Daten im System hinterlegen", zh: "在系統中存入資料" },
+      { de: "einen Schlüssel hinterlegen", zh: "寄存鑰匙" },
+      { de: "Sicherheiten hinterlegen", zh: "存入擔保物" }
+    ],
+    synonyms: ["deponieren", "einlagern", "speichern"],
+    related: ["festlegen", "verlegen", "vorlegen", "belegen", "ablegen"],
+    examples: [
+      { de: "Bitte hinterlegen Sie Ihre Kontaktdaten im System.", zh: "請在系統中存入您的聯繫資料。" },
+      { de: "Der Schlüssel wurde beim Hausmeister hinterlegt.", zh: "鑰匙寄存在看門人那裡。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  sprechen 補充
+  // ══════════════════════════════════════════════
+
+  {
+    id: 94,
+    word: "ansprechen",
+    artikel: "",
+    root: "sprechen",
+    rootMeaning: "說話（to speak）",
+    zh: "跟某人說話、提及（問題）；吸引",
+    en: "to address, to approach; to bring up (an issue); to appeal to",
+    breakdown: "an-（指向某人）+ sprechen（說話）\n→ 「對著某人說話」= 主動開口\n→ 引申：把問題提出來討論（ein Problem ansprechen）\n→ 引申②：某物吸引某人（Das spricht mich an.）",
+    collocations: [
+      { de: "ein Problem / Thema ansprechen", zh: "提出問題／主題" },
+      { de: "jemanden auf etw. ansprechen", zh: "就某事詢問某人" },
+      { de: "Das spricht mich an.", zh: "這吸引了我。（這很合我的意）" }
+    ],
+    synonyms: ["erwähnen", "thematisieren", "heransprechen"],
+    related: ["absprechen", "besprechen", "versprechen", "widersprechen", "aussprechen"],
+    examples: [
+      { de: "Ich möchte ein wichtiges Problem ansprechen.", zh: "我想提出一個重要的問題。" },
+      { de: "Er sprach den Kollegen direkt auf den Fehler an.", zh: "他直接就那個錯誤詢問了同事。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  詞根：greifen（抓取）
+  // ══════════════════════════════════════════════
+
+  {
+    id: 95,
+    word: "ergreifen",
+    artikel: "",
+    root: "greifen",
+    rootMeaning: "抓取（to grasp / seize）",
+    zh: "採取（措施）；抓住；選擇（職業）",
+    en: "to take (measures); to seize; to take up (a profession)",
+    breakdown: "er-（達成某結果）+ greifen（抓取）\n→ 「抓取並完成」= 採取、抓住\n→ 常見於職場固定搭配",
+    collocations: [
+      { de: "Maßnahmen ergreifen", zh: "採取措施" },
+      { de: "einen Beruf ergreifen", zh: "選擇從事某職業" },
+      { de: "die Initiative ergreifen", zh: "主動採取行動" },
+      { de: "eine Chance ergreifen", zh: "抓住機會" }
+    ],
+    synonyms: ["einleiten", "treffen（Maßnahmen）", "wählen（Beruf）"],
+    related: ["zugreifen", "angreifen", "begreifen", "eingreifen", "aufgreifen"],
+    examples: [
+      { de: "Das Unternehmen muss sofort Maßnahmen ergreifen.", zh: "公司必須立即採取措施。" },
+      { de: "Sie hat den Beruf der Physikerin ergriffen.", zh: "她選擇從事物理學家的職業。" }
+    ]
+  },
+
+  {
+    id: 96,
+    word: "zugreifen",
+    artikel: "",
+    root: "greifen",
+    rootMeaning: "抓取（to grasp / seize）",
+    zh: "存取（資料）；抓住機會；動手（拿食物）",
+    en: "to access (data); to grab an opportunity; to help oneself",
+    breakdown: "zu-（朝向）+ greifen（抓取）\n→ 「朝某物抓取」= 存取、取用\n→ IT 用語：auf eine Datei zugreifen = 存取檔案",
+    collocations: [
+      { de: "auf eine Datei / Daten zugreifen", zh: "存取檔案 / 資料" },
+      { de: "auf ein System zugreifen", zh: "存取系統" },
+      { de: "Bitte greifen Sie zu!", zh: "請動手吃！（餐桌用語）" }
+    ],
+    synonyms: ["abrufen", "öffnen", "nutzen"],
+    related: ["ergreifen", "angreifen", "begreifen", "eingreifen", "aufgreifen"],
+    examples: [
+      { de: "Nur autorisierte Benutzer dürfen auf diese Daten zugreifen.", zh: "只有授權用戶才可以存取這些資料。" },
+      { de: "Auf die Datei kann ich von zu Hause aus zugreifen.", zh: "我可以從家裡存取這個檔案。" }
+    ]
+  },
+
+  {
+    id: 97,
+    word: "eingreifen",
+    artikel: "",
+    root: "greifen",
+    rootMeaning: "抓取（to grasp / seize）",
+    zh: "介入、干預",
+    en: "to intervene, to step in, to interfere",
+    breakdown: "ein-（進入）+ greifen（抓取）\n→ 「插手進去抓住局勢」= 介入、干預",
+    collocations: [
+      { de: "in einen Prozess eingreifen", zh: "介入一個流程" },
+      { de: "rechtzeitig eingreifen", zh: "及時介入" },
+      { de: "der Eingriff", zh: "介入；手術（名詞）" }
+    ],
+    synonyms: ["intervenieren", "einschreiten", "sich einmischen"],
+    related: ["ergreifen", "zugreifen", "angreifen", "begreifen", "aufgreifen"],
+    examples: [
+      { de: "Bei diesem Fehler muss die Teamleitung eingreifen.", zh: "發生這個錯誤時，團隊領導必須介入。" },
+      { de: "Es war notwendig, sofort einzugreifen.", zh: "有必要立即介入。" }
+    ]
+  },
+
+  {
+    id: 98,
+    word: "begreifen",
+    artikel: "",
+    root: "greifen",
+    rootMeaning: "抓取（to grasp / seize）",
+    zh: "理解、領悟",
+    en: "to comprehend, to grasp, to understand",
+    breakdown: "be-（施加到對象）+ greifen（抓取）\n→ 「把概念抓進腦子裡」= 理解、領悟\n→ 比 verstehen 更強調「終於抓到了」的感覺",
+    collocations: [
+      { de: "etw. begreifen", zh: "理解某事" },
+      { de: "schwer zu begreifen", zh: "難以理解" },
+      { de: "begreiflich machen", zh: "讓某人明白" }
+    ],
+    synonyms: ["verstehen", "erfassen", "nachvollziehen"],
+    related: ["ergreifen", "zugreifen", "angreifen", "eingreifen", "aufgreifen"],
+    examples: [
+      { de: "Ich begreife nicht, warum der Fehler immer wieder auftritt.", zh: "我不理解為什麼這個錯誤一再出現。" },
+      { de: "Langsam beginnt er zu begreifen, worum es geht.", zh: "他慢慢開始理解這是怎麼回事。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  詞根：trauen（信任、託付）
+  // ══════════════════════════════════════════════
+
+  {
+    id: 99,
+    word: "vertrauen",
+    artikel: "",
+    root: "trauen",
+    rootMeaning: "信任、託付（to trust）",
+    zh: "信任、信賴",
+    en: "to trust, to rely on",
+    breakdown: "ver-（強化、完成）+ trauen（信任）\n→ 「完全信任」= 信賴\n→ vertrauen auf + Akk. = 依賴、信賴某人/某事\n→ das Vertrauen = 信任（名詞）",
+    collocations: [
+      { de: "jemandem vertrauen", zh: "信任某人" },
+      { de: "auf jemanden / etw. vertrauen", zh: "依賴某人 / 某事" },
+      { de: "das Vertrauen aufbauen / verlieren", zh: "建立 / 失去信任" }
+    ],
+    synonyms: ["sich verlassen auf", "glauben an"],
+    related: ["zutrauen", "vertraut", "vertrauensvoll", "vertraulich", "Selbstvertrauen"],
+    examples: [
+      { de: "Im Team ist es wichtig, sich gegenseitig zu vertrauen.", zh: "在團隊中，相互信任非常重要。" },
+      { de: "Ich vertraue darauf, dass das Projekt pünktlich abgeschlossen wird.", zh: "我信任這個項目會按時完成。" }
+    ]
+  },
+
+  {
+    id: 100,
+    word: "zutrauen",
+    artikel: "",
+    root: "trauen",
+    rootMeaning: "信任、託付（to trust）",
+    zh: "認為某人能勝任、對某人有信心",
+    en: "to believe someone is capable of, to credit someone with",
+    breakdown: "zu-（朝向、針對某人）+ trauen（信任）\n→ 「把信任投向某人，認為他做得到」= 認為某人有能力\n→ 固定搭配：jemandem etw. zutrauen",
+    collocations: [
+      { de: "jemandem etw. zutrauen", zh: "認為某人能做到某事" },
+      { de: "sich etw. zutrauen", zh: "自認有能力做某事" },
+      { de: "Das traue ich ihr zu.", zh: "我認為她做得到這件事。" }
+    ],
+    synonyms: ["glauben", "sich vorstellen", "jemanden für fähig halten"],
+    related: ["vertrauen", "vertraut", "vertrauensvoll", "vertraulich", "Selbstvertrauen"],
+    examples: [
+      { de: "Ich traue mir zu, diese Aufgabe selbstständig zu erledigen.", zh: "我認為我有能力獨立完成這項任務。" },
+      { de: "Die Chefin traut ihm die Projektleitung zu.", zh: "女主管認為他能勝任項目領導職務。" }
+    ]
+  },
+
+  {
+    id: 101,
+    word: "vertraut",
+    artikel: "",
+    root: "trauen",
+    rootMeaning: "信任、託付（to trust）",
+    zh: "熟悉的、親密的",
+    en: "familiar, intimate, well-acquainted",
+    breakdown: "ver- + traut（來自 trauen）\n→ 「充分信任的狀態」= 熟悉、親密\n→ vertraut mit etw. sein = 熟悉某事",
+    collocations: [
+      { de: "mit etw. vertraut sein", zh: "熟悉某事" },
+      { de: "sich vertraut machen mit", zh: "讓自己熟悉……" },
+      { de: "vertraute Umgebung", zh: "熟悉的環境" }
+    ],
+    synonyms: ["bekannt", "geläufig", "erfahren in"],
+    related: ["vertrauen", "zutrauen", "vertrauensvoll", "vertraulich", "Selbstvertrauen"],
+    examples: [
+      { de: "Sie ist mit den Sicherheitsvorschriften gut vertraut.", zh: "她對安全規定非常熟悉。" },
+      { de: "Neue Mitarbeiter müssen sich zunächst mit dem System vertraut machen.", zh: "新員工必須首先熟悉系統。" }
+    ]
+  },
+
+  {
+    id: 102,
+    word: "das Selbstvertrauen",
+    artikel: "das",
+    root: "trauen",
+    rootMeaning: "信任、託付（to trust）",
+    zh: "自信",
+    en: "self-confidence, self-assurance",
+    breakdown: "Selbst（自己）+ Vertrauen（信任）\n→ 「對自己的信任」= 自信",
+    collocations: [
+      { de: "Selbstvertrauen haben / zeigen", zh: "有 / 展現自信" },
+      { de: "das Selbstvertrauen stärken", zh: "增強自信" },
+      { de: "selbstbewusst auftreten", zh: "自信地表現（近義搭配）" }
+    ],
+    synonyms: ["das Selbstbewusstsein", "die Sicherheit"],
+    related: ["vertrauen", "zutrauen", "vertraut", "vertrauensvoll", "vertraulich"],
+    examples: [
+      { de: "Beim Vorstellungsgespräch ist Selbstvertrauen sehr wichtig.", zh: "面試時自信非常重要。" },
+      { de: "Durch Erfolge wächst das Selbstvertrauen.", zh: "透過成功，自信會增長。" }
+    ]
+  },
+
+  {
+    id: 103,
+    word: "vertraulich",
+    artikel: "",
+    root: "trauen",
+    rootMeaning: "信任、託付（to trust）",
+    zh: "機密的、保密的；親密的",
+    en: "confidential; intimate",
+    breakdown: "ver- + trau- + -lich（形容詞後綴）\n→ 「只在信任範圍內的」= 機密、保密\n→ 常見於職場文件、郵件標示",
+    collocations: [
+      { de: "vertrauliche Informationen", zh: "機密資訊" },
+      { de: "streng vertraulich", zh: "嚴格保密" },
+      { de: "etw. vertraulich behandeln", zh: "以保密方式處理某事" }
+    ],
+    synonyms: ["geheim", "nicht öffentlich", "intern"],
+    related: ["vertrauen", "zutrauen", "vertraut", "vertrauensvoll", "Selbstvertrauen"],
+    examples: [
+      { de: "Diese Informationen sind streng vertraulich und dürfen nicht weitergegeben werden.", zh: "這些資訊嚴格保密，不得外傳。" },
+      { de: "Bitte behandeln Sie diesen Bericht als vertraulich.", zh: "請將這份報告視為機密。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  詞根：tragen（攜帶、承擔）
+  // ══════════════════════════════════════════════
+
+  {
+    id: 104,
+    word: "eintragen",
+    artikel: "",
+    root: "tragen",
+    rootMeaning: "攜帶、承擔（to carry / bear）",
+    zh: "填入、登記、記入",
+    en: "to enter, to register, to fill in",
+    breakdown: "ein-（進入）+ tragen（攜帶）\n→ 「把資料帶進去填入」= 填寫、登記",
+    collocations: [
+      { de: "persönliche Angaben eintragen", zh: "填入個人資料" },
+      { de: "einen Termin eintragen", zh: "記入一個約定時間" },
+      { de: "sich in eine Liste eintragen", zh: "在清單上登記" }
+    ],
+    synonyms: ["einschreiben", "notieren", "erfassen"],
+    related: ["übertragen", "beitragen", "vortragen", "beauftragen", "tragen"],
+    examples: [
+      { de: "Bitte tragen Sie Ihre persönlichen Angaben in das Formular ein.", zh: "請將您的個人資料填入表格中。" },
+      { de: "Der Termin wurde in den Kalender eingetragen.", zh: "約定時間已記入行事曆。" }
+    ]
+  },
+
+  {
+    id: 105,
+    word: "übertragen",
+    artikel: "",
+    root: "tragen",
+    rootMeaning: "攜帶、承擔（to carry / bear）",
+    zh: "傳輸（資料）；授權、轉交（任務）；翻譯",
+    en: "to transfer (data); to delegate (a task); to translate",
+    breakdown: "über-（越過、轉移）+ tragen（攜帶）\n→ 「把東西帶到另一方」= 傳輸、轉交\n→ 三種意思靠搭配判斷",
+    collocations: [
+      { de: "Daten auf ein Gerät übertragen", zh: "把資料傳輸到設備上" },
+      { de: "jemandem eine Aufgabe übertragen", zh: "把任務授權給某人" },
+      { de: "ins Deutsche übertragen", zh: "翻譯成德文" }
+    ],
+    synonyms: ["transferieren（傳輸）", "delegieren（授權）", "übersetzen（翻譯）"],
+    related: ["eintragen", "beitragen", "vortragen", "beauftragen", "tragen"],
+    examples: [
+      { de: "Die Aufgabe wurde dem neuen Mitarbeiter übertragen.", zh: "這項任務被授權給了新員工。" },
+      { de: "Bitte übertragen Sie die Daten auf das neue Gerät.", zh: "請將資料傳輸到新設備上。" }
+    ]
+  },
+
+  {
+    id: 106,
+    word: "beitragen",
+    artikel: "",
+    root: "tragen",
+    rootMeaning: "攜帶、承擔（to carry / bear）",
+    zh: "貢獻、有助於",
+    en: "to contribute to, to help",
+    breakdown: "bei-（一起、附加）+ tragen（承擔）\n→ 「把自己的一份帶進來」= 貢獻\n→ 固定搭配：zu etw. beitragen",
+    collocations: [
+      { de: "zu etw. beitragen", zh: "對……有所貢獻" },
+      { de: "wesentlich beitragen", zh: "做出重要貢獻" },
+      { de: "der Beitrag", zh: "貢獻、文章、費用（名詞）" }
+    ],
+    synonyms: ["helfen", "fördern", "unterstützen"],
+    related: ["eintragen", "übertragen", "vortragen", "beauftragen", "tragen"],
+    examples: [
+      { de: "Jeder kann zum Erfolg des Teams beitragen.", zh: "每個人都可以為團隊的成功做出貢獻。" },
+      { de: "Dieses Projekt trägt zur Verbesserung der Simulationsqualität bei.", zh: "這個項目有助於提升模擬品質。" }
+    ]
+  },
+
+  {
+    id: 107,
+    word: "vortragen",
+    artikel: "",
+    root: "tragen",
+    rootMeaning: "攜帶、承擔（to carry / bear）",
+    zh: "呈報、提出（意見/要求）；演講",
+    en: "to present, to submit (a request); to give a presentation",
+    breakdown: "vor-（在前面）+ tragen（攜帶）\n→ 「把東西帶到眾人前面」= 提出、呈報、演講",
+    collocations: [
+      { de: "ein Anliegen vortragen", zh: "提出一個訴求" },
+      { de: "Ergebnisse vortragen", zh: "呈報結果" },
+      { de: "einen Vortrag halten", zh: "進行演講（名詞搭配）" }
+    ],
+    synonyms: ["präsentieren", "darlegen", "vorstellen"],
+    related: ["eintragen", "übertragen", "beitragen", "beauftragen", "tragen"],
+    examples: [
+      { de: "Sie trug ihr Anliegen direkt dem Vorgesetzten vor.", zh: "她直接向上司提出了她的訴求。" },
+      { de: "Die Ergebnisse werden im nächsten Meeting vorgetragen.", zh: "結果將在下次會議中呈報。" }
+    ]
+  },
+
+  {
+    id: 108,
+    word: "beauftragen",
+    artikel: "",
+    root: "tragen",
+    rootMeaning: "攜帶、承擔（to carry / bear）",
+    zh: "委託、授權（某人做某事）",
+    en: "to commission, to instruct, to assign",
+    breakdown: "be-（施加到對象）+ Auftrag（任務）+ -en\n→ 「把任務交付給對方讓他承擔」= 委託\n→ 固定搭配：jemanden mit etw. beauftragen",
+    collocations: [
+      { de: "jemanden mit etw. beauftragen", zh: "委託某人做某事" },
+      { de: "eine Firma beauftragen", zh: "委託一家公司" },
+      { de: "den Einbau / die Wartung beauftragen", zh: "委託安裝 / 維護" }
+    ],
+    synonyms: ["in Auftrag geben", "bestellen", "anweisen"],
+    related: ["eintragen", "übertragen", "beitragen", "vortragen", "tragen"],
+    examples: [
+      { de: "Wir haben eine externe Firma mit der Wartung beauftragt.", zh: "我們委託了一家外部公司進行維護。" },
+      { de: "Der Projektleiter wurde mit der Koordination beauftragt.", zh: "項目負責人被委託負責協調工作。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  詞根：leuchten（發光）
+  // ══════════════════════════════════════════════
+
+  {
+    id: 109,
+    word: "aufleuchten",
+    artikel: "",
+    root: "leuchten",
+    rootMeaning: "發光（to shine / light up）",
+    zh: "閃亮、突然發光；（眼神）閃現",
+    en: "to light up, to flash",
+    breakdown: "auf-（突然向上）+ leuchten（發光）\n→ 「突然亮起來」= 閃亮、亮起",
+    collocations: [
+      { de: "ein Licht leuchtet auf", zh: "燈光亮起" },
+      { de: "eine Idee leuchtet auf", zh: "一個想法突然閃現" },
+      { de: "Die Augen leuchten auf.", zh: "眼睛閃亮（喜悅時）" }
+    ],
+    synonyms: ["aufblinken", "erhellen", "aufflackern"],
+    related: ["einleuchten", "beleuchten", "leuchten", "erleuchten"],
+    examples: [
+      { de: "Auf dem Bildschirm leuchtete ein Warnsignal auf.", zh: "螢幕上突然亮起了警告信號。" },
+      { de: "Ihre Augen leuchteten auf, als sie das Angebot hörte.", zh: "當她聽到這個提案時，眼睛閃亮了起來。" }
+    ]
+  },
+
+  {
+    id: 110,
+    word: "einleuchten",
+    artikel: "",
+    root: "leuchten",
+    rootMeaning: "發光（to shine / light up）",
+    zh: "說得通、顯而易見（einleuchtend）",
+    en: "to make sense, to be obvious (einleuchtend = plausible)",
+    breakdown: "ein-（進入、照入）+ leuchten（發光）\n→ 「光照進來，讓人看清楚」= 說得通、有道理\n→ 幾乎只用於：Das leuchtet mir ein. / einleuchtend（形容詞）",
+    collocations: [
+      { de: "Das leuchtet mir ein.", zh: "我覺得這說得通。" },
+      { de: "eine einleuchtende Erklärung", zh: "一個令人信服的解釋" },
+      { de: "einleuchtend sein", zh: "顯而易見、合理" }
+    ],
+    synonyms: ["logisch sein", "nachvollziehbar sein", "verständlich sein"],
+    related: ["aufleuchten", "beleuchten", "leuchten", "erleuchten"],
+    examples: [
+      { de: "Die Erklärung ist sehr einleuchtend und leicht zu verstehen.", zh: "這個解釋非常合理，容易理解。" },
+      { de: "Das leuchtet mir sofort ein – ich verstehe das Problem jetzt.", zh: "我立刻覺得這說得通——我現在理解這個問題了。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  詞根：fassen（抓取、理解）
+  // ══════════════════════════════════════════════
+
+  {
+    id: 111,
+    word: "erfassen",
+    artikel: "",
+    root: "fassen",
+    rootMeaning: "抓取、理解（to grasp / comprehend）",
+    zh: "記錄、登記；理解；掌握全貌",
+    en: "to record, to capture (data); to comprehend; to cover",
+    breakdown: "er-（達成結果）+ fassen（抓取）\n→ 「把資料抓取並完成記錄」= 記錄、登記\n→ 引申：「把概念完全抓住」= 理解",
+    collocations: [
+      { de: "Daten erfassen", zh: "記錄資料" },
+      { de: "die Arbeitszeit erfassen", zh: "記錄工作時間" },
+      { de: "die Lage erfassen", zh: "掌握情況" },
+      { de: "die Zeiterfassung", zh: "工時記錄（名詞）" }
+    ],
+    synonyms: ["aufnehmen", "registrieren", "verstehen"],
+    related: ["zusammenfassen", "befassen", "umfassen", "auffassen", "fassen"],
+    examples: [
+      { de: "Die Arbeitszeiten werden elektronisch erfasst.", zh: "工作時間以電子方式記錄。" },
+      { de: "Ich habe die Situation sofort erfasst.", zh: "我立刻掌握了情況。" }
+    ]
+  },
+
+  {
+    id: 112,
+    word: "zusammenfassen",
+    artikel: "",
+    root: "fassen",
+    rootMeaning: "抓取、理解（to grasp / comprehend）",
+    zh: "總結、概括",
+    en: "to summarize, to sum up",
+    breakdown: "zusammen-（一起）+ fassen（抓取）\n→ 「把所有要點抓在一起」= 總結",
+    collocations: [
+      { de: "kurz zusammenfassen", zh: "簡短概括" },
+      { de: "stichpunktartig zusammenfassen", zh: "以要點形式概括" },
+      { de: "die Zusammenfassung", zh: "摘要（名詞）" }
+    ],
+    synonyms: ["zusammenstellen", "resümieren", "überblicken"],
+    related: ["erfassen", "befassen", "umfassen", "auffassen", "fassen"],
+    examples: [
+      { de: "Können Sie die wichtigsten Punkte kurz zusammenfassen?", zh: "您能簡短概括一下要點嗎？" },
+      { de: "Die Ergebnisse werden stichpunktartig zusammengefasst.", zh: "結果以要點形式概括。" }
+    ]
+  },
+
+  {
+    id: 113,
+    word: "befassen",
+    artikel: "",
+    root: "fassen",
+    rootMeaning: "抓取、理解（to grasp / comprehend）",
+    zh: "處理、研究（sich befassen mit）",
+    en: "to deal with, to concern oneself with",
+    breakdown: "be-（施加到對象）+ fassen（抓取）\n→ 「把某課題抓在手上處理」= 處理、研究\n→ 幾乎只用反身形式：sich befassen mit + Dativ",
+    collocations: [
+      { de: "sich mit einem Thema befassen", zh: "研究、處理某主題" },
+      { de: "sich eingehend befassen mit", zh: "深入研究" },
+      { de: "sich beruflich befassen mit", zh: "從職業上處理……" }
+    ],
+    synonyms: ["sich beschäftigen mit", "sich widmen", "behandeln"],
+    related: ["erfassen", "zusammenfassen", "umfassen", "auffassen", "fassen"],
+    examples: [
+      { de: "In meiner Forschung befasse ich mich mit Materialsimulation.", zh: "在我的研究中，我研究材料模擬。" },
+      { de: "Das Team befasst sich derzeit mit diesem Problem.", zh: "團隊目前正在處理這個問題。" }
+    ]
+  },
+
+  {
+    id: 114,
+    word: "umfassen",
+    artikel: "",
+    root: "fassen",
+    rootMeaning: "抓取、理解（to grasp / comprehend）",
+    zh: "包含、涵蓋",
+    en: "to include, to cover, to encompass",
+    breakdown: "um-（圍繞、環抱）+ fassen（抓取）\n→ 「把範圍都環抱住」= 包含、涵蓋\n→ 比 einschließen 更強調「全面涵蓋」",
+    collocations: [
+      { de: "etw. umfasst etw.", zh: "某物涵蓋某物" },
+      { de: "umfassend", zh: "全面的、廣泛的（形容詞）" },
+      { de: "das Angebot umfasst", zh: "服務包含……" }
+    ],
+    synonyms: ["beinhalten", "einschließen", "enthalten"],
+    related: ["erfassen", "zusammenfassen", "befassen", "auffassen", "fassen"],
+    examples: [
+      { de: "Die Ausbildung umfasst theoretische und praktische Teile.", zh: "培訓包含理論和實踐部分。" },
+      { de: "Der Bericht umfasst alle relevanten Daten.", zh: "報告涵蓋所有相關資料。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  詞根：gehen（走、進行）
+  // ══════════════════════════════════════════════
+
+  {
+    id: 115,
+    word: "vorgehen",
+    artikel: "",
+    root: "gehen",
+    rootMeaning: "走、進行（to go / proceed）",
+    zh: "進行、採取行動；優先",
+    en: "to proceed, to take action; to have priority",
+    breakdown: "vor-（在前面）+ gehen（走）\n→ 「往前走、率先行動」= 採取步驟\n→ 引申：優先（Sicherheit geht vor = 安全優先）\n→ das Vorgehen = 做法、程序（名詞）",
+    collocations: [
+      { de: "methodisch / schrittweise vorgehen", zh: "有條理地 / 逐步進行" },
+      { de: "das Vorgehen", zh: "做法、程序（名詞）" },
+      { de: "Sicherheit geht vor.", zh: "安全優先。" }
+    ],
+    synonyms: ["handeln", "verfahren", "agieren"],
+    related: ["vorübergehen", "eingehen", "ausgehen", "übergehen", "angehen"],
+    examples: [
+      { de: "Wir müssen methodisch vorgehen, um das Problem zu lösen.", zh: "我們必須有條理地進行，以解決問題。" },
+      { de: "Das Vorgehen des Teams war sehr professionell.", zh: "團隊的做法非常專業。" }
+    ]
+  },
+
+  {
+    id: 116,
+    word: "vorübergehen",
+    artikel: "",
+    root: "gehen",
+    rootMeaning: "走、進行（to go / proceed）",
+    zh: "暫時的、過去的（vorübergehend）；經過",
+    en: "to pass by; temporary (vorübergehend)",
+    breakdown: "vorüber-（經過、過去）+ gehen（走）\n→ 「走過去了」= 暫時的、一時的\n→ vorübergehend（形容詞/副詞）= 暫時地",
+    collocations: [
+      { de: "vorübergehend geschlossen", zh: "暫時關閉" },
+      { de: "eine vorübergehende Lösung", zh: "一個暫時的解決方案" },
+      { de: "Die Schwierigkeiten gehen vorüber.", zh: "困難會過去的。" }
+    ],
+    synonyms: ["temporär", "zeitweilig", "kurzfristig"],
+    related: ["vorgehen", "eingehen", "ausgehen", "übergehen", "angehen"],
+    examples: [
+      { de: "Die Produktion wurde vorübergehend eingestellt.", zh: "生產被暫時停止了。" },
+      { de: "Das ist nur eine vorübergehende Schwierigkeit.", zh: "這只是一個暫時的困難。" }
+    ]
+  },
+
+  {
+    id: 117,
+    word: "eingehen",
+    artikel: "",
+    root: "gehen",
+    rootMeaning: "走、進行（to go / proceed）",
+    zh: "回應、深入討論；簽訂；縮水",
+    en: "to respond to, to address (a point); to enter into (an agreement); to shrink",
+    breakdown: "ein-（進入）+ gehen（走）\n→ 「走進某事」= 深入討論、回應\n→ 引申：簽訂協議（eine Vereinbarung eingehen）",
+    collocations: [
+      { de: "auf etw. eingehen", zh: "回應 / 深入討論某事" },
+      { de: "eine Vereinbarung / ein Risiko eingehen", zh: "簽訂協議 / 承擔風險" },
+      { de: "Ich gehe näher darauf ein.", zh: "我來詳細說明這一點。" }
+    ],
+    synonyms: ["ansprechen（討論）", "abschließen（簽訂）"],
+    related: ["vorgehen", "vorübergehen", "ausgehen", "übergehen", "angehen"],
+    examples: [
+      { de: "Ich möchte näher auf diesen Punkt eingehen.", zh: "我想詳細討論這一點。" },
+      { de: "Das Unternehmen ist eine Partnerschaft mit einem chinesischen Hersteller eingegangen.", zh: "公司與一家中國製造商建立了合作關係。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  詞根：geben（給予）
+  // ══════════════════════════════════════════════
+
+  {
+    id: 118,
+    word: "aufgeben",
+    artikel: "",
+    root: "geben",
+    rootMeaning: "給予（to give）",
+    zh: "放棄；提交（任務）；寄出（包裹）",
+    en: "to give up; to assign (homework); to send (a parcel)",
+    breakdown: "auf-（向上、結束）+ geben（給予）\n→ 「把東西給出去並放手」= 放棄\n→ 引申：提交作業、寄出包裹（都是「交出去」）\n→ ⚠️ aufzugeben = 動詞原形的 zu-不定式",
+    collocations: [
+      { de: "nicht aufgeben", zh: "不放棄" },
+      { de: "eine Aufgabe aufgeben", zh: "布置作業" },
+      { de: "ein Paket aufgeben", zh: "寄出包裹" },
+      { de: "den Beruf aufgeben", zh: "放棄職業" }
+    ],
+    synonyms: ["verzichten auf（放棄）", "einreichen（提交）"],
+    related: ["angeben", "ausgeben", "vergeben", "hingeben", "abgeben"],
+    examples: [
+      { de: "Es ist wichtig, niemals aufzugeben.", zh: "永不放棄是很重要的。" },
+      { de: "Sie hat ihren Job aufgegeben, um eine neue Stelle anzutreten.", zh: "她放棄了工作，去接任新職位。" }
+    ]
+  },
+
+  {
+    id: 119,
+    word: "angeben",
+    artikel: "",
+    root: "geben",
+    rootMeaning: "給予（to give）",
+    zh: "填寫、提供（資料）；標示；誇口",
+    en: "to state, to provide (information); to indicate; to show off",
+    breakdown: "an-（指向、靠近）+ geben（給予）\n→ 「把資料給出去」= 填寫、提供\n→ 引申：標示（Preis angeben）\n→ 口語：誇口（Er gibt an. = 他愛吹牛。）",
+    collocations: [
+      { de: "persönliche Angaben angeben", zh: "填寫個人資料" },
+      { de: "den Grund angeben", zh: "說明原因" },
+      { de: "die Angabe", zh: "資料、說明（名詞，常用複數 Angaben）" }
+    ],
+    synonyms: ["nennen", "mitteilen", "eintragen"],
+    related: ["aufgeben", "ausgeben", "vergeben", "hingeben", "abgeben"],
+    examples: [
+      { de: "Bitte geben Sie alle erforderlichen Angaben an.", zh: "請填寫所有必要的資料。" },
+      { de: "Der Preis wird auf der Rechnung angegeben.", zh: "價格標示在發票上。" }
+    ]
+  },
+
+  {
+    id: 120,
+    word: "ausgeben",
+    artikel: "",
+    root: "geben",
+    rootMeaning: "給予（to give）",
+    zh: "花費（金錢）；發放；充當",
+    en: "to spend (money); to distribute; to pass oneself off as",
+    breakdown: "aus-（向外）+ geben（給予）\n→ 「把錢向外給出去」= 花費\n→ 引申：發放物品（Materialien ausgeben）",
+    collocations: [
+      { de: "Geld ausgeben", zh: "花費金錢" },
+      { de: "Materialien / Medikamente ausgeben", zh: "發放材料 / 藥物" },
+      { de: "sich als etw. ausgeben", zh: "自稱是……、冒充" }
+    ],
+    synonyms: ["verausgaben（金錢）", "verteilen（發放）"],
+    related: ["aufgeben", "angeben", "vergeben", "hingeben", "abgeben"],
+    examples: [
+      { de: "Das Unternehmen hat viel Geld für Forschung ausgegeben.", zh: "公司在研究上花費了大量資金。" },
+      { de: "Die Schutzausrüstung wird am Eingang ausgegeben.", zh: "防護裝備在入口處發放。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  詞根：Maß（尺度、標準）
+  // ══════════════════════════════════════════════
+
+  {
+    id: 121,
+    word: "das Maß",
+    artikel: "das",
+    root: "Maß",
+    rootMeaning: "尺度、標準（measure / standard）",
+    zh: "尺度、程度；措施（複數 Maße）",
+    en: "measure, degree, extent",
+    breakdown: "基本字根，來自古德語「測量」\n→ in hohem Maße = 在很大程度上\n→ das Maß halten = 保持適度\n→ auf Maß = 按尺寸訂製",
+    collocations: [
+      { de: "in hohem / gewissem Maße", zh: "在很大 / 一定程度上" },
+      { de: "über das Maß hinausgehen", zh: "超過限度" },
+      { de: "das Maß halten", zh: "保持適度" }
+    ],
+    synonyms: ["das Ausmaß", "der Grad", "das Niveau"],
+    related: ["Maßnahme", "gemäß", "maßgeblich", "angemessen", "übermäßig"],
+    examples: [
+      { de: "In hohem Maße hängt das Ergebnis von der Qualität der Daten ab.", zh: "結果在很大程度上取決於資料的品質。" },
+      { de: "Das Ausmaß des Fehlers war nicht sofort erkennbar.", zh: "錯誤的程度起初並不明顯。" }
+    ]
+  },
+
+  {
+    id: 122,
+    word: "die Maßnahme",
+    artikel: "die",
+    root: "Maß",
+    rootMeaning: "尺度、標準（measure / standard）",
+    zh: "措施、行動",
+    en: "measure, step, action",
+    breakdown: "Maß（尺度）+ Nahme（拿取，來自 nehmen）\n→ 「按照尺度採取的行動」= 措施\n→ 超高頻職場用字",
+    collocations: [
+      { de: "Maßnahmen ergreifen / treffen / einleiten", zh: "採取措施" },
+      { de: "Maßnahmen umsetzen", zh: "實施措施" },
+      { de: "geeignete Maßnahmen", zh: "適當的措施" }
+    ],
+    synonyms: ["der Schritt", "die Aktion", "das Vorgehen"],
+    related: ["das Maß", "gemäß", "maßgeblich", "angemessen"],
+    examples: [
+      { de: "Das Unternehmen ergreift geeignete Maßnahmen zur Qualitätssicherung.", zh: "公司採取適當措施確保品質。" },
+      { de: "Die beschlossenen Maßnahmen werden sofort umgesetzt.", zh: "已決定的措施將立即實施。" }
+    ]
+  },
+
+  {
+    id: 123,
+    word: "gemäß",
+    artikel: "",
+    root: "Maß",
+    rootMeaning: "尺度、標準（measure / standard）",
+    zh: "根據、依照（介系詞，接 Dativ）",
+    en: "in accordance with, pursuant to, according to",
+    breakdown: "ge- + Maß（尺度）\n→ 「按照某個尺度標準」= 根據、依照\n→ 正式書面德語常用\n⚠️ 接 Dativ：gemäß dem Vertrag / gemäß § 5",
+    collocations: [
+      { de: "gemäß den Vorschriften", zh: "根據規定" },
+      { de: "gemäß dem Vertrag", zh: "根據合約" },
+      { de: "gemäß § 5", zh: "根據第5條" }
+    ],
+    synonyms: ["entsprechend", "laut", "nach", "zufolge"],
+    related: ["das Maß", "die Maßnahme", "maßgeblich", "angemessen"],
+    examples: [
+      { de: "Gemäß den Vorschriften muss jeder Mitarbeiter eine Einweisung erhalten.", zh: "根據規定，每位員工必須接受指導說明。" },
+      { de: "Die Zahlung erfolgt gemäß dem vereinbarten Zahlungsplan.", zh: "付款按照商定的付款計畫進行。" }
+    ]
+  },
+
+  {
+    id: 124,
+    word: "maßgeblich",
+    artikel: "",
+    root: "Maß",
+    rootMeaning: "尺度、標準（measure / standard）",
+    zh: "決定性的、主要的；標準性的",
+    en: "decisive, authoritative, significant",
+    breakdown: "Maß（尺度）+ geb-（給予）+ -lich（形容詞後綴）\n→ 「設定尺度標準的」= 決定性的、有權威的",
+    collocations: [
+      { de: "maßgeblich beitragen zu", zh: "對……有決定性貢獻" },
+      { de: "maßgeblich beteiligt sein", zh: "起主要作用" },
+      { de: "maßgeblich für etw. sein", zh: "對某事有決定性影響" }
+    ],
+    synonyms: ["entscheidend", "ausschlaggebend", "wesentlich"],
+    related: ["das Maß", "die Maßnahme", "gemäß", "angemessen"],
+    examples: [
+      { de: "Sie hat maßgeblich zum Erfolg des Projekts beigetragen.", zh: "她對項目的成功做出了決定性的貢獻。" },
+      { de: "Die Qualität der Daten ist maßgeblich für das Simulationsergebnis.", zh: "資料品質對模擬結果有決定性影響。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  詞根：erfolgen / Erfolg
+  // ══════════════════════════════════════════════
+
+  {
+    id: 125,
+    word: "erfolgen",
+    artikel: "",
+    root: "folgen",
+    rootMeaning: "跟隨（to follow）",
+    zh: "進行、發生、完成（正式）",
+    en: "to take place, to occur, to be carried out (formal)",
+    breakdown: "er-（達成某結果）+ folgen（跟隨）\n→ 「跟著發生、結果產生」= 進行、發生\n→ 超正式書面德語，常見於通知、合約\n→ 常用句型：Die Zahlung erfolgt am …",
+    collocations: [
+      { de: "Die Zahlung erfolgt bis …", zh: "付款將在……之前完成" },
+      { de: "Die Benachrichtigung erfolgt schriftlich.", zh: "通知將以書面方式進行" },
+      { de: "Die Lieferung erfolgt innerhalb von …", zh: "交貨將在……內完成" }
+    ],
+    synonyms: ["stattfinden", "geschehen", "durchgeführt werden"],
+    related: ["der Erfolg", "erfolgreich", "erfolglos", "folgen"],
+    examples: [
+      { de: "Die Zahlung erfolgt innerhalb von 30 Tagen nach Rechnungsstellung.", zh: "付款將在開具發票後30天內完成。" },
+      { de: "Die Prüfung erfolgt gemäß den geltenden Vorschriften.", zh: "檢查按照現行規定進行。" }
+    ]
+  },
+
+  {
+    id: 126,
+    word: "erfolgreich",
+    artikel: "",
+    root: "folgen",
+    rootMeaning: "跟隨（to follow）",
+    zh: "成功的、有成效的",
+    en: "successful, effective",
+    breakdown: "Erfolg（成功）+ -reich（充滿……的）\n→ 「充滿成功的」= 成功的\n→ 注意：erfolgreich（達成目標）vs. gelungen（結果出色）",
+    collocations: [
+      { de: "erfolgreich abschließen", zh: "成功完成" },
+      { de: "erfolgreich durchführen", zh: "成功執行" },
+      { de: "eine erfolgreiche Bewerbung", zh: "一份成功的申請" }
+    ],
+    synonyms: ["gelungen（結果出色）", "wirksam（有效的）"],
+    related: ["der Erfolg", "erfolgen", "erfolglos", "folgen"],
+    examples: [
+      { de: "Die Simulation wurde erfolgreich durchgeführt.", zh: "模擬被成功執行了。" },
+      { de: "Sie hat die Ausbildung erfolgreich abgeschlossen.", zh: "她成功地完成了培訓。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  詞根：rufen（呼叫）
+  // ══════════════════════════════════════════════
+
+  {
+    id: 127,
+    word: "aufrufen",
+    artikel: "",
+    root: "rufen",
+    rootMeaning: "呼叫（to call）",
+    zh: "呼叫、開啟（程式/選單）；點名；號召",
+    en: "to call up, to open (a menu/program); to call on; to appeal",
+    breakdown: "auf-（向上、開啟）+ rufen（呼叫）\n→ 「把程式叫起來」= 開啟\n→ 引申：點名、號召",
+    collocations: [
+      { de: "ein Menü / ein Programm aufrufen", zh: "開啟選單 / 程式" },
+      { de: "eine Datei aufrufen", zh: "開啟一個檔案" },
+      { de: "jemanden aufrufen", zh: "點名某人" }
+    ],
+    synonyms: ["öffnen", "starten", "auffordern"],
+    related: ["anrufen", "herrufen", "abrufen", "herausfordern", "rufen"],
+    examples: [
+      { de: "Rufen Sie bitte das Menü auf und wählen Sie die entsprechende Option.", zh: "請開啟選單並選擇相應的選項。" },
+      { de: "Die Datei kann jederzeit aufgerufen werden.", zh: "該檔案隨時可以開啟。" }
+    ]
+  },
+
+  {
+    id: 128,
+    word: "anrufen",
+    artikel: "",
+    root: "rufen",
+    rootMeaning: "呼叫（to call）",
+    zh: "打電話",
+    en: "to call, to phone",
+    breakdown: "an-（靠近、朝向）+ rufen（呼叫）\n→ 「把呼叫投向某人」= 打電話",
+    collocations: [
+      { de: "jemanden anrufen", zh: "打電話給某人" },
+      { de: "zurückrufen", zh: "回電" },
+      { de: "der Anruf", zh: "電話（名詞）" }
+    ],
+    synonyms: ["telefonieren", "einen Anruf tätigen"],
+    related: ["aufrufen", "abrufen", "herrufen", "rufen"],
+    examples: [
+      { de: "Bitte rufen Sie mich morgen an.", zh: "請明天打電話給我。" },
+      { de: "Ich werde Sie zurückrufen, sobald ich mehr Informationen habe.", zh: "一旦我有更多資訊，我會回電給您。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  weisen 補充
+  // ══════════════════════════════════════════════
+
+  {
+    id: 129,
+    word: "unterweisen",
+    artikel: "",
+    root: "weisen",
+    rootMeaning: "指示、指引（to point / direct）",
+    zh: "指導、教導、講解（正式）",
+    en: "to instruct, to brief, to train",
+    breakdown: "unter-（在……之下）+ weisen（指引）\n→ 「在指導下引導某人」= 正式指導\n→ die Unterweisung = 指導說明（名詞，職場安全教育常用）",
+    collocations: [
+      { de: "Mitarbeiter unterweisen", zh: "對員工進行指導" },
+      { de: "in Sicherheitsvorschriften unterweisen", zh: "就安全規定進行指導" },
+      { de: "die Unterweisung", zh: "指導說明（名詞，常見於職場安全）" }
+    ],
+    synonyms: ["einweisen", "schulen", "anleiten"],
+    related: ["verweisen", "hinweisen", "nachweisen", "ausweisen", "überweisen", "beweisen", "anweisen"],
+    examples: [
+      { de: "Neue Mitarbeiter werden in die Sicherheitsvorschriften unterwiesen.", zh: "新員工會接受安全規定的指導說明。" },
+      { de: "Die Unterweisung muss jährlich wiederholt werden.", zh: "指導說明必須每年重複進行。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  詞根：läutern / erläutern
+  // ══════════════════════════════════════════════
+
+  {
+    id: 130,
+    word: "erläutern",
+    artikel: "",
+    root: "erläutern",
+    rootMeaning: "解釋、說明（to explain / elucidate）",
+    zh: "說明、解釋（較詳細）",
+    en: "to explain, to elaborate, to clarify",
+    breakdown: "er-（達成結果）+ läutern（純化、使清晰）\n→ 「把模糊的東西變清晰」= 詳細說明\n→ 比 erklären 更正式，強調有條理的詳細解釋",
+    collocations: [
+      { de: "etw. näher erläutern", zh: "進一步詳細說明某事" },
+      { de: "den Hintergrund erläutern", zh: "說明背景" },
+      { de: "die Erläuterung", zh: "說明、解釋（名詞）" }
+    ],
+    synonyms: ["erklären", "ausführen", "darlegen"],
+    related: ["erklären", "ausführen", "beschreiben"],
+    examples: [
+      { de: "Könnten Sie diesen Punkt bitte näher erläutern?", zh: "您能進一步說明這一點嗎？" },
+      { de: "Im Folgenden erläutere ich die wichtigsten Schritte.", zh: "以下我將說明最重要的步驟。" }
+    ]
+  },
 
 ];

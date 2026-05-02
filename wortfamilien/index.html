@@ -15,14 +15,12 @@
   --accent: #2d5a3d;
   --accent-light: #eaf2ec;
   --tag-bg: #f0ede8;
-  --header-blue: #1a3a5c;
-  --header-blue-light: #e8f0f8;
+  --hb: #1a3a5c;
+  --hb-light: #e8f0f8;
 }
-
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
 body {
-  font-family: 'Lora', 'Noto Sans TC', Georgia, serif;
+  font-family: 'Lora','Noto Sans TC',Georgia,serif;
   background: var(--bg);
   color: var(--text);
   font-size: 15px;
@@ -32,60 +30,105 @@ body {
 
 /* ── Header ── */
 header {
-  background: var(--text);
+  background: var(--hb);
   color: #f7f5f0;
-  padding: 28px 40px 24px;
+  padding: 22px 40px 18px;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 16px;
 }
-header h1 { font-size: 22px; font-weight: 600; letter-spacing: 0.01em; }
-header .subtitle {
-  font-size: 12px; opacity: 0.55; font-style: italic;
-  margin-top: 3px; font-family: 'Lora', serif;
-}
+header h1 { font-size: 20px; font-weight: 600; letter-spacing: 0.01em; }
+header .subtitle { font-size: 11px; opacity: 0.5; font-style: italic; margin-top: 2px; font-family: 'Lora',serif; }
 
 /* ── Search ── */
 .search-bar {
   display: flex; align-items: center;
   background: rgba(255,255,255,0.1);
   border: 1px solid rgba(255,255,255,0.2);
-  border-radius: 8px; padding: 8px 14px; gap: 8px; min-width: 240px;
+  border-radius: 8px; padding: 7px 14px; gap: 8px; min-width: 240px;
 }
 .search-bar input {
   background: none; border: none; outline: none;
-  color: #f7f5f0; font-size: 14px;
-  font-family: 'IBM Plex Mono', monospace; width: 200px;
+  color: #f7f5f0; font-size: 13px;
+  font-family: 'IBM Plex Mono',monospace; width: 200px;
 }
 .search-bar input::placeholder { color: rgba(247,245,240,0.4); }
 .search-bar svg { opacity: 0.5; flex-shrink: 0; }
 
-/* ── Root tabs ── */
-.root-tabs {
-  padding: 20px 40px 0; display: flex; gap: 6px; flex-wrap: wrap;
-  border-bottom: 1px solid var(--border); background: var(--surface);
+/* ── Tab bar ── */
+.tab-bar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
-.root-tab {
-  padding: 8px 18px 10px; border: none; background: none;
-  font-size: 13px; font-family: 'IBM Plex Mono', monospace;
-  color: var(--muted); cursor: pointer;
-  border-bottom: 2px solid transparent; margin-bottom: -1px;
-  transition: color 0.15s, border-color 0.15s; white-space: nowrap;
+.tab-row {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  border-bottom: 1px solid transparent;
 }
-.root-tab:hover { color: var(--text); }
-.root-tab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 500; }
-.root-tab .tab-count { font-size: 11px; opacity: 0.6; margin-left: 4px; }
+.tab-row + .tab-row {
+  border-top: 1px solid #eee;
+}
 
-/* ── Main layout ── */
+.tab {
+  padding: 9px 16px 10px;
+  border: none;
+  background: none;
+  font-size: 12px;
+  font-family: 'IBM Plex Mono',monospace;
+  color: var(--muted);
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.tab:hover { color: var(--text); }
+.tab.wort-tab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+.tab.ueb-tab.active  { color: var(--hb); border-bottom-color: var(--hb); font-weight: 600; }
+
+.tab-count { font-size: 10px; opacity: 0.55; }
+
+/* Row 1 = Wortfamilien, Row 2 = Übungen */
+.tab-row-label {
+  font-family: 'IBM Plex Mono',monospace;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 10px 8px 10px 0;
+  color: var(--muted);
+  opacity: 0.7;
+  white-space: nowrap;
+  align-self: center;
+}
+.ueb-row-label {
+  color: var(--hb);
+  font-weight: 600;
+  opacity: 1;
+}
+
+/* ── Content areas ── */
+#wortContent { display: block; }
+#uebContent  { display: none;  }
+
+/* ── Wortfamilien ── */
 .main { max-width: 1100px; margin: 0 auto; padding: 32px 40px; }
 
-/* ── Root group ── */
 .root-group { margin-bottom: 40px; }
-
 .root-header {
-  background: var(--header-blue);
+  background: var(--hb);
   color: #fff;
   border-radius: 8px 8px 0 0;
   padding: 12px 18px;
@@ -94,28 +137,16 @@ header .subtitle {
   gap: 12px;
   flex-wrap: wrap;
 }
-.root-label {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 18px; font-weight: 600; color: #fff;
-}
-.root-meaning {
-  font-size: 13px; color: rgba(255,255,255,0.75); font-style: italic;
-}
-.root-note {
-  font-size: 11px; color: rgba(255,255,255,0.55);
-  font-family: 'Noto Sans TC', sans-serif;
-}
-.root-count {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px; color: rgba(255,255,255,0.5); margin-left: auto;
-}
+.root-label { font-family:'IBM Plex Mono',monospace; font-size:18px; font-weight:600; color:#fff; }
+.root-meaning { font-size:13px; color:rgba(255,255,255,0.75); font-style:italic; }
+.root-note { font-size:11px; color:rgba(255,255,255,0.55); font-family:'Noto Sans TC',sans-serif; }
+.root-count { font-family:'IBM Plex Mono',monospace; font-size:11px; color:rgba(255,255,255,0.5); margin-left:auto; }
 .root-grid-wrap {
-  border: 1px solid #c8d8ea; border-top: none;
-  border-radius: 0 0 8px 8px;
-  padding: 16px; background: var(--header-blue-light);
+  border:1px solid #c8d8ea; border-top:none;
+  border-radius:0 0 8px 8px;
+  padding:16px; background:var(--hb-light);
 }
 
-/* ── Word cards ── */
 .word-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(480px, 1fr));
@@ -124,11 +155,11 @@ header .subtitle {
 .word-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 10px; overflow: hidden;
+  border-radius: 10px;
+  overflow: hidden;
   transition: box-shadow 0.2s;
 }
 .word-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.07); }
-
 .card-header {
   padding: 16px 20px 12px;
   border-bottom: 1px solid transparent;
@@ -139,129 +170,206 @@ header .subtitle {
 .card-header:hover { background: #faf9f6; }
 .word-card.open .card-header { border-bottom-color: var(--border); }
 
-.word-de {
-  font-size: 18px; font-weight: 600; line-height: 1.3;
-  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
-}
-.word-de .artikel {
-  font-size: 13px; color: var(--muted); font-weight: 400; font-style: italic;
-}
+.word-de { font-size:18px; font-weight:600; line-height:1.3; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.word-de .artikel { font-size:13px; color:var(--muted); font-weight:400; font-style:italic; }
 .word-de .root-highlight {
   text-decoration: underline;
   text-decoration-color: var(--accent);
   text-decoration-thickness: 2px;
   text-underline-offset: 3px;
 }
-/* clickable word — speaks on click, allows text selection */
-.word-clickable {
-  cursor: pointer;
-  user-select: text;
-  transition: color 0.15s;
-}
-.word-clickable:hover { color: var(--accent); }
+.word-clickable { cursor:pointer; user-select:text; transition:color 0.15s; }
+.word-clickable:hover { color:var(--accent); }
+.word-trans { font-size:13px; color:var(--muted); margin-top:3px; line-height:1.5; user-select:text; }
+.word-trans .zh { font-family:'Noto Sans TC',sans-serif; }
+.word-trans .en { font-style:italic; }
 
-.word-trans {
-  font-size: 13px; color: var(--muted);
-  margin-top: 3px; line-height: 1.5;
-  user-select: text;
-}
-.word-trans .zh { font-family: 'Noto Sans TC', sans-serif; }
-.word-trans .en { font-style: italic; }
-
-.card-toggle-area {
-  display: flex; gap: 6px; align-items: flex-start; flex-shrink: 0;
-}
+.card-toggle-area { display:flex; gap:6px; align-items:flex-start; flex-shrink:0; }
 .speak-btn {
-  background: none; border: 1px solid var(--border);
-  border-radius: 6px; padding: 5px 8px; cursor: pointer;
-  color: var(--muted); font-size: 14px; flex-shrink: 0;
-  transition: all 0.15s; line-height: 1;
+  background:none; border:1px solid var(--border);
+  border-radius:6px; padding:5px 8px; cursor:pointer;
+  color:var(--muted); font-size:14px; flex-shrink:0;
+  transition:all 0.15s; line-height:1;
 }
-.speak-btn:hover,
-.speak-btn.speaking { background: var(--accent-light); color: var(--accent); border-color: var(--accent); }
+.speak-btn:hover,.speak-btn.speaking { background:var(--accent-light); color:var(--accent); border-color:var(--accent); }
 
-.expand-icon {
-  font-size: 12px; color: var(--muted);
-  transition: transform 0.25s; margin-top: 6px; flex-shrink: 0;
-}
-.word-card.open .expand-icon { transform: rotate(180deg); }
+.expand-icon { font-size:12px; color:var(--muted); transition:transform 0.25s; margin-top:6px; flex-shrink:0; }
+.word-card.open .expand-icon { transform:rotate(180deg); }
 
-/* ── Card body ── */
-.card-body {
-  padding: 0 20px; max-height: 0; overflow: hidden;
-  transition: max-height 0.35s ease, padding 0.2s;
-}
-.card-body.open { max-height: 900px; padding: 16px 20px 18px; }
+.card-body { padding:0 20px; max-height:0; overflow:hidden; transition:max-height 0.35s ease,padding 0.2s; }
+.card-body.open { max-height:900px; padding:16px 20px 18px; }
 
-.section-label {
-  font-family: 'IBM Plex Mono', monospace;
-  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--muted); margin-bottom: 6px; margin-top: 14px;
-}
-.section-label:first-child { margin-top: 0; }
+.section-label { font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-bottom:6px; margin-top:14px; }
+.section-label:first-child { margin-top:0; }
 
-/* breakdown */
 .breakdown {
-  background: var(--accent-light);
-  border-left: 3px solid var(--accent);
-  border-radius: 0 6px 6px 0;
-  padding: 10px 14px; font-size: 13.5px;
-  line-height: 1.7; color: #1c1a17;
-  white-space: pre-line;
+  background:var(--accent-light); border-left:3px solid var(--accent);
+  border-radius:0 6px 6px 0; padding:10px 14px;
+  font-size:13.5px; line-height:1.7; color:#1c1a17; white-space:pre-line;
 }
 
-/* collocations */
-.collocations { display: flex; flex-direction: column; gap: 5px; }
+.collocations { display:flex; flex-direction:column; gap:5px; }
 .coll-item {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 8px; font-size: 13.5px;
-  padding: 5px 0; border-bottom: 1px dashed var(--border);
-  cursor: pointer; border-radius: 4px;
-  transition: background 0.12s;
+  display:grid; grid-template-columns:1fr 1fr; gap:8px;
+  font-size:13.5px; padding:5px 0; border-bottom:1px dashed var(--border);
+  cursor:pointer; border-radius:4px; transition:background 0.12s;
 }
-.coll-item:last-child { border-bottom: none; }
-.coll-item:hover { background: #f5f3ee; }
-.coll-item:hover .coll-de { color: var(--accent); }
-.coll-de { font-family: 'Lora', serif; transition: color 0.12s; }
-.coll-zh { color: var(--muted); font-family: 'Noto Sans TC', sans-serif; font-size: 13px; }
+.coll-item:last-child { border-bottom:none; }
+.coll-item:hover { background:#f5f3ee; }
+.coll-item:hover .coll-de { color:var(--accent); }
+.coll-de { font-family:'Lora',serif; transition:color 0.12s; }
+.coll-zh { color:var(--muted); font-family:'Noto Sans TC',sans-serif; font-size:13px; }
 
-/* synonym tags — speak on click */
-.tag-list { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag-list { display:flex; flex-wrap:wrap; gap:6px; }
 .tag {
-  font-family: 'IBM Plex Mono', monospace; font-size: 12px;
-  padding: 3px 10px; border-radius: 20px;
-  background: var(--tag-bg); color: var(--text);
-  border: 1px solid var(--border); cursor: pointer;
-  transition: all 0.15s;
+  font-family:'IBM Plex Mono',monospace; font-size:12px;
+  padding:3px 10px; border-radius:20px;
+  background:var(--tag-bg); color:var(--text);
+  border:1px solid var(--border); cursor:pointer; transition:all 0.15s;
 }
-.tag:hover { background: var(--accent-light); border-color: var(--accent); color: var(--accent); }
+.tag:hover { background:var(--accent-light); border-color:var(--accent); color:var(--accent); }
 
-/* examples — whole box speaks German */
-.examples { display: flex; flex-direction: column; gap: 8px; }
+.examples { display:flex; flex-direction:column; gap:8px; }
 .example-item {
-  font-size: 13.5px; cursor: pointer;
-  padding: 7px 10px; border-radius: 6px;
-  border: 1px solid transparent;
-  transition: background 0.15s, border-color 0.15s;
+  font-size:13.5px; cursor:pointer; padding:7px 10px; border-radius:6px;
+  border:1px solid transparent; transition:background 0.15s,border-color 0.15s;
 }
-.example-item:hover { background: #faf9f6; border-color: var(--border); }
-.example-item:hover .ex-de { color: var(--accent); }
-.ex-de { font-family: 'Lora', serif; font-style: italic; line-height: 1.6; transition: color 0.15s; }
-.ex-zh { color: var(--muted); font-family: 'Noto Sans TC', sans-serif; font-size: 13px; margin-top: 1px; }
+.example-item:hover { background:#faf9f6; border-color:var(--border); }
+.example-item:hover .ex-de { color:var(--accent); }
+.ex-de { font-family:'Lora',serif; font-style:italic; line-height:1.6; transition:color 0.15s; }
+.ex-zh { color:var(--muted); font-family:'Noto Sans TC',sans-serif; font-size:13px; margin-top:1px; }
 
-/* search */
-.search-results-info { font-size: 13px; color: var(--muted); margin-bottom: 20px; font-style: italic; }
-.no-results { text-align: center; padding: 60px 20px; color: var(--muted); font-style: italic; }
-.empty-tab { text-align: center; padding: 80px 20px; color: var(--muted); }
-.empty-tab p { font-size: 14px; font-style: italic; }
+.search-results-info { font-size:13px; color:var(--muted); margin-bottom:20px; font-style:italic; }
+.no-results { text-align:center; padding:60px 20px; color:var(--muted); font-style:italic; }
+mark { background:#fff3b0; border-radius:2px; padding:0 1px; }
 
-mark { background: #fff3b0; border-radius: 2px; padding: 0 1px; }
+/* ── Übungen content area ── */
+#uebContent {
+  background: var(--hb-light);
+  min-height: 60vh;
+}
+
+.ueb-inner { max-width: 1100px; margin: 0 auto; padding: 28px 40px 48px; }
+
+.ueb-group { margin-bottom: 40px; }
+.ueb-group-header {
+  font-family: 'IBM Plex Mono',monospace;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--hb);
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #c8d8ea;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ueb-group-count { font-size:11px; color:#8aacc8; font-weight:400; }
+
+.ueb-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(440px, 1fr));
+  gap: 12px;
+}
+
+/* Card: default shows only sentence */
+.ueb-card {
+  background: #fff;
+  border: 1px solid #c8d8ea;
+  border-radius: 10px;
+  padding: 18px 20px;
+  transition: box-shadow 0.2s;
+}
+.ueb-card:hover { box-shadow: 0 3px 12px rgba(26,58,92,0.1); }
+
+.ueb-sentence {
+  font-family: 'Lora',serif;
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 12px;
+  cursor: pointer;
+  padding: 4px 0;
+}
+.ueb-sentence:hover .blank-line { border-bottom-color: var(--accent); }
+
+.blank-line {
+  display: inline-block;
+  min-width: 70px;
+  border-bottom: 2px solid var(--hb);
+  margin: 0 2px;
+  vertical-align: baseline;
+}
+
+.ueb-actions { display: flex; gap: 8px; }
+.ueb-reveal-btn {
+  background: var(--hb); color: #fff;
+  border: none; border-radius: 6px;
+  padding: 6px 16px; font-size: 12px;
+  cursor: pointer; font-family: 'Noto Sans TC',sans-serif;
+  transition: background 0.15s;
+}
+.ueb-reveal-btn:hover { background: #2a5a8a; }
+.ueb-reveal-btn.revealed { background: #6a8aaa; }
+.ueb-speak-btn {
+  background: none; border: 1px solid #c8d8ea;
+  border-radius: 6px; padding: 6px 12px; font-size: 12px;
+  cursor: pointer; color: var(--muted); transition: all 0.15s;
+}
+.ueb-speak-btn:hover { background: var(--accent-light); color: var(--accent); border-color: var(--accent); }
+
+/* Answer block — hidden by default */
+.ueb-answer {
+  display: none;
+  margin-top: 12px;
+  padding: 12px 14px;
+  background: #eaf4ff;
+  border-left: 3px solid var(--hb);
+  border-radius: 0 6px 6px 0;
+}
+.ueb-ans-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
+}
+.ueb-ans-word {
+  font-family: 'IBM Plex Mono',monospace;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--hb);
+}
+.ueb-ans-root {
+  font-family: 'IBM Plex Mono',monospace;
+  font-size: 10px;
+  color: #8aacc8;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.ueb-ans-zh {
+  font-family: 'Noto Sans TC',sans-serif;
+  font-size: 13px;
+  color: var(--muted);
+}
+.ueb-ans-en {
+  font-size: 12px;
+  color: #9aacbc;
+  font-style: italic;
+}
+.ueb-full-zh {
+  font-family: 'Noto Sans TC',sans-serif;
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px dashed #c8d8ea;
+}
 
 @media (max-width: 640px) {
-  header { padding: 20px; }
-  .root-tabs { padding: 12px 20px 0; }
-  .main { padding: 20px; }
-  .word-grid { grid-template-columns: 1fr; }
+  header { padding: 18px 20px; }
+  .tab-bar { padding: 0 16px; }
+  .main, .ueb-inner { padding: 16px 20px; }
+  .word-grid, .ueb-grid { grid-template-columns: 1fr; }
   .coll-item { grid-template-columns: 1fr; gap: 2px; }
 }
 </style>
@@ -279,149 +387,118 @@ mark { background: #fff3b0; border-radius: 2px; padding: 0 1px; }
   </div>
 </header>
 
-<div class="root-tabs" id="rootTabs"></div>
-<div class="main" id="mainContent"></div>
+<!-- Unified tab bar -->
+<div class="tab-bar">
+  <div class="tab-row" id="wortRow"></div>
+  <div class="tab-row" id="uebRow"></div>
+</div>
+
+<!-- Content areas -->
+<div id="wortContent">
+  <div class="main" id="mainContent"></div>
+</div>
+<div id="uebContent">
+  <div class="ueb-inner" id="uebMain"></div>
+</div>
 
 <script src="data.js"></script>
+<script src="uebungen.js"></script>
 <script>
 // ── Speech ──
-let synth = window.speechSynthesis;
+const synth = window.speechSynthesis;
 let deVoice = null;
-function loadVoices() {
-  deVoice = synth.getVoices().find(v => v.lang.startsWith('de')) || null;
-}
+function loadVoices() { deVoice = synth.getVoices().find(v => v.lang.startsWith('de')) || null; }
 loadVoices();
 if (speechSynthesis.onvoiceschanged !== undefined) speechSynthesis.onvoiceschanged = loadVoices;
-
 function speak(text, btn) {
   synth.cancel();
-  if (btn) {
-    document.querySelectorAll('.speak-btn').forEach(b => b.classList.remove('speaking'));
-    btn.classList.add('speaking');
-    setTimeout(() => btn.classList.remove('speaking'), 2500);
-  }
+  if (btn) { document.querySelectorAll('.speak-btn').forEach(b=>b.classList.remove('speaking')); btn.classList.add('speaking'); setTimeout(()=>btn.classList.remove('speaking'),2500); }
   const u = new SpeechSynthesisUtterance(text);
-  u.lang = 'de-DE';
-  if (deVoice) u.voice = deVoice;
-  u.rate = 0.9;
-  synth.speak(u);
+  u.lang = 'de-DE'; if (deVoice) u.voice = deVoice; u.rate = 0.9; synth.speak(u);
 }
 
-// ── Root metadata (emoji + note) ──
+// ── Root metadata ──
 const ROOT_META = {
-  schließen: { emoji: '🔒', note: '注意 aus- vs ein- 方向相反' },
-  sicht:     { emoji: '👁',  note: '視線方向決定意思' },
-  dauer:     { emoji: '⏳', note: 'dauern 有「持續」和「令人遺憾」兩個意思' },
-  nehmen:    { emoji: '✋', note: '搭配不同前綴，意思差異很大' },
-  teilen:    { emoji: '✂️', note: 'er- 由上往下授予；ver- 向四方分散' },
-  stellen:   { emoji: '📋', note: 'ein- 僱用/調整/停止（三義！）' },
-  führen:    { emoji: '🧭', note: 'durch- 貫徹到底；aus- 帶出並說明' },
-  sprechen:  { emoji: '💬', note: 'versprechen 有無 sich，意思完全不同！' },
-  gleich:    { emoji: '⚖️', note: 'be- 結清帳單；aus- 補償差距；ver- 比較' },
-  weisen:    { emoji: '👆', note: 'nach- 追蹤證明；über- 匯款／轉診' },
-  zwingen:   { emoji: '⚡', note: 'zwingen 強迫人；erzwingen 強行取得結果' },
-  wirken:    { emoji: '✨', note: 'sich auswirken auf 固定搭配 Akkusativ' },
-  ziehen:    { emoji: '🧲', note: 'beziehen / bezüglich / beziehungsweise 都同根' },
-  legen:     { emoji: '📌', note: 'verlegen 有三義：改期 / 出版 / 放錯地方' },
-  treten:    { emoji: '👣', note: 'auftreten 常用於面試自我表現' },
-  kündigen:   { emoji: '📄', note: 'kündigen 辭職/解僱；ankündigen 宣布（方向相反！）' },
-  richten:    { emoji: '🎯', note: 'ausgerichtet auf = 針對……；berichten 來自同根' },
-  drücken:    { emoji: '🖐', note: 'Eindruck / Ausdruck / Druck 都同根' },
-  wirten:     { emoji: '🍽', note: 'Bewirtungskosten = 餐飲費用（稅務常用詞）' },
-  verzichten: { emoji: '🙅', note: 'auf + Akk. 固定搭配；unverzichtbar 超常用' },
-  erkunden:   { emoji: '🔍', note: '⚠️ 勿與 kündigen 混淆！字形相似但完全不同' },
+  schließen: { emoji:'🔒', note:'注意 aus- vs ein- 方向相反' },
+  sicht:     { emoji:'👁',  note:'視線方向決定意思' },
+  dauer:     { emoji:'⏳', note:'dauern 有「持續」和「令人遺憾」兩個意思' },
+  nehmen:    { emoji:'✋', note:'搭配不同前綴，意思差異很大' },
+  teilen:    { emoji:'✂️', note:'er- 由上往下授予；ver- 向四方分散' },
+  stellen:   { emoji:'📋', note:'ein- 僱用/調整/停止（三義！）' },
+  führen:    { emoji:'🧭', note:'durch- 貫徹到底；aus- 帶出並說明' },
+  sprechen:  { emoji:'💬', note:'versprechen 有無 sich，意思完全不同！' },
+  gleich:    { emoji:'⚖️', note:'be- 結清帳單；aus- 補償差距；ver- 比較' },
+  weisen:    { emoji:'👆', note:'nach- 追蹤證明；über- 匯款／轉診' },
+  zwingen:   { emoji:'⚡', note:'zwingen 強迫人；erzwingen 強行取得結果' },
+  wirken:    { emoji:'✨', note:'sich auswirken auf 固定搭配 Akkusativ' },
+  ziehen:    { emoji:'🧲', note:'beziehen / bezüglich / beziehungsweise 都同根' },
+  legen:     { emoji:'📌', note:'verlegen 有三義：改期 / 出版 / 放錯地方' },
+  treten:    { emoji:'👣', note:'auftreten 常用於面試自我表現' },
+  kündigen:  { emoji:'📄', note:'kündigen 辭職/解僱；ankündigen 宣布（方向相反！）' },
+  richten:   { emoji:'🎯', note:'ausgerichtet auf = 針對……；berichten 來自同根' },
+  drücken:   { emoji:'🖐', note:'Eindruck / Ausdruck / Druck 都同根' },
+  wirten:    { emoji:'🍽', note:'Bewirtungskosten = 餐飲費用（稅務常用詞）' },
+  verzichten:{ emoji:'🙅', note:'auf + Akk. 固定搭配；unverzichtbar 超常用' },
+  erkunden:  { emoji:'🔍', note:'⚠️ 勿與 kündigen 混淆！字形相似但完全不同' },
+  halten:    { emoji: '🤝', note: 'einhalten 遵守；festhalten 記錄/堅持；sich verhalten 行為表現' },
+  greifen:   { emoji: '✊', note: 'ergreifen 採取措施；zugreifen 存取資料；begreifen 理解' },
+  trauen:    { emoji: '💙', note: 'sich vertraut machen mit = 熟悉；vertraulich = 機密' },
+  tragen:    { emoji: '📦', note: 'übertragen 三義：傳輸/授權/翻譯；beauftragen = 委託' },
+  leuchten:  { emoji: '💡', note: 'Das leuchtet mir ein. = 我覺得這說得通。' },
+  fassen:    { emoji: '🗂', note: 'erfassen 記錄/掌握；zusammenfassen 總結；umfassen 涵蓋' },
+  gehen:     { emoji: '🚶', note: 'vorgehen 採取步驟；vorübergehend 暫時的；eingehen auf 深入討論' },
+  geben:     { emoji: '🎁', note: 'aufgeben 放棄/寄出；angeben 填寫資料；die Angabe 常用複數' },
+  Maß:       { emoji: '📏', note: 'gemäß + Dativ；maßgeblich = 決定性的；Maßnahme = 措施' },
+  folgen:    { emoji: '✅', note: 'erfolgen = 正式「進行/發生」；erfolgreich vs. gelungen' },
+  rufen:     { emoji: '📞', note: 'aufrufen 開啟選單/程式；zurückrufen 回電' },
+  erläutern: { emoji: '📖', note: '比 erklären 更正式，強調有條理的詳細解釋' },
 };
-
-// ── Tabs ──
-let currentTab = 'all';
-let searchQuery = '';
-
-function getRoots() {
-  const roots = {};
-  WORDS.forEach(w => {
-    if (!roots[w.root]) roots[w.root] = { label: w.root, meaning: w.rootMeaning, words: [] };
-    roots[w.root].words.push(w);
-  });
-  return roots;
-}
-
-function renderTabs() {
-  const roots = getRoots();
-  const tabs = document.getElementById('rootTabs');
-  const allCount = WORDS.length;
-  let html = `<button class="root-tab ${currentTab==='all'?'active':''}" onclick="switchTab('all')">全部 <span class="tab-count">${allCount}</span></button>`;
-  Object.entries(roots).forEach(([root, data]) => {
-    const active = currentTab === root ? ' active' : '';
-    const meta = ROOT_META[root] || {};
-    const emoji = meta.emoji ? meta.emoji + ' ' : '';
-    html += `<button class="root-tab${active}" onclick="switchTab('${root}')">${emoji}-${root} <span class="tab-count">${data.words.length}</span></button>`;
-  });
-  tabs.innerHTML = html;
-}
-
-function switchTab(tab) {
-  currentTab = tab;
-  searchQuery = '';
-  document.getElementById('searchInput').value = '';
-  renderTabs();
-  renderMain();
-}
 
 // ── Helpers ──
 function hl(text, q) {
-  if (!q || !text) return text || '';
-  const esc2 = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  return String(text).replace(new RegExp('('+esc2+')', 'gi'), '<mark>$1</mark>');
+  if (!q||!text) return text||'';
+  const e = q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  return String(text).replace(new RegExp('('+e+')','gi'),'<mark>$1</mark>');
 }
 function hlRoot(word, root) {
   if (!root) return word;
-  const idx = word.toLowerCase().indexOf(root.toLowerCase());
-  if (idx === -1) return word;
-  return word.slice(0,idx)
-    + '<span class="root-highlight">'+word.slice(idx,idx+root.length)+'</span>'
-    + word.slice(idx+root.length);
+  const i = word.toLowerCase().indexOf(root.toLowerCase());
+  if (i===-1) return word;
+  return word.slice(0,i)+'<span class="root-highlight">'+word.slice(i,i+root.length)+'</span>'+word.slice(i+root.length);
 }
-function escStr(s) {
-  return String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-}
+function escStr(s) { return String(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
 
-// ── Build card ──
+// ── Word card ──
 function buildCard(w, q='') {
-  const wordId = 'card-' + w.id;
-  const deText = (w.artikel ? w.artikel + ' ' : '') + w.word;
-  const wordInner = hlRoot(hl(w.word, q), q ? '' : w.root);
-  const artikelHtml = w.artikel ? `<span class="artikel">${w.artikel}</span> ` : '';
+  const id = 'card-'+w.id;
+  const deText = (w.artikel?w.artikel+' ':'')+w.word;
+  const wordInner = hlRoot(hl(w.word,q), q?'':w.root);
+  const artikelHtml = w.artikel?`<span class="artikel">${w.artikel}</span> `:'';
 
-  const collHtml = (w.collocations||[]).map(c => `
+  const collHtml = (w.collocations||[]).map(c=>`
     <div class="coll-item" onclick="speak('${escStr(c.de)}',null)">
       <span class="coll-de">${hl(c.de,q)}</span>
       <span class="coll-zh">${hl(c.zh,q)}</span>
     </div>`).join('');
 
-  // synonyms: speak on click
-  const synHtml = (w.synonyms||[]).map(s =>
+  const synHtml = (w.synonyms||[]).map(s=>
     `<span class="tag" onclick="speak('${escStr(s)}',null)" title="點擊朗讀">${hl(s,q)}</span>`
   ).join('');
 
-  // examples: whole box speaks German
-  const exHtml = (w.examples||[]).map(e => `
+  const exHtml = (w.examples||[]).map(e=>`
     <div class="example-item" onclick="speak('${escStr(e.de)}',null)">
       <div class="ex-de">${hl(e.de,q)}</div>
       <div class="ex-zh">${hl(e.zh,q)}</div>
     </div>`).join('');
 
-  const breakdownHtml = w.breakdown
-    ? `<div class="section-label">🧩 拆解記憶</div><div class="breakdown">${hl(w.breakdown,q)}</div>`
-    : '';
+  const bdHtml = w.breakdown?`<div class="section-label">🧩 拆解記憶</div><div class="breakdown">${hl(w.breakdown,q)}</div>`:'';
 
   return `
-  <div class="word-card" id="${wordId}">
-    <div class="card-header" onclick="toggleCard('${wordId}')">
+  <div class="word-card" id="${id}">
+    <div class="card-header" onclick="toggleCard('${id}')">
       <div>
         <div class="word-de">
-          ${artikelHtml}<span class="word-clickable"
-            onclick="event.stopPropagation();speak('${escStr(deText)}',null)"
-            title="點擊朗讀單字">${wordInner}</span>
+          ${artikelHtml}<span class="word-clickable" onclick="event.stopPropagation();speak('${escStr(deText)}',null)" title="點擊朗讀單字">${wordInner}</span>
         </div>
         <div class="word-trans" onclick="event.stopPropagation()">
           <span class="zh">${hl(w.zh,q)}</span>
@@ -434,11 +511,11 @@ function buildCard(w, q='') {
         <span class="expand-icon">▼</span>
       </div>
     </div>
-    <div class="card-body" id="${wordId}-body">
-      ${breakdownHtml}
-      ${collHtml ? `<div class="section-label">📎 常見搭配 — 點擊朗讀</div><div class="collocations">${collHtml}</div>` : ''}
-      ${synHtml  ? `<div class="section-label">💡 同義字 — 點擊朗讀</div><div class="tag-list">${synHtml}</div>` : ''}
-      ${exHtml   ? `<div class="section-label">📖 例句 — 點擊朗讀</div><div class="examples">${exHtml}</div>` : ''}
+    <div class="card-body" id="${id}-body">
+      ${bdHtml}
+      ${collHtml?`<div class="section-label">📎 常見搭配 — 點擊朗讀</div><div class="collocations">${collHtml}</div>`:''}
+      ${synHtml?`<div class="section-label">💡 同義字 — 點擊朗讀</div><div class="tag-list">${synHtml}</div>`:''}
+      ${exHtml?`<div class="section-label">📖 例句 — 點擊朗讀</div><div class="examples">${exHtml}</div>`:''}
     </div>
   </div>`;
 }
@@ -451,9 +528,9 @@ function toggleCard(id) {
 }
 
 function buildRootHeader(root, data) {
-  const meta = ROOT_META[root] || {};
-  const emoji = meta.emoji || '📂';
-  const note = meta.note ? `<span class="root-note">｜ ${meta.note}</span>` : '';
+  const meta = ROOT_META[root]||{};
+  const emoji = meta.emoji||'📂';
+  const note = meta.note?`<span class="root-note">｜ ${meta.note}</span>`:'';
   return `<div class="root-header">
     <span class="root-label">${emoji} -${data.label}</span>
     <span class="root-meaning">${data.meaning}</span>
@@ -462,50 +539,101 @@ function buildRootHeader(root, data) {
   </div>`;
 }
 
-// ── Render main ──
+// ── Roots from WORDS ──
+function getRoots() {
+  const roots = {};
+  WORDS.forEach(w => {
+    if (!roots[w.root]) roots[w.root] = { label:w.root, meaning:w.rootMeaning, words:[] };
+    roots[w.root].words.push(w);
+  });
+  return roots;
+}
+
+// ── State ──
+let mode = 'wort';   // 'wort' | 'ueb'
+let wortTab = 'all';
+let uebTab = 'all';
+let searchQuery = '';
+
+// ── Render tab bar ──
+function renderTabBar() {
+  const roots = getRoots();
+  const uebRoots = getUebRoots();
+
+  // Row 1: Wortfamilien
+  let wortHtml = `<span class="tab-row-label">📚 單字</span>`;
+  wortHtml += `<button class="tab wort-tab ${mode==='wort'&&wortTab==='all'?'active':''}" onclick="setTab('wort','all')">全部 <span class="tab-count">${WORDS.length}</span></button>`;
+  Object.entries(roots).forEach(([root,data]) => {
+    const meta = ROOT_META[root]||{};
+    const emoji = meta.emoji?meta.emoji+' ':'';
+    const active = mode==='wort'&&wortTab===root?' active':'';
+    wortHtml += `<button class="tab wort-tab${active}" onclick="setTab('wort','${root}')">${emoji}-${root} <span class="tab-count">${data.words.length}</span></button>`;
+  });
+  document.getElementById('wortRow').innerHTML = wortHtml;
+
+  // Row 2: Übungen
+  let uebHtml = `<span class="tab-row-label ueb-row-label">📝 Übungen</span>`;
+  uebHtml += `<button class="tab ueb-tab ${mode==='ueb'&&uebTab==='all'?'active':''}" onclick="setTab('ueb','all')">全部混合 <span class="tab-count">${UEBUNGEN.length}</span></button>`;
+  Object.entries(uebRoots).forEach(([root,items]) => {
+    const meta = ROOT_META[root]||{};
+    const emoji = meta.emoji?meta.emoji+' ':'';
+    const active = mode==='ueb'&&uebTab===root?' active':'';
+    uebHtml += `<button class="tab ueb-tab${active}" onclick="setTab('ueb','${root}')">${emoji}-${root} <span class="tab-count">${items.length}</span></button>`;
+  });
+  document.getElementById('uebRow').innerHTML = uebHtml;
+}
+
+function setTab(newMode, tab) {
+  mode = newMode;
+  if (newMode==='wort') {
+    wortTab = tab;
+    searchQuery = '';
+    document.getElementById('searchInput').value = '';
+    document.getElementById('wortContent').style.display = 'block';
+    document.getElementById('uebContent').style.display  = 'none';
+  } else {
+    uebTab = tab;
+    document.getElementById('wortContent').style.display = 'none';
+    document.getElementById('uebContent').style.display  = 'block';
+  }
+  renderTabBar();
+  if (newMode==='wort') renderMain();
+  else renderUebungen();
+}
+
+// ── Wort render ──
 function renderMain() {
   const el = document.getElementById('mainContent');
+  const roots = getRoots();
 
   if (searchQuery) {
     const q = searchQuery.toLowerCase();
     const matches = WORDS.filter(w =>
-      [w.word, w.zh, w.en, w.breakdown,
-        ...(w.collocations||[]).flatMap(c=>[c.de,c.zh]),
-        ...(w.synonyms||[]),
-        ...(w.related||[]),
-        ...(w.examples||[]).flatMap(e=>[e.de,e.zh])
-      ].some(s => s && String(s).toLowerCase().includes(q))
+      [w.word,w.zh,w.en,w.breakdown,
+       ...(w.collocations||[]).flatMap(c=>[c.de,c.zh]),
+       ...(w.synonyms||[]),
+       ...(w.examples||[]).flatMap(e=>[e.de,e.zh])
+      ].some(s=>s&&String(s).toLowerCase().includes(q))
     );
-    if (!matches.length) {
-      el.innerHTML = `<div class="no-results">找不到「${searchQuery}」的相關單字</div>`;
-      return;
-    }
-    el.innerHTML = `
-      <div class="search-results-info">🔍 找到 ${matches.length} 個結果 — 「${searchQuery}」</div>
+    if (!matches.length) { el.innerHTML=`<div class="no-results">找不到「${searchQuery}」的相關單字</div>`; return; }
+    el.innerHTML=`<div class="search-results-info">🔍 找到 ${matches.length} 個結果 — 「${searchQuery}」</div>
       <div class="word-grid">${matches.map(w=>buildCard(w,searchQuery)).join('')}</div>`;
     return;
   }
 
-  const roots = getRoots();
-  if (currentTab === 'all') {
-    let html = '';
-    Object.entries(roots).forEach(([root, data]) => {
-      html += `<div class="root-group">
-        ${buildRootHeader(root, data)}
-        <div class="root-grid-wrap">
-          <div class="word-grid">${data.words.map(w=>buildCard(w)).join('')}</div>
-        </div>
+  if (wortTab==='all') {
+    let html='';
+    Object.entries(roots).forEach(([root,data]) => {
+      html+=`<div class="root-group">${buildRootHeader(root,data)}
+        <div class="root-grid-wrap"><div class="word-grid">${data.words.map(w=>buildCard(w)).join('')}</div></div>
       </div>`;
     });
     el.innerHTML = html;
   } else {
-    const data = roots[currentTab];
-    if (!data) { el.innerHTML = '<div class="empty-tab"><p>找不到此詞根</p></div>'; return; }
-    el.innerHTML = `<div class="root-group">
-      ${buildRootHeader(currentTab, data)}
-      <div class="root-grid-wrap">
-        <div class="word-grid">${data.words.map(w=>buildCard(w)).join('')}</div>
-      </div>
+    const data = roots[wortTab];
+    if (!data) { el.innerHTML=''; return; }
+    el.innerHTML=`<div class="root-group">${buildRootHeader(wortTab,data)}
+      <div class="root-grid-wrap"><div class="word-grid">${data.words.map(w=>buildCard(w)).join('')}</div></div>
     </div>`;
   }
 }
@@ -514,13 +642,119 @@ function renderMain() {
 let searchTimer;
 function handleSearch(val) {
   searchQuery = val.trim();
-  if (val !== document.getElementById('searchInput').value)
-    document.getElementById('searchInput').value = val;
+  if (val!==document.getElementById('searchInput').value) document.getElementById('searchInput').value=val;
+  // Switch to wort mode if searching
+  if (mode!=='wort') { mode='wort'; document.getElementById('wortContent').style.display='block'; document.getElementById('uebContent').style.display='none'; }
   clearTimeout(searchTimer);
-  searchTimer = setTimeout(() => { currentTab='all'; renderTabs(); renderMain(); }, 200);
+  searchTimer = setTimeout(()=>{ wortTab='all'; renderTabBar(); renderMain(); }, 200);
 }
 
-renderTabs();
+// ══════════════════════════════════════════════
+// ÜBUNGEN
+// ══════════════════════════════════════════════
+
+function getUebRoots() {
+  const roots = {};
+  UEBUNGEN.forEach(u => {
+    if (!roots[u.root]) roots[u.root]=[];
+    roots[u.root].push(u);
+  });
+  return roots;
+}
+
+// Look up word data for answer display
+function getWordData(wordId) {
+  return WORDS.find(w=>w.id===wordId) || null;
+}
+
+function buildUebCard(u) {
+  const cardId = 'ueb-'+u.id;
+  const ansId  = 'ans-'+u.id;
+  // sentence: replace ___ with blank underline
+  const sentHtml = u.sentence.replace(/___/g,'<span class="blank-line">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>');
+
+  // Pre-build answer block content (hidden until reveal)
+  const wd = getWordData(u.wordId);
+  const zhTrans  = wd ? wd.zh  : '';
+  const enTrans  = wd ? wd.en  : '';
+  const rootInfo = wd ? `<span class="ueb-ans-root">-${wd.root}</span>` : '';
+
+  // Find full Chinese sentence translation from WORDS examples or collocations
+  // We store it in uebungen.js as u.full_zh — but we don't have that field.
+  // Use hint as zh fallback, and u.full as the full German.
+  // We need to find zh translation: check if data.js example matches u.full
+  let fullZh = '';
+  if (wd) {
+    const match = (wd.examples||[]).find(e => e.de === u.full);
+    if (match) fullZh = match.zh;
+    if (!fullZh) {
+      const cm = (wd.collocations||[]).find(c => u.full.includes(c.de));
+      if (cm) fullZh = cm.zh;
+    }
+  }
+
+  return `
+  <div class="ueb-card" id="${cardId}">
+    <div class="ueb-sentence" onclick="speak('${escStr(u.full)}',null)" title="點擊朗讀">${sentHtml}</div>
+    <div class="ueb-actions">
+      <button class="ueb-reveal-btn" id="btn-${u.id}" onclick="revealUeb(${u.id})">顯示答案</button>
+      <button class="ueb-speak-btn" onclick="speak('${escStr(u.full)}',null)">▶ 朗讀</button>
+    </div>
+    <div class="ueb-answer" id="${ansId}">
+      <div class="ueb-ans-row">
+        ${rootInfo}
+        <span class="ueb-ans-word">${u.answer}</span>
+        <span class="ueb-ans-zh">${zhTrans}</span>
+      </div>
+      <div class="ueb-ans-en">${enTrans}</div>
+      ${fullZh?`<div class="ueb-full-zh">${fullZh}</div>`:''}
+      <div class="ueb-full-zh" style="font-style:italic;color:#8aacc8;font-family:'Lora',serif;margin-top:4px;">${u.full}</div>
+    </div>
+  </div>`;
+}
+
+function revealUeb(id) {
+  const ans = document.getElementById('ans-'+id);
+  const btn = document.getElementById('btn-'+id);
+  if (ans.style.display==='none'||ans.style.display==='') {
+    ans.style.display='block';
+    btn.textContent='隱藏答案';
+    btn.classList.add('revealed');
+  } else {
+    ans.style.display='none';
+    btn.textContent='顯示答案';
+    btn.classList.remove('revealed');
+  }
+}
+
+function renderUebungen() {
+  const el = document.getElementById('uebMain');
+  const roots = getUebRoots();
+
+  if (uebTab==='all') {
+    let html='';
+    Object.entries(roots).forEach(([root,uList]) => {
+      const meta = ROOT_META[root]||{};
+      const emoji = meta.emoji||'📂';
+      html+=`<div class="ueb-group">
+        <div class="ueb-group-header">${emoji} -${root} <span class="ueb-group-count">${uList.length} 題</span></div>
+        <div class="ueb-grid">${uList.map(u=>buildUebCard(u)).join('')}</div>
+      </div>`;
+    });
+    el.innerHTML = html;
+  } else {
+    const uList = roots[uebTab]||[];
+    const meta = ROOT_META[uebTab]||{};
+    const emoji = meta.emoji||'📂';
+    el.innerHTML=`<div class="ueb-group">
+      <div class="ueb-group-header">${emoji} -${uebTab} <span class="ueb-group-count">${uList.length} 題</span></div>
+      <div class="ueb-grid">${uList.map(u=>buildUebCard(u)).join('')}</div>
+    </div>`;
+  }
+}
+
+// ── Init ──
+renderTabBar();
 renderMain();
 </script>
 </body>
