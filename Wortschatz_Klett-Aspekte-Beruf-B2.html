@@ -2529,6 +2529,8 @@ function setCpStatus(msg) {
 async function tryAutoLoadCheckpoint() {
   // Only attempt on http/https, not file://
   if (!location.protocol.startsWith('http')) return;
+  // Show loading indicator while fetching
+  setCpStatus('⏳ 載入標記中…');
   try {
     const res = await fetch('./Wortschatz_Klett-Aspekte-Beruf-B2.json', {cache: 'no-cache'});
     if (!res.ok) return;
@@ -2553,14 +2555,17 @@ async function tryAutoLoadCheckpoint() {
 }
 
 
-tryAutoLoadCheckpoint();
-if (currentChapter === 'search') {
-  switchToSearch();
-} else if (currentBook === 'b1') {
-  switchChapterB1(typeof currentChapter === 'number' ? currentChapter : 1);
-} else {
-  switchChapter(typeof currentChapter === 'number' ? currentChapter : 1);
-}
+// Wait for checkpoint to load before rendering
+(async () => {
+  await tryAutoLoadCheckpoint();
+  if (currentChapter === 'search') {
+    switchToSearch();
+  } else if (currentBook === 'b1') {
+    switchChapterB1(typeof currentChapter === 'number' ? currentChapter : 1);
+  } else {
+    switchChapter(typeof currentChapter === 'number' ? currentChapter : 1);
+  }
+})();
 
 </script>
 </body>
