@@ -280,8 +280,8 @@ body { padding-top: 0; }
 
 <div class="checkpoint-bar">
   <span>💾 勾選備份：</span>
-  <button class="cp-btn primary" onclick="exportCheckpoint()">匯出 Wortschatz_Klett-Aspekte-Beruf-B2.json</button>
-  <button class="cp-btn" onclick="document.getElementById('cpFileInput').click()">匯入 Wortschatz_Klett-Aspekte-Beruf-B2.json</button>
+  <button class="cp-btn primary" onclick="exportCheckpoint()">匯出 Wortschatz_Klett-Aspekte-Beruf-B2_checkpoint.json</button>
+  <button class="cp-btn" onclick="document.getElementById('cpFileInput').click()">匯入 Wortschatz_Klett-Aspekte-Beruf-B2_checkpoint.json</button>
   <input type="file" id="cpFileInput" accept=".json" onchange="importCheckpoint(event)">
   <span class="cp-status" id="cpStatus"></span>
 </div>
@@ -2477,10 +2477,10 @@ function exportCheckpoint() {
   const blob = new Blob([json], {type: 'application/json'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'Wortschatz_Klett-Aspekte-Beruf-B2.json';
+  a.download = 'Wortschatz_Klett-Aspekte-Beruf-B2_checkpoint.json';
   a.click();
   URL.revokeObjectURL(a.href);
-  setCpStatus('✓ 已匯出 Wortschatz_Klett-Aspekte-Beruf-B2.json');
+  setCpStatus('✓ 已匯出 Wortschatz_Klett-Aspekte-Beruf-B2_checkpoint.json');
 }
 
 function importCheckpoint(event) {
@@ -2532,7 +2532,7 @@ async function tryAutoLoadCheckpoint() {
   // Show loading indicator while fetching
   setCpStatus('⏳ 載入標記中…');
   try {
-    const res = await fetch('./Wortschatz_Klett-Aspekte-Beruf-B2.json', {cache: 'no-cache'});
+    const res = await fetch('./Wortschatz_Klett-Aspekte-Beruf-B2_checkpoint.json', {cache: 'no-cache'});
     if (!res.ok) return;
     const data = await res.json();
     let count = 0;
@@ -2548,7 +2548,7 @@ async function tryAutoLoadCheckpoint() {
         count += indices.length;
       }
     }
-    if (count > 0) setCpStatus(`✓ 已從 Wortschatz_Klett-Aspekte-Beruf-B2.json 自動載入 ${count} 個標記`);
+    if (count > 0) setCpStatus(`✓ 已從 Wortschatz_Klett-Aspekte-Beruf-B2_checkpoint.json 自動載入 ${count} 個標記`);
   } catch(e) {
     // No checkpoint.json found — silent fail
   }
