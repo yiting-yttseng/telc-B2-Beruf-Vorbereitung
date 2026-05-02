@@ -17,10 +17,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;ba
   color:#444;font-size:11px;font-weight:500;cursor:pointer;white-space:nowrap;transition:all .15s}
 .nav-btn:hover{border-color:#888;color:#1a1a1a}
 .nav-btn.active{color:#fff;border-color:transparent;background:#1F4E79}
-.nav-export{padding:4px 10px;border-radius:16px;border:1.5px solid #2E7D32;background:#fff;
-  color:#2E7D32;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;
-  margin-left:auto;transition:all .15s}
-.nav-export:hover{background:#2E7D32;color:#fff}
+
+/* checkpoint bar */
+.checkpoint-bar{background:#f0f4ff;border-bottom:1px solid #d0d8f0;
+  padding:6px 16px;display:flex;align-items:center;gap:8px;font-size:12px;color:#444;flex-wrap:wrap}
+.cp-btn{padding:4px 12px;border-radius:6px;border:1.5px solid #aaa;background:#fff;
+  font-size:11px;font-weight:500;cursor:pointer;transition:all .15s}
+.cp-btn:hover{border-color:#555}
+.cp-btn.primary{background:#1F4E79;color:#fff;border-color:#1F4E79}
+.cp-btn.primary:hover{background:#163a5c}
+.cp-status{font-size:11px;color:#2E7D32;font-weight:500;margin-left:4px}
+#cpFileInput{display:none}
 
 /* Page */
 .page{max-width:960px;margin:0 auto;padding:18px 16px 60px}
@@ -142,7 +149,13 @@ tr.fav .ex-item:hover{background:#fff0d0}
 
 <div class="nav-bar" id="navBar">
   <span class="nav-title">DTB B2 Schreiben Teil 1</span>
-  <button class="nav-export" onclick="exportCheckpoint()">⬇ 匯出勾選 JSON</button>
+</div>
+<div class="checkpoint-bar">
+  <span>💾 勾選備份：</span>
+  <button class="cp-btn primary" onclick="exportCheckpoint()">匯出 checkpoint.json</button>
+  <button class="cp-btn" onclick="document.getElementById('cpFileInput').click()">匯入 checkpoint.json</button>
+  <input type="file" id="cpFileInput" accept=".json" onchange="importCheckpoint(event)">
+  <span class="cp-status" id="cpStatus"></span>
 </div>
 <div class="speaking-badge" id="speakBadge">
   <span class="speaking-dot"></span><span>朗讀中…</span>
@@ -348,40 +361,73 @@ function toggleSample(btn, id) {
   btn.textContent = (ans.classList.contains('visible') ? '▼ ' : '▶ ') + btn.textContent;
 }
 
-// ── Export checkpoint ──
-function exportCheckpoint() {
-  const result = [];
-  REDEMITTEL.forEach(entry => {
-    if (!favSet.has(entry.id)) return;
-    result.push({
-      id: entry.id,
-      section: entry.sec,
-      framework_de: entry.left_de,
-      framework_zh: entry.left_zh,
-      examples: entry.ex
-    });
-  });
+// ── Checkpoint export / import / auto-load ──
+const CP_KEY = 'beschwerde_rm_fav';
+const CP_FILENAME = 'SchreibenI_Beschwerde_beantworten_checkpoint.json';
 
-  if (result.length === 0) {
-    alert('尚未勾選任何句型！請先在 Redemittel 頁面勾選常用句子。');
-    return;
-  }
-
-  const output = {
-    exported_at: new Date().toISOString().slice(0,10),
-    file: "SchreibenI_Beschwerde_beantworten",
-    total_selected: result.length,
-    items: result
-  };
-
-  const blob = new Blob([JSON.stringify(output, null, 2)], {type: 'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'SchreibenI_Beschwerde_beantworten_checkpoint.json';
-  a.click();
-  URL.revokeObjectURL(url);
+function setCpStatus(msg) {
+  const el = document.getElementById('cpStatus');
+  if (!el) return;
+  el.textContent = msg;
+  setTimeout(() => { el.textContent = ''; }, 4000);
 }
+
+function exportCheckpoint() {
+  const ids = [...favSet];
+  const data = { [CP_KEY]: ids };
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = CP_FILENAME;
+  a.click();
+  URL.revokeObjectURL(a.href);
+  setCpStatus(`✓ 已匯出 ${ids.length} 個勾選`);
+}
+
+function importCheckpoint(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!data[CP_KEY] || !Array.isArray(data[CP_KEY])) {
+        alert('格式錯誤：找不到 ' + CP_KEY + ' 欄位');
+        return;
+      }
+      localStorage.setItem(CP_KEY, JSON.stringify(data[CP_KEY]));
+      favSet.clear();
+      data[CP_KEY].forEach(id => favSet.add(id));
+      // Re-apply fav class to all rows
+      document.querySelectorAll('tr[data-id]').forEach(row => {
+        if (favSet.has(row.dataset.id)) row.classList.add('fav');
+        else row.classList.remove('fav');
+      });
+      setCpStatus(`✓ 匯入成功，共 ${data[CP_KEY].length} 個勾選`);
+    } catch(err) {
+      alert('格式錯誤：無法解析 JSON 檔案');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+async function tryAutoLoadCheckpoint() {
+  if (!location.protocol.startsWith('http')) return;
+  try {
+    const res = await fetch('./' + CP_FILENAME, {cache: 'no-cache'});
+    if (!res.ok) return;
+    const data = await res.json();
+    if (!data[CP_KEY] || !Array.isArray(data[CP_KEY])) return;
+    // Only load if localStorage is empty for this key
+    if (localStorage.getItem(CP_KEY)) return;
+    localStorage.setItem(CP_KEY, JSON.stringify(data[CP_KEY]));
+    data[CP_KEY].forEach(id => favSet.add(id));
+    setCpStatus(`✓ 已自動載入 ${data[CP_KEY].length} 個勾選`);
+  } catch(e) { /* silent fail */ }
+}
+
+tryAutoLoadCheckpoint();
 
 // ── Init ──
 (function init() {
