@@ -1558,11 +1558,322 @@ const CHAPTERS = {
 };
 
 
+// =====================================================
+// B1/B2 ASPEKTE BERUF – VOCABULARY DATA
+// K1=page62, K2=page76, K3=page92, K4=page106
+// =====================================================
+
+const B1_CHAPTERS = {
+  1: {
+    key: 'b1k1_unfamiliar_v1',
+    title: 'Das bin ich',
+    vocab: [
+      // ── Auftakt ──────────────────────────────────────
+      { s:"Auftakt – Berufsbiografie", a:"die", w:"Kita", p:"-s", en:"daycare / nursery", zh:"幼兒園、托育中心", k:"in der Kita arbeiten / die Kita besuchen", kz:"在幼兒園工作 / 上幼兒園", ex:"Seit sie in der Kita arbeitet, weiß sie, dass das ihr Traumberuf ist.", ez:"自從她在幼兒園工作後，她知道這是她的夢想職業。" },
+      { s:"Auftakt – Berufsbiografie", a:"", w:"halbtags arbeiten", p:"", en:"to work part-time / half days", zh:"半天工作、兼職工作", k:"halbtags arbeiten / Halbtagsstelle", kz:"半天工作 / 兼職職位", ex:"Sie arbeitet halbtags, um sich um ihre Kinder zu kümmern.", ez:"她半天工作以便照顧孩子。" },
+      { s:"Auftakt – Berufsbiografie", a:"das", w:"Lager", p:"-", en:"warehouse / stock / storage", zh:"倉庫、庫存", k:"im Lager arbeiten / das Lager verwalten", kz:"在倉庫工作 / 管理倉庫", ex:"Er arbeitet im Lager und kontrolliert täglich alle Waren.", ez:"他在倉庫工作，每天檢查所有商品。" },
+      { s:"Auftakt – Berufsbiografie", a:"die", w:"Ware", p:"-n", en:"goods / merchandise / product", zh:"商品、貨物", k:"Waren kontrollieren / liefern", kz:"檢查 / 運送商品", ex:"Die Waren müssen vor der Auslieferung sorgfältig kontrolliert werden.", ez:"商品在出貨前必須仔細檢查。" },
+      { s:"Auftakt – Berufsbiografie", a:"", w:"Waren kontrollieren", p:"", en:"to check / inspect goods", zh:"檢查商品", k:"Waren kontrollieren / prüfen", kz:"檢查 / 查驗商品", ex:"Bevor die Waren ins Lager kommen, werden sie kontrolliert.", ez:"在商品進入倉庫之前，先進行檢查。" },
+      { s:"Auftakt – Berufsbiografie", a:"das", w:"Material", p:"-ien", en:"material / supplies", zh:"材料、物資", k:"das Material bestellen / verwalten", kz:"訂購 / 管理材料", ex:"Das Material für die Produktion muss rechtzeitig bestellt werden.", ez:"生產所需的材料必須及時訂購。" },
+      { s:"Auftakt – Berufsbiografie", a:"", w:"ein Ziel erreichen", p:"", en:"to achieve / reach a goal", zh:"達到目標", k:"ein Ziel erreichen / setzen", kz:"達到 / 設定目標", ex:"Nach vielen Jahren hat er sein Ziel erreicht und den Meister gemacht.", ez:"多年後，他達到了目標並獲得了師傅資格。" },
+      { s:"Auftakt – Berufsbiografie", a:"der", w:"Bedarf", p:"-e", en:"demand / need / requirement", zh:"需求、需要", k:"den Bedarf decken / ermitteln", kz:"滿足 / 確定需求", ex:"Der Bedarf an Fachkräften in der Pflege wächst jedes Jahr.", ez:"護理領域對專業人才的需求每年都在增長。" },
+      { s:"Auftakt – Berufsbiografie", a:"", w:"aufwachsen", p:"", c1:"wächst auf", c2:"wuchs auf", c3:"ist aufgewachsen", en:"to grow up", zh:"成長", k:"in einer Stadt / auf dem Land aufwachsen", kz:"在城市 / 農村長大", ex:"Sie ist in einem kleinen Dorf aufgewachsen und zog später in die Stadt.", ez:"她在一個小村莊長大，後來搬到了城市。" },
+      { s:"Auftakt – Berufsbiografie", a:"der", w:"Abschluss", p:"-e", en:"qualification / degree / completion", zh:"學歷、結業、完成", k:"einen Abschluss machen / erwerben", kz:"獲得學歷 / 取得資格", ex:"Ohne einen Abschluss ist es schwieriger, eine gute Stelle zu finden.", ez:"沒有學歷，找到好工作更困難。" },
+      { s:"Auftakt – Berufsbiografie", a:"", w:"eine Ausbildung machen zu + D.", p:"", en:"to do a training / apprenticeship", zh:"接受職業培訓", k:"eine Ausbildung machen / abschließen", kz:"接受 / 完成職業培訓", ex:"Er macht eine Ausbildung zum Elektroniker und ist sehr motiviert.", ez:"他正在接受電氣師的職業培訓，非常積極。" },
+      { s:"Auftakt – Berufsbiografie", a:"der", w:"Job", p:"-s", en:"job / work", zh:"工作、職位", k:"einen Job suchen / finden", kz:"尋找 / 找到工作", ex:"Nach dem Studium hat sie schnell einen Job in ihrem Berufsfeld gefunden.", ez:"學業結束後，她很快在自己的職業領域找到了工作。" },
+      // ── Modul 1 ──────────────────────────────────────
+      { s:"Modul 1 – Das bin ich", a:"", w:"tätig als + N.", p:"", en:"working as / employed as", zh:"從事……職業", k:"tätig sein als + N.", kz:"擔任……職業", ex:"Sie ist tätig als Krankenpflegerin in einem großen Krankenhaus.", ez:"她在一家大醫院擔任護士。" },
+      { s:"Modul 1 – Das bin ich", a:"", w:"sich bewerben", p:"", c1:"bewirbt sich", c2:"bewarb sich", c3:"hat sich beworben", en:"to apply (for a job)", zh:"應聘、申請", k:"sich um eine Stelle bewerben", kz:"應聘某職位", ex:"Sie hat sich um eine Stelle als Designerin beworben.", ez:"她應聘了一個設計師的職位。" },
+      { s:"Modul 1 – Das bin ich", a:"", w:"im selben Jahr", p:"", en:"in the same year", zh:"在同一年", k:"im selben Jahr … wie", kz:"在同一年……如同", ex:"Im selben Jahr hat er seinen Abschluss gemacht und eine Stelle gefunden.", ez:"在同一年，他完成了學業並找到了工作。" },
+      { s:"Modul 1 – Das bin ich", a:"der", w:"Krieg", p:"-e", en:"war", zh:"戰爭", k:"im Krieg / nach dem Krieg", kz:"在戰爭中 / 戰後", ex:"Nach dem Krieg musste seine Familie das Land verlassen.", ez:"戰後，他的家人不得不離開這個國家。" },
+      { s:"Modul 1 – Das bin ich", a:"", w:"verlassen", p:"", c1:"verlässt", c2:"verließ", c3:"hat verlassen", en:"to leave / abandon", zh:"離開、放棄", k:"das Land / die Familie verlassen", kz:"離開國家 / 家人", ex:"Sie hat ihre Heimat verlassen und in Deutschland neu angefangen.", ez:"她離開了家鄉，在德國重新開始。" },
+      { s:"Modul 1 – Das bin ich", a:"", w:"verzweifelt", p:"", en:"desperate / in despair", zh:"絕望的、心灰意冷的", k:"verzweifelt sein / wirken", kz:"感到絕望 / 顯得絕望", ex:"Nach der Absage war er so verzweifelt, dass er nicht mehr weitermachen wollte.", ez:"被拒絕後，他感到如此絕望，以至於不想繼续了。" },
+      { s:"Modul 1 – Das bin ich", a:"der", w:"Nachweis", p:"-e", en:"proof / evidence / certificate", zh:"證明、憑據", k:"einen Nachweis vorlegen / erbringen", kz:"提交 / 提供證明", ex:"Für die Bewerbung muss man alle nötigen Nachweise vorlegen.", ez:"申請時必須提交所有必要的證明文件。" },
+      { s:"Modul 1 – Das bin ich", a:"die", w:"Abschlussprüfung", p:"-en", en:"final exam / graduation exam", zh:"結業考試、畢業考試", k:"die Abschlussprüfung ablegen / bestehen", kz:"參加 / 通過結業考試", ex:"Nach der Abschlussprüfung hat sie ihr Zeugnis mit sehr gut abgeschlossen.", ez:"結業考試後，她以優異的成績完成了學業。" },
+      { s:"Modul 1 – Das bin ich", a:"", w:"anspruchsvoll", p:"", en:"demanding / challenging / high-quality", zh:"要求高的、有挑戰性的", k:"anspruchsvoll sein / eine anspruchsvolle Aufgabe", kz:"要求高 / 一項有挑戰性的任務", ex:"Die Arbeit als Chirurgin ist sehr anspruchsvoll, aber sie liebt es.", ez:"外科醫生的工作非常具有挑戰性，但她熱愛這份工作。" },
+      { s:"Modul 1 – Das bin ich", a:"", w:"eine Prüfung bestehen", p:"", c1:"besteht", c2:"bestand", c3:"hat bestanden", en:"to pass an exam", zh:"通過考試", k:"eine Prüfung bestehen / ablegen", kz:"通過 / 參加考試", ex:"Er hat die Abschlussprüfung beim ersten Versuch bestanden.", ez:"他第一次嘗試就通過了結業考試。" },
+      { s:"Modul 1 – Das bin ich", a:"", w:"eine Ausbildung abschließen", p:"", c1:"schließt ab", c2:"schloss ab", c3:"hat abgeschlossen", en:"to complete a training / apprenticeship", zh:"完成職業培訓", k:"eine Ausbildung abschließen / machen", kz:"完成 / 接受職業培訓", ex:"Nachdem sie die Ausbildung abgeschlossen hat, fand sie sofort Arbeit.", ez:"完成職業培訓後，她立刻找到了工作。" },
+      { s:"Modul 1 – Das bin ich", a:"", w:"ein Praktikum machen", p:"", en:"to do an internship", zh:"實習", k:"ein Praktikum machen / absolvieren", kz:"做 / 完成實習", ex:"Sie macht ein Praktikum in einem Architekturbüro, um Erfahrungen zu sammeln.", ez:"她在一家建築事務所實習以積累經驗。" },
+      { s:"Modul 1 – Das bin ich", a:"", w:"aushilfsweise", p:"", en:"as a temporary replacement / on a stand-in basis", zh:"臨時替補地、代班地", k:"aushilfsweise arbeiten / einspringen", kz:"臨時工作 / 代班", ex:"Er arbeitet aushilfsweise in der Bäckerei, wenn jemand krank ist.", ez:"當有人生病時，他臨時在麵包店代班工作。" },
+      { s:"Modul 1 – Das bin ich", a:"die", w:"Aushilfe", p:"-n", en:"temporary worker / stand-in / helper", zh:"臨時工、兼職替代人員", k:"als Aushilfe arbeiten / eine Aushilfe suchen", kz:"做臨時工 / 尋找臨時員工", ex:"Die Bäckerei sucht eine Aushilfe für die Wochenenden.", ez:"麵包店正在尋找週末的臨時員工。" },
+      // ── Modul 2 ──────────────────────────────────────
+      { s:"Modul 2 – Welcher Beruf passt zu mir?", a:"das", w:"Berufsfeld", p:"-er", en:"professional field / career field", zh:"職業領域", k:"im Berufsfeld arbeiten / das Berufsfeld wechseln", kz:"在職業領域工作 / 更換職業領域", ex:"Das Berufsfeld der IT bietet viele spannende Karrieremöglichkeiten.", ez:"IT職業領域提供了許多令人興奮的職業機會。" },
+      { s:"Modul 2 – Welcher Beruf passt zu mir?", a:"das", w:"Talent", p:"-e", en:"talent / gift / skill", zh:"才能、天賦", k:"ein Talent haben für / Talente fördern", kz:"有……的才能 / 培養才能", ex:"Sie hat ein großes Talent für Sprachen und spricht fünf Sprachen fließend.", ez:"她有極強的語言天賦，能流利地說五種語言。" },
+      { s:"Modul 2 – Welcher Beruf passt zu mir?", a:"", w:"mit den Händen arbeiten", p:"", en:"to work with one's hands / manual work", zh:"用雙手工作、手工勞動", k:"mit den Händen arbeiten / handwerklich tätig sein", kz:"用雙手工作 / 從事手工業", ex:"Er arbeitet gerne mit den Händen und ist deshalb Tischler geworden.", ez:"他喜歡用雙手工作，因此成為了一名木匠。" },
+      { s:"Modul 2 – Welcher Beruf passt zu mir?", a:"", w:"präzise", p:"", en:"precise / exact / accurate", zh:"精確的、準確的", k:"präzise arbeiten / vorgehen", kz:"精確地工作 / 操作", ex:"Als Uhrmacher muss man sehr präzise arbeiten.", ez:"作為鐘錶師，必須非常精確地工作。" },
+      { s:"Modul 2 – Welcher Beruf passt zu mir?", a:"", w:"handwerklich geschickt", p:"", en:"skilled with one's hands / craft-talented", zh:"手工靈巧的、有工藝才能的", k:"handwerklich geschickt sein", kz:"手工靈巧", ex:"Wer handwerklich geschickt ist, hat gute Chancen in technischen Berufen.", ez:"手工靈巧的人在技術職業中有很好的機會。" },
+      { s:"Modul 2 – Welcher Beruf passt zu mir?", a:"", w:"Maschinen bedienen", p:"", en:"to operate machines", zh:"操作機器", k:"Maschinen bedienen / warten", kz:"操作 / 維護機器", ex:"In der Fabrik muss er täglich verschiedene Maschinen bedienen.", ez:"在工廠裡，他每天必須操作各種機器。" },
+      { s:"Modul 2 – Welcher Beruf passt zu mir?", a:"die", w:"Schichtarbeit", p:"-en", en:"shift work", zh:"輪班工作", k:"Schichtarbeit leisten / im Schichtdienst arbeiten", kz:"從事輪班工作", ex:"Die Schichtarbeit im Krankenhaus ist anstrengend, aber sie gewöhnt sich daran.", ez:"醫院的輪班工作很辛苦，但她正在適應。" },
+      { s:"Modul 2 – Welcher Beruf passt zu mir?", a:"", w:"sich etw. räumlich vorstellen", p:"", en:"to visualise sth. spatially / imagine space", zh:"在空間上想象某物", k:"sich etw. räumlich vorstellen können", kz:"能夠在空間上想象某物", ex:"Als Architektin muss sie sich Gebäude räumlich vorstellen können.", ez:"作為建築師，她必須能夠在空間上想象建築物。" },
+      { s:"Modul 2 – Welcher Beruf passt zu mir?", a:"", w:"einfallsreich", p:"", en:"creative / inventive / imaginative", zh:"富有創意的、有創造力的", k:"einfallsreich sein / einfallsreiche Lösungen finden", kz:"富有創意 / 找到有創意的解決方案", ex:"Ein guter Designer muss einfallsreich sein und neue Ideen entwickeln.", ez:"一個好的設計師必須富有創意並開發新想法。" },
+      { s:"Modul 2 – Welcher Beruf passt zu mir?", a:"das", w:"Design", p:"-s", en:"design", zh:"設計", k:"ein Design entwickeln / modernes Design", kz:"開發設計 / 現代設計", ex:"Sie studiert Design und möchte später für eine bekannte Modemarke arbeiten.", ez:"她學習設計，希望以後為一個著名的時裝品牌工作。" },
+      { s:"Modul 2 – Welcher Beruf passt zu mir?", a:"die", w:"Gestaltung", p:"-en", en:"design / layout / shaping", zh:"設計、版面設計", k:"die Gestaltung übernehmen / kreative Gestaltung", kz:"負責設計 / 創意設計", ex:"Die kreative Gestaltung von Webseiten ist ihr Spezialgebiet.", ez:"網站的創意設計是她的專業領域。" },
+      { s:"Modul 2 – Welcher Beruf passt zu mir?", a:"", w:"konzentriert", p:"", en:"concentrated / focused", zh:"專注的、集中注意力的", k:"konzentriert arbeiten / konzentriert sein", kz:"專注地工作 / 保持集中", ex:"Er kann stundenlang konzentriert an einem Projekt arbeiten.", ez:"他能夠數小時集中精神在一個專案上工作。" },
+      { s:"Modul 2 – Welcher Beruf passt zu mir?", a:"", w:"strukturieren", p:"", en:"to structure / organise", zh:"整理、組織、結構化", k:"eine Arbeit / einen Prozess strukturieren", kz:"整理工作 / 組織流程", ex:"Sie strukturiert ihre Arbeit so, dass sie alle Aufgaben pünktlich erledigt.", ez:"她整理工作以便準時完成所有任務。" },
+      { s:"Modul 2 – Welcher Beruf passt zu mir?", a:"der", w:"Zusammenhang", p:"=e", en:"context / connection / relationship", zh:"關聯、背景、關係", k:"im Zusammenhang stehen mit / Zusammenhänge verstehen", kz:"與……有關聯 / 理解關聯", ex:"Sie versteht die Zusammenhänge zwischen Wirtschaft und Gesellschaft sehr gut.", ez:"她非常了解經濟和社會之間的關聯。" },
+      { s:"Modul 2 – Welcher Beruf passt zu mir?", a:"", w:"kommunizieren mit + D.", p:"", en:"to communicate with", zh:"與……溝通", k:"mit Kunden / Kollegen kommunizieren", kz:"與客戶 / 同事溝通", ex:"In diesem Beruf muss man täglich mit vielen verschiedenen Menschen kommunizieren.", ez:"在這個職業中，每天必須與許多不同的人溝通。" },
+      { s:"Modul 2 – Welcher Beruf passt zu mir?", a:"das", w:"Einfühlungsvermögen", p:"", en:"empathy / ability to empathise", zh:"同理心、換位思考能力", k:"Einfühlungsvermögen haben / zeigen", kz:"具備 / 展現同理心", ex:"Als Sozialarbeiterin braucht man viel Einfühlungsvermögen.", ez:"作為社會工作者，需要很強的同理心。" },
+      { s:"Modul 2 – Welcher Beruf passt zu mir?", a:"", w:"teamfähig", p:"", en:"able to work in a team / team-oriented", zh:"具有團隊合作能力的", k:"teamfähig sein / teamfähige Mitarbeiter", kz:"具備團隊合作能力 / 有團隊精神的員工", ex:"In dieser Branche muss man teamfähig sein und gut mit anderen zusammenarbeiten.", ez:"在這個行業，必須具備團隊合作能力，與他人良好合作。" },
+      { s:"Modul 2 – Welcher Beruf passt zu mir?", a:"die", w:"Empathie", p:"", en:"empathy", zh:"同理心", k:"Empathie zeigen / Empathie haben", kz:"展現同理心 / 具有同理心", ex:"Empathie ist eine der wichtigsten Fähigkeiten in sozialen Berufen.", ez:"同理心是社會職業中最重要的能力之一。" },
+      { s:"Modul 2 – Welcher Beruf passt zu mir?", a:"", w:"ein großes Herz haben für + A.", p:"", en:"to have a big heart for / care deeply about", zh:"對……有一顆善良的心", k:"ein großes Herz haben für Kinder / Menschen", kz:"對孩子 / 人們有一顆善良的心", ex:"Als Krankenpflegerin hat sie ein großes Herz für ihre Patienten.", ez:"作為護士，她對病患有一顆善良的心。" },
+      { s:"Modul 2 – Welcher Beruf passt zu mir?", a:"", w:"zählen zu + D.", p:"", en:"to be counted among / belong to", zh:"被列為……之一、屬於", k:"zu den besten / wichtigsten zählen", kz:"被列為最好的 / 最重要的之一", ex:"Sie zählt zu den besten Architektinnen ihrer Generation.", ez:"她被列為她那一代最優秀的建築師之一。" },
+      // ── Modul 3 ──────────────────────────────────────
+      { s:"Modul 3 – Was nun?", a:"", w:"seinen Meister machen", p:"", en:"to get one's master craftsman certificate", zh:"考取師傅資格證", k:"den Meister machen / ablegen", kz:"考取師傅資格證", ex:"Nach seiner Ausbildung möchte er seinen Meister machen.", ez:"完成職業培訓後，他想考取師傅資格證。" },
+      { s:"Modul 3 – Was nun?", a:"die", w:"Routine", p:"-n", en:"routine / habit", zh:"日常規律、習慣", k:"eine Routine entwickeln / in der Routine stecken", kz:"養成規律 / 陷入日常規律", ex:"Nach vielen Jahren fiel er in eine Routine und suchte nach neuen Herausforderungen.", ez:"多年後，他陷入了日常規律並開始尋找新的挑戰。" },
+      { s:"Modul 3 – Was nun?", a:"", w:"schwerfallen", p:"", c1:"fällt schwer", c2:"fiel schwer", c3:"ist schwergefallen", en:"to be difficult / hard for sb.", zh:"對某人來說困難", k:"jdm. schwerfallen / die Entscheidung fällt schwer", kz:"對某人來說困難 / 決定很困難", ex:"Die Entscheidung, die Stelle zu wechseln, ist ihm sehr schwergefallen.", ez:"換工作的決定對他來說非常困難。" },
+      { s:"Modul 3 – Was nun?", a:"", w:"nach langem Überlegen", p:"", en:"after long consideration / after much thought", zh:"長時間思考後", k:"nach langem Überlegen entscheiden", kz:"長時間思考後做出決定", ex:"Nach langem Überlegen hat sie sich für den Quereinstieg entschieden.", ez:"長時間思考後，她決定跨領域轉職。" },
+      { s:"Modul 3 – Was nun?", a:"der", w:"Jobwechsel", p:"-", en:"job change / career change", zh:"換工作、職業轉換", k:"einen Jobwechsel planen / vollziehen", kz:"計劃 / 完成換工作", ex:"Der Jobwechsel war ein großer Schritt, aber er bereut es nicht.", ez:"換工作是一大步，但他不後悔。" },
+      { s:"Modul 3 – Was nun?", a:"der", w:"Neustart", p:"-s", en:"new start / fresh start", zh:"新的開始、重新出發", k:"einen Neustart wagen / einen Neustart planen", kz:"勇於新的開始 / 計劃重新出發", ex:"Mit dem Jobwechsel hat sie einen kompletten Neustart in ihrer Karriere gewagt.", ez:"通過換工作，她在職業生涯中勇於完全重新出發。" },
+      { s:"Modul 3 – Was nun?", a:"der", w:"Quereinstieg", p:"-e", en:"career change / lateral entry into a profession", zh:"跨領域進入、非科班入行", k:"den Quereinstieg wagen / Quereinsteiger sein", kz:"勇於跨領域入行 / 作為跨領域人員", ex:"Als Quereinstieg in die IT-Branche absolvierte sie zuerst einen Kurs.", ez:"為了跨領域進入IT行業，她先參加了一個課程。" },
+      { s:"Modul 3 – Was nun?", a:"", w:"hauptsächlich", p:"", en:"mainly / primarily / chiefly", zh:"主要地、主要是", k:"hauptsächlich arbeiten / hauptsächlich verantwortlich sein", kz:"主要工作 / 主要負責", ex:"Ihre Aufgabe besteht hauptsächlich darin, Kunden zu beraten.", ez:"她的工作主要是為客戶提供諮詢。" },
+      { s:"Modul 3 – Was nun?", a:"", w:"zur Verfügung stellen", p:"", en:"to provide / make available", zh:"提供、使……可用", k:"etw. zur Verfügung stellen", kz:"提供某物", ex:"Das Unternehmen stellt seinen Mitarbeitenden moderne Arbeitsgeräte zur Verfügung.", ez:"公司為員工提供現代化的工作設備。" },
+      { s:"Modul 3 – Was nun?", a:"", w:"sich richten an + A.", p:"", en:"to be aimed at / address / target", zh:"針對……、以……為對象", k:"sich richten an Kunden / Jugendliche", kz:"針對客戶 / 年輕人", ex:"Das Angebot richtet sich an alle, die einen Jobwechsel planen.", ez:"這個服務針對所有計劃換工作的人。" },
+      { s:"Modul 3 – Was nun?", a:"", w:"vereinzelt", p:"", en:"isolated / sporadic / occasional", zh:"偶爾的、零星的", k:"vereinzelt auftreten / vereinzelt vorkommen", kz:"偶爾出現 / 偶爾發生", ex:"Vereinzelt gibt es noch freie Stellen in dieser Branche.", ez:"這個行業中偶爾還有空缺職位。" },
+      { s:"Modul 3 – Was nun?", a:"", w:"auf Antrag", p:"", en:"on request / upon application", zh:"根據申請", k:"auf Antrag gewähren / auf Antrag möglich", kz:"根據申請給予 / 根據申請可行", ex:"Eine Verlängerung des Vertrags ist auf Antrag möglich.", ez:"合同的延期根據申請是可行的。" },
+      { s:"Modul 3 – Was nun?", a:"das", w:"Konzept", p:"-e", en:"concept / plan / idea", zh:"概念、計劃", k:"ein Konzept entwickeln / vorstellen", kz:"開發 / 呈現概念", ex:"Sie hat ein neues Konzept für die Kundenbetreuung entwickelt.", ez:"她開發了一個新的客戶服務概念。" },
+      { s:"Modul 3 – Was nun?", a:"die", w:"Dienstleistung", p:"-en", en:"service / service industry", zh:"服務業、服務項目", k:"eine Dienstleistung anbieten / in Anspruch nehmen", kz:"提供服務 / 使用服務", ex:"Das Unternehmen bietet verschiedene Dienstleistungen im Bereich IT an.", ez:"公司在IT領域提供各種服務項目。" },
+      { s:"Modul 3 – Was nun?", a:"die", w:"Reinigung", p:"-en", en:"cleaning / cleaning company", zh:"清潔、清潔公司", k:"die Reinigung beauftragen / in der Reinigung arbeiten", kz:"委託清潔 / 在清潔公司工作", ex:"Er arbeitet seit fünf Jahren in einer Reinigungsfirma.", ez:"他在一家清潔公司工作了五年。" },
+      { s:"Modul 3 – Was nun?", a:"die", w:"Anlage", p:"-n", en:"facility / plant / installation", zh:"設施、工廠設備", k:"eine Anlage warten / betreiben", kz:"維護 / 運營設施", ex:"Die technischen Anlagen müssen regelmäßig gewartet werden.", ez:"技術設施必須定期維護。" },
+      { s:"Modul 3 – Was nun?", a:"", w:"individuell", p:"", en:"individual / personal / customised", zh:"個人的、個別的", k:"individuell beraten / individuell anpassen", kz:"個別諮詢 / 個別調整", ex:"Die Beratung ist individuell auf die Bedürfnisse jedes Kunden abgestimmt.", ez:"諮詢根據每位客戶的需求進行個別調整。" },
+      { s:"Modul 3 – Was nun?", a:"", w:"kompetent", p:"", en:"competent / skilled / capable", zh:"能幹的、有能力的", k:"kompetent auftreten / kompetent sein", kz:"表現出色 / 有能力", ex:"Sie ist sehr kompetent in ihrem Berufsfeld und wird von allen geschätzt.", ez:"她在自己的職業領域非常能幹，受到所有人的尊重。" },
+      { s:"Modul 3 – Was nun?", a:"das", w:"Gehalt", p:"=er", en:"salary / wages", zh:"薪資、工資", k:"das Gehalt verhandeln / erhöhen", kz:"談判薪資 / 加薪", ex:"Nach drei Jahren hat er sein Gehalt erfolgreich verhandelt.", ez:"三年後，他成功地談判了薪資。" },
+      { s:"Modul 3 – Was nun?", a:"der", w:"Führerschein", p:"-e", en:"driving licence", zh:"駕照", k:"den Führerschein machen / haben", kz:"考駕照 / 有駕照", ex:"Für diesen Job ist ein gültiger Führerschein der Klasse B erforderlich.", ez:"這份工作需要有效的B類駕照。" },
+      { s:"Modul 3 – Was nun?", a:"das", w:"Diensthandy", p:"-s", en:"company mobile phone / work phone", zh:"公務手機", k:"ein Diensthandy erhalten / nutzen", kz:"獲得 / 使用公務手機", ex:"Als Außendienstmitarbeiter bekommt er ein Diensthandy und einen Firmenwagen.", ez:"作為外勤員工，他獲得了公務手機和公司用車。" },
+    ]
+  },
+
+  2: {
+    key: 'b1k2_unfamiliar_v1',
+    title: 'Im Unternehmen',
+    vocab: [
+      // ── Auftakt ──────────────────────────────────────
+      { s:"Auftakt – Im Unternehmen", a:"", w:"sich interessieren für + A.", p:"", en:"to be interested in", zh:"對……感興趣", k:"sich für einen Beruf / ein Thema interessieren", kz:"對職業 / 主題感興趣", ex:"Sie interessiert sich sehr für nachhaltiges Wirtschaften.", ez:"她對可持續經濟非常感興趣。" },
+      { s:"Auftakt – Im Unternehmen", a:"", w:"pflegen", p:"", en:"to care for / maintain / cultivate", zh:"照料、維護、培養", k:"Kontakte / Beziehungen pflegen", kz:"維護聯繫 / 關係", ex:"Es ist wichtig, gute Kontakte zu Kunden zu pflegen.", ez:"維護與客戶的良好聯繫非常重要。" },
+      { s:"Auftakt – Im Unternehmen", a:"", w:"entwickeln", p:"", en:"to develop / create / build up", zh:"開發、發展", k:"ein Produkt / eine Strategie entwickeln", kz:"開發產品 / 策略", ex:"Das Team hat eine neue App für die Kundenkommunikation entwickelt.", ez:"團隊開發了一款用於客戶溝通的新應用程式。" },
+      { s:"Auftakt – Im Unternehmen", a:"", w:"transportieren", p:"", en:"to transport / carry / ship", zh:"運輸、運送", k:"Waren / Güter transportieren", kz:"運輸商品 / 貨物", ex:"Die Waren werden täglich mit LKWs transportiert.", ez:"商品每天用卡車運輸。" },
+      { s:"Auftakt – Im Unternehmen", a:"die", w:"Hektik", p:"", en:"hectic pace / rush / bustle", zh:"忙亂、緊張忙碌", k:"die Hektik im Büro / der tägliche Hektik", kz:"辦公室的忙亂 / 日常忙亂", ex:"Die Hektik im Büro gehört für viele zum Alltag.", ez:"辦公室的忙亂對許多人來說是日常生活的一部分。" },
+      { s:"Auftakt – Im Unternehmen", a:"die", w:"Dienstreise", p:"-n", en:"business trip", zh:"出差", k:"auf Dienstreise gehen / eine Dienstreise machen", kz:"出差 / 進行出差", ex:"Sie ist oft auf Dienstreise und besucht Kunden in ganz Europa.", ez:"她經常出差，拜訪整個歐洲的客戶。" },
+      { s:"Auftakt – Im Unternehmen", a:"die", w:"Anfahrt", p:"-en", en:"journey to work / commute / approach route", zh:"前往目的地的路程、上班路程", k:"eine lange Anfahrt haben / die Anfahrt dauert", kz:"上班路程很長 / 上班路程需要", ex:"Die Anfahrt zum neuen Büro dauert mehr als eine Stunde.", ez:"前往新辦公室的路程需要超過一個小時。" },
+      { s:"Auftakt – Im Unternehmen", a:"die", w:"Langeweile", p:"", en:"boredom", zh:"無聊", k:"Langeweile haben / unter Langeweile leiden", kz:"感到無聊 / 忍受無聊", ex:"Im alten Job hatte er viel Langeweile, weil die Aufgaben zu einfach waren.", ez:"在舊工作中，他很無聊，因為任務太簡單了。" },
+      { s:"Auftakt – Im Unternehmen", a:"das", w:"Großraumbüro", p:"-s", en:"open-plan office", zh:"開放式辦公室", k:"im Großraumbüro arbeiten", kz:"在開放式辦公室工作", ex:"Im Großraumbüro kann es manchmal laut sein, was die Konzentration stört.", ez:"在開放式辦公室裡有時會很吵，這會干擾專注力。" },
+      { s:"Auftakt – Im Unternehmen", a:"die", w:"Karrierechance", p:"-n", en:"career opportunity / career prospect", zh:"職業機會、晉升機會", k:"Karrierechancen nutzen / haben", kz:"利用 / 有職業機會", ex:"Das Unternehmen bietet seinen Mitarbeitenden viele Karrierechancen.", ez:"公司為員工提供許多職業機會。" },
+      { s:"Auftakt – Im Unternehmen", a:"die", w:"Ausstattung", p:"-en", en:"equipment / furnishing / facilities", zh:"設備、裝備、設施", k:"mit moderner Ausstattung / die Ausstattung verbessern", kz:"配備現代設備 / 改善設施", ex:"Die Ausstattung des neuen Büros ist modern und funktional.", ez:"新辦公室的設施現代且實用。" },
+      { s:"Auftakt – Im Unternehmen", a:"der/die", w:"Vorgesetzte", p:"-n", en:"superior / boss / manager", zh:"上司、主管", k:"dem/der Vorgesetzten berichten / mit dem/der Vorgesetzten sprechen", kz:"向上司彙報 / 與上司交談", ex:"Sie spricht regelmäßig mit ihrer Vorgesetzten über ihre Ziele.", ez:"她定期與上司討論她的目標。" },
+      { s:"Auftakt – Im Unternehmen", a:"der", w:"berufliche Werdegang", p:"=e", en:"professional career / career path", zh:"職業發展歷程、職業生涯", k:"den beruflichen Werdegang beschreiben / vorstellen", kz:"描述 / 介紹職業發展歷程", ex:"In der Bewerbung sollten Sie Ihren beruflichen Werdegang kurz beschreiben.", ez:"在申請中，您應該簡短描述您的職業發展歷程。" },
+      // ── Modul 1 ──────────────────────────────────────
+      { s:"Modul 1 – Neues ausprobieren", a:"der", w:"Minijob", p:"-s", en:"mini job / marginal employment", zh:"迷你工作（低薪兼職）", k:"einen Minijob annehmen / im Minijob arbeiten", kz:"接受迷你工作 / 做迷你工作", ex:"Sie macht einen Minijob in einem Café, um etwas dazuzuverdienen.", ez:"她在咖啡館做一份迷你工作以補貼收入。" },
+      { s:"Modul 1 – Neues ausprobieren", a:"das", w:"Praktikum", p:"Praktika", en:"internship / work placement", zh:"實習", k:"ein Praktikum machen / absolvieren", kz:"做 / 完成實習", ex:"Das Praktikum bei der Firma hat ihr geholfen, erste Erfahrungen zu sammeln.", ez:"在公司的實習幫助她積累了初步經驗。" },
+      { s:"Modul 1 – Neues ausprobieren", a:"", w:"reinschnuppern in + A.", p:"", en:"to get a taste of / dip into", zh:"試試看、嘗試了解", k:"in einen Beruf reinschnuppern", kz:"嘗試了解某職業", ex:"Durch das Praktikum konnte er in den Beruf des Grafikers reinschnuppern.", ez:"通過實習，他得以嘗試了解平面設計師的職業。" },
+      { s:"Modul 1 – Neues ausprobieren", a:"der", w:"Aushilfsjob", p:"-s", en:"temporary job / casual work", zh:"臨時工作", k:"einen Aushilfsjob annehmen / machen", kz:"接受 / 做臨時工作", ex:"Während des Studiums hatte er einen Aushilfsjob in einem Restaurant.", ez:"在大學期間，他在一家餐廳做臨時工作。" },
+      { s:"Modul 1 – Neues ausprobieren", a:"die", w:"Zeitarbeit", p:"", en:"temporary work / agency work", zh:"臨時工、派遣工", k:"in der Zeitarbeit arbeiten / durch Zeitarbeit", kz:"做派遣工 / 通過臨時工作", ex:"Viele Unternehmen setzen Zeitarbeit ein, um flexibel auf Auftragsschwankungen zu reagieren.", ez:"許多公司使用臨時工作以靈活應對訂單波動。" },
+      { s:"Modul 1 – Neues ausprobieren", a:"", w:"befristet", p:"", en:"temporary / fixed-term", zh:"有期限的、臨時的", k:"befristet angestellt / ein befristeter Vertrag", kz:"臨時受雇 / 有期限的合約", ex:"Ihr erster Vertrag war befristet, wurde aber nach einem Jahr verlängert.", ez:"她的第一份合約是有期限的，但一年後被延長了。" },
+      { s:"Modul 1 – Neues ausprobieren", a:"", w:"frühestmöglich", p:"", en:"as soon as possible / at the earliest", zh:"盡早、盡可能早地", k:"frühestmöglich anfangen / frühestmöglicher Termin", kz:"盡早開始 / 最早的日期", ex:"Der Arbeitgeber möchte, dass sie frühestmöglich anfängt.", ez:"僱主希望她盡早開始工作。" },
+      { s:"Modul 1 – Neues ausprobieren", a:"der", w:"Antrittsttermin", p:"-e", en:"start date / date of commencement", zh:"入職日期", k:"den Antrittsttermin vereinbaren / nennen", kz:"協商 / 說明入職日期", ex:"Den Antrittsttermin können wir gemeinsam festlegen.", ez:"我們可以共同確定入職日期。" },
+      { s:"Modul 1 – Neues ausprobieren", a:"die", w:"Voraussetzung", p:"-en", en:"requirement / prerequisite / condition", zh:"前提條件、必要條件", k:"die Voraussetzungen erfüllen / mitbringen", kz:"滿足前提條件 / 具備必要條件", ex:"Eine wichtige Voraussetzung für diese Stelle ist gutes Englisch.", ez:"這個職位的一個重要必要條件是良好的英語能力。" },
+      { s:"Modul 1 – Neues ausprobieren", a:"der", w:"Schulabschluss", p:"=e", en:"school-leaving certificate / graduation", zh:"學校畢業文憑", k:"einen Schulabschluss haben / machen", kz:"有 / 獲得學校畢業文憑", ex:"Ohne Schulabschluss ist es schwieriger, eine Ausbildungsstelle zu finden.", ez:"沒有學校畢業文憑，找到實習職位更困難。" },
+      { s:"Modul 1 – Neues ausprobieren", a:"", w:"praxisorientiert", p:"", en:"practice-oriented / hands-on", zh:"實踐導向的、注重實踐的", k:"praxisorientiert arbeiten / praxisorientierte Ausbildung", kz:"注重實踐地工作 / 實踐導向的培訓", ex:"Die Ausbildung ist sehr praxisorientiert und bereitet gut auf den Beruf vor.", ez:"這個培訓非常注重實踐，很好地準備了職業生涯。" },
+      { s:"Modul 1 – Neues ausprobieren", a:"die", w:"Schicht", p:"-en", en:"shift / layer", zh:"班次、輪班", k:"Schicht arbeiten / die Früh-/Spätschicht", kz:"輪班工作 / 早班/晚班", ex:"Sie arbeitet in der Frühschicht von sechs bis vierzehn Uhr.", ez:"她在早班工作，從六點到十四點。" },
+      { s:"Modul 1 – Neues ausprobieren", a:"die", w:"Einarbeitung", p:"", en:"induction / orientation period", zh:"入職培訓期", k:"die Einarbeitung abschließen / begleiten", kz:"完成 / 陪伴入職培訓", ex:"Die Einarbeitung dauert in der Regel zwei Wochen.", ez:"入職培訓通常需要兩週時間。" },
+      { s:"Modul 1 – Neues ausprobieren", a:"", w:"Das ist mein Ding.", p:"", en:"That's my thing. / That's what I'm into.", zh:"這是我的菜。/ 這正合我意。", k:"Das ist mein Ding.", kz:"這正合我意", ex:"Kreatives Arbeiten mit Menschen – das ist wirklich mein Ding.", ez:"與人一起進行創意工作——這真的是我的菜。" },
+      { s:"Modul 1 – Neues ausprobieren", a:"", w:"motiviert", p:"", en:"motivated / enthusiastic", zh:"有積極性的、積極的", k:"motiviert sein / motiviert arbeiten", kz:"充滿積極性 / 積極地工作", ex:"Sie ist sehr motiviert und gibt immer ihr Bestes.", ez:"她非常積極，總是全力以赴。" },
+      { s:"Modul 1 – Neues ausprobieren", a:"", w:"erfolgreich", p:"", en:"successful / effective", zh:"成功的", k:"erfolgreich sein / erfolgreich abschließen", kz:"成功 / 成功完成", ex:"Nach dem Jobwechsel war sie sehr erfolgreich in ihrer neuen Rolle.", ez:"換工作後，她在新角色中非常成功。" },
+      { s:"Modul 1 – Neues ausprobieren", a:"", w:"zuverlässig", p:"", en:"reliable / dependable", zh:"可靠的、值得信賴的", k:"zuverlässig sein / als zuverlässig gelten", kz:"可靠 / 被視為可靠", ex:"Ein zuverlässiger Mitarbeiter erscheint pünktlich und erledigt Aufgaben vollständig.", ez:"一個可靠的員工準時出現並完整完成任務。" },
+      { s:"Modul 1 – Neues ausprobieren", a:"", w:"gepflegt", p:"", en:"well-groomed / neat / tidy", zh:"整潔的、整齊的", k:"gepflegt auftreten / ein gepflegtes Äußeres", kz:"整潔地出現 / 整潔的外表", ex:"Im Kundenkontakt ist ein gepflegtes Erscheinungsbild sehr wichtig.", ez:"在接觸客戶時，整潔的外表非常重要。" },
+      { s:"Modul 1 – Neues ausprobieren", a:"", w:"innovativ", p:"", en:"innovative / creative", zh:"創新的", k:"innovativ denken / innovative Lösungen entwickeln", kz:"創新思考 / 開發創新解決方案", ex:"Das Unternehmen sucht innovative Mitarbeitende, die neue Ideen einbringen.", ez:"公司正在尋找能帶來新想法的創新員工。" },
+      { s:"Modul 1 – Neues ausprobieren", a:"die", w:"Herausforderung", p:"-en", en:"challenge", zh:"挑戰", k:"eine Herausforderung annehmen / meistern", kz:"接受 / 克服挑戰", ex:"Der Jobwechsel war eine große Herausforderung, aber auch eine Chance.", ez:"換工作是一個巨大的挑戰，但也是一個機會。" },
+      { s:"Modul 1 – Neues ausprobieren", a:"die", w:"Umgebung", p:"-en", en:"environment / surroundings", zh:"環境、周圍環境", k:"in einer neuen Umgebung arbeiten / sich anpassen", kz:"在新環境中工作 / 適應", ex:"In einer neuen Umgebung zu arbeiten, hilft dabei, sich weiterzuentwickeln.", ez:"在新環境中工作有助於自我發展。" },
+      { s:"Modul 1 – Neues ausprobieren", a:"die", w:"Spedition", p:"-en", en:"freight forwarding company / logistics company", zh:"貨運公司、物流公司", k:"bei einer Spedition arbeiten / die Spedition beauftragen", kz:"在貨運公司工作 / 委託貨運公司", ex:"Er arbeitet seit Jahren bei einer internationalen Spedition.", ez:"他在一家國際貨運公司工作多年了。" },
+      { s:"Modul 1 – Neues ausprobieren", a:"", w:"profitieren von + D.", p:"", en:"to benefit from / profit from", zh:"從……受益", k:"von einer Erfahrung / Förderung profitieren", kz:"從經驗 / 資助中受益", ex:"Sie hat sehr von dem Praktikum profitiert und viel gelernt.", ez:"她從實習中受益匪淺，學到了很多東西。" },
+      // ── Modul 2 ──────────────────────────────────────
+      { s:"Modul 2 – Wann wären Sie verfügbar?", a:"", w:"verfügbar", p:"", en:"available / free / accessible", zh:"可用的、有空的", k:"verfügbar sein / wann sind Sie verfügbar?", kz:"有空 / 您什麼時候有空？", ex:"Wann wären Sie für einen Probearbeitstag verfügbar?", ez:"您什麼時候可以來試工一天？" },
+      { s:"Modul 2 – Wann wären Sie verfügbar?", a:"die", w:"Verfügbarkeit", p:"", en:"availability", zh:"可用性、可聯繫性", k:"die Verfügbarkeit prüfen / mitteilen", kz:"確認 / 告知可用時間", ex:"Bitte teilen Sie uns Ihre Verfügbarkeit für das kommende Monat mit.", ez:"請告知我們您下個月的可用時間。" },
+      { s:"Modul 2 – Wann wären Sie verfügbar?", a:"", w:"zur Probe arbeiten", p:"", en:"to work on a trial basis", zh:"試用工作、試工", k:"zur Probe arbeiten / einen Probearbeitstag machen", kz:"試用工作 / 試工一天", ex:"Er durfte zur Probe arbeiten, bevor er den Vertrag bekommen hat.", ez:"在獲得合約之前，他被允許試用工作。" },
+      { s:"Modul 2 – Wann wären Sie verfügbar?", a:"der", w:"Probetag", p:"-e", en:"trial day / trial work day", zh:"試工日", k:"einen Probetag machen / zum Probetag kommen", kz:"進行試工日 / 來試工", ex:"Der Probetag hat sehr gut geklappt und sie hat die Stelle bekommen.", ez:"試工日非常順利，她獲得了這份工作。" },
+      { s:"Modul 2 – Wann wären Sie verfügbar?", a:"der/die", w:"Praktikant/in", p:"-en/-nen", en:"intern / trainee (m/f)", zh:"實習生", k:"als Praktikant/in arbeiten / einen Praktikanten suchen", kz:"作為實習生工作 / 尋找實習生", ex:"Die Firma sucht eine Praktikantin für drei Monate im Marketingbereich.", ez:"公司在行銷領域尋找一名實習生，為期三個月。" },
+      { s:"Modul 2 – Wann wären Sie verfügbar?", a:"der", w:"Handwerksbetrieb", p:"-e", en:"craft business / artisan workshop", zh:"手工業企業", k:"in einem Handwerksbetrieb arbeiten / einen Handwerksbetrieb leiten", kz:"在手工業企業工作 / 管理手工業企業", ex:"Er leitet einen kleinen Handwerksbetrieb mit zehn Mitarbeitenden.", ez:"他管理一家擁有十名員工的小型手工業企業。" },
+      { s:"Modul 2 – Wann wären Sie verfügbar?", a:"", w:"sich auskennen mit + D.", p:"", c1:"kennt sich aus", c2:"kannte sich aus", c3:"hat sich ausgekannt", en:"to know one's way around / be familiar with", zh:"熟悉、了解", k:"sich mit Technik / Software auskennen", kz:"熟悉技術 / 軟體", ex:"Er kennt sich gut mit modernen Maschinen aus und kann sie problemlos bedienen.", ez:"他對現代機器非常熟悉，能夠毫無問題地操作它們。" },
+      { s:"Modul 2 – Wann wären Sie verfügbar?", a:"", w:"Verstärkung suchen", p:"", en:"to look for reinforcement / recruit staff", zh:"招募人員、尋求補充", k:"Verstärkung suchen / Verstärkung brauchen", kz:"招募人員 / 需要補充人員", ex:"Das Team sucht dringend Verstärkung für das bevorstehende Großprojekt.", ez:"團隊迫切需要為即將到來的大型專案招募人員。" },
+      { s:"Modul 2 – Wann wären Sie verfügbar?", a:"", w:"sich bemühen um + A.", p:"", en:"to make an effort / try hard to get", zh:"努力爭取、積極尋求", k:"sich um eine Stelle / Lösung bemühen", kz:"努力爭取職位 / 解決方案", ex:"Er bemüht sich intensiv um eine Vollzeitstelle in seiner Branche.", ez:"他積極努力在自己的行業中爭取一個全職職位。" },
+      // ── Modul 3 ──────────────────────────────────────
+      { s:"Modul 3 – Das Firmenwiki", a:"die", w:"Sonnenenergie", p:"", en:"solar energy", zh:"太陽能", k:"Sonnenenergie nutzen / erzeugen", kz:"利用 / 產生太陽能", ex:"Das Unternehmen nutzt Sonnenenergie, um seinen Strom selbst zu erzeugen.", ez:"公司利用太陽能自行發電。" },
+      { s:"Modul 3 – Das Firmenwiki", a:"", w:"nachhaltig", p:"", en:"sustainable / lasting", zh:"可持續的、持久的", k:"nachhaltig wirtschaften / nachhaltige Produktion", kz:"可持續經營 / 可持續生產", ex:"Das Unternehmen wirtschaftet nachhaltig und achtet auf die Umwelt.", ez:"公司可持續經營並注重環境保護。" },
+      { s:"Modul 3 – Das Firmenwiki", a:"die", w:"interne Fortbildung", p:"-en", en:"internal training / in-house training", zh:"內部培訓", k:"an interner Fortbildung teilnehmen / anbieten", kz:"參加 / 提供內部培訓", ex:"Das Unternehmen bietet seinen Mitarbeitenden regelmäßige interne Fortbildungen an.", ez:"公司為員工提供定期的內部培訓。" },
+      { s:"Modul 3 – Das Firmenwiki", a:"die", w:"Abteilung", p:"-en", en:"department / division", zh:"部門", k:"die Abteilung leiten / in der Abteilung arbeiten", kz:"管理部門 / 在部門工作", ex:"Sie leitet die Abteilung für Qualitätssicherung seit zwei Jahren.", ez:"她管理品質保證部門已有兩年。" },
+      { s:"Modul 3 – Das Firmenwiki", a:"die", w:"Personalabteilung", p:"-en", en:"HR department / human resources", zh:"人事部門", k:"bei der Personalabteilung melden / in der Personalabteilung arbeiten", kz:"向人事部門報告 / 在人事部門工作", ex:"Bei Fragen zu Ihrem Vertrag wenden Sie sich bitte an die Personalabteilung.", ez:"如有關於合同的問題，請聯繫人事部門。" },
+      { s:"Modul 3 – Das Firmenwiki", a:"die", w:"Buchhaltung", p:"-en", en:"accounting / bookkeeping", zh:"會計部門", k:"in der Buchhaltung arbeiten / die Buchhaltung prüfen", kz:"在會計部門工作 / 審查帳務", ex:"Alle Rechnungen werden von der Buchhaltung erfasst und geprüft.", ez:"所有發票都由會計部門記錄和審查。" },
+      { s:"Modul 3 – Das Firmenwiki", a:"die", w:"Niederlassung", p:"-en", en:"branch / subsidiary office", zh:"分公司、分支機構", k:"eine Niederlassung gründen / die Niederlassung in + D.", kz:"成立分公司 / ……的分公司", ex:"Das Unternehmen hat eine neue Niederlassung in München eröffnet.", ez:"公司在慕尼黑開設了一家新的分公司。" },
+      { s:"Modul 3 – Das Firmenwiki", a:"die", w:"Wochenend zulage", p:"-n", en:"weekend supplement / weekend bonus", zh:"週末補貼", k:"eine Wochenend zulage erhalten / bekommen", kz:"獲得週末補貼", ex:"Für Wochenendarbeit gibt es eine Zulage von 25 Prozent.", ez:"週末工作有25%的補貼。" },
+      { s:"Modul 3 – Das Firmenwiki", a:"die", w:"Arbeitszeiterfassung", p:"-en", en:"time recording / time tracking system", zh:"工時記錄", k:"die Arbeitszeiterfassung nutzen / einführen", kz:"使用 / 引入工時記錄", ex:"Alle Mitarbeitenden müssen ihre Arbeitszeit über das System erfassen.", ez:"所有員工必須通過系統記錄工時。" },
+      { s:"Modul 3 – Das Firmenwiki", a:"die", w:"Überstunde", p:"-n", en:"overtime (hour)", zh:"加班（小時）", k:"Überstunden machen / abbauen", kz:"加班 / 補休加班時數", ex:"Überstunden werden entweder ausbezahlt oder als Freizeit abgebaut.", ez:"加班時數要么以現金支付，要么以補休形式消化。" },
+      { s:"Modul 3 – Das Firmenwiki", a:"die", w:"Minusstunde", p:"-n", en:"negative hours / time deficit", zh:"負工時、欠班時數", k:"Minusstunden haben / ausgleichen", kz:"有欠班時數 / 補回欠班時數", ex:"Wenn man früher geht, entstehen Minusstunden, die man später ausgleichen muss.", ez:"如果提早離開，就會產生欠班時數，之後必須補回。" },
+      { s:"Modul 3 – Das Firmenwiki", a:"die", w:"Gleitzeit", p:"", en:"flexitime / flexible working hours", zh:"彈性工時", k:"in Gleitzeit arbeiten / Gleitzeit nutzen", kz:"以彈性工時工作 / 利用彈性工時", ex:"Dank Gleitzeit kann sie ihre Arbeitszeiten selbst einteilen.", ez:"多虧彈性工時，她可以自己安排工作時間。" },
+    ]
+  },
+
+  3: {
+    key: 'b1k3_unfamiliar_v1',
+    title: 'Teamarbeit',
+    vocab: [
+      // ── Auftakt ──────────────────────────────────────
+      { s:"Auftakt – Branchen und Berufe", a:"die", w:"Maschinenbaubranche", p:"-n", en:"mechanical engineering sector", zh:"機械製造行業", k:"in der Maschinenbaubranche arbeiten / tätig sein", kz:"在機械製造行業工作", ex:"Die Maschinenbaubranche ist eine der wichtigsten Industrien in Deutschland.", ez:"機械製造行業是德國最重要的工業之一。" },
+      { s:"Auftakt – Branchen und Berufe", a:"die", w:"Elektronikbranche", p:"-n", en:"electronics sector / electronics industry", zh:"電子行業", k:"in der Elektronikbranche tätig sein", kz:"在電子行業工作", ex:"Die Elektronikbranche entwickelt sich rasant durch neue Technologien.", ez:"電子行業因新技術而快速發展。" },
+      { s:"Auftakt – Branchen und Berufe", a:"die", w:"Logistikbranche", p:"-n", en:"logistics sector / logistics industry", zh:"物流行業", k:"in der Logistikbranche arbeiten", kz:"在物流行業工作", ex:"Die Logistikbranche hat durch den E-Commerce stark an Bedeutung gewonnen.", ez:"物流行業因電子商務而大幅提升了重要性。" },
+      { s:"Auftakt – Branchen und Berufe", a:"", w:"chemisch", p:"", en:"chemical / chemical industry", zh:"化學的、化工的", k:"chemische Industrie / chemische Produkte", kz:"化工行業 / 化學產品", ex:"In der chemischen Industrie wird streng auf Sicherheitsvorschriften geachtet.", ez:"在化工行業中，嚴格遵守安全規定。" },
+      { s:"Auftakt – Branchen und Berufe", a:"", w:"pharmazeutisch", p:"", en:"pharmaceutical", zh:"製藥的", k:"pharmazeutische Industrie / pharmazeutische Produkte", kz:"製藥行業 / 製藥產品", ex:"Die pharmazeutische Industrie forscht intensiv an neuen Medikamenten.", ez:"製藥行業在積極研發新藥物。" },
+      { s:"Auftakt – Branchen und Berufe", a:"die", w:"Arbeitskraft", p:"=e", en:"worker / labour / workforce", zh:"勞動力、工人", k:"Arbeitskräfte einsetzen / gesucht werden", kz:"部署勞動力 / 被需求", ex:"In dieser Branche werden dringend qualifizierte Arbeitskräfte gesucht.", ez:"這個行業迫切需要有資質的勞動力。" },
+      { s:"Auftakt – Branchen und Berufe", a:"der", w:"Umsatz", p:"=e", en:"turnover / revenue / sales", zh:"營業額、銷售額", k:"den Umsatz steigern / der Jahresumsatz", kz:"提升營業額 / 年營業額", ex:"Das Unternehmen hat seinen Umsatz im letzten Jahr um 15% gesteigert.", ez:"公司去年將營業額提升了15%。" },
+      { s:"Auftakt – Branchen und Berufe", a:"die", w:"Vorschrift", p:"-en", en:"regulation / rule / directive", zh:"規定、條例", k:"Vorschriften einhalten / gegen Vorschriften verstoßen", kz:"遵守規定 / 違反規定", ex:"In der Lebensmittelindustrie müssen alle Vorschriften genau eingehalten werden.", ez:"在食品行業，必須嚴格遵守所有規定。" },
+      { s:"Auftakt – Branchen und Berufe", a:"das", w:"Fließband", p:"=er", en:"assembly line / conveyor belt", zh:"流水線、傳送帶", k:"am Fließband arbeiten", kz:"在流水線上工作", ex:"Früher arbeiteten viele Menschen am Fließband in der Automobilindustrie.", ez:"以前許多人在汽車工業的流水線上工作。" },
+      { s:"Auftakt – Branchen und Berufe", a:"", w:"montieren", p:"", en:"to assemble / install / mount", zh:"組裝、安裝", k:"Teile montieren / eine Anlage montieren", kz:"組裝零件 / 安裝設備", ex:"Die Mitarbeitenden montieren täglich hunderte von Bauteilen.", ez:"員工每天組裝數百個零件。" },
+      { s:"Auftakt – Branchen und Berufe", a:"die", w:"Qualitätssicherung", p:"-en", en:"quality assurance / quality control", zh:"品質保證", k:"Qualitätssicherung betreiben / in der Qualitätssicherung arbeiten", kz:"進行品質保證 / 在品質保證部門工作", ex:"Die Qualitätssicherung überprüft alle Produkte vor der Auslieferung.", ez:"品質保證部門在出貨前檢查所有產品。" },
+      { s:"Auftakt – Branchen und Berufe", a:"die", w:"Rezeptur", p:"-en", en:"recipe / formula / formulation", zh:"配方、處方", k:"eine Rezeptur entwickeln / nach Rezeptur arbeiten", kz:"開發配方 / 按配方工作", ex:"Die Rezeptur für das neue Produkt wurde streng geheim gehalten.", ez:"新產品的配方被嚴格保密。" },
+      { s:"Auftakt – Branchen und Berufe", a:"die", w:"Textilie", p:"-n", en:"textile / fabric", zh:"紡織品", k:"Textilien produzieren / Textilbranche", kz:"生產紡織品 / 紡織行業", ex:"Das Unternehmen produziert Textilien für den europäischen Markt.", ez:"公司為歐洲市場生產紡織品。" },
+      { s:"Auftakt – Branchen und Berufe", a:"die", w:"Digitalisierung", p:"", en:"digitalisation / digitisation", zh:"數位化", k:"die Digitalisierung vorantreiben / durch die Digitalisierung", kz:"推進數位化 / 通過數位化", ex:"Die Digitalisierung verändert fast alle Branchen grundlegend.", ez:"數位化正在從根本上改變幾乎所有行業。" },
+      // ── Modul 1 ──────────────────────────────────────
+      { s:"Modul 1 – Wir machen das so, damit …", a:"die", w:"Hygiene", p:"", en:"hygiene / sanitation", zh:"衛生、清潔", k:"auf Hygiene achten / Hygienevorschriften einhalten", kz:"注意衛生 / 遵守衛生規定", ex:"In der Lebensmittelproduktion ist Hygiene das Wichtigste.", ez:"在食品生產中，衛生是最重要的。" },
+      { s:"Modul 1 – Wir machen das so, damit …", a:"", w:"verunreinigen", p:"", en:"to contaminate / pollute", zh:"污染、使不潔", k:"Lebensmittel / Wasser verunreinigen", kz:"污染食物 / 水", ex:"Die Hände können Lebensmittel verunreinigen, wenn man sie nicht wäscht.", ez:"如果不洗手，手可能會污染食物。" },
+      { s:"Modul 1 – Wir machen das so, damit …", a:"die", w:"Backware", p:"-n", en:"baked goods / bakery product", zh:"烘焙食品", k:"Backwaren herstellen / Backwaren lagern", kz:"生產烘焙食品 / 儲存烘焙食品", ex:"Die Bäckerei produziert täglich frische Backwaren.", ez:"麵包店每天生產新鮮的烘焙食品。" },
+      { s:"Modul 1 – Wir machen das so, damit …", a:"der", w:"Teig", p:"-e", en:"dough / batter", zh:"麵團", k:"den Teig kneten / Teig zubereiten", kz:"揉麵團 / 準備麵團", ex:"Der Teig muss genau 45 Minuten ruhen, bevor er gebacken wird.", ez:"麵團必須靜置整整45分鐘才能烘烤。" },
+      { s:"Modul 1 – Wir machen das so, damit …", a:"die", w:"Filiale", p:"-n", en:"branch / outlet / store", zh:"分店", k:"eine Filiale eröffnen / die Filiale in + D.", kz:"開設分店 / ……的分店", ex:"Die Bäckerei hat insgesamt zehn Filialen in der Innenstadt.", ez:"麵包店在市中心共有十家分店。" },
+      { s:"Modul 1 – Wir machen das so, damit …", a:"", w:"verladen", p:"", c1:"verlädt", c2:"verlud", c3:"hat verladen", en:"to load / to load onto a vehicle", zh:"裝載、搬運上車", k:"Waren verladen / den LKW verladen", kz:"裝載商品 / 裝載卡車", ex:"Die Waren müssen bis 6 Uhr morgens verladen sein.", ez:"商品必須在早上6點前裝載完畢。" },
+      { s:"Modul 1 – Wir machen das so, damit …", a:"", w:"übergeben", p:"", c1:"übergibt", c2:"übergab", c3:"hat übergeben", en:"to hand over / pass on / transfer", zh:"移交、交接", k:"eine Aufgabe / einen Auftrag übergeben", kz:"移交任務 / 訂單", ex:"Er übergibt die Aufgaben an seine Kollegin, wenn er im Urlaub ist.", ez:"當他休假時，他將任務移交給同事。" },
+      { s:"Modul 1 – Wir machen das so, damit …", a:"", w:"annehmen", p:"", c1:"nimmt an", c2:"nahm an", c3:"hat angenommen", en:"to accept / receive / take", zh:"接受、接收", k:"eine Lieferung / einen Auftrag annehmen", kz:"接收貨物 / 接受訂單", ex:"Die Mitarbeiterin nimmt die Lieferung an und prüft die Ware.", ez:"女員工接收貨物並檢查商品。" },
+      { s:"Modul 1 – Wir machen das so, damit …", a:"", w:"entgegennehmen", p:"", c1:"nimmt entgegen", c2:"nahm entgegen", c3:"hat entgegengenommen", en:"to receive / accept / take delivery of", zh:"接收、受理", k:"eine Bestellung / Beschwerde entgegennehmen", kz:"接收訂單 / 受理投訴", ex:"Bitte nehmen Sie die Lieferung entgegen und prüfen Sie alles sofort.", ez:"請接收貨物並立即檢查所有物品。" },
+      { s:"Modul 1 – Wir machen das so, damit …", a:"", w:"quittieren", p:"", en:"to sign for / acknowledge receipt", zh:"簽收、確認收到", k:"eine Lieferung quittieren / quittieren lassen", kz:"簽收貨物 / 讓人簽收", ex:"Bitte quittieren Sie den Empfang der Waren mit Ihrer Unterschrift.", ez:"請用您的簽名簽收商品。" },
+      { s:"Modul 1 – Wir machen das so, damit …", a:"", w:"einsortieren", p:"", en:"to sort in / file / put away in order", zh:"分類放入、歸類", k:"Waren / Dokumente einsortieren", kz:"分類放入商品 / 文件", ex:"Die neuen Waren müssen sofort einsortiert werden.", ez:"新商品必須立即分類放好。" },
+      { s:"Modul 1 – Wir machen das so, damit …", a:"", w:"kassieren", p:"", en:"to cash / collect payment / charge", zh:"收款、結帳", k:"kassieren / an der Kasse kassieren", kz:"收款 / 在收銀台結帳", ex:"An der Kasse kassiert sie täglich viele Kunden.", ez:"她每天在收銀台為許多客戶結帳。" },
+      { s:"Modul 1 – Wir machen das so, damit …", a:"der", w:"Mangel", p:"=", en:"shortage / deficiency / lack", zh:"缺乏、短缺、缺陷", k:"ein Mangel an + D. / Mängel beheben", kz:"缺乏…… / 消除缺陷", ex:"Es gibt einen Mangel an qualifizierten Fachkräften in der Branche.", ez:"這個行業存在合格專業人才短缺的問題。" },
+      { s:"Modul 1 – Wir machen das so, damit …", a:"", w:"parallel", p:"", en:"parallel / simultaneously / at the same time", zh:"平行的、同時進行的", k:"parallel laufen / parallel bearbeiten", kz:"同時進行 / 平行處理", ex:"Mehrere Projekte laufen parallel, was eine gute Organisation erfordert.", ez:"多個專案同時進行，這需要良好的組織能力。" },
+      { s:"Modul 2 – Könnten Sie bitte …?", a:"der", w:"Workshop", p:"-s", en:"workshop / seminar", zh:"工作坊、研討會", k:"einen Workshop leiten / an einem Workshop teilnehmen", kz:"主持工作坊 / 參加工作坊", ex:"Im Workshop haben wir neue Kommunikationstechniken gelernt.", ez:"在工作坊中，我們學習了新的溝通技巧。" },
+      { s:"Modul 2 – Könnten Sie bitte …?", a:"", w:"erstellen", p:"", en:"to create / produce / draw up", zh:"製作、創建", k:"ein Dokument / einen Bericht erstellen", kz:"製作文件 / 報告", ex:"Sie erstellt monatlich einen Bericht über die Verkaufszahlen.", ez:"她每月製作一份關於銷售數字的報告。" },
+      { s:"Modul 2 – Könnten Sie bitte …?", a:"", w:"abbauen", p:"", en:"to dismantle / reduce / break down", zh:"拆除、減少", k:"Überstunden abbauen / eine Struktur abbauen", kz:"消化加班時數 / 拆除結構", ex:"Bis Ende des Monats müssen alle Überstunden abgebaut sein.", ez:"所有加班時數必須在月底前消化完畢。" },
+      { s:"Modul 2 – Könnten Sie bitte …?", a:"", w:"sich registrieren bei + D.", p:"", en:"to register with / sign up at", zh:"在……登記、向……註冊", k:"sich beim Amt / System registrieren", kz:"在機關 / 系統登記", ex:"Neue Mitarbeitende müssen sich beim System registrieren.", ez:"新員工必須在系統中登記。" },
+      { s:"Modul 2 – Könnten Sie bitte …?", a:"", w:"verpflichten", p:"", en:"to oblige / commit / obligate", zh:"義務、規定", k:"jdn. zu etw. verpflichten / sich verpflichten", kz:"規定某人做某事 / 承諾", ex:"Alle Mitarbeitenden sind verpflichtet, die Sicherheitsvorschriften einzuhalten.", ez:"所有員工都有義務遵守安全規定。" },
+      { s:"Modul 2 – Könnten Sie bitte …?", a:"", w:"bereitstehen", p:"", c1:"steht bereit", c2:"stand bereit", c3:"ist bereit gestanden", en:"to be ready / stand by / be available", zh:"準備就緒、待命", k:"bereitstehen für + A. / die Unterlagen stehen bereit", kz:"為……準備就緒 / 文件準備就緒", ex:"Das Team steht bereit, um bei Problemen sofort zu helfen.", ez:"團隊準備就緒，隨時幫助解決問題。" },
+      { s:"Modul 2 – Könnten Sie bitte …?", a:"das", w:"Kalenderjahr", p:"-e", en:"calendar year", zh:"日曆年", k:"im Kalenderjahr / bis Ende des Kalenderjahres", kz:"在日曆年內 / 到日曆年底", ex:"Der Urlaubsanspruch gilt für das jeweilige Kalenderjahr.", ez:"假期權利適用於各自的日曆年。" },
+      { s:"Modul 2 – Könnten Sie bitte …?", a:"", w:"fällig", p:"", en:"due / payable / overdue", zh:"到期的、應付的", k:"fällig sein / am Fälligkeitsdatum", kz:"到期 / 在到期日", ex:"Die Zahlung ist am 15. des Monats fällig.", ez:"付款在每月15日到期。" },
+      { s:"Modul 2 – Könnten Sie bitte …?", a:"", w:"eine Entscheidung treffen", p:"", c1:"trifft", c2:"traf", c3:"hat getroffen", en:"to make a decision", zh:"做決定", k:"eine Entscheidung treffen / eine schwierige Entscheidung", kz:"做決定 / 艱難的決定", ex:"Das Management trifft diese Entscheidung nach langem Überlegen.", ez:"管理層在長時間思考後做出了這個決定。" },
+      { s:"Modul 2 – Könnten Sie bitte …?", a:"", w:"beifügen", p:"", en:"to enclose / attach / add", zh:"附上、附件", k:"Dokumente / Unterlagen beifügen", kz:"附上文件 / 材料", ex:"Bitte fügen Sie Ihrer Bewerbung ein Foto bei.", ez:"請在申請中附上一張照片。" },
+      // ── Modul 3 ──────────────────────────────────────
+      { s:"Modul 3 – Im Krankheitsfall", a:"der", w:"Krankheitsfall", p:"=e", en:"case of illness / sickness", zh:"生病情況、病假情況", k:"im Krankheitsfall / bei Krankheitsfall", kz:"在生病情況下", ex:"Im Krankheitsfall müssen Sie Ihren Vorgesetzten sofort informieren.", ez:"在生病情況下，您必須立即通知上司。" },
+      { s:"Modul 3 – Im Krankheitsfall", a:"die", w:"Beschwerde", p:"-n", en:"complaint / ailment / symptom", zh:"抱怨、症狀、投訴", k:"Beschwerden haben / eine Beschwerde einreichen", kz:"有症狀 / 提出投訴", ex:"Bei anhaltenden Beschwerden sollten Sie einen Arzt aufsuchen.", ez:"如果症狀持續，您應該去看醫生。" },
+      { s:"Modul 3 – Im Krankheitsfall", a:"die", w:"Krankmeldung", p:"-en", en:"sick note notification / calling in sick", zh:"病假通知", k:"eine Krankmeldung einreichen / die Krankmeldung abgeben", kz:"提交病假通知", ex:"Die Krankmeldung muss spätestens am ersten Krankheitstag beim Arbeitgeber eingehen.", ez:"病假通知最遲必須在生病第一天送達僱主。" },
+      { s:"Modul 3 – Im Krankheitsfall", a:"der", w:"Krankenschein", p:"-e", en:"doctor's certificate / sick note", zh:"病假單", k:"einen Krankenschein vorlegen / bekommen", kz:"出示 / 獲得病假單", ex:"Ab dem dritten Krankheitstag braucht man einen Krankenschein.", ez:"從生病第三天起需要病假單。" },
+      { s:"Modul 3 – Im Krankheitsfall", a:"", w:"krankschreiben", p:"", c1:"schreibt krank", c2:"schrieb krank", c3:"hat krankgeschrieben", en:"to certify sb. as unfit for work / give a sick note", zh:"開病假單、診斷為不適合工作", k:"jdn. krankschreiben / krankgeschrieben sein", kz:"開病假單給某人 / 處於病假中", ex:"Der Arzt hat ihn für eine Woche krankgeschrieben.", ez:"醫生開了一週的病假單給他。" },
+      { s:"Modul 3 – Im Krankheitsfall", a:"die", w:"Ausfertigung", p:"-en", en:"copy / duplicate / version", zh:"副本、抄本", k:"eine Ausfertigung vorlegen / drei Ausfertigungen", kz:"出示副本 / 三份副本", ex:"Bitte reichen Sie drei Ausfertigungen des Formulars ein.", ez:"請提交三份表格副本。" },
+      { s:"Modul 3 – Im Krankheitsfall", a:"die", w:"Bescheinigung", p:"-en", en:"certificate / confirmation / documentation", zh:"證明書", k:"eine Bescheinigung ausstellen / vorlegen", kz:"開具 / 出示證明書", ex:"Für die Beantragung benötigen Sie eine ärztliche Bescheinigung.", ez:"申請需要醫療證明書。" },
+      { s:"Modul 3 – Im Krankheitsfall", a:"", w:"ausstellen", p:"", en:"to issue / exhibit / put on display", zh:"開具、頒發", k:"ein Zeugnis / eine Bescheinigung ausstellen", kz:"開具證書 / 證明書", ex:"Der Arzt stellt die Bescheinigung sofort aus.", ez:"醫生立即開具證明書。" },
+      { s:"Modul 3 – Im Krankheitsfall", a:"", w:"vorlegen", p:"", en:"to present / submit / produce", zh:"出示、提交", k:"Dokumente / Nachweise vorlegen", kz:"出示文件 / 證明", ex:"Bitte legen Sie alle erforderlichen Dokumente beim nächsten Termin vor.", ez:"請在下次預約時出示所有必要的文件。" },
+      { s:"Modul 3 – Im Krankheitsfall", a:"", w:"rückwirkend", p:"", en:"retroactive / backdated", zh:"追溯的、有追溯效力的", k:"rückwirkend gelten / rückwirkend anerkennen", kz:"追溯適用 / 追溯承認", ex:"Die Regelung gilt rückwirkend ab dem 1. Januar.", ez:"該規定追溯適用於1月1日起。" },
+      { s:"Modul 3 – Im Krankheitsfall", a:"die", w:"Vertretung", p:"-en", en:"substitute / representative / cover", zh:"代理、替代人員", k:"die Vertretung übernehmen / eine Vertretung suchen", kz:"承擔代理 / 尋找代理人", ex:"Während ihrer Abwesenheit übernimmt ihr Kollege die Vertretung.", ez:"在她缺席期間，她的同事承擔代理工作。" },
+      { s:"Modul 3 – Im Krankheitsfall", a:"der/die", w:"Ansprechpartner/in", p:"-/-nen", en:"contact person / point of contact (m/f)", zh:"聯絡人、負責人", k:"der/die Ansprechpartner/in für + A.", kz:"……的聯絡人", ex:"Bei Fragen ist Herr Müller Ihr Ansprechpartner.", ez:"如有問題，Müller 先生是您的聯絡人。" },
+      { s:"Modul 3 – Im Krankheitsfall", a:"der/die", w:"Angehörige", p:"-n", en:"family member / relative (m/f)", zh:"家屬、親屬", k:"Angehörige informieren / für Angehörige sorgen", kz:"通知家屬 / 照顧家屬", ex:"Im Notfall werden die Angehörigen sofort informiert.", ez:"緊急情況下，家屬會立即被通知。" },
+      { s:"Modul 3 – Im Krankheitsfall", a:"", w:"etw. gesetzlich regeln", p:"", en:"to regulate sth. by law / legally stipulate", zh:"以法律規定某事", k:"etw. gesetzlich regeln / gesetzlich geregelt sein", kz:"以法律規定某事 / 受法律規範", ex:"Die Lohnfortzahlung im Krankheitsfall ist gesetzlich geregelt.", ez:"病假期間的工資繼續支付受法律規範。" },
+      { s:"Modul 3 – Im Krankheitsfall", a:"das", w:"Detail", p:"-s", en:"detail", zh:"細節、詳情", k:"auf Details achten / im Detail klären", kz:"注意細節 / 在細節上說明", ex:"Die Details zur Krankmeldung sind im Mitarbeiterhandbuch beschrieben.", ez:"病假通知的細節在員工手冊中有描述。" },
+      { s:"Modul 3 – Im Krankheitsfall", a:"", w:"jdm. etw. ersparen", p:"", en:"to save sb. sth. / spare sb. sth.", zh:"為某人省去某事", k:"jdm. Mühe / Zeit ersparen", kz:"為某人省去麻煩 / 時間", ex:"Digitale Formulare ersparen uns viel Zeit und Papierkram.", ez:"數位表格為我們省去了大量時間和文書工作。" },
+      { s:"Modul 3 – Im Krankheitsfall", a:"", w:"sich herausstellen", p:"", en:"to turn out / transpire / emerge", zh:"結果是、事實證明", k:"es stellt sich heraus / sich als falsch herausstellen", kz:"結果是 / 被證明是錯誤的", ex:"Es hat sich herausgestellt, dass die Bescheinigung fehlt.", ez:"結果發現缺少證明書。" },
+      { s:"Modul 3 – Im Krankheitsfall", a:"", w:"zurückkehren zu + D.", p:"", en:"to return to / come back to", zh:"回到、返回", k:"zur Arbeit / zum Team zurückkehren", kz:"回到工作 / 團隊", ex:"Nach der Krankheit kehrt sie langsam zur Arbeit zurück.", ez:"病後她慢慢回到工作崗位。" },
+      { s:"Modul 3 – Im Krankheitsfall", a:"", w:"vorausgesetzt", p:"", en:"provided (that) / assuming / given", zh:"前提是、假設", k:"vorausgesetzt, dass … / vorausgesetzt es klappt", kz:"前提是…… / 假設成功", ex:"Sie kann früher zurückkehren, vorausgesetzt, der Arzt stimmt zu.", ez:"她可以提早回來，前提是醫生同意。" },
+      { s:"Modul 3 – Im Krankheitsfall", a:"der", w:"Fragebogen", p:"=", en:"questionnaire / form", zh:"問卷、調查表", k:"einen Fragebogen ausfüllen / einreichen", kz:"填寫 / 提交問卷", ex:"Bitte füllen Sie den Fragebogen vollständig aus.", ez:"請完整填寫問卷。" },
+      { s:"Modul 3 – Im Krankheitsfall", a:"", w:"führen zu + D.", p:"", en:"to lead to / result in / cause", zh:"導致、引起", k:"zu Problemen / einem Ergebnis führen", kz:"導致問題 / 引起結果", ex:"Häufige Fehlzeiten können zu Problemen im Arbeitsvertrag führen.", ez:"頻繁缺勤可能導致勞動合同方面的問題。" },
+      { s:"Modul 3 – Im Krankheitsfall", a:"", w:"in der Lage sein zu + D.", p:"", c1:"ist", c2:"war", c3:"ist gewesen", en:"to be able to / be in a position to", zh:"能夠、有能力", k:"in der Lage sein zu arbeiten / zu entscheiden", kz:"能夠工作 / 做決定", ex:"Nach der Erkrankung ist er wieder in der Lage, voll zu arbeiten.", ez:"病後他再次能夠全力工作。" },
+    ]
+  },
+
+  4: {
+    key: 'b1k4_unfamiliar_v1',
+    title: 'Kaufen und Verkaufen',
+    vocab: [
+      // ── Auftakt ──────────────────────────────────────
+      { s:"Auftakt – Belege und Dokumente", a:"die", w:"Quittung", p:"-en", en:"receipt / acknowledgement", zh:"收據", k:"eine Quittung ausstellen / verlangen", kz:"開具 / 要求收據", ex:"Bitte verlangen Sie immer eine Quittung, um Ausgaben belegen zu können.", ez:"請務必索取收據，以便能夠證明支出。" },
+      { s:"Auftakt – Belege und Dokumente", a:"der", w:"Kassenzettel", p:"-", en:"till receipt / cash receipt", zh:"收銀收據", k:"den Kassenzettel aufbewahren / vorlegen", kz:"保存 / 出示收銀收據", ex:"Den Kassenzettel brauchen Sie, wenn Sie etwas umtauschen möchten.", ez:"如果您想更換商品，需要收銀收據。" },
+      { s:"Auftakt – Belege und Dokumente", a:"der", w:"Kassenbon", p:"-s", en:"cash receipt / till slip", zh:"現金收據、小票", k:"den Kassenbon behalten / zeigen", kz:"保留 / 出示現金收據", ex:"Er hat den Kassenbon noch und kann damit das Produkt zurückgeben.", ez:"他還有現金收據，可以用它退還產品。" },
+      { s:"Auftakt – Belege und Dokumente", a:"der", w:"Lieferschein", p:"-e", en:"delivery note / packing slip", zh:"送貨單", k:"den Lieferschein prüfen / unterschreiben", kz:"檢查 / 簽署送貨單", ex:"Der Lieferschein muss bei Wareneingang sofort geprüft werden.", ez:"收貨時必須立即檢查送貨單。" },
+      { s:"Auftakt – Belege und Dokumente", a:"die", w:"Bestellung", p:"-en", en:"order / booking", zh:"訂購、訂單", k:"eine Bestellung aufgeben / stornieren", kz:"下訂單 / 取消訂單", ex:"Die Bestellung wurde rechtzeitig aufgegeben und sollte morgen ankommen.", ez:"訂單及時下達，明天應該能到貨。" },
+      { s:"Auftakt – Belege und Dokumente", a:"der", w:"Bestellschein", p:"-e", en:"order form", zh:"訂購單", k:"einen Bestellschein ausfüllen / abschicken", kz:"填寫 / 送出訂購單", ex:"Bitte füllen Sie den Bestellschein vollständig aus.", ez:"請完整填寫訂購單。" },
+      { s:"Auftakt – Belege und Dokumente", a:"die", w:"Preisliste", p:"-n", en:"price list", zh:"價格表", k:"die Preisliste einsehen / aktualisieren", kz:"查看 / 更新價格表", ex:"Die aktuelle Preisliste finden Sie auf unserer Website.", ez:"您可以在我們的網站上找到最新的價格表。" },
+      { s:"Auftakt – Belege und Dokumente", a:"das", w:"Angebot", p:"-e", en:"offer / quotation / proposal", zh:"報價、優惠", k:"ein Angebot machen / einholen", kz:"提供報價 / 獲取報價", ex:"Wir haben mehrere Angebote eingeholt, um den besten Preis zu finden.", ez:"我們獲取了幾個報價以找到最優惠的價格。" },
+      { s:"Auftakt – Belege und Dokumente", a:"die", w:"Fahrtkosten", p:"(Pl.)", en:"travel costs / travel expenses", zh:"差旅費、交通費", k:"Fahrtkosten erstatten / abrechnen", kz:"報銷差旅費 / 結算差旅費", ex:"Die Fahrtkosten zum Kunden werden vom Unternehmen übernommen.", ez:"前往客戶的差旅費由公司承擔。" },
+      { s:"Auftakt – Belege und Dokumente", a:"der", w:"Beleg", p:"-e", en:"receipt / proof / voucher", zh:"憑證、收據、單據", k:"Belege sammeln / vorlegen", kz:"收集 / 出示憑證", ex:"Alle Belege für Ausgaben müssen sorgfältig aufbewahrt werden.", ez:"所有支出憑證必須妥善保存。" },
+      { s:"Auftakt – Belege und Dokumente", a:"", w:"aufheben", p:"", c1:"hebt auf", c2:"hob auf", c3:"hat aufgehoben", en:"to keep / save / lift up", zh:"保存、保留", k:"Belege / Dokumente aufheben", kz:"保存憑證 / 文件", ex:"Bitte heben Sie alle Belege mindestens zehn Jahre auf.", ez:"請至少保存所有憑證十年。" },
+      { s:"Auftakt – Belege und Dokumente", a:"", w:"etw. erstattet bekommen", p:"", c1:"bekommt", c2:"bekam", c3:"hat bekommen", en:"to get sth. reimbursed / get sth. refunded", zh:"獲得退款、獲得報銷", k:"die Kosten erstattet bekommen", kz:"獲得費用報銷", ex:"Nach Vorlage aller Belege hat sie die Kosten erstattet bekommen.", ez:"出示所有憑證後，她獲得了費用報銷。" },
+      // ── Modul 1 ──────────────────────────────────────
+      { s:"Modul 1 – Der neue Kursraum", a:"der", w:"Einrichtungsgegenstand", p:"=e", en:"piece of furniture / furnishing item", zh:"家具、室內陳設品", k:"Einrichtungsgegenstände kaufen / auswählen", kz:"購買 / 選擇家具", ex:"Alle Einrichtungsgegenstände für das neue Büro wurden bestellt.", ez:"新辦公室的所有家具都已訂購。" },
+      { s:"Modul 1 – Der neue Kursraum", a:"die", w:"Garderobe", p:"-n", en:"wardrobe / cloakroom / coat rack", zh:"衣帽間、衣架", k:"die Garderobe benutzen / aufhängen", kz:"使用衣帽間 / 掛在衣架上", ex:"Bitte hängen Sie Ihre Jacke an der Garderobe auf.", ez:"請將外套掛在衣架上。" },
+      { s:"Modul 1 – Der neue Kursraum", a:"der", w:"Mülleimer", p:"-", en:"rubbish bin / waste bin", zh:"垃圾桶", k:"den Mülleimer leeren / etwas in den Mülleimer werfen", kz:"清空垃圾桶 / 把東西扔進垃圾桶", ex:"Bitte werfen Sie leere Flaschen nicht in den normalen Mülleimer.", ez:"請不要將空瓶子扔進普通垃圾桶。" },
+      { s:"Modul 1 – Der neue Kursraum", a:"die", w:"Pinnwand", p:"=e", en:"pinboard / notice board", zh:"公告板、展示板", k:"etw. an die Pinnwand hängen", kz:"把某物貼在公告板上", ex:"Die wichtigsten Infos hängen an der Pinnwand im Eingangsbereich.", ez:"最重要的信息貼在入口區域的公告板上。" },
+      { s:"Modul 1 – Der neue Kursraum", a:"das", w:"Whiteboard", p:"-s", en:"whiteboard", zh:"白板", k:"etw. auf das Whiteboard schreiben", kz:"在白板上寫東西", ex:"Die Lehrerin schreibt die wichtigsten Vokabeln auf das Whiteboard.", ez:"老師把最重要的詞彙寫在白板上。" },
+      { s:"Modul 1 – Der neue Kursraum", a:"", w:"erledigen", p:"", en:"to complete / sort out / deal with", zh:"完成、處理", k:"eine Aufgabe / Angelegenheit erledigen", kz:"完成任務 / 處理事務", ex:"Alle Aufgaben müssen bis Freitag erledigt sein.", ez:"所有任務必須在週五前完成。" },
+      { s:"Modul 1 – Der neue Kursraum", a:"die", w:"Anfrage", p:"-n", en:"enquiry / request / query", zh:"詢問、請求", k:"eine Anfrage stellen / beantworten", kz:"提出 / 回答詢問", ex:"Wir haben eine Anfrage wegen eines neuen Whiteboards an die Firma geschickt.", ez:"我們向公司發送了一個關於新白板的詢問。" },
+      { s:"Modul 1 – Der neue Kursraum", a:"", w:"anbieten", p:"", c1:"bietet an", c2:"bot an", c3:"hat angeboten", en:"to offer / provide", zh:"提供、提議", k:"etw. anbieten / Hilfe anbieten", kz:"提供某物 / 提供幫助", ex:"Das Unternehmen bietet kostenlose Lieferung für alle Bestellungen an.", ez:"公司為所有訂單提供免費送貨。" },
+      { s:"Modul 1 – Der neue Kursraum", a:"", w:"selbstverständlich", p:"", en:"of course / naturally / as a matter of course", zh:"當然、理所當然地", k:"selbstverständlich helfen / selbstverständlich sein", kz:"理所當然地幫助 / 是理所當然的", ex:"Selbstverständlich liefern wir die bestellten Artikel pünktlich.", ez:"我們當然會準時送達訂購的商品。" },
+      { s:"Modul 1 – Der neue Kursraum", a:"", w:"jederzeit", p:"", en:"at any time / always / whenever", zh:"隨時、任何時候", k:"jederzeit erreichbar / jederzeit verfügbar", kz:"隨時可聯繫 / 隨時可用", ex:"Bei Fragen stehe ich Ihnen jederzeit zur Verfügung.", ez:"如有問題，我隨時為您效勞。" },
+      { s:"Modul 1 – Der neue Kursraum", a:"", w:"derzeit", p:"", en:"currently / at present", zh:"目前、當前", k:"derzeit nicht verfügbar / derzeit lieferbar", kz:"目前不可用 / 目前可交貨", ex:"Das Produkt ist derzeit leider nicht auf Lager.", ez:"該產品目前很遺憾沒有庫存。" },
+      { s:"Modul 1 – Der neue Kursraum", a:"", w:"zur Verfügung stehen", p:"", c1:"steht", c2:"stand", c3:"hat gestanden", en:"to be available / at sb.'s disposal", zh:"可供使用、待命", k:"zur Verfügung stehen / jdm. zur Verfügung stehen", kz:"可供使用 / 為某人提供服務", ex:"Das neue Equipment steht ab Montag zur Verfügung.", ez:"新設備從週一起可以使用。" },
+      { s:"Modul 1 – Der neue Kursraum", a:"die", w:"Lieferung", p:"-en", en:"delivery / shipment", zh:"送貨、交貨", k:"eine Lieferung erhalten / aufgeben", kz:"收到 / 下達送貨", ex:"Die Lieferung der Büromöbel ist für Dienstag geplant.", ez:"辦公家具的送貨計劃在週二進行。" },
+      { s:"Modul 1 – Der neue Kursraum", a:"", w:"lieferbar", p:"", en:"available / in stock / deliverable", zh:"可交貨的、有庫存的", k:"lieferbar sein / sofort lieferbar", kz:"可交貨 / 即時可交貨", ex:"Das Produkt ist sofort lieferbar und kann noch diese Woche zugestellt werden.", ez:"該產品即時可交貨，本週就能送達。" },
+      { s:"Modul 1 – Der neue Kursraum", a:"die", w:"Installation", p:"-en", en:"installation / setup", zh:"安裝", k:"eine Installation durchführen / beauftragen", kz:"進行 / 委託安裝", ex:"Die Installation des neuen Systems dauert ungefähr zwei Stunden.", ez:"新系統的安裝大約需要兩個小時。" },
+      { s:"Modul 1 – Der neue Kursraum", a:"der", w:"Aufbau", p:"-ten", en:"assembly / construction / build-up", zh:"組裝、搭建", k:"den Aufbau übernehmen / beim Aufbau helfen", kz:"負責組裝 / 協助組裝", ex:"Der Aufbau der neuen Möbel wird vom Lieferanten übernommen.", ez:"新家具的組裝由送貨商負責。" },
+      // ── Modul 2 ──────────────────────────────────────
+      { s:"Modul 2 – Alles fürs Büro", a:"die", w:"Schreibwaren", p:"(Pl.)", en:"stationery / writing materials", zh:"文具", k:"Schreibwaren kaufen / bestellen", kz:"購買 / 訂購文具", ex:"Für das Büro müssen regelmäßig neue Schreibwaren bestellt werden.", ez:"辦公室需要定期訂購新的文具。" },
+      { s:"Modul 2 – Alles fürs Büro", a:"die", w:"Büroklammer", p:"-n", en:"paper clip", zh:"迴紋針", k:"Dokumente mit Büroklammern zusammenhalten", kz:"用迴紋針固定文件", ex:"Bitte verwenden Sie Büroklammern für Dokumente, die zusammengehören.", ez:"請用迴紋針固定屬於同一組的文件。" },
+      { s:"Modul 2 – Alles fürs Büro", a:"der", w:"Kugelschreiber / Kuli", p:"-/-s", en:"ballpoint pen / biro", zh:"圓珠筆", k:"mit dem Kugelschreiber schreiben / einen Kuli kaufen", kz:"用圓珠筆寫 / 購買圓珠筆", ex:"Haben Sie einen Kugelschreiber, den ich kurz benutzen darf?", ez:"您有圓珠筆可以借我一下嗎？" },
+      { s:"Modul 2 – Alles fürs Büro", a:"das", w:"Klebeband", p:"=er", en:"adhesive tape / sticky tape", zh:"膠帶", k:"etw. mit Klebeband befestigen", kz:"用膠帶固定某物", ex:"Das Paket wurde mit Klebeband verschlossen.", ez:"包裹用膠帶封好了。" },
+      { s:"Modul 2 – Alles fürs Büro", a:"der", w:"Locher", p:"-", en:"hole punch", zh:"打孔機", k:"Papier mit dem Locher lochen", kz:"用打孔機打孔", ex:"Bitte lochen Sie die Dokumente und heften Sie sie ab.", ez:"請打孔並歸檔文件。" },
+      { s:"Modul 2 – Alles fürs Büro", a:"der", w:"Katalog", p:"-e", en:"catalogue / catalog", zh:"目錄冊", k:"im Katalog suchen / einen Katalog bestellen", kz:"在目錄冊中查找 / 訂購目錄冊", ex:"Im Katalog finden Sie alle Produkte mit aktuellen Preisen.", ez:"在目錄冊中您可以找到所有產品及最新價格。" },
+      { s:"Modul 2 – Alles fürs Büro", a:"die", w:"Packung", p:"-en", en:"packet / pack / package", zh:"包裝、一包", k:"eine Packung Papier / eine Packung kaufen", kz:"一包紙 / 購買一包", ex:"Bitte bestellen Sie noch zwei Packungen Kopierpapier.", ez:"請再訂購兩包影印紙。" },
+      { s:"Modul 2 – Alles fürs Büro", a:"", w:"schmal", p:"", en:"narrow / slim / thin", zh:"窄的、細的", k:"schmal sein / ein schmales Regal", kz:"很窄 / 窄架子", ex:"Das Regal ist zu schmal für die großen Ordner.", ez:"架子太窄，放不下大型文件夾。" },
+      { s:"Modul 2 – Alles fürs Büro", a:"", w:"breit", p:"", en:"wide / broad", zh:"寬的", k:"breit sein / breiter machen", kz:"很寬 / 加寬", ex:"Der Schreibtisch ist breit genug für zwei Monitore.", ez:"書桌足夠寬，可以放兩台螢幕。" },
+      { s:"Modul 2 – Alles fürs Büro", a:"", w:"empfehlen", p:"", c1:"empfiehlt", c2:"empfahl", c3:"hat empfohlen", en:"to recommend", zh:"推薦", k:"etw. empfehlen / dringend empfehlen", kz:"推薦某物 / 強烈推薦", ex:"Ich empfehle diesen Kugelschreiber – er schreibt sehr angenehm.", ez:"我推薦這款圓珠筆——書寫非常流暢。" },
+      { s:"Modul 2 – Alles fürs Büro", a:"die", w:"Kundennummer", p:"-n", en:"customer number / client ID", zh:"客戶號碼", k:"die Kundennummer angeben / die Kundennummer vergessen", kz:"提供客戶號碼 / 忘記客戶號碼", ex:"Bitte geben Sie beim Bestellen Ihre Kundennummer an.", ez:"訂購時請提供您的客戶號碼。" },
+      { s:"Modul 2 – Alles fürs Büro", a:"", w:"eine Bestellung aufgeben", p:"", c1:"gibt auf", c2:"gab auf", c3:"hat aufgegeben", en:"to place an order", zh:"下訂單", k:"eine Bestellung aufgeben / telefonisch aufgeben", kz:"下訂單 / 電話下訂單", ex:"Sie hat eine Bestellung für Büromaterial aufgegeben.", ez:"她下了一份辦公用品的訂單。" },
+      { s:"Modul 2 – Alles fürs Büro", a:"", w:"eine Bestellung aufnehmen", p:"", c1:"nimmt auf", c2:"nahm auf", c3:"hat aufgenommen", en:"to take an order / receive an order", zh:"接受訂單", k:"eine Bestellung aufnehmen / per Telefon aufnehmen", kz:"接受訂單 / 電話接受訂單", ex:"Der Mitarbeiter nimmt die Bestellung auf und gibt sie ins System ein.", ez:"員工接受訂單並輸入系統。" },
+      { s:"Modul 2 – Alles fürs Büro", a:"", w:"dringend", p:"", en:"urgent / pressing", zh:"緊急的、迫切的", k:"dringend brauchen / eine dringende Anfrage", kz:"迫切需要 / 緊急詢問", ex:"Wir brauchen dringend neue Tintenpatronen, da der Drucker leer ist.", ez:"我們迫切需要新的墨水匣，因為印表機沒墨了。" },
+      { s:"Modul 2 – Alles fürs Büro", a:"", w:"hinweisen auf + A.", p:"", c1:"weist hin", c2:"wies hin", c3:"hat hingewiesen", en:"to point out / draw attention to", zh:"指出、提醒注意", k:"auf ein Problem / Angebot hinweisen", kz:"指出問題 / 提醒注意優惠", ex:"Der Verkäufer weist auf das aktuelle Sonderangebot hin.", ez:"銷售員提醒注意目前的特別優惠。" },
+      { s:"Modul 2 – Alles fürs Büro", a:"", w:"ausverkauft", p:"", en:"sold out / out of stock", zh:"售完的、脫銷的", k:"ausverkauft sein / leider ausverkauft", kz:"售完 / 很遺憾已售完", ex:"Das Produkt ist leider ausverkauft, aber wir erwarten neue Lieferung.", ez:"這個產品很遺憾已售完，但我們等待新貨。" },
+      { s:"Modul 2 – Alles fürs Büro", a:"der", w:"Rabatt", p:"-e", en:"discount / reduction", zh:"折扣", k:"einen Rabatt gewähren / Rabatt bekommen", kz:"給予折扣 / 獲得折扣", ex:"Ab einem Bestellwert von 100 Euro erhalten Sie 10% Rabatt.", ez:"訂購金額超過100歐元可獲得10%折扣。" },
+      { s:"Modul 2 – Alles fürs Büro", a:"das", w:"Sonderangebot", p:"-e", en:"special offer / bargain", zh:"特別優惠", k:"ein Sonderangebot nutzen / im Sonderangebot sein", kz:"利用特別優惠 / 在特別優惠中", ex:"Diese Woche sind Druckerpatronen im Sonderangebot.", ez:"本週墨水匣在特別優惠中。" },
+      { s:"Modul 2 – Alles fürs Büro", a:"die", w:"Mehrwertsteuer (MwSt.)", p:"-n", en:"value added tax (VAT)", zh:"增值稅", k:"zzgl. / inkl. Mehrwertsteuer", kz:"加 / 含增值稅", ex:"Alle Preise sind inklusive 19% Mehrwertsteuer angegeben.", ez:"所有價格均含19%增值稅。" },
+      // ── Modul 3 ──────────────────────────────────────
+      { s:"Modul 3 – Beschwerden", a:"die", w:"Registrierung", p:"-en", en:"registration / sign-up", zh:"登記、註冊", k:"die Registrierung abschließen / bei der Registrierung", kz:"完成登記 / 在登記時", ex:"Die Registrierung auf der Website dauert nur wenige Minuten.", ez:"在網站上的登記只需幾分鐘。" },
+      { s:"Modul 3 – Beschwerden", a:"", w:"einen Account anlegen", p:"", en:"to create an account / set up an account", zh:"建立帳戶", k:"einen Account anlegen / einrichten", kz:"建立帳戶 / 設置帳戶", ex:"Sie müssen zuerst einen Account anlegen, um bestellen zu können.", ez:"您必須先建立帳戶才能下訂單。" },
+      { s:"Modul 3 – Beschwerden", a:"", w:"aufwendig", p:"", en:"elaborate / time-consuming / costly", zh:"費時費力的、複雜的", k:"aufwendig sein / aufwendig gestalten", kz:"費時費力 / 複雜設計", ex:"Die Registrierung ist sehr aufwendig und dauert zu lange.", ez:"登記非常繁瑣，花費時間太長。" },
+      { s:"Modul 3 – Beschwerden", a:"", w:"anscheinend", p:"", en:"apparently / seemingly / it seems", zh:"看來、似乎", k:"anscheinend funktioniert es nicht / anscheinend fehlt etw.", kz:"看來無法運作 / 看來缺少某物", ex:"Das System funktioniert anscheinend nicht richtig.", ez:"系統看來運作不正常。" },
+      { s:"Modul 3 – Beschwerden", a:"die", w:"Auswahl", p:"", en:"selection / choice / range", zh:"選擇、選項", k:"eine große Auswahl haben / die Auswahl treffen", kz:"有大量選擇 / 做出選擇", ex:"Das Online-Angebot hat leider eine begrenzte Auswahl.", ez:"在線服務很遺憾選項有限。" },
+      { s:"Modul 3 – Beschwerden", a:"", w:"begrenzt", p:"", en:"limited / restricted", zh:"有限的、受限的", k:"begrenzt verfügbar / begrenzte Auswahl", kz:"有限地可用 / 有限的選項", ex:"Die Lagerkapazitäten sind begrenzt, daher können wir nicht mehr liefern.", ez:"倉儲容量有限，因此我們無法再交貨。" },
+      { s:"Modul 3 – Beschwerden", a:"der", w:"Anbieter", p:"-", en:"provider / supplier / vendor", zh:"供應商、服務提供商", k:"der Anbieter wechseln / einen Anbieter finden", kz:"更換供應商 / 找到供應商", ex:"Wir haben den Anbieter gewechselt, weil der Service nicht gut war.", ez:"我們更換了供應商，因為服務不好。" },
+      { s:"Modul 3 – Beschwerden", a:"der", w:"Vorrat", p:"=e", en:"stock / supply / reserve", zh:"庫存、存貨", k:"den Vorrat auffüllen / Vorrat haben", kz:"補充庫存 / 有庫存", ex:"Der Vorrat an Druckerpatronen ist fast aufgebraucht.", ez:"印表機墨水匣的庫存幾乎耗盡了。" },
+      { s:"Modul 3 – Beschwerden", a:"die", w:"Bewertung", p:"-en", en:"review / rating / assessment", zh:"評價、評分", k:"eine Bewertung abgeben / schreiben", kz:"給出 / 撰寫評價", ex:"Nach dem Kauf hat sie eine positive Bewertung für das Produkt geschrieben.", ez:"購買後，她為產品撰寫了正面評價。" },
+      { s:"Modul 3 – Beschwerden", a:"die", w:"Rückmeldung", p:"-en", en:"feedback / response", zh:"反饋、回覆", k:"eine Rückmeldung geben / erwarten", kz:"給予 / 期待反饋", ex:"Wir bitten um Ihre Rückmeldung, damit wir unseren Service verbessern können.", ez:"我們請求您的反饋，以便我們改善服務。" },
+      { s:"Modul 3 – Beschwerden", a:"die", w:"Kritik", p:"", en:"criticism / critique", zh:"批評、批判", k:"Kritik üben / Kritik annehmen", kz:"提出批評 / 接受批評", ex:"Konstruktive Kritik hilft uns, unsere Produkte besser zu machen.", ez:"建設性批評幫助我們改善產品。" },
+      { s:"Modul 3 – Beschwerden", a:"", w:"vorwerfen", p:"", c1:"wirft vor", c2:"warf vor", c3:"hat vorgeworfen", en:"to accuse / blame / reproach", zh:"指責、歸咎", k:"jdm. etw. vorwerfen", kz:"指責某人某事", ex:"Die Kundin wirft dem Unternehmen vor, zu langsam auf ihre Beschwerde reagiert zu haben.", ez:"女客戶指責公司對她的投訴反應太慢。" },
+      { s:"Modul 3 – Beschwerden", a:"", w:"reklamieren", p:"", en:"to complain / make a complaint", zh:"投訴、申訴", k:"ein Produkt reklamieren / reklamieren gehen", kz:"投訴產品 / 去投訴", ex:"Sie möchte das defekte Gerät reklamieren und Ersatz erhalten.", ez:"她想就有缺陷的設備投訴並獲得替換品。" },
+      { s:"Modul 3 – Beschwerden", a:"", w:"umgehen mit + D.", p:"", c1:"geht um", c2:"ging um", c3:"ist umgegangen", en:"to deal with / handle", zh:"應對、處理", k:"mit Beschwerden / Stress umgehen", kz:"應對投訴 / 壓力", ex:"Ein guter Kundenservice muss professionell mit Beschwerden umgehen.", ez:"良好的客戶服務必須專業地應對投訴。" },
+      { s:"Modul 3 – Beschwerden", a:"", w:"ernst nehmen", p:"", c1:"nimmt ernst", c2:"nahm ernst", c3:"hat ernst genommen", en:"to take seriously", zh:"認真對待", k:"jdn. / etw. ernst nehmen", kz:"認真對待某人 / 某事", ex:"Wir nehmen jede Beschwerde unserer Kunden ernst.", ez:"我們認真對待每一位客戶的投訴。" },
+      { s:"Modul 3 – Beschwerden", a:"das", w:"Verständnis", p:"", en:"understanding / comprehension", zh:"理解、諒解", k:"Verständnis zeigen / um Verständnis bitten", kz:"表示理解 / 請求諒解", ex:"Wir bitten um Ihr Verständnis für die Verzögerung.", ez:"我們請求您對延誤表示諒解。" },
+      { s:"Modul 3 – Beschwerden", a:"", w:"bedauerlich", p:"", en:"regrettable / unfortunate", zh:"令人遺憾的", k:"etw. ist bedauerlich / als bedauerlich bezeichnen", kz:"某事令人遺憾 / 表示遺憾", ex:"Es ist bedauerlich, dass Sie mit unserem Service unzufrieden sind.", ez:"很遺憾您對我們的服務感到不滿意。" },
+      { s:"Modul 3 – Beschwerden", a:"die", w:"Unannehmlichkeit", p:"-en", en:"inconvenience / trouble", zh:"不便、麻煩", k:"Unannehmlichkeiten entschuldigen / verursachen", kz:"為不便道歉 / 造成不便", ex:"Wir entschuldigen uns für die entstandenen Unannehmlichkeiten.", ez:"我們為造成的不便道歉。" },
+      { s:"Modul 3 – Beschwerden", a:"die", w:"Entschädigung", p:"-en", en:"compensation / damages", zh:"賠償", k:"eine Entschädigung fordern / anbieten", kz:"要求 / 提供賠償", ex:"Als Entschädigung bieten wir Ihnen einen Gutschein über 20 Euro an.", ez:"作為賠償，我們為您提供20歐元的優惠券。" },
+      { s:"Modul 3 – Beschwerden", a:"die", w:"Gutschrift", p:"-en", en:"credit note / credit", zh:"貸記、信用憑條", k:"eine Gutschrift erhalten / ausstellen", kz:"獲得 / 開具貸記憑條", ex:"Nach der Reklamation haben wir eine Gutschrift erhalten.", ez:"投訴後我們獲得了一張貸記憑條。" },
+      { s:"Modul 3 – Beschwerden", a:"", w:"sich wenden an + A.", p:"", c1:"wendet sich an", c2:"wandte sich an", c3:"hat sich angewandt", en:"to turn to / contact / address", zh:"向……求助、聯繫", k:"sich an den Kundendienst wenden", kz:"聯繫客戶服務", ex:"Bei Problemen wenden Sie sich bitte an unseren Kundendienst.", ez:"如有問題，請聯繫我們的客戶服務。" },
+    ]
+  }
+};
+
+
 // ── Active chapter ────────────────────────────────────────────
 let currentChapter = 1;
 try {
   const saved = localStorage.getItem('b2_activeChapter');
-  if (saved && CHAPTERS[parseInt(saved)]) currentChapter = parseInt(saved);
+  if (saved) {
+    const parsed = JSON.parse(saved);
+    if (typeof parsed === 'object' && parsed.book) {
+      currentBook = parsed.book;
+      currentChapter = parsed.k;
+    } else if (CHAPTERS[parseInt(saved)]) {
+      currentChapter = parseInt(saved);
+    }
+  }
 } catch(e) {}
 
 function getChapterData() { return CHAPTERS[currentChapter]; }
@@ -1595,19 +1906,200 @@ const CHAPTER_TITLES = {
   9: 'Karriere & Gespräche', 10: 'Arbeit im Wandel'
 };
 
+
+// ── Book / chapter state ──────────────────────────────────────
+let currentBook = 'b2';  // 'b1' or 'b2'
+
+// Override getChapterData to support both books
+function getChapterData() {
+  if (currentBook === 'b1') return B1_CHAPTERS[currentChapter];
+  return CHAPTERS[currentChapter];
+}
+
+function getB1Unfamiliar(k) {
+  const key = 'b1k'+k;
+  if (!unfamiliarCache[key]) {
+    unfamiliarCache[key] = new Set();
+    try { const s=localStorage.getItem(B1_CHAPTERS[k].key); if(s) unfamiliarCache[key]=new Set(JSON.parse(s)); } catch(e){}
+  }
+  return unfamiliarCache[key];
+}
+
+function switchChapterB2(k) {
+  currentBook = 'b2';
+  currentChapter = k;
+  try { localStorage.setItem('b2_activeChapter', JSON.stringify({book:'b2',k})); } catch(e) {}
+  const tl = document.querySelector('.toolbar-left');
+  if (tl) tl.style.display = '';
+  currentFilter = 'all';
+  document.querySelectorAll('.filter-btn').forEach((b,i) => b.classList.toggle('active', i===0));
+  const ep = document.getElementById('exportPanel');
+  if (ep) ep.classList.remove('visible');
+  const titles = {
+    1:'Im Beruf ankommen', 2:'Mein Weg in den Beruf',
+    3:'Neu in der Firma', 4:'Meetings & Kommunikation',
+    5:'Kennen Sie schon …?', 6:'Kommunikation ist alles',
+    7:'Was kann ich für Sie tun?', 8:'Arbeitssicherheit',
+    9:'Karriere & Gespräche', 10:'Arbeit im Wandel'
+  };
+  document.getElementById('chapterTitle').textContent = `B2 Kapitel ${k} – ${titles[k]}`;
+  renderTabs();
+  render();
+}
+
+function switchChapterB1(k) {
+  currentBook = 'b1';
+  currentChapter = k;
+  try { localStorage.setItem('b2_activeChapter', JSON.stringify({book:'b1',k})); } catch(e) {}
+  const tl = document.querySelector('.toolbar-left');
+  if (tl) tl.style.display = '';
+  currentFilter = 'all';
+  document.querySelectorAll('.filter-btn').forEach((b,i) => b.classList.toggle('active', i===0));
+  const ep = document.getElementById('exportPanel');
+  if (ep) ep.classList.remove('visible');
+  document.getElementById('exportBtn').disabled = true;
+  const titles = {1:'Das bin ich', 2:'Im Unternehmen', 3:'Teamarbeit', 4:'Kaufen und Verkaufen'};
+  document.getElementById('chapterTitle').textContent = `B1/B2 Kapitel ${k} – ${titles[k]}`;
+  renderTabs();
+  renderB1Chapter(k);
+}
+
+function renderB1Chapter(k) {
+  const data = B1_CHAPTERS[k];
+  if (!data) return;
+  const unfam = getB1Unfamiliar(k);
+  const VOCAB = data.vocab;
+  const filtered = VOCAB.map((v,i)=>[v,i]).filter(([v,i])=>{
+    if (currentFilter==='unfamiliar') return unfam.has(i);
+    if (currentFilter==='familiar') return !unfam.has(i);
+    return true;
+  });
+  document.getElementById('stats').textContent = `不熟悉 ${unfam.size} / ${VOCAB.length} 個`;
+  document.getElementById('exportBtn').disabled = unfam.size===0;
+  if (!filtered.length) {
+    document.getElementById('mainContent').innerHTML = '<div class="empty">沒有符合的單字</div>';
+    return;
+  }
+  const sections = {};
+  filtered.forEach(([v,i]) => { if(!sections[v.s]) sections[v.s]=[]; sections[v.s].push([v,i]); });
+  let html2 = '';
+  for (const [sec, words] of Object.entries(sections)) {
+    const rows = words.map(([v,i]) => buildB1Row(v,i,k,unfam)).join('');
+    html2 += `<div class="section-block">
+      <div class="section-header">${sec}</div>
+      <table><thead><tr>
+        <th class="col-dot"></th>
+        <th class="col-de">德文</th>
+        <th class="col-enzh">英文 / 中文</th>
+        <th class="col-koll">固定搭配</th>
+        <th class="col-satz">例句</th>
+      </tr></thead>
+      <tbody>${rows}</tbody></table>
+    </div>
+    ${buildB1Kurztext(sec, k)}`;
+  }
+  document.getElementById('mainContent').innerHTML = html2;
+}
+
+function buildB1Row(v, i, k, unfam) {
+  const uf = unfam.has(i);
+  const deT = ((v.a?v.a+' ':'')+v.w).replace(/'/g,'&#39;');
+  const enT = (v.en.split('/')[0]||'').trim().replace(/'/g,'&#39;');
+  const kT  = (v.k||'').replace(/'/g,'&#39;');
+  const exT = (v.ex||'').replace(/'/g,'&#39;');
+  const enParts = v.en.split('/').map(s=>s.trim()).join('<br>');
+  const zhParts = v.zh.split('/').map(s=>s.trim()).join('<br>');
+  const kParts  = highlightVerbs(v.k||'');
+  return `<tr class="${uf?'unfamiliar':''}">
+    <td class="dot-cell" onclick="event.stopPropagation();toggleMarkB1(${k},${i})"><span class="dot"></span></td>
+    <td onclick="speakText('${deT}','de-DE')" style="cursor:pointer">
+      ${v.a?`<span class="artikel">${v.a}</span>`:''}
+      <span class="word-de">${v.w}</span>
+      ${v.p?`<span class="plural">${v.p}</span>`:''}
+      ${v.c1?`<span class="irr-conj" onclick="speakConj('${v.c1}',event)">${v.c1}</span>`:''}
+      ${v.c2?`<span class="irr-conj" onclick="speakConj('${v.c2}',event)">${v.c2}</span>`:''}
+      ${v.c3?`<span class="irr-conj" onclick="speakConj('${v.c3}',event)">${v.c3}</span>`:''}
+    </td>
+    <td onclick="speakText('${enT}','en-US')" style="cursor:pointer">
+      <span class="word-en">${enParts}</span>
+      <span class="word-zh">${zhParts}</span>
+    </td>
+    <td onclick="speakText('${kT}','de-DE')" style="cursor:pointer">
+      <span class="koll-de">${kParts}</span>
+      <span class="koll-zh">${v.kz||''}</span>
+    </td>
+    <td onclick="speakText('${exT}','de-DE')" style="cursor:pointer">
+      <span class="satz-de">${v.ex||''}</span>
+      <span class="satz-zh">${v.ez||''}</span>
+    </td>
+  </tr>`;
+}
+
+function toggleMarkB1(k, i) {
+  const key = 'b1k'+k;
+  if (!unfamiliarCache[key]) {
+    unfamiliarCache[key]=new Set();
+    try{const s=localStorage.getItem(B1_CHAPTERS[k].key);if(s)unfamiliarCache[key]=new Set(JSON.parse(s));}catch(e){}
+  }
+  const set=unfamiliarCache[key];
+  if(set.has(i)) set.delete(i); else set.add(i);
+  try{localStorage.setItem(B1_CHAPTERS[k].key,JSON.stringify([...set]));}catch(e){}
+  renderB1Chapter(k);
+  renderTabs();
+}
+
+function buildB1Kurztext(secName, k) {
+  const data = B1_CHAPTERS[k];
+  if (!data || !data.vocab) return '';
+  // Group sentences by section from vocab examples
+  const sectionVocab = data.vocab.filter(v => v.s === secName);
+  if (!sectionVocab.length) return '';
+  // Build short text from first few examples in the section
+  const sentences = sectionVocab.slice(0,6).map(v => ({de:v.ex, zh:v.ez}));
+  const rows = sentences.map(p => {
+    const de = (p.de||'').replace(/'/g,"\'");
+    return `<div class="kurztext-sent">
+      <span class="sent-de" onclick="speakText('${de}','de-DE')" title="點擊朗讀">${p.de||''}</span>
+      <span class="sent-zh">${p.zh||''}</span>
+    </div>`;
+  }).join('');
+  return `<div class="kurztext">
+    <div class="kurztext-header">📝 練習例句 — 點擊句子可朗讀</div>
+    <div class="kurztext-body">${rows}</div>
+  </div>`;
+}
+
+
 function renderTabs() {
   const container = document.getElementById('chapterTabs');
-  const tabs = Array.from({length:10}, (_,i) => {
+  // ── B2 row ──────────────────────────────────────────────────
+  const b2tabs = Array.from({length:10}, (_,i) => {
     const k = i + 1;
-    let ufCount = 0;
-    try { const s=localStorage.getItem(CHAPTERS[k].key); ufCount=s?JSON.parse(s).length:0; } catch(e){}
-    const badge = ufCount>0 ? `<span class="tab-badge">${ufCount}</span>` : '';
-    const active = k===currentChapter ? ' active' : '';
-    return `<button class="chapter-tab${active}" onclick="switchChapter(${k})">Kapitel ${k}${badge}</button>`;
+    let uf = 0;
+    try { const s=localStorage.getItem(CHAPTERS[k].key); uf=s?JSON.parse(s).length:0; } catch(e){}
+    const badge = uf>0 ? `<span class="tab-badge">${uf}</span>` : '';
+    const active = (currentBook==='b2' && k===currentChapter) ? ' active' : '';
+    return `<button class="chapter-tab${active}" onclick="switchChapterB2(${k})">Kapitel ${k}${badge}</button>`;
+  }).join('');
+  // ── B1 row ──────────────────────────────────────────────────
+  const b1tabs = Array.from({length:4}, (_,i) => {
+    const k = i + 1;
+    let uf = 0;
+    try { const s=localStorage.getItem(B1_CHAPTERS[k].key); uf=s?JSON.parse(s).length:0; } catch(e){}
+    const badge = uf>0 ? `<span class="tab-badge">${uf}</span>` : '';
+    const active = (currentBook==='b1' && k===currentChapter) ? ' active' : '';
+    return `<button class="chapter-tab${active}" onclick="switchChapterB1(${k})">Kapitel ${k}${badge}</button>`;
   }).join('');
   const srActive = currentChapter==='search' ? ' active' : '';
-  container.innerHTML = tabs +
-    `<button class="chapter-tab${srActive}" onclick="switchToSearch()" style="margin-left:10px;">🔍 搜尋</button>`;
+  container.innerHTML =
+    `<div class="tab-row">` +
+    `<span class="book-label ${currentBook==='b1'?'active-book':''}">B1/B2</span>` +
+    b1tabs + `</div>` +
+    `<div class="tab-row">` +
+    `<span class="book-label ${currentBook==='b2'?'active-book':''}">B2</span>` +
+    b2tabs +
+    `<button class="chapter-tab${srActive}" onclick="switchToSearch()" style="margin-left:10px;">🔍 搜尋</button>` +
+    `</div>`;
 }
 
 
@@ -1887,8 +2379,16 @@ function runSearch(q) {
   for (let k=1; k<=10; k++) {
     CHAPTERS[k].vocab.forEach((v,i) => {
       if (buildSearchText(v).includes(low)) {
-        if (!byChapter[k]) byChapter[k]=[];
-        byChapter[k].push({v,i});
+        if (!byChapter['b2-'+k]) byChapter['b2-'+k]=[];
+        byChapter['b2-'+k].push({v,i,book:'b2',k});
+      }
+    });
+  }
+  for (let k=1; k<=4; k++) {
+    B1_CHAPTERS[k].vocab.forEach((v,i) => {
+      if (buildSearchText(v).includes(low)) {
+        if (!byChapter['b1-'+k]) byChapter['b1-'+k]=[];
+        byChapter['b1-'+k].push({v,i,book:'b1',k});
       }
     });
   }
@@ -1907,7 +2407,7 @@ function runSearch(q) {
       const kT=(v.k||'').replace(/'/g,'&#39;');
       const exT=(v.ex||'').replace(/'/g,'&#39;');
       return `<tr class="${uf?'unfamiliar':''}">
-        <td class="dot-cell" onclick="event.stopPropagation();srToggleMark(${k},${i})"><span class="dot"></span></td>
+        <td class="dot-cell" onclick="event.stopPropagation();srToggleMark('${book}',${kNum},${i})"><span class="dot"></span></td>
         <td onclick="speakText('${deT}','de-DE')" style="cursor:pointer">
           ${v.a?`<span class="artikel">${v.a}</span>`:''}
           <span class="word-de">${hl(v.w,searchQuery)}</span>
@@ -1930,8 +2430,13 @@ function runSearch(q) {
         </td>
       </tr>`;
     }).join('');
+    const bookLabel = k.startsWith('b1') ? 'B1/B2' : 'B2';
+    const kNum2 = parseInt(k.split('-')[1]);
+    const secTitle = k.startsWith('b1') 
+      ? {1:'Das bin ich',2:'Im Unternehmen',3:'Teamarbeit',4:'Kaufen und Verkaufen'}[kNum2]
+      : TITLES[kNum2];
     out+=`<div class="section-block" style="margin-bottom:20px;">
-      <div class="section-header">Kapitel ${k} – ${TITLES[k]}
+      <div class="section-header"><span style="opacity:.6;font-size:10px;margin-right:6px;">${bookLabel}</span>Kapitel ${kNum2} – ${secTitle||''}
         <span style="font-weight:400;margin-left:6px;opacity:.7;">(${items.length} 筆)</span>
       </div>
       <table><thead><tr>
@@ -1944,7 +2449,8 @@ function runSearch(q) {
   el.innerHTML=out;
 }
 
-function srToggleMark(k,i) {
+function srToggleMark(bookKey,k,i) {
+  if (bookKey==='b1') { toggleMarkB1(k,i); runSearch(searchQuery); return; }
   if (!unfamiliarCache[k]) {
     unfamiliarCache[k]=new Set();
     try{const s=localStorage.getItem(CHAPTERS[k].key);if(s)unfamiliarCache[k]=new Set(JSON.parse(s));}catch(e){}
@@ -1961,19 +2467,20 @@ function exportCheckpoint() {
   const data = {};
   for (let k = 1; k <= 10; k++) {
     const key = CHAPTERS[k].key;
-    try {
-      const s = localStorage.getItem(key);
-      data[key] = s ? JSON.parse(s) : [];
-    } catch(e) { data[key] = []; }
+    try { const s=localStorage.getItem(key); data[key]=s?JSON.parse(s):[]; } catch(e){data[key]=[];}
+  }
+  for (let k = 1; k <= 4; k++) {
+    const key = B1_CHAPTERS[k].key;
+    try { const s=localStorage.getItem(key); data[key]=s?JSON.parse(s):[]; } catch(e){data[key]=[];}
   }
   const json = JSON.stringify(data, null, 2);
   const blob = new Blob([json], {type: 'application/json'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'Wortschatz_Klett-Aspekte-Beruf-B2.json';
+  a.download = 'Wortschatz_Klett-Aspekte-Beruf-B2_checkpoint.json';
   a.click();
   URL.revokeObjectURL(a.href);
-  setCpStatus('✓ 已匯出 Wortschatz_Klett-Aspekte-Beruf-B2.json');
+  setCpStatus('✓ 已匯出 Wortschatz_Klett-Aspekte-Beruf-B2_checkpoint.json');
 }
 
 function importCheckpoint(event) {
@@ -2018,12 +2525,12 @@ function setCpStatus(msg) {
   setTimeout(() => { el.textContent = ''; }, 4000);
 }
 
-// Auto-load Wortschatz_Klett-Aspekte-Beruf-B2.json if served from a web server (GitHub Pages etc.)
+// Auto-load Wortschatz_Klett-Aspekte-Beruf-B2_checkpoint.json if served from a web server (GitHub Pages etc.)
 async function tryAutoLoadCheckpoint() {
   // Only attempt on http/https, not file://
   if (!location.protocol.startsWith('http')) return;
   try {
-    const res = await fetch('./Wortschatz_Klett-Aspekte-Beruf-B2.json', {cache: 'no-cache'});
+    const res = await fetch('./Wortschatz_Klett-Aspekte-Beruf-B2_checkpoint.json', {cache: 'no-cache'});
     if (!res.ok) return;
     const data = await res.json();
     let count = 0;
@@ -2041,7 +2548,7 @@ async function tryAutoLoadCheckpoint() {
     }
     if (count > 0) setCpStatus(`✓ 已自動載入 ${count} 個標記`);
   } catch(e) {
-    // No Wortschatz_Klett-Aspekte-Beruf-B2.json found — silent fail
+    // No Wortschatz_Klett-Aspekte-Beruf-B2_checkpoint.json found — silent fail
   }
 }
 
@@ -2049,6 +2556,8 @@ async function tryAutoLoadCheckpoint() {
 tryAutoLoadCheckpoint();
 if (currentChapter === 'search') {
   switchToSearch();
+} else if (currentBook === 'b1') {
+  switchChapterB1(typeof currentChapter === 'number' ? currentChapter : 1);
 } else {
   switchChapter(typeof currentChapter === 'number' ? currentChapter : 1);
 }
