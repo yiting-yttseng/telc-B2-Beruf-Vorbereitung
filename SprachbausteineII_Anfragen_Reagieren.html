@@ -21,6 +21,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;ba
 .clear-btn{padding:3px 8px;border-radius:13px;border:0.5px solid #f0c0c0;background:#fff;color:#c0392b;font-size:11px;cursor:pointer}
 .export-btn-nav{padding:3px 9px;border-radius:13px;border:0.5px solid #ccc;background:#fff;color:#333;font-size:11px;cursor:pointer}
 .export-btn-nav:disabled{opacity:.35;cursor:default}
+.backup-bar{display:flex;align-items:center;gap:8px;padding:6px 14px;background:#f0f4ff;border-bottom:1px solid #d0d8f0;font-size:12px;color:#444;flex-wrap:wrap}
+.backup-label{font-weight:600;white-space:nowrap}
+.cp-btn{padding:4px 13px;border-radius:6px;border:1px solid #b0bce8;background:#fff;color:#1F4E79;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s}
+.cp-btn:hover{border-color:#1F4E79;background:#eef2ff}
+.cp-btn.primary{background:#1F4E79;color:#fff;border-color:#1F4E79}
+.cp-btn.primary:hover{background:#163b5e}
+.cp-import-ok{font-size:11px;color:#2e7d32;font-weight:600;display:none}
+.cp-import-ok.show{display:inline}
 .page{max-width:1200px;margin:0 auto;padding:18px 16px 60px}
 .page-header{margin-bottom:14px}
 .page-header h1{font-size:17px;font-weight:600;color:#1F4E79;margin-bottom:3px}
@@ -144,6 +152,14 @@ tr.unfamiliar .dot{background:#e24b4a;border-color:#e24b4a}
     <button class="clear-btn" onclick="ueClear()">清除</button>
     <button class="export-btn-nav" id="ueExportBtn" onclick="ueToggleExport()" disabled>匯出 ↗</button>
   </div>
+</div>
+
+<div class="backup-bar">
+  <span class="backup-label">💾 勾選備份：</span>
+  <button class="cp-btn primary" onclick="cpExport()">匯出</button>
+  <button class="cp-btn" onclick="document.getElementById('cpFileInput').click()">匯入</button>
+  <span class="cp-import-ok" id="cpImportOk">✓ 匯入成功</span>
+  <input type="file" id="cpFileInput" accept=".json" style="display:none" onchange="cpImport(event)">
 </div>
 
 <div class="speaking-badge" id="speakingBadge">
@@ -1006,6 +1022,48 @@ function ueBuildNav(){
     };
     c.appendChild(btn);
   });
+}
+
+// ── JSON 匯出 / 匯入 ─────────────────────────────────────────────────────────
+function cpExport(){
+  const data = {
+    rd: [...rdMarked],
+    ue: [...ueMarked]
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'SprachbausteineII_Anfragen_Reagieren_checkpoint.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+function cpImport(event){
+  const file = event.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e){
+    try {
+      const data = JSON.parse(e.target.result);
+      if(!Array.isArray(data.rd) || !Array.isArray(data.ue)){
+        alert('格式錯誤：JSON 檔案缺少 rd 或 ue 欄位。');
+        return;
+      }
+      rdMarked = new Set(data.rd);
+      ueMarked = new Set(data.ue);
+      localStorage.setItem(RD_LS, JSON.stringify([...rdMarked]));
+      localStorage.setItem(UE_LS, JSON.stringify([...ueMarked]));
+      rdRender();
+      ueRender();
+      const ok = document.getElementById('cpImportOk');
+      ok.classList.add('show');
+      setTimeout(()=> ok.classList.remove('show'), 3000);
+    } catch(err) {
+      alert('格式錯誤：無法解析 JSON 檔案。');
+    }
+    event.target.value = '';
+  };
+  reader.readAsText(file);
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────────
