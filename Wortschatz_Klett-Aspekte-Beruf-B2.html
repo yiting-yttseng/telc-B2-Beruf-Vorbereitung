@@ -280,8 +280,8 @@ body { padding-top: 0; }
 
 <div class="checkpoint-bar">
   <span>💾 勾選備份：</span>
-  <button class="cp-btn primary" onclick="exportCheckpoint()">匯出 Wortschatz_Klett-Aspekte-Beruf-B2_checkpoint.json</button>
-  <button class="cp-btn" onclick="document.getElementById('cpFileInput').click()">匯入 Wortschatz_Klett-Aspekte-Beruf-B2_checkpoint.json</button>
+  <button class="cp-btn primary" onclick="exportCheckpoint()">匯出 Wortschatz_Klett-Aspekte-Beruf-B2.json</button>
+  <button class="cp-btn" onclick="document.getElementById('cpFileInput').click()">匯入 Wortschatz_Klett-Aspekte-Beruf-B2.json</button>
   <input type="file" id="cpFileInput" accept=".json" onchange="importCheckpoint(event)">
   <span class="cp-status" id="cpStatus"></span>
 </div>
@@ -2400,14 +2400,16 @@ function runSearch(q) {
   let out=`<p style="color:#888;font-size:12px;margin:0 0 12px;padding:0 4px;">共找到 <strong>${total}</strong> 筆結果</p>`;
   Object.keys(byChapter).sort((a,b)=>+a-+b).forEach(k => {
     const items=byChapter[k];
+    const bookKey = k.startsWith('b1') ? 'b1' : 'b2';
+    const kNum = parseInt(k.split('-')[1]);
     const rows=items.map(({v,i})=>{
-      const uf=(unfamiliarCache[k]||new Set()).has(i);
+      const uf = bookKey==='b1' ? getB1Unfamiliar(kNum).has(i) : (unfamiliarCache[kNum]||new Set()).has(i);
       const deT=((v.a?v.a+' ':'')+v.w).replace(/'/g,'&#39;');
       const enT=(v.en.split('/')[0]||'').trim().replace(/'/g,'&#39;');
       const kT=(v.k||'').replace(/'/g,'&#39;');
       const exT=(v.ex||'').replace(/'/g,'&#39;');
       return `<tr class="${uf?'unfamiliar':''}">
-        <td class="dot-cell" onclick="event.stopPropagation();srToggleMark('${book}',${kNum},${i})"><span class="dot"></span></td>
+        <td class="dot-cell" onclick="event.stopPropagation();srToggleMark('${bookKey}',${kNum},${i})"><span class="dot"></span></td>
         <td onclick="speakText('${deT}','de-DE')" style="cursor:pointer">
           ${v.a?`<span class="artikel">${v.a}</span>`:''}
           <span class="word-de">${hl(v.w,searchQuery)}</span>
@@ -2430,13 +2432,12 @@ function runSearch(q) {
         </td>
       </tr>`;
     }).join('');
-    const bookLabel = k.startsWith('b1') ? 'B1/B2' : 'B2';
-    const kNum2 = parseInt(k.split('-')[1]);
-    const secTitle = k.startsWith('b1') 
-      ? {1:'Das bin ich',2:'Im Unternehmen',3:'Teamarbeit',4:'Kaufen und Verkaufen'}[kNum2]
-      : TITLES[kNum2];
+    const bookLabel = bookKey === 'b1' ? 'B1/B2' : 'B2';
+    const secTitle = bookKey === 'b1'
+      ? {1:'Das bin ich',2:'Im Unternehmen',3:'Teamarbeit',4:'Kaufen und Verkaufen'}[kNum]
+      : TITLES[kNum];
     out+=`<div class="section-block" style="margin-bottom:20px;">
-      <div class="section-header"><span style="opacity:.6;font-size:10px;margin-right:6px;">${bookLabel}</span>Kapitel ${kNum2} – ${secTitle||''}
+      <div class="section-header"><span style="opacity:.6;font-size:10px;margin-right:6px;">${bookLabel}</span>Kapitel ${kNum} – ${secTitle||''}
         <span style="font-weight:400;margin-left:6px;opacity:.7;">(${items.length} 筆)</span>
       </div>
       <table><thead><tr>
@@ -2477,10 +2478,10 @@ function exportCheckpoint() {
   const blob = new Blob([json], {type: 'application/json'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'Wortschatz_Klett-Aspekte-Beruf-B2_checkpoint.json';
+  a.download = 'Wortschatz_Klett-Aspekte-Beruf-B2.json';
   a.click();
   URL.revokeObjectURL(a.href);
-  setCpStatus('✓ 已匯出 Wortschatz_Klett-Aspekte-Beruf-B2_checkpoint.json');
+  setCpStatus('✓ 已匯出 Wortschatz_Klett-Aspekte-Beruf-B2.json');
 }
 
 function importCheckpoint(event) {
@@ -2532,7 +2533,7 @@ async function tryAutoLoadCheckpoint() {
   // Show loading indicator while fetching
   setCpStatus('⏳ 載入標記中…');
   try {
-    const res = await fetch('./Wortschatz_Klett-Aspekte-Beruf-B2_checkpoint.json', {cache: 'no-cache'});
+    const res = await fetch('./Wortschatz_Klett-Aspekte-Beruf-B2.json', {cache: 'no-cache'});
     if (!res.ok) return;
     const data = await res.json();
     let count = 0;
@@ -2548,7 +2549,7 @@ async function tryAutoLoadCheckpoint() {
         count += indices.length;
       }
     }
-    if (count > 0) setCpStatus(`✓ 已從 Wortschatz_Klett-Aspekte-Beruf-B2_checkpoint.json 自動載入 ${count} 個標記`);
+    if (count > 0) setCpStatus(`✓ 已從 Wortschatz_Klett-Aspekte-Beruf-B2.json 自動載入 ${count} 個標記`);
   } catch(e) {
     // No checkpoint.json found — silent fail
   }
