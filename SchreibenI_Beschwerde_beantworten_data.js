@@ -121,7 +121,11 @@ const REDEMITTEL = [
   ]
 },
 
-// ── 3. 解釋原因 ──────────────────────────────────────────
+{id:"r2-6", sec:"2. 道歉 — Entschuldigung",
+  left_de:"Das hätte nicht passieren sollen, und wir übernehmen die volle Verantwortung dafür.",
+  left_zh:"這本不應該發生，我們為此承擔全部責任。（語氣較強，適合嚴重疏失）",
+  ex:[]
+},
 {id:"r3-1", sec:"3. 解釋原因 — Erklärung der Ursache",
   left_de:"Grund für [die Beanstandung / die Mängel / die Lieferverzögerung / die Probleme] war(en) …",
   left_zh:"[客訴/瑕疵/交貨延遲/問題]的原因是……（Beanstandung 比 Beschwerde 更正式）",
@@ -227,8 +231,8 @@ const REDEMITTEL = [
   left_de:"Wir können Ihnen versichern / zusichern, dass …",
   left_zh:"我們可以向您保證……（versichern = 保證事實為真；zusichern = 承諾未來行動，更精確）",
   ex:[
-    {de:"Wir können Ihnen versichern, dass solche Fehler in Zukunft nicht mehr passieren werden.",
-     zh:"我們可以向您保證，此類失誤將來不會再發生。"},
+    {de:"Wir können Ihnen versichern, dass [solche Fehler / derartige Fehler] in Zukunft nicht mehr [passieren / auftreten] werden.",
+     zh:"我們可以向您保證，此類/這樣的失誤將來不會再[發生/出現]。"},
     {de:"Wir können Ihnen zusichern, dass wir in Zukunft bei Verzögerungen sofort Kontakt aufnehmen werden.",
      zh:"我們承諾，今後遇到延誤會立即聯繫您。"},
     {de:"Wir möchten Ihnen versichern, dass wir diese Probleme zukünftig so lösen werden, dass wir unseren neuen Mitarbeitern nicht nur Weiterbildungen anbieten, sondern auch genügend Personal einstellen.",
@@ -236,7 +240,19 @@ const REDEMITTEL = [
   ]
 },
 
-// ── 5. 解決方案與補償 ────────────────────────────────────
+{id:"r4-7", sec:"4. 改善措施 — Interne Maßnahmen",
+  left_de:"Wir haben den Fehler sofort identifiziert und werden ihn umgehend beheben.",
+  left_zh:"我們已立即查明失誤，並將盡快予以修正。（identifizieren = 查明/確認；umgehend = 立即）",
+  ex:[]
+},
+{id:"r4-8", sec:"4. 改善措施 — Interne Maßnahmen",
+  left_de:"Wir werden den entsprechenden Betrag auf Ihr Konto zurückerstatten.",
+  left_zh:"我們將把相應金額退回您的帳戶。（zurückerstatten = 退款/退還）",
+  ex:[
+    {de:"Wir werden den entsprechenden Betrag von € 18,50 umgehend auf Ihr Konto zurückerstatten.",
+     zh:"我們將立即把18.50歐元退回您的帳戶。"},
+  ]
+},
 {id:"r5-1", sec:"5. 解決方案與補償 — Lösung und Entschädigung",
   left_de:"Als [Entschädigung / Entgegenkommen / Ausgleich / Wiedergutmachung] für die Unannehmlichkeiten bieten wir Ihnen [bei einer Folgebestellung 10% Rabatt / einen Ersatz / eine Gutschrift / einen Preisnachlass] an.",
   left_zh:"作為補償，我們為您提供……（Entschädigung賠償 / Entgegenkommen讓步 / Ausgleich彌補 / Wiedergutmachung彌補過失）",
@@ -330,7 +346,11 @@ const REDEMITTEL = [
   ]
 },
 
-// ── 📝 General 範例信 ──────────────────────────────────
+{id:"r6-5", sec:"6. 結尾 — Abschluss",
+  left_de:"Wir versichern Ihnen eine pünktliche und sorgfältige Ausführung Ihrer Bestellung und stehen Ihnen für Rückfragen jederzeit zur Verfügung.",
+  left_zh:"我們向您保證準時且謹慎地執行您的訂單，如有任何疑問，我們隨時為您服務。（pünktlich = 準時；sorgfältig = 謹慎/細心；Ausführung = 執行）",
+  ex:[]
+},
 {id:"general-example", sec:"📝 General 範例信 — Musterbrief",
   left_de:"► 一封通用示範回信（可套用任何情況）",
   left_zh:"以下為完整示範，點各行可朗讀",
