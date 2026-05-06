@@ -3071,4 +3071,745 @@ const WORDS = [
     ]
   },
 
+// ══════════════════════════════════════════════
+  //  詞根：kommen（來）
+  // ══════════════════════════════════════════════
+
+  {
+    id: 131,
+    word: "kommen",
+    artikel: "",
+    root: "kommen",
+    rootMeaning: "來、到來（to come）",
+    zh: "來（基本字根）",
+    en: "to come",
+    breakdown: "基本字根，衍生出大量前綴動詞和名詞（-kunft 家族）\n→ 注意：kommen 的名詞形式變成 -kunft\n（an + kommen → Ankunft；zu + kommen → Zukunft）",
+    collocations: [
+      { de: "jemandem etw. zukommen lassen", zh: "把某事物轉達／送達給某人" },
+      { de: "zum Einsatz kommen", zh: "被投入使用" },
+      { de: "zu einem Ergebnis kommen", zh: "得出結果" },
+      { de: "infrage kommen", zh: "值得考慮、適合" }
+    ],
+    synonyms: ["ankommen", "eintreffen", "erscheinen"],
+    related: ["ankommen", "auskommen", "vorkommen", "zukommen", "bekommen", "entkommen"],
+    examples: [
+      { de: "Wir lassen Ihnen die Unterlagen so bald wie möglich zukommen.", zh: "我們會盡快將文件送達給您。" },
+      { de: "Diese Lösung kommt für uns nicht infrage.", zh: "這個解決方案對我們來說不適合。" }
+    ]
+  },
+
+  {
+    id: 132,
+    word: "ankommen",
+    artikel: "",
+    root: "kommen",
+    rootMeaning: "來、到來（to come）",
+    zh: "抵達；取決於；重要",
+    en: "to arrive; to depend on; to matter",
+    breakdown: "an-（靠近、到達）+ kommen（來）\n→ 「來到某處」= 抵達\n→ 引申：es kommt auf etw. an = 取決於某事",
+    collocations: [
+      { de: "pünktlich ankommen", zh: "準時抵達" },
+      { de: "Es kommt darauf an, dass …", zh: "關鍵在於……；取決於……" },
+      { de: "gut ankommen", zh: "受到好評（某事受歡迎）" }
+    ],
+    synonyms: ["eintreffen", "erscheinen"],
+    related: ["kommen", "auskommen", "vorkommen", "zukommen", "bekommen"],
+    examples: [
+      { de: "Der Zug kommt pünktlich um 10 Uhr an.", zh: "火車準時在十點抵達。" },
+      { de: "Es kommt vor allem auf die Qualität der Daten an.", zh: "最重要的是取決於資料的品質。" }
+    ]
+  },
+
+  {
+    id: 133,
+    word: "vorkommen",
+    artikel: "",
+    root: "kommen",
+    rootMeaning: "來、到來（to come）",
+    zh: "發生、出現；感覺（好像）",
+    en: "to occur, to happen; to seem",
+    breakdown: "vor-（在前面出現）+ kommen（來）\n→ 「出現在眼前」= 發生、出現\n→ 引申：das kommt mir komisch vor = 這讓我感覺很奇怪",
+    collocations: [
+      { de: "Fehler kommen vor.", zh: "錯誤時有發生。" },
+      { de: "das kommt mir bekannt vor", zh: "這讓我感覺很熟悉" },
+      { de: "In dieser Situation kommt es oft vor, dass …", zh: "在這種情況下，常常發生……" }
+    ],
+    synonyms: ["auftreten", "passieren", "erscheinen"],
+    related: ["kommen", "ankommen", "auskommen", "zukommen", "bekommen"],
+    examples: [
+      { de: "Solche Fehler kommen in der Praxis häufig vor.", zh: "這類錯誤在實踐中經常發生。" },
+      { de: "Das kommt mir seltsam vor.", zh: "這讓我感覺很奇怪。" }
+    ]
+  },
+
+  {
+    id: 134,
+    word: "auskommen",
+    artikel: "",
+    root: "kommen",
+    rootMeaning: "來、到來（to come）",
+    zh: "相處融洽；應付、湊合",
+    en: "to get along (with someone); to manage (with something)",
+    breakdown: "aus-（向外、應付出去）+ kommen（來）\n→ 「能從情況中出來」= 應付、湊合\n→ 引申：mit jemandem auskommen = 與某人相處融洽",
+    collocations: [
+      { de: "mit jemandem gut auskommen", zh: "與某人相處融洽" },
+      { de: "mit etw. auskommen", zh: "用某物應付、湊合" },
+      { de: "ohne etw. auskommen", zh: "不需要某物也能應付" }
+    ],
+    synonyms: ["harmonieren（相處）", "zurechtkommen（應付）"],
+    related: ["kommen", "ankommen", "vorkommen", "zukommen", "bekommen"],
+    examples: [
+      { de: "Im Team kommen alle gut miteinander aus.", zh: "團隊裡大家相處融洽。" },
+      { de: "Mit diesem Budget kommen wir nicht aus.", zh: "這個預算我們應付不來。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  詞根：-kunft（kommen 的名詞形式）
+  // ══════════════════════════════════════════════
+
+  {
+    id: 135,
+    word: "die Auskunft",
+    artikel: "die",
+    root: "kunft",
+    rootMeaning: "kommen（來）的名詞形式",
+    zh: "資訊、回覆、問詢",
+    en: "information, inquiry response",
+    breakdown: "aus-（向外）+ Kunft（來自 kommen）\n→ 「讓資訊從裡面向外出來」= 提供的資訊\n→ 常用搭配：Auskunft geben / erteilen / einholen\n→ ⚠️ 注意：Auskunft（資訊回覆）≠ Information（一般資訊）",
+    collocations: [
+      { de: "Auskunft geben / erteilen über", zh: "就……提供資訊" },
+      { de: "Auskunft einholen", zh: "取得資訊" },
+      { de: "um Auskunft bitten", zh: "請求提供資訊" }
+    ],
+    synonyms: ["die Information", "die Antwort", "die Mitteilung"],
+    related: ["Ankunft", "Zukunft", "Herkunft", "Unterkunft"],
+    examples: [
+      { de: "Können Sie mir bitte Auskunft über die Öffnungszeiten geben?", zh: "您能告訴我開放時間嗎？" },
+      { de: "Der Kundendienst erteilt gerne Auskunft über Lieferzeiten.", zh: "客服部門很樂意提供交貨時間的資訊。" }
+    ]
+  },
+
+  {
+    id: 136,
+    word: "die Ankunft",
+    artikel: "die",
+    root: "kunft",
+    rootMeaning: "kommen（來）的名詞形式",
+    zh: "抵達",
+    en: "arrival",
+    breakdown: "an-（靠近）+ Kunft（kommen）→ 「到來」= 抵達\n→ 反義：die Abfahrt（出發）",
+    collocations: [
+      { de: "bei der Ankunft", zh: "抵達時" },
+      { de: "die voraussichtliche Ankunft", zh: "預計抵達時間" },
+      { de: "Ankunft und Abfahrt", zh: "抵達與出發" }
+    ],
+    synonyms: ["das Eintreffen"],
+    related: ["Auskunft", "Zukunft", "Herkunft", "Unterkunft"],
+    examples: [
+      { de: "Bei der Ankunft bitte am Empfang melden.", zh: "抵達時請在前台報到。" },
+      { de: "Die voraussichtliche Ankunftszeit ist 15 Uhr.", zh: "預計抵達時間為下午三點。" }
+    ]
+  },
+
+  {
+    id: 137,
+    word: "die Zukunft",
+    artikel: "die",
+    root: "kunft",
+    rootMeaning: "kommen（來）的名詞形式",
+    zh: "未來",
+    en: "future",
+    breakdown: "zu-（朝向）+ Kunft（kommen）→ 「即將到來的」= 未來\n→ zukünftig（形容詞）= 未來的、今後的",
+    collocations: [
+      { de: "in der / für die Zukunft", zh: "在未來 / 為了未來" },
+      { de: "zukunftsorientiert", zh: "面向未來的" },
+      { de: "zukünftig", zh: "今後、未來的（形容詞）" }
+    ],
+    synonyms: ["die Perspektive"],
+    related: ["Auskunft", "Ankunft", "Herkunft", "Unterkunft"],
+    examples: [
+      { de: "In Zukunft werden alle Daten digital erfasst.", zh: "今後所有資料將以數位方式記錄。" },
+      { de: "Das Unternehmen ist gut aufgestellt für die Zukunft.", zh: "公司為未來做好了充分準備。" }
+    ]
+  },
+
+  {
+    id: 138,
+    word: "die Herkunft",
+    artikel: "die",
+    root: "kunft",
+    rootMeaning: "kommen（來）的名詞形式",
+    zh: "來源、出身、產地",
+    en: "origin, background, provenance",
+    breakdown: "her-（從那裡來）+ Kunft（kommen）→ 「從哪裡來的」= 來源、出身",
+    collocations: [
+      { de: "die berufliche / soziale Herkunft", zh: "職業 / 社會背景" },
+      { de: "das Herkunftsland", zh: "原產地國" },
+      { de: "unabhängig von der Herkunft", zh: "不論出身" }
+    ],
+    synonyms: ["der Ursprung", "die Abstammung"],
+    related: ["Auskunft", "Ankunft", "Zukunft", "Unterkunft"],
+    examples: [
+      { de: "Die Herkunft des Materials muss dokumentiert werden.", zh: "材料的來源必須記錄在案。" },
+      { de: "Unabhängig von der Herkunft werden alle Bewerber gleich behandelt.", zh: "不論出身，所有應聘者都受到平等對待。" }
+    ]
+  },
+
+  {
+    id: 139,
+    word: "die Unterkunft",
+    artikel: "die",
+    root: "kunft",
+    rootMeaning: "kommen（來）的名詞形式",
+    zh: "住宿、住所",
+    en: "accommodation, lodging",
+    breakdown: "unter-（在下面、容納在內）+ Kunft（kommen）\n→ 「讓人來到並容納的地方」= 住宿",
+    collocations: [
+      { de: "eine Unterkunft suchen / buchen", zh: "尋找 / 預訂住宿" },
+      { de: "Unterkunft und Verpflegung", zh: "食宿" },
+      { de: "die Unterkunftskosten", zh: "住宿費用" }
+    ],
+    synonyms: ["die Unterkunft", "das Quartier", "die Wohnung"],
+    related: ["Auskunft", "Ankunft", "Zukunft", "Herkunft"],
+    examples: [
+      { de: "Das Angebot schließt Unterkunft und Verpflegung ein.", zh: "這個方案包含食宿。" },
+      { de: "Für die Schulung wird eine Unterkunft in der Nähe gebucht.", zh: "培訓期間將在附近預訂住宿。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  schließen 補充（beschließen）
+  // ══════════════════════════════════════════════
+
+  {
+    id: 140,
+    word: "beschließen",
+    artikel: "",
+    root: "schließen",
+    rootMeaning: "關、鎖（to close / lock）",
+    zh: "決議、決定（集體）；結束",
+    en: "to decide, to resolve (collectively); to conclude",
+    breakdown: "be-（施加到某對象）+ schließen（鎖、關）\n→ 「把討論鎖定、結束」= 做出決議\n→ der Beschluss = 決議、決定（名詞）\n→ ⚠️ 區別：sich entschließen = 個人決定；beschließen = 集體決議",
+    collocations: [
+      { de: "einen Beschluss fassen", zh: "通過決議（名詞搭配）" },
+      { de: "eine Maßnahme beschließen", zh: "決議採取一項措施" },
+      { de: "die Verordnung wurde beschlossen", zh: "法規被通過決議" }
+    ],
+    synonyms: ["entscheiden", "vereinbaren", "verabschieden"],
+    related: ["ausschließen", "einschließen", "abschließen", "entschließen", "schließen"],
+    examples: [
+      { de: "Der Vorstand hat beschlossen, das Projekt fortzusetzen.", zh: "董事會決議繼續推進這個項目。" },
+      { de: "Die neue Verordnung wurde gestern beschlossen.", zh: "新法規昨天被通過決議。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  nehmen 補充
+  // ══════════════════════════════════════════════
+
+  {
+    id: 141,
+    word: "vornehmen",
+    artikel: "",
+    root: "nehmen",
+    rootMeaning: "拿取（to take）",
+    zh: "進行（某操作）；計畫、打算（sich vornehmen）",
+    en: "to carry out, to make (a change); to intend, to resolve",
+    breakdown: "vor-（在前面）+ nehmen（拿取）\n→ 「把某事拿到前面來處理」= 進行某操作\n→ sich vornehmen = 下定決心、計畫做\n→ 職場常見：Änderungen vornehmen = 進行修改",
+    collocations: [
+      { de: "Änderungen vornehmen", zh: "進行修改" },
+      { de: "Anpassungen vornehmen", zh: "進行調整" },
+      { de: "sich etw. vornehmen", zh: "計畫做某事；下定決心" }
+    ],
+    synonyms: ["durchführen（進行）", "planen（計畫）"],
+    related: ["entgegennehmen", "annehmen", "aufnehmen", "übernehmen", "unternehmen", "entnehmen"],
+    examples: [
+      { de: "Am Dokument wurden mehrere Änderungen vorgenommen.", zh: "文件進行了多處修改。" },
+      { de: "Ich habe mir vorgenommen, täglich Deutsch zu üben.", zh: "我下定決心每天練習德語。" }
+    ]
+  },
+
+  {
+    id: 142,
+    word: "die Ausnahme",
+    artikel: "die",
+    root: "nehmen",
+    rootMeaning: "拿取（to take）",
+    zh: "例外",
+    en: "exception",
+    breakdown: "aus-（向外）+ Nahme（nahm，nehmen 的名詞形式）\n→ 「從規則中拿出去的」= 例外\n→ ausnahmsweise = 作為例外（副詞）\n→ keine Ausnahme = 沒有例外",
+    collocations: [
+      { de: "eine Ausnahme machen", zh: "破例" },
+      { de: "ohne Ausnahme", zh: "毫無例外地" },
+      { de: "ausnahmsweise", zh: "作為例外；例外地（副詞）" },
+      { de: "Ausnahmen bestätigen die Regel.", zh: "例外印證規則。（諺語）" }
+    ],
+    synonyms: ["der Sonderfall", "die Abweichung"],
+    related: ["entgegennehmen", "annehmen", "aufnehmen", "vornehmen", "Stellungnahme"],
+    examples: [
+      { de: "In diesem Fall kann eine Ausnahme gemacht werden.", zh: "這種情況下可以破例。" },
+      { de: "Diese Regel gilt ohne Ausnahme für alle Mitarbeiter.", zh: "這條規定對所有員工毫無例外地適用。" }
+    ]
+  },
+
+  {
+    id: 143,
+    word: "die Stellungnahme",
+    artikel: "die",
+    root: "nehmen",
+    rootMeaning: "拿取（to take）",
+    zh: "聲明、表態、意見書",
+    en: "statement, position paper, comment",
+    breakdown: "Stellung（立場、位置）+ Nahme（nahm，nehmen 名詞形式）\n→ 「拿定立場」= 聲明、表態\n→ eine Stellungnahme abgeben = 發表聲明",
+    collocations: [
+      { de: "eine Stellungnahme abgeben", zh: "發表聲明" },
+      { de: "um eine Stellungnahme bitten", zh: "請求表態" },
+      { de: "eine schriftliche Stellungnahme", zh: "書面聲明" }
+    ],
+    synonyms: ["die Erklärung", "die Äußerung", "das Statement"],
+    related: ["vornehmen", "annehmen", "aufnehmen", "die Ausnahme"],
+    examples: [
+      { de: "Die Firma hat eine offizielle Stellungnahme zu dem Vorfall abgegeben.", zh: "公司就這起事件發表了官方聲明。" },
+      { de: "Wir bitten um Ihre Stellungnahme bis Freitag.", zh: "請在週五前提供您的意見。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  geben 補充（zugeben）
+  // ══════════════════════════════════════════════
+
+  {
+    id: 144,
+    word: "zugeben",
+    artikel: "",
+    root: "geben",
+    rootMeaning: "給予（to give）",
+    zh: "承認、坦承",
+    en: "to admit, to confess, to acknowledge",
+    breakdown: "zu-（朝向、加入）+ geben（給予）\n→ 「把事實交出去給對方」= 坦承、承認\n→ ⚠️ 比 gestehen 語氣更輕，日常用語",
+    collocations: [
+      { de: "einen Fehler zugeben", zh: "承認錯誤" },
+      { de: "offen zugeben", zh: "坦率承認" },
+      { de: "ich muss zugeben, dass …", zh: "我必須承認……" }
+    ],
+    synonyms: ["eingestehen", "gestehen", "einräumen"],
+    related: ["aufgeben", "angeben", "ausgeben", "vergeben", "abgeben"],
+    examples: [
+      { de: "Er musste zugeben, dass er einen Fehler gemacht hatte.", zh: "他不得不承認自己犯了一個錯誤。" },
+      { de: "Ich muss zugeben, dass die Lösung besser ist als ich dachte.", zh: "我必須承認，這個解決方案比我想的要好。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  詞根：wenden（轉向）
+  // ══════════════════════════════════════════════
+
+  {
+    id: 145,
+    word: "anwenden",
+    artikel: "",
+    root: "wenden",
+    rootMeaning: "轉向、應用（to turn / apply）",
+    zh: "應用、使用、運用",
+    en: "to apply, to use, to employ",
+    breakdown: "an-（靠近、施加）+ wenden（轉向）\n→ 「把方法轉向某對象使用」= 應用\n→ die Anwendung = 應用、程式（App）（名詞）",
+    collocations: [
+      { de: "eine Methode anwenden", zh: "應用一種方法" },
+      { de: "Kenntnisse anwenden", zh: "運用知識" },
+      { de: "die Anwendung", zh: "應用、程式（名詞）" },
+      { de: "anwendungsorientiert", zh: "以應用為導向的" }
+    ],
+    synonyms: ["einsetzen", "verwenden", "nutzen"],
+    related: ["verwenden", "abwenden", "zuwenden", "sich wenden an"],
+    examples: [
+      { de: "Im Praktikum kann man das erlernte Wissen direkt anwenden.", zh: "在實習中可以直接應用所學的知識。" },
+      { de: "Welche Methode soll hier angewendet werden?", zh: "這裡應該應用哪種方法？" }
+    ]
+  },
+
+  {
+    id: 146,
+    word: "verwenden",
+    artikel: "",
+    root: "wenden",
+    rootMeaning: "轉向、應用（to turn / apply）",
+    zh: "使用、採用",
+    en: "to use, to employ, to utilize",
+    breakdown: "ver-（轉化、應用）+ wenden（轉向）\n→ 「把資源轉化投入使用」= 使用\n→ 比 benutzen 更正式；比 anwenden 更強調「投入資源」",
+    collocations: [
+      { de: "Materialien / Ressourcen verwenden", zh: "使用材料 / 資源" },
+      { de: "Zeit und Mühe verwenden", zh: "花費時間和精力" },
+      { de: "die Verwendung", zh: "使用、用途（名詞）" }
+    ],
+    synonyms: ["benutzen", "einsetzen", "anwenden"],
+    related: ["anwenden", "abwenden", "zuwenden", "sich wenden an"],
+    examples: [
+      { de: "Für dieses Experiment wurden modernste Messgeräte verwendet.", zh: "這個實驗使用了最先進的測量設備。" },
+      { de: "Welche Software wird in Ihrem Unternehmen verwendet?", zh: "您的公司使用哪種軟體？" }
+    ]
+  },
+
+  {
+    id: 147,
+    word: "sich wenden an",
+    artikel: "",
+    root: "wenden",
+    rootMeaning: "轉向、應用（to turn / apply）",
+    zh: "聯繫、求助於、向……求助",
+    en: "to contact, to turn to, to address",
+    breakdown: "sich wenden（轉身面向）+ an（靠近）\n→ 「轉身面向某人」= 聯繫、求助\n→ 書信/職場超高頻固定搭配",
+    collocations: [
+      { de: "sich an jemanden wenden", zh: "聯繫某人、向某人求助" },
+      { de: "sich an die zuständige Abteilung wenden", zh: "聯繫負責部門" },
+      { de: "Bitte wenden Sie sich an …", zh: "請聯繫……" }
+    ],
+    synonyms: ["kontaktieren", "anfragen bei"],
+    related: ["anwenden", "verwenden", "abwenden", "zuwenden"],
+    examples: [
+      { de: "Bitte wenden Sie sich in dieser Angelegenheit an unsere Rechtsabteilung.", zh: "在這件事上，請聯繫我們的法律部門。" },
+      { de: "Bei Fragen können Sie sich jederzeit an mich wenden.", zh: "如有問題，您隨時可以聯繫我。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  詞根：bringen（帶來）
+  // ══════════════════════════════════════════════
+
+  {
+    id: 148,
+    word: "einbringen",
+    artikel: "",
+    root: "bringen",
+    rootMeaning: "帶來（to bring）",
+    zh: "貢獻、投入（技能/想法）；提出（議案）",
+    en: "to contribute, to bring in; to introduce (a motion)",
+    breakdown: "ein-（進入）+ bringen（帶來）\n→ 「把東西帶進來投入」= 貢獻、投入\n→ Kompetenzen einbringen = 投入自己的能力",
+    collocations: [
+      { de: "Kompetenzen / Erfahrungen einbringen", zh: "貢獻能力 / 經驗" },
+      { de: "Ideen einbringen", zh: "提出想法" },
+      { de: "sich einbringen", zh: "積極參與、投入（反身）" }
+    ],
+    synonyms: ["beitragen", "einsetzen", "einbringen"],
+    related: ["mitbringen", "anbringen", "erbringen", "verbringen", "angebracht"],
+    examples: [
+      { de: "In diesem Team kann jeder seine Kompetenzen aktiv einbringen.", zh: "在這個團隊中，每個人都可以積極貢獻自己的能力。" },
+      { de: "Sie brachte viele neue Ideen in das Projekt ein.", zh: "她為這個項目提出了許多新想法。" }
+    ]
+  },
+
+  {
+    id: 149,
+    word: "angebracht",
+    artikel: "",
+    root: "bringen",
+    rootMeaning: "帶來（to bring）",
+    zh: "適當的、恰當的",
+    en: "appropriate, suitable, fitting",
+    breakdown: "an-（靠近、附上）+ gebracht（bringen 的 Partizip II）\n→ 「被帶到恰當的位置上」= 適當的、合宜的\n→ 幾乎只用形容詞形式：angebracht sein",
+    collocations: [
+      { de: "angebracht sein", zh: "是適當的、合適的" },
+      { de: "nicht angebracht sein", zh: "不適當、不合宜" },
+      { de: "es wäre angebracht, etw. zu tun", zh: "做某事是恰當的" }
+    ],
+    synonyms: ["passend", "geeignet", "zweckmäßig", "angemessen"],
+    related: ["einbringen", "mitbringen", "erbringen", "verbringen"],
+    examples: [
+      { de: "In dieser Situation ist Vorsicht angebracht.", zh: "在這種情況下，謹慎是適當的。" },
+      { de: "Eine kurze Entschuldigung wäre hier angebracht.", zh: "在這裡，簡短道歉是恰當的。" }
+    ]
+  },
+
+  {
+    id: 150,
+    word: "erbringen",
+    artikel: "",
+    root: "bringen",
+    rootMeaning: "帶來（to bring）",
+    zh: "提供（服務/證明）；達到（成果）",
+    en: "to provide (proof/service); to achieve (results)",
+    breakdown: "er-（達成某結果）+ bringen（帶來）\n→ 「帶來並完成交付」= 提供、達到\n→ 正式用語，常見於合約和職場",
+    collocations: [
+      { de: "den Nachweis erbringen", zh: "提供證明" },
+      { de: "Leistungen erbringen", zh: "提供服務；達到績效" },
+      { de: "gute Ergebnisse erbringen", zh: "達到好的結果" }
+    ],
+    synonyms: ["liefern", "nachweisen", "leisten"],
+    related: ["einbringen", "mitbringen", "angebracht", "verbringen"],
+    examples: [
+      { de: "Der Bewerber muss den Nachweis seiner Qualifikationen erbringen.", zh: "應聘者必須提供其資格認證的證明。" },
+      { de: "Das Team hat hervorragende Leistungen erbracht.", zh: "團隊取得了傑出的績效。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  詞根：stehen（站立、存在）
+  // ══════════════════════════════════════════════
+
+  {
+    id: 151,
+    word: "anstehen",
+    artikel: "",
+    root: "stehen",
+    rootMeaning: "站立、存在（to stand）",
+    zh: "即將發生的、待辦的；排隊",
+    en: "upcoming, pending; to queue",
+    breakdown: "an-（靠近、即將）+ stehen（站立）\n→ 「站在門口準備發生」= 即將到來的、待辦的\n→ anstehend（形容詞）= 即將的、待處理的",
+    collocations: [
+      { de: "anstehende Aufgaben / Termine", zh: "待辦任務 / 即將到來的約定" },
+      { de: "Was steht als nächstes an?", zh: "接下來有什麼事？" },
+      { de: "die anstehenden Änderungen", zh: "即將進行的修改" }
+    ],
+    synonyms: ["bevorstehen", "geplant sein", "zu erledigen sein"],
+    related: ["verstehen", "bestehen", "entstehen", "feststehen", "vorstehen"],
+    examples: [
+      { de: "Bitte bereiten Sie sich auf die anstehende Prüfung vor.", zh: "請為即將到來的考試做好準備。" },
+      { de: "Was steht diese Woche noch an?", zh: "這週還有什麼待辦事項？" }
+    ]
+  },
+
+  {
+    id: 152,
+    word: "bestehen",
+    artikel: "",
+    root: "stehen",
+    rootMeaning: "站立、存在（to stand）",
+    zh: "通過（考試）；堅持；由……組成；存在",
+    en: "to pass (an exam); to insist; to consist of; to exist",
+    breakdown: "be-（施加到對象）+ stehen（站立）\n→ 「站穩、存在」→ 多重意思：\n① 通過考試（站得住腳）\n② 堅持（bestehen auf）\n③ 由……組成（bestehen aus）\n④ 存在（das Unternehmen besteht seit 10 Jahren）",
+    collocations: [
+      { de: "eine Prüfung bestehen", zh: "通過考試" },
+      { de: "auf etw. bestehen", zh: "堅持某事" },
+      { de: "aus etw. bestehen", zh: "由……組成" }
+    ],
+    synonyms: ["durchkommen（通過）", "beharren auf（堅持）", "sich zusammensetzen aus（組成）"],
+    related: ["anstehen", "verstehen", "entstehen", "feststehen", "vorstehen"],
+    examples: [
+      { de: "Sie hat die Prüfung beim ersten Versuch bestanden.", zh: "她第一次嘗試就通過了考試。" },
+      { de: "Das Team besteht aus zehn Fachleuten.", zh: "這個團隊由十位專業人員組成。" }
+    ]
+  },
+
+  {
+    id: 153,
+    word: "verstehen",
+    artikel: "",
+    root: "stehen",
+    rootMeaning: "站立、存在（to stand）",
+    zh: "理解、明白",
+    en: "to understand, to comprehend",
+    breakdown: "ver-（完全）+ stehen（站立）\n→ 「完全站穩在某知識上」= 理解\n→ sich verstehen mit = 與某人相處\n→ unter etw. verstehen = 對某詞的理解",
+    collocations: [
+      { de: "etw. / jemanden verstehen", zh: "理解某事 / 某人" },
+      { de: "sich verstehen mit", zh: "與……相處融洽" },
+      { de: "Was verstehen Sie unter …?", zh: "您對……的理解是什麼？" }
+    ],
+    synonyms: ["begreifen", "nachvollziehen", "erfassen"],
+    related: ["anstehen", "bestehen", "entstehen", "feststehen", "vorstehen"],
+    examples: [
+      { de: "Haben Sie die Aufgabenstellung richtig verstanden?", zh: "您正確理解了任務說明嗎？" },
+      { de: "Was verstehen Sie unter dem Begriff Nachhaltigkeit?", zh: "您對「永續性」這個概念的理解是什麼？" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  詞根：fordern（要求）
+  // ══════════════════════════════════════════════
+
+  {
+    id: 154,
+    word: "einfordern",
+    artikel: "",
+    root: "fordern",
+    rootMeaning: "要求（to demand）",
+    zh: "要求提交、催繳、索取",
+    en: "to demand, to call in, to enforce",
+    breakdown: "ein-（進入、收回）+ fordern（要求）\n→ 「要求對方把東西交回來」= 催繳、索取",
+    collocations: [
+      { de: "Dokumente / Nachweise einfordern", zh: "要求提交文件 / 證明" },
+      { de: "Rechenschaft einfordern", zh: "要求問責" },
+      { de: "ausstehende Zahlungen einfordern", zh: "催繳未付款項" }
+    ],
+    synonyms: ["anfordern", "verlangen", "einmahnen"],
+    related: ["auffordern", "herausfordern", "überfordern", "anforderung"],
+    examples: [
+      { de: "Die Behörde forderte alle fehlenden Unterlagen ein.", zh: "機關要求提交所有缺少的文件。" },
+      { de: "Der Kunde forderte eine vollständige Dokumentation ein.", zh: "客戶要求提交完整的文件。" }
+    ]
+  },
+
+  {
+    id: 155,
+    word: "auffordern",
+    artikel: "",
+    root: "fordern",
+    rootMeaning: "要求（to demand）",
+    zh: "要求、請求（某人做某事）",
+    en: "to ask, to request, to call upon",
+    breakdown: "auf-（向上、啟動）+ fordern（要求）\n→ 「提出要求讓對方行動」= 要求、請求\n→ 比 bitten 更正式、有一定權威性",
+    collocations: [
+      { de: "jemanden auffordern, etw. zu tun", zh: "要求某人做某事" },
+      { de: "zur Stellungnahme auffordern", zh: "要求表態" },
+      { de: "die Aufforderung", zh: "要求、通知（名詞）" }
+    ],
+    synonyms: ["bitten", "verlangen", "anweisen"],
+    related: ["einfordern", "herausfordern", "überfordern", "anforderung"],
+    examples: [
+      { de: "Die Kunden werden aufgefordert, das Formular vollständig auszufüllen.", zh: "客戶被要求完整填寫表格。" },
+      { de: "Er wurde aufgefordert, eine schriftliche Stellungnahme abzugeben.", zh: "他被要求提交一份書面聲明。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  tragen 補充（betragen）
+  // ══════════════════════════════════════════════
+
+  {
+    id: 156,
+    word: "betragen",
+    artikel: "",
+    root: "tragen",
+    rootMeaning: "攜帶、承擔（to carry / bear）",
+    zh: "總計、達到（金額/數量）",
+    en: "to amount to, to total, to come to",
+    breakdown: "be-（施加到數量對象）+ tragen（承擔）\n→ 「數量承載到這個值」= 總計\n→ 只用於金額、數量等客觀數值，不用於行為",
+    collocations: [
+      { de: "Der Betrag beträgt …", zh: "金額為……" },
+      { de: "Die Kosten betragen …", zh: "費用為……" },
+      { de: "Der Schaden beträgt …", zh: "損失達……" }
+    ],
+    synonyms: ["ausmachen", "sich belaufen auf", "kosten"],
+    related: ["eintragen", "übertragen", "beitragen", "vortragen", "beauftragen"],
+    examples: [
+      { de: "Der Gesamtbetrag beträgt 1.200 Euro.", zh: "總金額為1,200歐元。" },
+      { de: "Die Reparaturkosten betragen circa 500 Euro.", zh: "維修費用約為500歐元。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  詞根：breiten（展開、鋪開）
+  // ══════════════════════════════════════════════
+
+  {
+    id: 157,
+    word: "unterbreiten",
+    artikel: "",
+    root: "breiten",
+    rootMeaning: "展開、鋪開（to spread）",
+    zh: "正式提出、呈遞（建議/方案）",
+    en: "to present, to submit, to put forward",
+    breakdown: "unter-（在下方）+ breiten（鋪展）\n→ 「在對方面前恭敬地攤開來」= 正式提出\n→ 比 vorschlagen 更正式，含有「呈遞給對方審閱」的語感",
+    collocations: [
+      { de: "einen Vorschlag unterbreiten", zh: "提出建議" },
+      { de: "ein Angebot unterbreiten", zh: "提出報價 / 提案" },
+      { de: "einen Plan unterbreiten", zh: "呈遞計畫" }
+    ],
+    synonyms: ["vorschlagen", "vorlegen", "präsentieren"],
+    related: ["ausbreiten", "verbreiten", "breit"],
+    examples: [
+      { de: "Wir möchten Ihnen einen konkreten Vorschlag unterbreiten.", zh: "我們想向您提出一個具體的建議。" },
+      { de: "Die Firma unterbreitete dem Kunden ein attraktives Angebot.", zh: "公司向客戶提出了一個有吸引力的提案。" }
+    ]
+  },
+
+  {
+    id: 158,
+    word: "verbreiten",
+    artikel: "",
+    root: "breiten",
+    rootMeaning: "展開、鋪開（to spread）",
+    zh: "傳播、散布",
+    en: "to spread, to disseminate, to circulate",
+    breakdown: "ver-（向四方擴散）+ breiten（鋪展）\n→ 「向四方鋪展開去」= 傳播",
+    collocations: [
+      { de: "Informationen / Nachrichten verbreiten", zh: "傳播資訊 / 消息" },
+      { de: "weit verbreitet", zh: "廣泛流傳的、普遍的" },
+      { de: "eine Methode verbreiten", zh: "推廣一種方法" }
+    ],
+    synonyms: ["weitergeben", "kommunizieren", "bekanntmachen"],
+    related: ["unterbreiten", "ausbreiten", "breit"],
+    examples: [
+      { de: "Diese Methode ist in der Industrie weit verbreitet.", zh: "這種方法在工業中廣泛應用。" },
+      { de: "Bitte verbreiten Sie diese Information an alle Mitarbeiter.", zh: "請將這個資訊傳達給所有員工。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  gehen 補充（zugänglich）
+  // ══════════════════════════════════════════════
+
+  {
+    id: 159,
+    word: "zugänglich",
+    artikel: "",
+    root: "gehen",
+    rootMeaning: "走、進行（to go / proceed）",
+    zh: "可進入的、易於接觸的；平易近人的",
+    en: "accessible, approachable",
+    breakdown: "Zugang（入口、途徑，來自 zugehen）+ -lich（形容詞後綴）\n→ 「有途徑可以進入的」= 可存取的\n→ 引申：平易近人（Vorgesetzter ist zugänglich）",
+    collocations: [
+      { de: "öffentlich zugänglich", zh: "公開可存取的" },
+      { de: "für alle zugänglich sein", zh: "對所有人開放" },
+      { de: "leicht / schwer zugänglich", zh: "容易 / 難以取得" }
+    ],
+    synonyms: ["erreichbar", "verfügbar", "offen"],
+    related: ["vorgehen", "vorübergehen", "eingehen", "übergehen", "zugehen"],
+    examples: [
+      { de: "Die Daten sind für alle autorisierten Benutzer zugänglich.", zh: "資料對所有授權用戶開放存取。" },
+      { de: "Die Unterlagen sind online zugänglich.", zh: "相關文件可在網上取得。" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  Maß 補充（folgendermaßen）
+  // ══════════════════════════════════════════════
+
+  {
+    id: 160,
+    word: "folgendermaßen",
+    artikel: "",
+    root: "Maß",
+    rootMeaning: "尺度、標準（measure / standard）",
+    zh: "如下、以下述方式",
+    en: "as follows, in the following manner",
+    breakdown: "folgend（以下的）+ er- + maßen（以……方式，來自 Maß）\n→ 「以如下的尺度方式」= 如下\n→ 書面德語書信常用語",
+    collocations: [
+      { de: "folgendermaßen vorgehen", zh: "按如下方式進行" },
+      { de: "Das Verfahren läuft folgendermaßen ab:", zh: "程序如下：" },
+      { de: "Ich erkläre das folgendermaßen:", zh: "我如下解釋：" }
+    ],
+    synonyms: ["wie folgt", "auf folgende Weise", "in folgender Weise"],
+    related: ["das Maß", "die Maßnahme", "gemäß", "maßgeblich", "gleichermaßen"],
+    examples: [
+      { de: "Das Verfahren läuft folgendermaßen ab: Zuerst …", zh: "程序如下進行：首先……" },
+      { de: "Bitte gehen Sie folgendermaßen vor:", zh: "請按如下方式進行：" }
+    ]
+  },
+
+  // ══════════════════════════════════════════════
+  //  詞根：schildern（描述）
+  // ══════════════════════════════════════════════
+
+  {
+    id: 161,
+    word: "schildern",
+    artikel: "",
+    root: "schildern",
+    rootMeaning: "描述、敘述（to describe / depict）",
+    zh: "描述、敘述（某情況/經過）",
+    en: "to describe, to depict, to recount",
+    breakdown: "來自 Schild（牌子、盾牌）→ 「像描繪牌子上的圖樣一樣」= 描述\n→ 比 beschreiben 更強調敘述事件的過程\n→ 常見於：Sachverhalt schildern = 描述事實情況",
+    collocations: [
+      { de: "den Sachverhalt schildern", zh: "描述事實情況" },
+      { de: "den Vorfall schildern", zh: "描述事件經過" },
+      { de: "die Situation schildern", zh: "描述情況" }
+    ],
+    synonyms: ["beschreiben", "darstellen", "erzählen"],
+    related: ["beschreiben", "darstellen", "berichten"],
+    examples: [
+      { de: "Bitte schildern Sie den Vorfall so genau wie möglich.", zh: "請盡可能詳細地描述事件經過。" },
+      { de: "Der Zeuge schilderte den Sachverhalt aus seiner Perspektive.", zh: "證人從自己的角度描述了事實情況。" }
+    ]
+  },
+
 ];
