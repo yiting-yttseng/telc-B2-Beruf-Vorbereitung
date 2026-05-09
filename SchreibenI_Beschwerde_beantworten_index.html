@@ -403,9 +403,7 @@ const GRUENDE = [
     {de:"ein Virus / [Körperteil] verletzt", zh:"病毒感染／身體部位受傷"},
     {de:"der Chefkoch / der Teamleiter / der Mitarbeiter war krank", zh:"主廚/組長/員工生病"},
     {de:"zu wenig Mitarbeiter", zh:"人手不足"},
-    {de:"neue Azubis ohne ausreichende Erfahrung", zh:"新學徒經驗不足"},
     {de:"häufiger Personalwechsel", zh:"人員頻繁更替"},
-    {de:"Darüber hinaus haben wir vor Kurzem drei Azubis eingestellt, die noch nicht über ausreichende Erfahrung verfügen.", zh:"此外，我們最近剛招募了三名學徒，他們的經驗尚不足夠。"},
   ]
 },
 {
@@ -445,6 +443,164 @@ const GRUENDE = [
   ]
 },
 ];
+
+
+// ══════════════════════════════════════════════════════════
+// URSACHEN_BEHANDLUNG（各情況原因與處理）
+// 每個 entry: { id, title, zh, pairs: [{de, zh}] }
+// ══════════════════════════════════════════════════════════
+
+const URSACHEN_BEHANDLUNG = [
+
+{id:"ub-mangelanzeige-1", title:"Mängelanzeige", zh:"瑕疵通報", num:1,
+  subtitle:"範例一：製造商存在缺陷",
+  pairs:[
+    {de:"Zu den Mängeln an [Produkt] kam es dadurch, dass beim Herstellungsprozess ein Qualitätsfehler aufgetreten ist, der erst nach der Lieferung festgestellt wurde.",
+     zh:"[產品]出現瑕疵，是因為製造過程中發生了品質問題，該問題直到交貨後才被發現。"},
+    {de:"Um das Problem zu beheben, werden wir umgehend einen Techniker schicken, um das mangelhafte Produkt zu ersetzen, und sicherstellen, dass die Arbeiten fachgerecht ausgeführt werden.",
+     zh:"為了解決這個問題，我們將立即派遣技術人員前往更換有瑕疵的產品，並確保相關工程按照專業標準執行。"},
+  ]
+},
+{id:"ub-mangelanzeige-2", title:"Mängelanzeige", zh:"瑕疵通報", num:1,
+  subtitle:"範例二：新製造商對產品不夠熟悉",
+  pairs:[
+    {de:"Zu den Mängeln an [Produkt] kam es dadurch, dass wir kürzlich auf einen neuen Hersteller umgestiegen sind, der mit unseren spezifischen Produktanforderungen noch nicht vollständig vertraut war.",
+     zh:"[產品]出現瑕疵，是因為我們近期更換了新的製造商，該製造商對我們具體的產品要求尚未完全熟悉。"},
+    {de:"Um das Problem zu beheben, haben wir den Hersteller bereits kontaktiert und arbeiten eng mit ihm zusammen, um die Qualitätsstandards künftig sicherzustellen.",
+     zh:"為了解決這個問題，我們已與製造商聯繫，並正密切合作，以確保今後的品質標準得到保障。"},
+  ]
+},
+{id:"ub-mangelanzeige-3", title:"Mängelanzeige", zh:"瑕疵通報", num:1,
+  subtitle:"範例三：製造機台更換導致缺陷",
+  pairs:[
+    {de:"Zu den Mängeln an [Produkt] kam es dadurch, dass wir kürzlich unsere Produktionsanlage erneuert haben und dabei technische Anpassungen erforderlich waren, die zu unvorhergesehenen Qualitätsschwankungen geführt haben.",
+     zh:"[產品]出現瑕疵，是因為我們近期更新了生產設備，在此過程中需要進行技術調整，導致了無法預見的品質波動。"},
+    {de:"Um das Problem zu beheben, haben wir bereits Kontakt mit dem Maschinenhersteller aufgenommen, um die Ursache der Mängel zu klären und die Anlage entsprechend zu optimieren.",
+     zh:"為了解決這個問題，我們已與機器製造商取得聯繫，以查明瑕疵原因並對設備進行相應的優化。"},
+  ]
+},
+
+{id:"ub-service-1", title:"schlechter Service", zh:"服務品質不佳", num:2,
+  subtitle:"範例：負責員工請育嬰假，代理人員不熟悉業務",
+  pairs:[
+    {de:"Zu den Problemen mit unserem Service kam es dadurch, dass unsere zuständige Mitarbeiterin sich derzeit in Elternzeit befindet und ihre Vertretung die spezifischen Anforderungen dieses Aufgabenbereichs zunächst nicht vollständig erfasst hatte.",
+     zh:"我們的服務出現問題，是因為負責此業務的員工目前正在請育嬰假，而其代理人員起初尚未完全掌握此職責範疇的具體要求。"},
+    {de:"Um das Problem zu beheben, haben wir eine interne Besprechung abgehalten, indem erfahrene Mitarbeitende der Vertretung die Abläufe detailliert erläutert haben.",
+     zh:"為了解決這個問題，我們召開了一次內部會議，讓有經驗的員工向代理人員詳細說明了工作流程。"},
+    {de:"Durch regelmäßige Schulungen stellen wir sicher, dass solche Fehler nicht mehr vorkommen.",
+     zh:"透過定期培訓，我們確保此類失誤不再發生。"},
+  ]
+},
+
+{id:"ub-fehlende-rechnung-1", title:"fehlende Rechnung", zh:"發票遺失", num:3,
+  subtitle:"範例：系統技術錯誤導致發票未自動產生",
+  pairs:[
+    {de:"Zu den Problemen mit der Rechnung kam es dadurch, dass aufgrund eines technischen Fehlers in unserem System die Rechnung nicht automatisch generiert und versendet wurde.",
+     zh:"發票出現問題，是因為我們系統中的技術故障，導致發票未能自動生成並寄送。"},
+    {de:"Um das Problem zu beheben, haben wir die Rechnung erneut erstellt und senden Ihnen diese mit dieser E-Mail als Anhang zu.",
+     zh:"為了解決這個問題，我們已重新開立發票，並隨此封電子郵件以附件形式寄送給您。"},
+  ]
+},
+
+{id:"ub-fehlerhafte-rechnung-1", title:"fehlerhafte Rechnung", zh:"發票錯誤", num:4,
+  subtitle:"範例：系統更新後員工輸入失誤",
+  pairs:[
+    {de:"Zu den Problemen mit der Rechnung kam es dadurch, dass wir kürzlich ein internes Systemupdate zum Schutz vor Cyberangriffen durchgeführt haben.",
+     zh:"發票出現問題，是因為我們近期為防範網路攻擊進行了內部系統更新。"},
+    {de:"Da einige Mitarbeiterinnen und Mitarbeiter mit dem neuen System noch nicht vollständig vertraut sind, kam es leider zu einem Eingabefehler.",
+     zh:"由於部分員工對新系統尚未完全熟悉，不幸發生了輸入失誤。"},
+    {de:"Um das Problem zu beheben, werden wir eine gezielte Schulung für alle betroffenen Mitarbeitenden durchführen.",
+     zh:"為了解決這個問題，我們將為所有相關員工進行專項培訓。"},
+    {de:"Wir haben bereits eine korrigierte Rechnung erstellt, die Sie im Anhang finden.",
+     zh:"我們已開立一份更正後的發票，您可在附件中找到。"},
+    {de:"Wir bitten Sie, die ursprüngliche Rechnung zu ignorieren.",
+     zh:"敬請忽略原始發票。"},
+  ]
+},
+
+{id:"ub-fehlende-lieferung-1", title:"fehlende Lieferung", zh:"貨物未送達", num:5,
+  subtitle:"範例：物流服務商罷工導致延誤",
+  pairs:[
+    {de:"Zu den Problemen bei der Lieferung kam es dadurch, dass es aufgrund eines Streiks beim Logistikdienstleister zu unvorhergesehenen Verzögerungen gekommen ist.",
+     zh:"交貨出現問題，是因為物流服務商發生罷工，導致了無法預見的延誤。"},
+    {de:"Um das Problem zu beheben, haben wir bereits einen alternativen Versanddienstleister beauftragt.",
+     zh:"為了解決這個問題，我們已委託另一家快遞服務商。"},
+    {de:"Sie können mit dem Eingang Ihrer Bestellung innerhalb von [X] Werktagen rechnen.",
+     zh:"您的訂單預計將在[X]個工作天內送達。"},
+  ]
+},
+
+{id:"ub-fehlerhafte-lieferung-1", title:"fehlerhafte Lieferung", zh:"送錯貨", num:6,
+  subtitle:"範例：系統更新後員工操作失誤導致送錯貨",
+  pairs:[
+    {de:"Zu den Problemen bei der Lieferung kam es dadurch, dass wir kürzlich ein internes Systemupdate zum Schutz vor Cyberangriffen durchgeführt haben, wodurch es bei einigen Mitarbeiterinnen und Mitarbeitern zu Unsicherheiten im Umgang mit dem neuen System gekommen ist und leider ein Dateneingabefehler aufgetreten ist.",
+     zh:"交貨出現問題，是因為我們近期為防範網路攻擊進行了內部系統更新，導致部分員工在操作新系統時出現不確定性，不幸發生了資料輸入錯誤。"},
+    {de:"Um das Problem zu beheben, werden wir die korrekte Ware umgehend versenden und einen Kurier beauftragen, die fehlerhafte Lieferung bei Ihnen abzuholen.",
+     zh:"為了解決這個問題，我們將立即寄送正確的貨品，並委託快遞人員前往取回送錯的貨品。"},
+  ]
+},
+
+{id:"ub-lieferverzoegerung-1", title:"Lieferverzögerung", zh:"交貨延誤", num:7,
+  subtitle:"範例：供應商生產瓶頸導致延誤",
+  pairs:[
+    {de:"Zu den Problemen mit der Lieferzeit kam es dadurch, dass unser Lieferant aufgrund von Produktionsengpässen die Ware nicht rechtzeitig bereitstellen konnte.",
+     zh:"交貨出現延誤，是因為我們的供應商由於生產瓶頸而無法及時備貨。"},
+    {de:"Um das Problem zu beheben, haben wir einen alternativen Lieferanten kontaktiert und erwarten den Wareneingang bis spätestens [Datum].",
+     zh:"為了解決這個問題，我們已聯繫了另一家供應商，預計最晚於[日期]收到貨物。"},
+    {de:"Wir werden Sie über den genauen Liefertermin informieren, sobald dieser feststeht.",
+     zh:"一旦確定確切的交貨日期，我們將立即通知您。"},
+  ]
+},
+
+{id:"ub-unvollstaendige-lieferung-1", title:"Lieferung war unvollständig", zh:"交貨不完整", num:8,
+  subtitle:"範例：包裝過程中部分商品漏裝",
+  pairs:[
+    {de:"Zu den Problemen bei der Lieferung kam es dadurch, dass beim Verpackungsprozess ein interner Fehler aufgetreten ist und ein Teil der bestellten Waren versehentlich nicht eingepackt wurde.",
+     zh:"交貨出現問題，是因為包裝過程中發生了內部失誤，導致部分訂購的商品被不慎遺漏未裝箱。"},
+    {de:"Um das Problem zu beheben, werden wir die fehlenden Artikel umgehend nachliefern.",
+     zh:"為了解決這個問題，我們將立即補送缺少的商品。"},
+    {de:"Sie können mit dem Eingang der restlichen Waren innerhalb von zwei Werktagen rechnen.",
+     zh:"您應可在兩個工作天內收到其餘貨物。"},
+  ]
+},
+
+{id:"ub-handwerker-1", title:"Der Handwerker kommt nicht", zh:"技工未到場", num:9,
+  subtitle:"範例：負責員工途中發生事故",
+  pairs:[
+    {de:"Zu den Problemen bei dem vereinbarten Termin kam es dadurch, dass unser zuständiger Mitarbeiter auf dem Weg zu Ihnen in einen Verkehrsunfall verwickelt wurde und den Termin daher leider nicht wahrnehmen konnte.",
+     zh:"預約時間出現問題，是因為我們的負責員工在前往您處的途中發生了交通事故，因此遺憾地無法赴約。"},
+    {de:"Um das Problem zu beheben, sind wir bereits dabei, eine geeignete Vertretung zu organisieren.",
+     zh:"為了解決這個問題，我們正在安排合適的替代人員。"},
+    {de:"Sobald ein Ersatz gefunden wurde, wird sich dieser umgehend mit Ihnen in Verbindung setzen, um einen neuen Termin zu vereinbaren.",
+     zh:"一旦找到替代人員，他/她將立即與您聯繫以安排新的預約時間。"},
+    {de:"Wären Sie in der kommenden Woche verfügbar?",
+     zh:"請問您下週方便嗎？"},
+  ]
+},
+
+{id:"ub-catering-1", title:"Essen auf Konferenz kalt", zh:"會議餐點變涼", num:10,
+  subtitle:"範例：低溫導致餐點冷卻過快",
+  pairs:[
+    {de:"Zu den Problemen mit dem Catering bei der Konferenz kam es dadurch, dass die ungewöhnlich niedrigen Temperaturen an diesem Tag dazu geführt haben, dass die Speisen schneller als erwartet abgekühlt sind.",
+     zh:"會議餐飲出現問題，是因為當天異常低溫，導致餐點冷卻速度比預期更快。"},
+    {de:"Um das Problem zu beheben, haben wir bereits mit dem Cateringunternehmen gesprochen und vereinbart, künftig Speisen auszuwählen, die auch bei Raumtemperatur qualitativ hochwertig und genussvoll sind, sodass die Qualität nicht von der Außentemperatur abhängt.",
+     zh:"為了解決這個問題，我們已與餐飲公司協商，並達成協議，今後將選擇即使在室溫下也能保持高品質且美味的餐點，使品質不受外部溫度影響。"},
+  ]
+},
+
+{id:"ub-gebaeudemanagement-1", title:"Gebäudemanagement arbeitet nicht gut", zh:"物業管理品質下降", num:11,
+  subtitle:"範例：人員更替導致職責不清",
+  pairs:[
+    {de:"Zu den Problemen im Gebäudemanagement kam es dadurch, dass ein Personalwechsel in der zuständigen Abteilung zu Unklarheiten in den Zuständigkeiten geführt hat.",
+     zh:"物業管理出現問題，是因為負責部門的人員更替導致職責分工不明。"},
+    {de:"Um das Problem zu beheben, haben wir eine interne Besprechung abgehalten und die Aufgabenverteilung neu geregelt.",
+     zh:"為了解決這個問題，我們召開了內部會議，重新規劃了任務分配。"},
+    {de:"Durch regelmäßige Schulungen stellen wir sicher, dass solche Fehler nicht mehr vorkommen.",
+     zh:"透過定期培訓，我們確保此類失誤不再發生。"},
+  ]
+},
+
+]; // end URSACHEN_BEHANDLUNG
 
 
 // ══════════════════════════════════════════════════════════
@@ -533,7 +689,7 @@ const SITUATIONS = [
     summary:{
       boss:["1. Den Grund für die aktuellen Probleme nennen","2. Wie wir diese Probleme zukünftig lösen werden"],
       complaint:["1. Personal nicht mehr freundlich und höflich","2. Service im Restaurant wesentlich schlechter","3. Lange Wartezeiten","4. Servicepersonal häufig gewechselt, unhöflich und gestresst"],
-      gruende:["Krankheitsfälle", "Neue Azubis ohne ausreichende Erfahrung"]
+      gruende:["Krankheitsfälle", "Personalwechsel / neue Mitarbeiter ohne ausreichende Schulung"]
     },
     emails:[
       {role:"teamleitung",
@@ -871,6 +1027,9 @@ tr.fav .ex-item:hover{background:#fff0d0}
 .gr-de:hover{background:#e8f0fe}
 .g-de{font-size:13px;color:#1a3a6a;font-weight:600;display:block;line-height:1.6}
 .gr-zh{font-size:12px;color:#555;vertical-align:top;padding:8px 10px}
+.ub-de{cursor:pointer;vertical-align:top;padding:8px 10px}
+.ub-de:hover{background:#e8f5e9}
+.ub-zh{font-size:12px;color:#555;vertical-align:top;padding:8px 10px}
 
 /* coming soon */
 .coming-soon{text-align:center;padding:40px 20px;color:#bbb;font-size:13px;font-style:italic}
@@ -999,6 +1158,53 @@ function buildGruende() {
         </tr></thead>
         <tbody>${rows}</tbody>
       </table>
+    </div>`;
+  }).join('');
+}
+
+// ── Build Ursachen & Behandlung tab ──
+function buildUrsachen() {
+  // Group by num+title, preserving order
+  const groups = {};
+  const order = [];
+  URSACHEN_BEHANDLUNG.forEach(e => {
+    const key = e.num + '|' + e.title + '|' + e.zh;
+    if (!groups[key]) { groups[key] = []; order.push(key); }
+    groups[key].push(e);
+  });
+
+  return order.map(key => {
+    const [num, title, zh] = key.split('|');
+    const examples = groups[key].map(e => {
+      const rows = e.pairs.map(p => `<tr>
+        <td class="ub-de" onclick="speak('${esc(p.de)}')">
+          <span class="g-de">${p.de}</span>
+        </td>
+        <td class="ub-zh">${p.zh}</td>
+      </tr>`).join('');
+      return `<div style="margin-bottom:14px">
+        <div style="font-size:11px;font-weight:600;color:#555;letter-spacing:.03em;
+          padding:5px 10px;background:#f0f7f0;border-left:3px solid #2E7D32;margin-bottom:0">
+          ${e.subtitle}
+        </div>
+        <table class="rm" style="table-layout:fixed;border-top:none;border-radius:0 0 6px 6px">
+          <thead><tr>
+            <th style="width:55%">德文 🔊 點擊朗讀</th>
+            <th style="width:45%">中文翻譯</th>
+          </tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>`;
+    }).join('');
+
+    return `<div class="rm-group">
+      <div class="rm-label" style="background:#2E7D32;color:#fff;border-color:#1a5c26">
+        ${num}. ${title}（${zh}）
+      </div>
+      <div style="background:#fff;border:0.5px solid #ddd;border-top:none;
+        border-radius:0 0 8px 8px;padding:12px 14px">
+        ${examples}
+      </div>
     </div>`;
   }).join('');
 }
@@ -1191,6 +1397,16 @@ async function tryAutoLoadCheckpoint() {
   grBtn.className = 'nav-btn'; grBtn.textContent = '💡 Mögliche Gründe';
   grBtn.onclick = () => showTab('gruende', grBtn);
   navBar.appendChild(grBtn);
+
+  // Ursachen & Behandlung
+  const ubDiv = document.createElement('div');
+  ubDiv.className = 'tab-section'; ubDiv.id = 'tab-ursachen';
+  ubDiv.innerHTML = buildUrsachen();
+  content.appendChild(ubDiv);
+  const ubBtn = document.createElement('button');
+  ubBtn.className = 'nav-btn'; ubBtn.textContent = '🔧 Ursachen & Behandlung';
+  ubBtn.onclick = () => showTab('ursachen', ubBtn);
+  navBar.appendChild(ubBtn);
 
   // Situations
   SITUATIONS.forEach(sit => {
