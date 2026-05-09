@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schreiben – Grammatik B2</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Segoe UI", "Microsoft JhengHei", "PingFang TC", sans-serif; background: #f0f4f8; color: #1a1a2e; }
+
+header { background: linear-gradient(135deg, #1a3a6b, #2563a8); color: white; padding: 24px 32px; }
+header h1 { font-size: 22px; font-weight: 700; }
+header p { margin-top: 5px; font-size: 13px; opacity: 0.85; }
+.stats { display: flex; gap: 14px; margin-top: 12px; flex-wrap: wrap; }
+.stat { background: rgba(255,255,255,0.15); border-radius: 8px; padding: 7px 14px; font-size: 12px; }
+.stat strong { font-size: 18px; display: block; }
+
+.cp-bar { background: #f0f4ff; border-bottom: 1px solid #d0d8f0; padding: 7px 32px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 13px; color: #2a4a80; }
+.cp-label { font-weight: 600; white-space: nowrap; }
+.cp-btn { padding: 4px 13px; border-radius: 14px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.18s; white-space: nowrap; }
+.cp-btn.primary { background: #2563a8; color: white; border: 2px solid #2563a8; }
+.cp-btn.primary:hover { background: #1a3a6b; border-color: #1a3a6b; }
+.cp-btn.secondary { background: white; color: #2563a8; border: 2px solid #2563a8; }
+.cp-btn.secondary:hover { background: #eef4ff; }
+.cp-ok { font-size: 11.5px; color: #2a7a4a; font-weight: 600; display: none; margin-left: 4px; }
+
+.tts-bar { background: #ddeaff; border-bottom: 1px solid #b8ccee; padding: 6px 32px; font-size: 12px; color: #2a4a80; display: flex; align-items: center; gap: 8px; }
+#tts-status { flex: 1; }
+.tts-hint { opacity: 0.75; }
+.tts-playing { font-weight: 600; color: #1a3a6b; }
+
+/* ── Sticky tag nav ── */
+.tag-nav {
+  position: sticky; top: 0; z-index: 200;
+  background: white; border-bottom: 1px solid #dde3ec;
+  padding: 8px 24px; display: flex; gap: 5px; flex-wrap: wrap; align-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.tag-sep { width: 1px; height: 20px; background: #dde3ec; margin: 0 3px; flex-shrink: 0; }
+.tag-cat { font-size: 10.5px; font-weight: 700; padding: 3px 9px; border-radius: 11px; background: #1a3a6b; color: white; cursor: default; white-space: nowrap; }
+.tag-item { font-size: 10.5px; padding: 3px 9px; border-radius: 11px; border: 1.5px solid #2563a8; color: #2563a8; background: white; cursor: pointer; white-space: nowrap; transition: all 0.18s; }
+.tag-item:hover, .tag-item.active { background: #2563a8; color: white; }
+
+/* ── Filter bar ── */
+.filter-bar { background: #fafaf8; padding: 9px 24px; display: flex; gap: 8px; align-items: center; border-bottom: 1px solid #dde3ec; flex-wrap: wrap; }
+.filter-btn { padding: 5px 16px; border: 2px solid #2563a8; border-radius: 20px; background: white; color: #2563a8; font-size: 12.5px; font-weight: 600; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+.filter-btn:hover, .filter-btn.active { background: #2563a8; color: white; }
+.filter-btn.reply-btn { border-color: #b06030; color: #b06030; }
+.filter-btn.reply-btn:hover, .filter-btn.reply-btn.active { background: #b06030; color: white; }
+.filter-btn.forum-btn { border-color: #2a7a4a; color: #2a7a4a; }
+.filter-btn.forum-btn:hover, .filter-btn.forum-btn.active { background: #2a7a4a; color: white; }
+
+/* ── Cards ── */
+.container { max-width: 1100px; margin: 0 auto; padding: 20px 18px; }
+.card { background: white; border-radius: 12px; padding: 18px 20px; margin-bottom: 14px; border-left: 5px solid #90a8c8; box-shadow: 0 1px 4px rgba(0,0,0,0.07); transition: box-shadow 0.15s; scroll-margin-top: 130px; }
+.card.flash { outline: 3px solid #4a9eff; box-shadow: 0 0 0 6px rgba(74,159,255,0.15); }
+.card-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+.grammar-name { flex: 1; font-size: 17px; font-weight: 700; color: #1a3a6b; }
+.grammar-badge { background: #e0e8f8; color: #1a3a6b; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 10px; white-space: nowrap; flex-shrink: 0; }
+.formula-box { background: #f5f8ff; border: 1px solid #c8d8f0; border-radius: 8px; padding: 10px 14px; margin-bottom: 12px; font-size: 13px; color: #1a3a6b; line-height: 1.9; }
+.formula-box code { background: #dde8f8; padding: 1px 6px; border-radius: 4px; font-family: monospace; font-size: 12.5px; color: #0a2a5a; }
+
+/* ── Partizip table ── */
+.ptable-wrap { margin-bottom: 12px; overflow-x: auto; }
+.ptable-title { font-size: 12px; font-weight: 700; color: #5a7a9a; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 5px; }
+.ptable { border-collapse: collapse; font-size: 12.5px; width: 100%; }
+.ptable th { background: #f0f4f8; color: #3a5a8a; font-weight: 700; text-align: left; padding: 5px 10px; border: 1px solid #dde3ec; font-size: 11px; }
+.ptable td { padding: 5px 10px; border: 1px solid #e8ecf0; vertical-align: top; }
+.ptable tr:nth-child(even) td { background: #fafbfc; }
+.ptable .pt-adj { font-weight: 700; color: #1a3a6b; }
+.ptable .pt-noun { color: #2a5a2a; }
+.ptable .pt-zh { color: #7a5000; font-style: italic; font-size: 11.5px; }
+.ptable .pt-cat { background: #eaf0f8 !important; font-size: 11px; font-weight: 700; color: #3a5a8a; padding: 4px 10px; letter-spacing: 0.3px; }
+
+/* ── Examples ── */
+.examples { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 720px) { .examples { grid-template-columns: 1fr; } }
+.example { padding: 11px 13px; border-radius: 8px; cursor: pointer; transition: filter 0.15s; }
+.example:hover { filter: brightness(0.96); }
+.example.speaking { outline: 2px solid #4a7fd4; outline-offset: 1px; }
+.example.reply   { background: #fff8f0; border-left: 3px solid #d4844a; }
+.example.forum   { background: #f0fff4; border-left: 3px solid #4a9a6a; }
+.example.reply.is-saved  { border-left-color: #b85a10; border-left-width: 4px; }
+.example.forum.is-saved  { border-left-color: #2a7a4a; border-left-width: 4px; }
+.ex-header { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; }
+.ex-label { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; opacity: 0.7; flex: 1; }
+.ex-sublabel { font-size: 10px; color: #999; font-style: italic; font-weight: 400; text-transform: none; letter-spacing: 0; }
+.ex-de { font-size: 13px; color: #1a1a2e; margin-bottom: 3px; line-height: 1.55; }
+.ex-zh { font-size: 12px; color: #666; line-height: 1.45; }
+
+.sent-check-wrap { display: inline-flex; align-items: center; cursor: pointer; flex-shrink: 0; }
+.sent-check { display: none; }
+.sent-check-box { width: 16px; height: 16px; border-radius: 4px; border: 2px solid #ccc; background: white; position: relative; transition: all 0.18s; flex-shrink: 0; }
+.sent-check-box::after { content: ''; position: absolute; left: 3px; top: 1px; width: 4px; height: 7px; border: 2px solid white; border-top: none; border-left: none; transform: rotate(45deg); opacity: 0; transition: opacity 0.15s; }
+.sent-check-wrap:hover .reply-box   { border-color: #d4844a; }
+.sent-check-wrap:hover .forum-box   { border-color: #4a9a6a; }
+.sent-check:checked + .reply-box    { background: #d4844a; border-color: #d4844a; }
+.sent-check:checked + .forum-box    { background: #4a9a6a; border-color: #4a9a6a; }
+.sent-check:checked + .sent-check-box::after { opacity: 1; }
+
+/* ── Saved panel ── */
+#saved-panel { display: none; }
+.sent-summary { background: white; border-radius: 12px; padding: 16px 20px; margin-bottom: 18px; border-left: 5px solid #2563a8; box-shadow: 0 1px 4px rgba(0,0,0,0.07); display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.sent-count-big { font-size: 40px; font-weight: 700; line-height: 1; color: #2563a8; }
+.sent-summary-text { font-size: 14px; color: #444; line-height: 1.7; }
+.sent-clear-btn { margin-left: auto; padding: 7px 16px; border: 2px solid #c0392b; color: #c0392b; background: white; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.sent-clear-btn:hover { background: #c0392b; color: white; }
+.sent-empty { text-align: center; padding: 44px 20px; color: #aaa; }
+.sent-empty .empty-icon { font-size: 44px; margin-bottom: 10px; }
+.sent-empty p { font-size: 14px; line-height: 1.9; }
+.saved-row { background: white; border-radius: 10px; padding: 13px 16px; margin-bottom: 9px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); display: flex; align-items: flex-start; gap: 12px; }
+.saved-row.reply-row { border-left: 4px solid #d4844a; }
+.saved-row.forum-row { border-left: 4px solid #4a9a6a; }
+.saved-row-main { flex: 1; }
+.saved-gram { font-size: 11px; color: #999; margin-bottom: 3px; }
+.saved-de { font-size: 13.5px; color: #1a1a2e; font-weight: 500; margin-bottom: 3px; cursor: pointer; }
+.saved-de:hover { color: #2563a8; }
+.saved-zh { font-size: 12px; color: #777; }
+.saved-type { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 8px; white-space: nowrap; flex-shrink: 0; margin-top: 3px; }
+.saved-type.reply { background: #fff0e0; color: #b06030; }
+.saved-type.forum { background: #e8f8ee; color: #2a7a4a; }
+.saved-remove { padding: 4px 11px; border: 1.5px solid #c0392b; color: #c0392b; background: white; border-radius: 14px; font-size: 11px; font-weight: 600; cursor: pointer; flex-shrink: 0; margin-top: 2px; transition: all 0.2s; }
+.saved-remove:hover { background: #c0392b; color: white; }
+.no-results { text-align: center; padding: 44px; color: #999; font-size: 14px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Schreiben – Grammatik B2</h1>
+  <p>寫作文法總覽｜✉️ 回應顧客抱怨信 ＋ 💬 論壇寫作（公司規則討論）｜telc DTB B2 Beruf</p>
+  <div class="stats">
+    <div class="stat"><strong id="stat-total">0</strong>文法點</div>
+    <div class="stat"><strong id="stat-reply">0</strong>✉️ 已勾回信句</div>
+    <div class="stat"><strong id="stat-forum">0</strong>💬 已勾論壇句</div>
+  </div>
+</header>
+
+<div class="cp-bar">
+  <span class="cp-label">💾 勾選備份：</span>
+  <button class="cp-btn primary" onclick="exportCP()">匯出</button>
+  <button class="cp-btn secondary" onclick="importCP()">匯入</button>
+  <span class="cp-ok" id="cp-ok">✓ 匯入成功</span>
+  <input type="file" id="cp-file-input" accept=".json" style="display:none">
+</div>
+
+<div class="tts-bar">
+  🔊 <span id="tts-status" class="tts-hint">點擊例句朗讀</span>
+</div>
+
+<div class="tag-nav" id="tag-nav">
+  <span class="tag-cat">Konjunktiv II（虛擬二式）</span>
+  <span class="tag-item" onclick="jumpTo('konj2-grundformen')">Verb mit KII-Form: fände / ließe / käme / bliebe / ginge / brauchte / wüsste / sähe</span>
+  <span class="tag-item" onclick="jumpTo('konj2-alsob')">als ob / als wenn</span>
+  <span class="tag-item" onclick="jumpTo('konj2-vgh')">KII Vergangenheit: hätte + PII / wäre + PII / hätte … Modalverb</span>
+  <div class="tag-sep"></div>
+  <span class="tag-cat">Passiv（被動語態）</span>
+  <span class="tag-item" onclick="jumpTo('passiv-alternativen')">Passiv-Alternativen: lässt sich + Inf. / ist zu + Inf. / -bar Adjektiv</span>
+  <span class="tag-item" onclick="jumpTo('partizip1')">Partizip I als Adjektiv（現在分詞作形容詞）</span>
+  <span class="tag-item" onclick="jumpTo('partizip2')">Partizip II als Adjektiv（過去分詞作形容詞）</span>
+  <div class="tag-sep"></div>
+  <span class="tag-cat">Nebensatz（從句）</span>
+  <span class="tag-item" onclick="jumpTo('temporal')">Temporalsatz: sobald / sowie / während / nachdem</span>
+  <span class="tag-item" onclick="jumpTo('konsekutiv')">Konsekutivsatz: sodass / so … dass</span>
+  <span class="tag-item" onclick="jumpTo('modal-indem')">Modalsatz: indem / dadurch, dass</span>
+  <span class="tag-item" onclick="jumpTo('kausal')">Kausalsatz: weil / da / zumal</span>
+  <span class="tag-item" onclick="jumpTo('konzessiv')">Konzessivsatz: obwohl / trotzdem / obgleich</span>
+  <span class="tag-item" onclick="jumpTo('infinitiv')">Infinitivsatz: um…zu / anstatt…zu / ohne…zu + damit / anstatt dass / ohne dass</span>
+  <span class="tag-item" onclick="jumpTo('relativsatz')">Relativsatz: wo / als / was / satzwertiges was</span>
+  <div class="tag-sep"></div>
+  <span class="tag-cat">Konnektoren（連詞）</span>
+  <span class="tag-item" onclick="jumpTo('doppelkonnektoren')">Doppelkonnektoren: sowohl…als auch / nicht nur…sondern auch / entweder…oder / weder…noch / zwar…aber / einerseits…andererseits / je…desto</span>
+  <div class="tag-sep"></div>
+  <span class="tag-cat">Pronomen（代詞）</span>
+  <span class="tag-item" onclick="jumpTo('es-wendungen')">es: handelt sich um / geht um / liegt an / kommt auf…an / hängt…ab / steht fest / bleibt abzuwarten / ist zu beachten</span>
+</div>
+
+<div class="filter-bar">
+  <button class="filter-btn active" onclick="setFilter('all',this)">全部</button>
+  <button class="filter-btn reply-btn" id="reply-tab-btn" onclick="setFilter('reply',this)">✉️ 已勾回信句 (0)</button>
+  <button class="filter-btn forum-btn" id="forum-tab-btn" onclick="setFilter('forum',this)">💬 已勾論壇句 (0)</button>
+</div>
+
+<div class="container">
+  <div id="cards-panel"><div id="cards"></div></div>
+  <div id="saved-panel">
+    <div class="sent-summary">
+      <div class="sent-count-big" id="sc-big">0</div>
+      <div class="sent-summary-text">句已勾選<br><small style="color:#888">點擊德文可朗讀</small></div>
+      <button class="sent-clear-btn" onclick="clearSaved()">🗑 清除全部</button>
+    </div>
+    <div id="saved-list"></div>
+    <div class="sent-empty" id="saved-empty">
+      <div class="empty-icon">📌</div>
+      <p>還沒有勾選例句<br>在 ✉️ 或 💬 例句框右上角的小框框勾選即可！</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const GRAMMAR = [
+{
+  id:'konj2-grundformen',
+  name:'Konjunktiv II – Verb mit eigener KII-Form',
+  badge:'Konjunktiv II（虛擬二式）',
+  formula:`<b>Häufige B2-Formen ohne würde-Umschreibung:</b><br>
+<code>finden → fände</code> &nbsp; <code>lassen → ließe</code> &nbsp; <code>kommen → käme</code> &nbsp; <code>bleiben → bliebe</code><br>
+<code>gehen → ginge</code> &nbsp; <code>brauchen → brauchte</code> &nbsp; <code>wissen → wüsste</code> &nbsp; <code>sehen → sähe</code><br>
+Verwendung: höfliche Distanz in Antwortschreiben, hypothetische Lösungsvorschläge`,
+  examples:[
+    {id:'k2g-r1',type:'reply',sub:'fände',
+      de:'Wir fänden es sehr bedauerlich, wenn diese Erfahrung Ihr Vertrauen in unseren Service dauerhaft beschädigt hätte. Um das Problem zu beheben, werden wir die Lieferung umgehend wiederholen und die Versandkosten übernehmen.',
+      zh:'我們認為非常遣憑，如果這次經歷永久損害了您對我們服務的信任。為了解決這個問題，我們將立即重新配送並承擔運費。'},
+    {id:'k2g-r2',type:'reply',sub:'wüsste / ließe',
+      de:'Wir wübssten gerne, ob sich das Problem durch eine sofortige Ersatzlieferung lösen ließe, oder ob Sie eine Erstattung bevorzugen würden. Bitte teilen Sie uns Ihren Wunsch mit, damit wir schnellstmöglich handeln können.',
+      zh:'我們很想知道，問題是否可以透過立即補貨解決，還是您更傾向退款。請告知我們您的意愿，以便我們获可盡快處理。'},
+    {id:'k2g-r3',type:'reply',sub:'bliebe',
+      de:'Als kurzfristige Maßnahme bliebe uns nur, Ihnen ein gleichwertiges Ersatzprodukt umgehend zuzusenden, bis die defekte Einheit repariert ist. Wir werden Sie über den Status der Reparatur regelmäßig informieren.',
+      zh:'作為短期措施，我們只能立即向您寄送同等替換產品，直到有缺陷的設備修復為止。我們將會定期向您報告修復進度。'},
+    {id:'k2g-f1',type:'forum',sub:'käme darauf an',
+      de:'Es käme letztlich darauf an, ob das Unternehmen diese Maßnahme wirklich für alle Mitarbeitenden gerecht gestaltet. Eine pauschale Lösung, die nicht auf individuelle Situationen eingeht, würde eher für Unmut sorgen.',
+      zh:'最終還是要取決於公司是否真的能讓這項措施對所有員工公平。一個不考慮個人情況的一擺作法，反而只會引發不滿。'},
+    {id:'k2g-f2',type:'forum',sub:'ginge',
+      de:'Meiner Meinung nach ginge das nur, wenn auch die Mitarbeitenden aktiv in die Planung einbezogen würden. Nur so lässt sich sicherstellen, dass die Maßnahme wirklich auf Akzeptanz stößt.',
+      zh:'依我之見，這只有在員工也積極參與規劃的情況下才行得通。只有這樣才能確保這項措施真正獲得認可。'},
+    {id:'k2g-f3',type:'forum',sub:'sähe',
+      de:'Das sähe für viele Kolleginnen und Kollegen fairer aus, wenn die Fitnessstudio-Mitgliedschaft freiwillig wäre. Wer das Angebot nicht nutzen möchte, brauchte dann auch keinen Gehaltsabzug hinnehmen.',
+      zh:'如果健身房會員資格是自願的，對許多同事來說看起來會更公平。不想使用此優惠的人，就不需要承受薪資扣減。'},
+    {id:'k2g-f4',type:'forum',sub:'brauchte',
+      de:'Man brauchte eigentlich keine neuen Regelungen, wenn die Kommunikation zwischen Führung und Belegschaft von vornherein transparenter wäre. Vieles lässt sich durch Offenheit lösen, bevor es zu Unmut kommt.',
+      zh:'如果管理層與員工之間的溝通從一開始就更透明，其實根本不需要新的規定。許多事情可以透過开放來解決，在不滿發生之前。'},
+  ]
+},
+{
+  id:'konj2-alsob',
+  name:'Konjunktiv II – als ob / als wenn',
+  badge:'Konjunktiv II（虛擬二式）',
+  formula:`<b>Struktur A:</b> Hauptsatz + <code>als ob / als wenn</code> + KII (Verb am Ende)<br>
+<b>Struktur B:</b> Hauptsatz + <code>als</code> + KII direkt (Inversion, ohne „ob“)<br>
+Beispiel: <em>Es wirkt, als ob das Problem ignoriert würde.</em> = <em>Es wirkt, als würde das Problem ignoriert.</em>`,
+  examples:[
+    {id:'ao-r1',type:'reply',sub:'als ob',
+      de:'Zu den Problemen bei der Lieferung kam es dadurch, dass in unserem System ein Fehler aufgetreten ist, der wirkte, als ob die Bestellung nie eingegangen wäre. Um das Problem zu beheben, haben wir die Bestellung manuell neu angelegt und die Lieferung umgehend veranlasst.',
+      zh:'交貨出現問題，是因為我們系統中發生了一個錯誤，看起來好像訂單從未收到一樣。為了解決這個問題，我們已手動重新建立了訂單並立即安排了配送。'},
+    {id:'ao-r2',type:'reply',sub:'als (Inversion)',
+      de:'Wir verstehen, dass die Situation für Sie so wirkte, als wäre Ihre Beschwerde gar nicht angekommen. Zu den Problemen mit unserer Reaktionszeit kam es dadurch, dass Ihre Nachricht aufgrund eines technischen Fehlers im Postfach nicht korrekt zugestellt wurde.',
+      zh:'我們理解，這種情況讓您感覺好像您的投訴根本沒有被收到。我們回檢時間出現問題，是因為您的訊息因技術錯誤沒有被正確送達到我們的信笩。'},
+    {id:'ao-f1',type:'forum',sub:'als ob',
+      de:'Manchmal hat man als Mitarbeitender das Gefühl, als ob solche Entscheidungen über unsere Köpfe hinweg getroffen würden. Eine frühzeitige Einbindung der Belegschaft würde diesen Eindruck vermeiden.',
+      zh:'作為員工，有時候會有種感覺，好像這些決定是撸過我們的頭做出的。如果能從早讓幸員參與，就能避免這種印象。'},
+    {id:'ao-f2',type:'forum',sub:'als wenn',
+      de:'Es sieht manchmal aus, als wenn die Firma mit solchen Regelungen nur Kosten sparen wollte, ohne wirklich an das Wohlbefinden der Mitarbeitenden zu denken. Dabei wäre es einfach, durch transparente Kommunikation dieses Misstrauen zu vermeiden.',
+      zh:'有時看起來，好像公司只想透過這類規定節省成本，根本沒有真正考慮員工的福祉。其實透明的溝通就能很簡單地避免這種不信任感。'},
+  ]
+},
+{
+  id:'konj2-vgh',
+  name:'Konjunktiv II der Vergangenheit',
+  badge:'Konjunktiv II（虛擬二式）',
+  formula:`<b>hätte + Partizip II</b> → transitive / „haben“-Verben<br>
+<b>wäre + Partizip II</b> → Bewegung, Zustandsänderung, sein-Verben<br>
+<b>hätte + Infinitiv + Modalverb (Inf.)</b> z.B. <em>hätte informiert werden sollen</em><br>
+Verwendung: rückblickende Entschuldigung, was besser hätte gemacht werden sollen`,
+  examples:[
+    {id:'kv-r1',type:'reply',sub:'hätte + PII',
+      de:'Zu den Mängeln an dem Produkt kam es dadurch, dass die Qualitätskontrolle bei der letzten Produktionscharge nicht ausreichend durchgeführt wurde – was bei regelmäßigen Überprüfungen hätte verhindert werden können. Um das Problem zu beheben, haben wir die betroffene Charge zurückgerufen und eine gezielte Schulung für alle Mitarbeitenden eingeleitet.',
+      zh:'產品出現缺陷，是因為最後一批生產的品質控制沒有充分執行，如果定期檢查到位，這本來是可以避免的。為了解決問題，我們已召回這批受影響的產品，並為所有相關員工展開專項培訓。'},
+    {id:'kv-r2',type:'reply',sub:'hätte … sollen',
+      de:'Wir räumen ein, dass Sie über die Lieferverzögerung frühzeitig hätten informiert werden sollen – das war ein klares Versäumnis unsererseits. Um das Problem zu beheben, haben wir einen alternativen Versanddienstleister beauftragt und können Ihnen nun einen neuen Liefertermin bestätigen.',
+      zh:'我們承認，您本應提早被告知交貨延誤，這是我們明顯的疏失。為了解決問題，我們已委袗另一家配送公司，現在可以確認新的交貨日期。'},
+    {id:'kv-r3',type:'reply',sub:'wäre + PII',
+      de:'Wäre die Bestellung korrekt erfasst worden, wäre es gar nicht erst zu dieser Verzögerung gekommen. Zu dem Fehler kam es dadurch, dass nach einem Systemupdate einige Mitarbeitende mit dem neuen Eingabeformular noch nicht vollständig vertraut waren.',
+      zh:'如果訂單被正確錄入的話，根本不會發生這次延誤。這個錯誤發生是因為系統更新後，部分員工對新的輸入表單尚不完全熟悧。'},
+    {id:'kv-f1',type:'forum',sub:'hätte + PII',
+      de:'Man hätte die Mitarbeitenden von Anfang an in die Planung einbezogen – dann wäre die Akzeptanz der Regelung sicher höher. Wer von Beginn an mitgestalten kann, trägt die Entscheidung am Ende auch mit.',
+      zh:'本應從一開始就讓員工參與規劃，這樣規定的接受度肯定會更高。能從一開始參與制定的人，最後也會應許路并支持這個決定。'},
+    {id:'kv-f2',type:'forum',sub:'hätte … müssen',
+      de:'Eine solche Regelung hätte vorab mit dem Betriebsrat abgestimmt werden müssen. Die Tatsache, dass dies nicht geschehen ist, zeigt, dass der Entscheidungsprozess dringend transparenter gestaltet werden muss.',
+      zh:'這樣的規定本應事先與員工代表會協商。這一點沒有做到的事實，說明決策過程辫切需要更加透明。'},
+    {id:'kv-f3',type:'forum',sub:'wäre + PII',
+      de:'Wäre das Jobticket von Anfang an kostenlos eingeführt worden, ohne gleichzeitig Parkgebühren zu erheben, wäre der Widerstand wohl deutlich geringer ausgefallen. So aber entsteht der Eindruck, dass die eine Maßnahme die andere nur finanziert.',
+      zh:'如果工作票從一開始就是免費引入的，沒有同時征收停車費，反對的聲音可能就會小得多了。但現在的做法却讓人感覺一項措施只是在為另一項投資。'},
+  ]
+},
+{
+  id:'passiv-alternativen',
+  name:'Passiv-Alternativen',
+  badge:'Passiv（被動替代）',
+  formula:`<b>(a) sich lassen + Infinitiv</b><br>
+&nbsp;&nbsp;<em>Das Problem lässt sich lösen.</em> = Das Problem kann gelöst werden. (Möglichkeit)<br>
+<b>(b) sein + zu + Infinitiv</b><br>
+&nbsp;&nbsp;<em>Das Problem ist zu lösen.</em> = Das Problem muss / kann gelöst werden. (Pflicht / Möglichkeit)<br>
+<b>(c) -bar / -lich Adjektiv</b><br>
+&nbsp;&nbsp;<em>Das Problem ist lösbar.</em> = Das Problem kann gelöst werden. (Eigenschaft des Subjekts)<br>
+Weitere: <code>vermeidbar, nachvollziehbar, zumutbar, vertretbar, reparierbar, akzeptabel</code>`,
+  examples:[
+    {id:'pa-r1',type:'reply',sub:'lässt sich',
+      de:'Um das Problem zu beheben, lässt sich die fehlerhafte Ware umgehend durch ein einwandfreies Ersatzprodukt ersetzen. Bitte teilen Sie uns Ihre bevorzugte Lieferadresse mit, damit wir die Sendung sofort veranlassen können.',
+      zh:'為了解決這個問題，有缺陷的商品可以立即以完好的替換品替換。請告知我們您希望的配送地址，以便我們立即安排寄送。'},
+    {id:'pa-r2',type:'reply',sub:'ist zu',
+      de:'Um das Problem zu beheben, ist die ursprüngliche Rechnung zu ignorieren und ausschließlich die korrigierte Version im Anhang zu verwenden. Sollten Sie weitere Fragen haben, ist unser Buchhaltungsteam unter [Kontakt] erreichbar.',
+      zh:'為了解決這個問題，原始發票請予以忽略，僅使用附件中的更正版本。如有其他問題，我們的會計團隊可透過[聯絡方式]聯繫。'},
+    {id:'pa-r3',type:'reply',sub:'-bar',
+      de:'Zu den Problemen mit der Lieferzeit kam es dadurch, dass ein Streik beim Logistikdienstleister zu unvorhergesehenen Verzögerungen geführt hat – dies war leider nicht vermeidbar. Die entstandenen Unannehmlichkeiten sind für uns jedoch nicht akzeptabel; daher haben wir bereits einen alternativen Versanddienstleister beauftragt.',
+      zh:'交貨時間出現問題，是因為物流服務商發生缷工，造成了無法預見的延誤，這很遣憑是無法避免的。但這次造成的不便對我們來說是無法接受的；因此我們已委袗另一家配送公司。'},
+    {id:'pa-f1',type:'forum',sub:'lässt sich',
+      de:'Viele dieser Konflikte ließen sich durch eine offene Kommunikation von vornherein vermeiden. Wenn die Geschäftsleitung die Mitarbeitenden frühzeitig einbindet, lässt sich auch der Widerstand deutlich reduzieren.',
+      zh:'許多這些衝突本可以透過開放的溝通從一開始就避免。如果管理層运早讓員工參與，也能明顯減少阻力。'},
+    {id:'pa-f2',type:'forum',sub:'ist zu',
+      de:'Es ist klar zu sagen: Eine dauerhafte Raumtemperatur von 19 Grad ist ohne medizinische Begründung nicht durchzusetzen. Zudem ist zu beachten, dass ein solches Arbeitsumfeld die Konzentration und damit die Produktivität nachweislich beeinträchtigt.',
+      zh:'必須清楚地說：長期室溫19度在沒有醫學依據的情況下是不可執行的。此外需要注意的是，有證据顯示這樣的工作環境確實會影響專注力和生產力。'},
+    {id:'pa-f3',type:'forum',sub:'-bar',
+      de:'Eine tägliche Mehrarbeit von 15 Minuten für die Nutzung des Raucherraums ist für viele schlicht nicht zumutbar – das ist rechtlich fragwürdig. Da eine solche Regelung als diskriminierend einzustufen wäre, sollte sie dringend überprüft werden.',
+      zh:'為使用吸菸室而每天多工作15分鐘，對許多人來說根本無法接受，這在法律上是値得質疑的。由於這樣的規定可能被認定為歧視行為，徳定應迭切審查。'},
+  ]
+},
+{
+  id:'partizip1',
+  name:'Partizip I als Adjektiv（現在分詞作形容詞）',
+  badge:'Passiv（被動替代）',
+  formula:`<b>Bildung:</b> Infinitiv + <code>-d</code> + Adjektivendung<br>
+<b>Bedeutung:</b> aktiv, gleichzeitig mit dem Hauptsatz (= der Mangel, der anhält = der anhaltende Mangel)<br>
+Häufig in Beschwerde-Antworten: <code>anhaltend, zunehmend, wachsend, fehlend, bestehend, entsprechend</code>`,
+  p1table: true,
+  examples:[
+    {id:'p1-r1',type:'reply',sub:'Partizip I',
+      de:'Zu den anhaltenden Problemen mit unserem Service kam es dadurch, dass unsere zuständige Mitarbeiterin sich derzeit in Elternzeit befindet und die entsprechenden Vertretungsregelungen noch nicht vollständig greifen. Um das Problem zu beheben, haben wir eine interne Besprechung abgehalten, indem erfahrene Mitarbeitende der Vertretung die Abläufe detailliert erläutert haben.',
+      zh:'我們服務持續存在的問題，是因為負責的員工目前正在育嬰假，相應的代理安排尚未完全到位。為了解決這個問題，我們召開了一次內部會議，讓有經驗的員工向代理人員詳細說明了工作流程。'},
+    {id:'p1-f1',type:'forum',sub:'Partizip I',
+      de:'Die wachsende Unzufriedenheit unter den Mitarbeitenden zeigt deutlich, dass die bestehenden Regelungen dringend überarbeitet werden müssen. Geltende Vorschriften, die keine Akzeptanz finden, werden auf Dauer nicht eingehalten.',
+      zh:'員工之間日益增長的不滿清楚地表明，現有規定迫切需要修訂。无法獲得認可的現行法規，長期下來是不會被遵守的。'},
+  ]
+},
+{
+  id:'partizip2',
+  name:'Partizip II als Adjektiv（過去分詞作形容詞）',
+  badge:'Passiv（被動替代）',
+  formula:`<b>Bildung:</b> ge- + Verbstamm + -t/-en + Adjektivendung<br>
+<b>Bedeutung:</b> passivisch, abgeschlossen (= die Ware, die geliefert wurde = die gelieferte Ware)<br>
+Häufig: <code>beschädigt, vereinbart, versprochen, geliefert, angekündigt, eingeführt, betroffen, korrigiert</code>`,
+  p2table: true,
+  examples:[
+    {id:'p2-r1',type:'reply',sub:'Partizip II',
+      de:'Zu den Mängeln an dem gelieferten Produkt kam es dadurch, dass beim Verpackungsprozess ein interner Fehler aufgetreten ist und ein Teil der bestellten Waren versehentlich nicht eingepackt wurde. Um das Problem zu beheben, werden wir die fehlenden Artikel umgehend nachliefern; Sie können mit dem Eingang der restlichen Waren innerhalb von zwei Werktagen rechnen.',
+      zh:'所送達產品出現缺陷，是因為包裝過程中發生了內部錯誤，部分訂購商品被意外遺漏未裝算。為了解決這個問題，我們將立即補送缺少的商品；您應可在兩個工作天內收到其餘貨物。'},
+    {id:'p2-f1',type:'forum',sub:'Partizip II',
+      de:'Die angekündigten Maßnahmen wurden bisher nicht umgesetzt – das enttäuscht viele betroffene Kolleginnen und Kollegen. Wenn versprochene Verbesserungen ausbleiben, schwindet das Vertrauen in die Glaubwürdigkeit der Geschäftsleitung.',
+      zh:'已宣布的措施迄今尚未落實，這讓許多受影響的同事感到失望。如果承諾的改善沒有実現，對管理層可信度的信任就會逐漸消退。'},
+  ]
+},
+{
+  id:'temporal',
+  name:'Temporalsatz（時間從句）: sobald / sowie / während / nachdem',
+  badge:'Nebensatz（從句）',
+  formula:`<code>sobald / sowie</code> = unmittelbar nachdem / as soon as (Verb am Ende)<br>
+<code>während</code> = while (gleichzeitig) / whereas (Kontrast zwischen zwei Sachverhalten)<br>
+<code>nachdem</code> + Plusquamperfekt → Hauptsatz folgt danach`,
+  examples:[
+    {id:'t-r1',type:'reply',sub:'sobald',
+      de:'Um das Problem zu beheben, haben wir bereits einen alternativen Lieferanten kontaktiert. Wir werden Sie über den genauen Liefertermin informieren, sobald dieser feststeht.',
+      zh:'為了解決這個問題，我們已經聯繫了另一家供應商。一旦確定確切的交貨日期，我們將立即通知您。'},
+    {id:'t-r2',type:'reply',sub:'sowie',
+      de:'Zu den Problemen mit dem vereinbarten Termin kam es dadurch, dass unser zuständiger Mitarbeiter auf dem Weg zu Ihnen in einen Verkehrsunfall verwickelt wurde. Sobald ein Ersatz gefunden wurde, wird sich dieser umgehend mit Ihnen in Verbindung setzen, sowie ein neuer Termin vereinbart werden kann.',
+      zh:'預約時間出現問題，是因為我們負責的員工在前往您處途中發生了交通事故。一旦找到替代人員，他/她將立即與您聯繫，以便安排新的預約。'},
+    {id:'t-r3',type:'reply',sub:'während (Kontrast)',
+      de:'Während andere Anbieter bei einem solchen Fehler sofort reagiert hätten, haben wir Sie leider zu lange warten lassen – das bedauern wir sehr. Um das Problem zu beheben, wurde die korrigierte Rechnung bereits erstellt und ist als Anhang beigefügt.',
+      zh:'其他供應商遺看遇到這種錯誤會立即回應，而我們却讓您等了太久，對此我們深感遣憑。為了解決這個問題，更正的發票已經開立，並已隨附於此。'},
+    {id:'t-r4',type:'reply',sub:'nachdem',
+      de:'Nachdem wir Ihre Reklamation geprüft hatten, haben wir sofort Maßnahmen eingeleitet und einen alternativen Versanddienstleister beauftragt. Sie können mit dem Eingang Ihrer Bestellung innerhalb von drei Werktagen rechnen.',
+      zh:'在審查了您的投訴之後，我們立即採取了措施，並委袗了另一家配送公司。您應可在三個工作天內收到訂單。'},
+    {id:'t-f1',type:'forum',sub:'sobald',
+      de:'Sobald eine offizielle Stellungnahme der Geschäftsleitung vorliegt, sollten alle betroffenen Mitarbeitenden informiert werden. Andernfalls entstehen Gerüchte, die mehr Verwirrung stiften als die Maßnahme selbst.',
+      zh:'一旦管理層的官方聲明出來，所有受影響的員工都應該被告知。否則就會產生謠言，比措施本身造成更多混亂。'},
+    {id:'t-f2',type:'forum',sub:'während (Kontrast)',
+      de:'Während manche Kolleginnen und Kollegen das Fitnessstudio-Angebot begrüßen, sehen andere im Gehaltsabzug eine ungerechtfertigte Einschränkung. Hier wäre eine optionale Lösung sinnvoller.',
+      zh:'有些同事歡迎健身房優惠，而另一些人則認為薪資扣減是不合理的限制。在這裡，一個自願參加的方案會更有意義。'},
+    {id:'t-f3',type:'forum',sub:'nachdem',
+      de:'Nachdem die Firma das Jobticket eingeführt hatte, stiegen auch die Parkgebühren – das hatte kaum jemand erwartet. Seitdem fühlen sich viele Kolleginnen und Kollegen getäuscht.',
+      zh:'公司引進工作票之後，停車費也隨之上漲，這幾乎沒有人料到。自此許多同事感到被欺騙。'},
+  ]
+},
+{
+  id:'konsekutiv',
+  name:'Konsekutivsatz（結果從句）: sodass / so … dass',
+  badge:'Nebensatz（從句）',
+  formula:`<b>sodass</b> (ein Wort): Ursache/Handlung + <code>sodass</code> + Folge (Verb am Ende)<br>
+<b>so … dass</b> (zwei Wörter): <code>so</code> + Adj./Adv. + Verb + <code>dass</code> + Folge – Grad wird betont`,
+  examples:[
+    {id:'ks-r1',type:'reply',sub:'sodass',
+      de:'Zu den Problemen bei der Lieferung kam es dadurch, dass beim Verpackungsprozess ein interner Fehler aufgetreten ist, sodass ein Teil der bestellten Waren versehentlich nicht eingepackt wurde. Um das Problem zu beheben, werden wir die fehlenden Artikel umgehend nachliefern.',
+      zh:'交貨出現問題，是因為包裝過程中發生了內部錯誤，以至於部分訂購商品被意外遺漏未裝算。為了解決這個問題，我們將立即補送缺少的商品。'},
+    {id:'ks-r2',type:'reply',sub:'so … dass',
+      de:'Zu den Problemen mit dem Catering bei der Konferenz kam es dadurch, dass die Temperaturen an diesem Tag so ungewöhnlich niedrig waren, dass die Speisen schneller als erwartet abgekühlt sind. Um das Problem zu beheben, haben wir mit dem Cateringunternehmen gesprochen und vereinbart, künftig Speisen auszuwählen, die auch bei Raumtemperatur qualitativ hochwertig bleiben.',
+      zh:'會議餐飲出現問題，是因為當天溫度異常低，導致餐黚冷卻速度比預期更快。為了解決這個問題，我們已與餐飲公司協商，今後將選擇即便在室溫下也能保持高品質的餐黚。'},
+    {id:'ks-f1',type:'forum',sub:'sodass',
+      de:'Die Raumtemperatur wurde auf 19 Grad gesenkt, sodass viele Kolleginnen und Kollegen nicht mehr ausreichend konzentriert arbeiten können. Langfristig wird das die Produktivität beeinträchtigen – das Gegenteil von dem, was die Maßnahme beabsichtigt.',
+      zh:'室溫被降低到19度，以至於許多同事無法充分集中注意力工作。長期下來這將損害生產力，正好與這項措施的初衷相反。'},
+    {id:'ks-f2',type:'forum',sub:'so … dass',
+      de:'Der Druck durch die ständige Erreichbarkeit über das Firmenhandy ist so hoch, dass einige Mitarbeitende bereits über einen Wechsel nachdenken. Eine klare Regelung zu Erreichbarkeitszeiten wäre dringend notwendig.',
+      zh:'透過公務手機持續保持可聯繫的壓力如此之高，以至於有些員工已經在考慮換工作了。對可聯繫時間刺制定明確規定，屬現辫切需要。'},
+  ]
+},
+{
+  id:'modal-indem',
+  name:'Modalsatz（方式從句）: indem / dadurch, dass',
+  badge:'Nebensatz（從句）',
+  formula:`<code>indem</code> + Nebensatz = durch diese Handlung / by doing (gleiches Subjekt)<br>
+<code>dadurch, dass</code> + Nebensatz = formeller (durch die Tatsache, dass; auch verschiedene Subjekte möglich)`,
+  examples:[
+    {id:'mi-r1',type:'reply',sub:'indem',
+      de:'Um das Problem zu beheben, haben wir eine interne Besprechung abgehalten, indem erfahrene Mitarbeitende der Vertretung die Abläufe detailliert erläutert haben. Durch regelmäßige Schulungen stellen wir sicher, dass solche Fehler nicht mehr vorkommen.',
+      zh:'為了解決這個問題，我們召開了一次內部會議，讓有經驗的員工向代理人員詳細說明了工作流程。透過定期培訓，我們確保此類錯誤不再發生。'},
+    {id:'mi-r2',type:'reply',sub:'dadurch, dass',
+      de:'Zu den Problemen mit der Rechnung kam es dadurch, dass wir kürzlich ein internes Systemupdate zum Schutz vor Cyberangriffen durchgeführt haben. Da einige Mitarbeitende mit dem neuen System noch nicht vollständig vertraut sind, kam es leider zu einem Eingabefehler.',
+      zh:'發票出現問題，是因為我們最近為防範網路攻擊進行了內部系統更新。由於部分員工對新系統尚不完全熟悧，很遣憑發生了輸入錯誤。'},
+    {id:'mi-f1',type:'forum',sub:'indem',
+      de:'Indem man die Mitarbeitenden aktiv in Entscheidungsprozesse einbindet, lässt sich die Motivation deutlich steigern. Das zeigt sich besonders bei Maßnahmen, die den Arbeitsalltag direkt betreffen.',
+      zh:'透過積極讓員工參與決策過程，可以顯著提高積極性。這在直接影響日常工作的措施中尤為明顯。'},
+    {id:'mi-f2',type:'forum',sub:'dadurch, dass',
+      de:'Dadurch, dass die Firma das Firmenhandy auch für private Nutzung freigibt, entsteht eine schwer kontrollierbare Grauzone zwischen Arbeit und Freizeit. Klare Nutzungsregeln wären daher dringend erforderlich.',
+      zh:'由於公司允許將公務手機用於私人用途，在工作和休閒之間產生了一個難以監管的灰色地帶。因此迦切需要明確的使用規定。'},
+  ]
+},
+{
+  id:'kausal',
+  name:'Kausalsatz（原因從句）: weil / da / zumal',
+  badge:'Kausalsatz（原因從句）',
+  formula:`<code>weil</code> = betonte, neue Ursache (Verb am Ende, meist nach dem Hauptsatz)<br>
+<code>da</code> = bereits bekannte Ursache (oft am Satzanfang, Verb am Ende)<br>
+<code>zumal</code> = besonders da / especially since (verstärkt den Grund, meist am Satzende)`,
+  examples:[
+    {id:'kd-r1',type:'reply',sub:'weil',
+      de:'Zu den Mängeln an dem Produkt kam es dadurch, dass wir kürzlich auf einen neuen Hersteller umgestiegen sind, weil unser bisheriger Lieferant die Produktion eingestellt hatte. Um das Problem zu beheben, haben wir den Hersteller bereits kontaktiert und arbeiten eng mit ihm zusammen, um die Qualitätsstandards künftig sicherzustellen.',
+      zh:'產品出現缺陷，是因為我們最近更換了新的製造商，原因是我們之前的供應商已停止生產。為了解決這個問題，我們已與製造商聯繫，並正密切合作，以確保今後的品質標準得到保障。'},
+    {id:'kd-r2',type:'reply',sub:'da',
+      de:'Da unsere zuständige Mitarbeiterin sich derzeit in Elternzeit befindet und ihre Vertretung die spezifischen Anforderungen zunächst nicht vollständig erfasst hatte, kam es zu den beschriebenen Problemen. Um das Problem zu beheben, haben wir eine interne Besprechung abgehalten, indem erfahrene Mitarbeitende der Vertretung die Abläufe detailliert erläutert haben.',
+      zh:'由於負責的員工目前正在育嬰假，而其代理人員起初未能完全掌握此職責的具體要求，因此發生了所述問題。為了解決這個問題，我們召開了內部會議，讓有經驗的員工向代理人員詳細說明了工作流程。'},
+    {id:'kd-r3',type:'reply',sub:'zumal',
+      de:'Wir entschuldigen uns aufrichtig für die entstandenen Unannehmlichkeiten, zumal dieser Fehler bei sorgfältigerer Kontrolle hätte vermieden werden können. Um das Problem zu beheben, werden wir eine gezielte Schulung für alle betroffenen Mitarbeitenden durchführen.',
+      zh:'我們為造成的不便誠摺道歉，尤其是因為如果檢查更加仔細，這個錯誤本來是可以避免的。為了解決這個問題，我們將為所有相關員工展開專項培訓。'},
+    {id:'kd-f1',type:'forum',sub:'weil',
+      de:'Viele Mitarbeitende sind gegen die Regelung, weil sie keine Möglichkeit hatten, bei der Entscheidung mitzuwirken. Das führt zu Misstrauen, das nur durch echte Beteiligung abgebaut werden kann.',
+      zh:'許多員工反對這項規定，因為他們沒有機會參與決策。這導致了不信任感，而這只能透過真正的參與來消除。'},
+    {id:'kd-f2',type:'forum',sub:'da',
+      de:'Da die Maßnahme alle Mitarbeitenden direkt betrifft, wäre eine transparente Kommunikation vorab selbstverständlich gewesen. Wer rechtzeitig informiert wird, kann sich anpassen – wer überrumpelt wird, reagiert mit Ablehnung.',
+      zh:'由於這項措施直接影響到所有員工，事先的透明溝通本應是理所當然的。及時被告知的人可以適應，被突然奉告的人就會以拒絕回應。'},
+    {id:'kd-f3',type:'forum',sub:'zumal',
+      de:'Die Gehaltsabzüge sind besonders schwer zu akzeptieren, zumal das Unternehmen im letzten Quartal Gewinne verzeichnet hat. Es ist schwer nachvollziehbar, warum die Kosten ausgerechnet von den Mitarbeitenden getragen werden sollen.',
+      zh:'薪資扣減尤其難以接受，更何況公司上一季還盈利了。實在難以理解，為什麼成本偷偷好由員工來承擔。'},
+  ]
+},
+{
+  id:'konzessiv',
+  name:'Konzessivsatz（讓步從句）: obwohl / trotzdem / obgleich',
+  badge:'Konzessivsatz（讓步從句）',
+  formula:`<code>obwohl</code> + Nebensatz (Verb am Ende) = although (Widerspruch zum Hauptsatz)<br>
+<code>trotzdem</code> + Hauptsatz (Pos. 1, Inversion) = nevertheless<br>
+<code>obgleich</code> = obwohl, etwas formeller`,
+  examples:[
+    {id:'kz-r1',type:'reply',sub:'obwohl',
+      de:'Obwohl wir unser System kürzlich aktualisiert haben, um solche Fehler zu verhindern, kam es in diesem Fall leider noch einmal zu einem Eingabeproblem. Um das Problem zu beheben, haben wir eine gezielte Schulung für alle betroffenen Mitarbeitenden eingeleitet.',
+      zh:'雖然我們最近更新了系統以防止此類錯誤，但這次很遣憑仍然發生了輸入問題。為了解決這個問題，我們已為所有相關員工展開專項培訓。'},
+    {id:'kz-r2',type:'reply',sub:'trotzdem',
+      de:'Wir haben sofort Maßnahmen eingeleitet und eine korrigierte Rechnung erstellt. Trotzdem bitten wir Sie, uns die Gelegenheit zu geben, den Schaden vollständig zu beheben – Ihre Zufriedenheit hat für uns oberste Priorität.',
+      zh:'我們已立即採取了措施並開立了更正發票。尿管如此，我們請求您給我們機會完全修復這個損失，您的滿意對我們來說是最高優先。'},
+    {id:'kz-f1',type:'forum',sub:'obwohl',
+      de:'Obwohl das Ziel der Maßnahme – die Gesundheit der Mitarbeitenden zu fördern – grundsätzlich zu begrüßen ist, halte ich den Gehaltsabzug als Finanzierungsmodell für nicht durchdacht. Eine freiwillige Lösung wäre hier wesentlich überzeugender.',
+      zh:'雖然這項措施的目標，促進員工健康，原則上是値得歡迎的，但我認為以薪資扣減作為資金模型的做法欠缺考慮。自願參加的方案會比這更有說服力。'},
+    {id:'kz-f2',type:'forum',sub:'trotzdem',
+      de:'Das Unternehmen hat uns über die Regelung informiert. Trotzdem fehlte jede Möglichkeit zur Mitsprache oder Rückmeldung – das verstärkt das Gefühl, dass unsere Meinungen keine Rolle spielen.',
+      zh:'公司确實通知了我們這項規定。然而卻完全沒有給我們任何參與或反饋的機會，這加強了我們的意見不被重視的感覺。'},
+  ]
+},
+{
+  id:'infinitiv',
+  name:'Infinitivsatz（不定式從句）: um…zu / anstatt…zu / ohne…zu',
+  badge:'Nebensatz（從句）',
+  formula:`Infinitivsatz (gleiches Subjekt) → Nebensatz mit dass (verschiedene Subjekte):<br>
+<code>um … zu</code> + Inf. &nbsp;→&nbsp; <code>damit</code> + NS &nbsp;= Ziel / Zweck<br>
+<code>anstatt … zu</code> + Inf. &nbsp;→&nbsp; <code>anstatt dass</code> + NS &nbsp;= Ersatz<br>
+<code>ohne … zu</code> + Inf. &nbsp;→&nbsp; <code>ohne dass</code> + NS &nbsp;= fehlende Begleitumstand`,
+  examples:[
+    {id:'is-r1',type:'reply',sub:'um … zu',
+      de:'Um das Problem zu beheben, werden wir umgehend einen Techniker schicken, um das mangelhafte Produkt zu ersetzen und sicherzustellen, dass die Arbeiten fachgerecht ausgeführt werden.',
+      zh:'為了解決問題，我們將立即派遣技術人員前往更換有缺陷的產品，並確保相關工程按照專業標準執行。'},
+    {id:'is-r2',type:'reply',sub:'damit',
+      de:'Wir haben die Rechnung erneut erstellt und senden Ihnen diese mit dieser E-Mail als Anhang zu, damit Ihnen alle relevanten Unterlagen vorliegen. Bitte ignorieren Sie die ursprüngliche Rechnung.',
+      zh:'我們已重新開立發票，並隨這封電子郵件以附件形式寄送給您，以便您擁有所有相關文件。請忽略原始發票。'},
+    {id:'is-r3',type:'reply',sub:'anstatt … zu',
+      de:'Anstatt sofort auf Ihre Anfrage zu reagieren, haben wir Ihnen leider unnötig lange Wartezeiten zugemutet – das bedauern wir sehr. Um das Problem zu beheben, haben wir Ihre Anfrage nun intern priorisiert und werden innerhalb von 24 Stunden antworten.',
+      zh:'我們沒有立即回應您的詢問，而是讓您忍受了不必要的漫長等待，對此我們深感遣憑。為了解決這個問題，我們已將您的詢問在內部列為優先，將在24小時內回覆。'},
+    {id:'is-r4',type:'reply',sub:'anstatt dass',
+      de:'Anstatt dass unsere zuständige Mitarbeiterin Sie proaktiv über die Verzögerung informiert hat, mussten Sie selbst mehrfach nachfragen. Das hätte nicht passieren dürfen, und wir haben intern entsprechende Maßnahmen eingeleitet.',
+      zh:'我們的負責員工沒有主動就延誤通知您，而是您自己不得不多次追問。這是不應該發生的，我們已在內部採取了相應措施。'},
+    {id:'is-r5',type:'reply',sub:'ohne … zu',
+      de:'Zu den Mängeln an dem Produkt kam es dadurch, dass es offensichtlich versendet wurde, ohne es vorher ausreichend auf Funktionsfähigkeit zu prüfen. Um das Problem zu beheben, haben wir ein strengeres Prüfverfahren für alle Sendungen eingeführt.',
+      zh:'產品出現缺陷，是因為顯然是在沒有事先充分檢查其功能狀態的情況下就寄出了。為了解決這個問題，我們已對所有寄送引入更嚴格的檢驗程序。'},
+    {id:'is-r6',type:'reply',sub:'ohne dass',
+      de:'Die Reparatur wurde abgeschlossen, ohne dass Sie darüber informiert wurden – das war ein Versäumnis. Wir haben diesen Vorgang intern dokumentiert und werden künftig sicherstellen, dass Sie über jeden Schritt auf dem Laufenden gehalten werden.',
+      zh:'維修已完成，卻沒有通知您，這是我們的疏失。我們已將此事在內部記錄在案，今後將確保持續议您的進展。'},
+    {id:'is-f1',type:'forum',sub:'um … zu',
+      de:'Eine solche Maßnahme sollte transparent kommuniziert werden, um das Vertrauen der Belegschaft nicht zu beschädigen. Wer Vertrauen aufbauen will, muss bereit sein, Entscheidungen zu erklären.',
+      zh:'這樣的措施應該透明地溝通，以免損害員工對公司的信任。想建立信任的人，必須願意解釋決策。'},
+    {id:'is-f2',type:'forum',sub:'damit',
+      de:'Es wäre sinnvoll, alle Beteiligten frühzeitig einzubinden, damit die Regelung auf mehr Akzeptanz stößt. Entscheidungen, die gemeinsam getragen werden, sind stabiler als solche, die von oben verordnet werden.',
+      zh:'盡早讓所有相關人員參與進來是明智之舉，這樣規定才能獲得更多認可。共同承擔的決定，比自上而下發布的更具穩定性。'},
+    {id:'is-f3',type:'forum',sub:'anstatt … zu',
+      de:'Anstatt pauschal Gehalt zu kürzen, hätte man auch andere, weniger einschneidende Wege finden können. Ein freiwilliges Modell mit Anreizen wäre aus meiner Sicht fairer und motivierender gewesen.',
+      zh:'與其一概削減薪資，本來也可以找到其他影響較小的途徑。一個附有激勵的自願模式，依我之見會更公平也更有激勵作用。'},
+    {id:'is-f4',type:'forum',sub:'anstatt dass',
+      de:'Anstatt dass die Geschäftsleitung die Mitarbeitenden befragt hat, wurde die Entscheidung einfach durchgesetzt. Das führt nicht nur zu Widerstand, sondern auch zu einem Vertrauensverlust, der schwer wieder aufzubauen ist.',
+      zh:'管理層並沒有徵詢員工意見，而是直接強行實施了這個決定。這不僅導致阻力，也造成了難以重建的信任危機。'},
+    {id:'is-f5',type:'forum',sub:'ohne … zu',
+      de:'Die neue Regelung wurde eingeführt, ohne die langfristigen Folgen für die Gesundheit der Mitarbeitenden zu bedenken. Eine Maßnahme, die gesundheitsfördernd sein soll, sollte nicht selbst zu einer Belastung werden.',
+      zh:'新規定在沒有考慮對員工健康的長期影響的情況下就被引入了。一項該促進健康的措施，不應該本身成為一種負擔。'},
+    {id:'is-f6',type:'forum',sub:'ohne dass',
+      de:'Die Änderung trat in Kraft, ohne dass der Betriebsrat konsultiert wurde – das ist rechtlich fragwürdig. Ohne eine solche Absprache fehlt der Maßnahme die nötige rechtliche und moralische Legitimation.',
+      zh:'變更在未論詢員工代表會的情況下就生效了，這在法律上是値得質疑的。沒有這樣的協商，這項措施就缺乏必要的法律和道德合法性。'},
+  ]
+},
+{
+  id:'relativsatz',
+  name:'Relativsatz（關係從句，擴展）',
+  badge:'Nebensatz（從句）',
+  formula:`<b>Ort:</b> <code>wo</code> statt in/an/auf + dem<br>
+<b>Zeit:</b> <code>als</code> (einmalig, Vergangenheit) / <code>wenn</code> (wiederholt)<br>
+<b>Indefinitpronomen:</b> <code>was</code> nach <em>alles, etwas, nichts, das</em><br>
+<b>Bezug auf ganzen Satz:</b> Komma + <code>was</code> (= ein Umstand, der…)`,
+  examples:[
+    {id:'rs-r1',type:'reply',sub:'Relativpronomen',
+      de:'Um das Problem zu beheben, werden wir die korrekte Ware umgehend versenden und einen Kurier beauftragen, der die fehlerhafte Lieferung bei Ihnen abholt. Sie müssen sich um nichts weiter kümmern.',
+      zh:'為了解決問題，我們將立即寄送正確的貨物，並委袗快遞人員前往取回送錯的貨品。您不需要擔心其他任何事項。'},
+    {id:'rs-r2',type:'reply',sub:'was (alles)',
+      de:'Alles, was wir bisher unternommen haben, diente dazu, diesen Fehler so schnell wie möglich zu beheben. Wir hoffen, dass diese Maßnahmen Ihr Vertrauen in unseren Service wiederherstellen.',
+      zh:'我們迄今所採取的一切措施，都是為了盡快修復這個錯誤。我們希望這些措施能够恢復您對我們服務的信任。'},
+    {id:'rs-r3',type:'reply',sub:'was (satzwertig)',
+      de:'Wir haben Ihre Beschwerde sofort intern weitergeleitet und Maßnahmen eingeleitet, was wir Ihnen hiermit schriftlich bestätigen. Über den weiteren Verlauf werden wir Sie regelmäßig informieren.',
+      zh:'我們立即在內部轉交了您的投訴並採取了措施，我們在此以書面方式確認這一點。我們將會定期向您報告後續進展。'},
+    {id:'rs-f1',type:'forum',sub:'wo',
+      de:'Es gibt Situationen im Arbeitsalltag, wo eine klare Regelung Orientierung gibt und Konflikte verhindert. Das Raucherraumthema ist genau so ein Fall.',
+      zh:'在日常工作中，有些時候明確的規定能提供方向并防止衝突。吸菸室的議題正是這樣的一個案例。'},
+    {id:'rs-f2',type:'forum',sub:'was (etwas)',
+      de:'Ein kostenloses Jobticket ist etwas, was die meisten Kolleginnen und Kollegen grundsätzlich begrüßen würden – die Frage ist nur, ob die Parkgebühren wirklich dafür nötig sind.',
+      zh:'免費工作票是大多數同事原則上都會歡迎的東西，問題只是停車費是否真的有必要。'},
+    {id:'rs-f3',type:'forum',sub:'was (satzwertig)',
+      de:'Die Entscheidung wurde ohne Beteiligung der Belegschaft getroffen, was viele Kolleginnen und Kollegen verständlicherweise verärgert. Diese fehlende Beteiligung ist es, die Maßnahmen von Beginn an zum Scheitern bringt.',
+      zh:'這個決定是在未經員工參與的情況下做出的，這讓許多同事感到憤怒，這是可以理解的。正是這種缺乏參與，讓措施從一開始就注定失敗。'},
+  ]
+},
+{
+  id:'doppelkonnektoren',
+  name:'Doppelkonnektoren（雙重連詞）',
+  badge:'Konnektoren（連詞）',
+  formula:`<code>sowohl … als auch</code> = both … and<br>
+<code>nicht nur … sondern auch</code> = not only … but also<br>
+<code>entweder … oder</code> = either … or<br>
+<code>weder … noch</code> = neither … nor<br>
+<code>zwar … aber</code> = admittedly … but<br>
+<code>einerseits … andererseits</code> = on the one hand … on the other<br>
+<code>je … desto</code> = the more … the more`,
+  examples:[
+    {id:'dk-r1',type:'reply',sub:'sowohl … als auch',
+      de:'Zu den Problemen mit der Lieferung kam es dadurch, dass sowohl die Produktionskette als auch der Versandprozess durch das Systemupdate beeinträchtigt wurden. Um das Problem zu beheben, haben wir beide Bereiche überprüft und entsprechende Korrekturen vorgenommen.',
+      zh:'交貨出現問題，是因為生產鏈和寄送流程都受到了系統更新的影響。為了解決這個問題，我們對兩個流程進行了檢查並做出相應的修正。'},
+    {id:'dk-r2',type:'reply',sub:'entweder … oder',
+      de:'Um das Problem zu beheben, können wir Ihnen entweder eine vollständige Rückerstattung anbieten oder umgehend ein einwandfreies Ersatzprodukt zusenden. Bitte teilen Sie uns mit, welche Lösung Sie bevorzugen.',
+      zh:'為了解決這個問題，我們可以提供您全額退款，或者立即寄送一件完好的替換品。請告知我們您希望哪種方案。'},
+    {id:'dk-r3',type:'reply',sub:'weder … noch',
+      de:'Wir möchten sicherstellen, dass Ihnen weder zusätzliche Kosten noch weitere Unannehmlichkeiten entstehen. Alle anfallenden Versandkosten für die Ersatzlieferung übernehmen selbstverständlich wir.',
+      zh:'我們希望確保您不會產生額外費用，也不會再有任何不便。替換品的所有運費當然由我們承擔。'},
+    {id:'dk-r4',type:'reply',sub:'zwar … aber',
+      de:'Zwar können wir die entstandene Verzögerung nicht mehr rükgängig machen, aber wir werden alles daransetzen, den Schaden so gut wie möglich zu beheben. Als Entschädigung möchten wir Ihnen einen Rabatt auf Ihre nächste Bestellung anbieten.',
+      zh:'誠然我們無法再撤回已造成的延誤，但我們將盡一切努力盡可能地彌補損失。作為跃居款，我們希望向您提供下次訂單的折扣。'},
+    {id:'dk-f1',type:'forum',sub:'nicht nur … sondern auch',
+      de:'Das Firmenhandy bedeutet nicht nur ständige Erreichbarkeit außerhalb der Arbeitszeit, sondern auch eine erhebliche psychische Belastung. Langfristig könnte das zu erhöhtem Krankenstand führen – das Gegenteil von dem, was das Unternehmen anstrebt.',
+      zh:'公務手機不僅意味著工作時間外需隨時保持可聯繫，也造成相當大的心理負擔。長期下來這可能導致訷病率上升，正好與公司的初衷相反。'},
+    {id:'dk-f2',type:'forum',sub:'einerseits … andererseits',
+      de:'Einerseits schätze ich die Intention hinter dem kostenlosen Jobticket, andererseits halte ich die gleichzeitige Einführung von Parkgebühren für keine faire Lösung. Wer auf das Auto angewiesen ist, wird de facto bestraft.',
+      zh:'一方面我欣賞免費工作票背後的初衷，另一方面我認為同時引入停車費並不公平。需要依賴車子的人，實際上是被懲罰了。'},
+    {id:'dk-f3',type:'forum',sub:'je … desto',
+      de:'Je weniger die Mitarbeitenden in solche Entscheidungen einbezogen werden, desto größer wird der Widerstand. Das sollte die Geschäftsleitung bedenken, bevor sie ähnliche Maßnahmen plant.',
+      zh:'員工越少參與這類決策，阻力就會越大。管理層在計劃類似措施之前，應該考慮到這一點。'},
+  ]
+},
+{
+  id:'es-wendungen',
+  name:'„es“ – feste Wendungen und Platzhalter（固定用法）',
+  badge:'Pronomen（代詞）',
+  formula:`<code>Es handelt sich um</code> = It concerns / It is about<br>
+<code>Es geht um</code> = It is about<br>
+<code>Es liegt an / bei</code> = It is due to / It is up to<br>
+<code>Es kommt auf … an</code> = What matters is … / It depends on …<br>
+<code>Es hängt von … ab</code> = It depends on …<br>
+<code>Es steht fest</code> = It is certain / clear<br>
+<code>Es bleibt abzuwarten</code> = It remains to be seen<br>
+<code>Es ist zu beachten</code> = It should be noted`,
+  examples:[
+    {id:'es-r1',type:'reply',sub:'Es handelt sich um',
+      de:'Bei dem beschriebenen Problem handelt es sich um einen technischen Fehler in unserem Abrechnungssystem. Dieser Fehler ist zwischenzeitlich vollständig behoben worden, und die korrigierte Rechnung finden Sie im Anhang.',
+      zh:'所描述的問題涉及我們計費系統中的一個技術錯誤。該錯誤目前已完全修復，更正的發票已附於付件。'},
+    {id:'es-r2',type:'reply',sub:'Es liegt an / bei',
+      de:'Es liegt nun an uns, diesen Fehler schnellstmöglich zu korrigieren. Wir bitten Sie um noch etwas Geduld und versichern Ihnen, dass wir alles unternehmen werden, um Ihr Vertrauen wiederzugewinnen.',
+      zh:'現在輪到我們盡快結正這個錯誤。我們請求您再多一點耐心，並向您保證，我們將作出一切努力來重得您的信任。'},
+    {id:'es-r3',type:'reply',sub:'Es ist zu beachten',
+      de:'Es ist zu beachten, dass die ursprüngliche Rechnung ungültig ist. Bitte verwenden Sie ausschließlich die korrigierte Version im Anhang, und sollten Sie weitere Fragen haben, stehen wir Ihnen gerne zur Verfügung.',
+      zh:'需要注意的是，原始發票已無效。請僅使用附件中的更正版本，如有其他問題，我們隨時提供协助。'},
+    {id:'es-f1',type:'forum',sub:'Es steht fest',
+      de:'Es steht fest, dass eine bessere Kommunikation im Vorfeld viele dieser Konflikte hätte verhindern können. Eine Entscheidung, die im Dialog getroffen wird, ist stabiler als eine, die verordnet wird.',
+      zh:'可以確定的是，事先更好的溝通本可以避免許多這些衝突。在對話中做出的決定，比被指派的更具穩定性。'},
+    {id:'es-f2',type:'forum',sub:'Es kommt auf … an',
+      de:'Es kommt letztlich darauf an, ob das Unternehmen bereit ist, auf die konkreten Bedürfnisse seiner Mitarbeitenden einzugehen. Wer das ignoriert, riskiert auf Dauer eine sinkende Motivation und höhere Fluktuation.',
+      zh:'最終還是要看企業是否願意回應員工的具體需求。忽視這一點的人，長期將面臨日益下滑的積極性和更高的人流稍動率。'},
+    {id:'es-f3',type:'forum',sub:'Es bleibt abzuwarten',
+      de:'Es bleibt abzuwarten, ob die angekündigten Maßnahmen tatsächlich umgesetzt werden. Viele Kolleginnen und Kollegen haben inzwischen eine abwartende Haltung eingenommen.',
+      zh:'已宣布的措施是否真的會落實，還有待觀察。許多同事目前已採取觀望態度。'},
+    {id:'es-f4',type:'forum',sub:'Es hängt … ab',
+      de:'Ob ich das Jobticket wirklich nutzen kann, hängt davon ab, wie gut mein Wohnort an den öffentlichen Nahverkehr angebunden ist. Für Kolleginnen und Kollegen in ländlichen Gebieten wäre das Angebot schlicht nicht nutzbar.',
+      zh:'我是否能實際使用工作票，取決於我的住所與公共交通的連接有多方便。居住在鄉村地區的同事，這項優惠根本無法使用。'},
+  ]
+},
+];
+
+// ── Partizip tables ───────────────────────────────────────────────────────
+const P1_DATA = {
+  title:'常用 Partizip I 搭配（形容詞 + 名詞）',
+  cols:['Partizip I','名詞搭配','中文'],
+  groups:[
+    {cat:'問題・缺陷',rows:[
+      ['anhaltend','der anhaltende Mangel / die anhaltenden Beschwerden','持續的缺陷 / 持續的投訴'],
+      ['zunehmend','die zunehmende Unzufriedenheit / der zunehmende Druck','日益增長的不滿 / 壓力'],
+      ['fehlend','die fehlende Reaktion / das fehlende Feedback','缺乏的回應 / 缺乏的反饋'],
+      ['bestehend','das bestehende Problem / die bestehenden Mängel','現有的問題 / 現有的缺陷'],
+    ]},
+    {cat:'公司・職場',rows:[
+      ['wachsend','die wachsende Belastung / der wachsende Widerstand','日益增長的負擔 / 阻力'],
+      ['entsprechend','die entsprechende Abteilung / die entsprechenden Maßnahmen','相應的部門 / 措施'],
+      ['geltend','die geltenden Regelungen / die geltenden Vorschriften','現行規定 / 現行條例'],
+      ['steigend','die steigenden Kosten / die steigende Nachfrage','上漲的成本 / 上升的需求'],
+    ]},
+  ]
+};
+const P2_DATA = {
+  title:'常用 Partizip II 搭配（形容詞 + 名詞）',
+  cols:['Partizip II','名詞搭配','中文'],
+  groups:[
+    {cat:'投訴・回覆',rows:[
+      ['geliefert','das gelieferte Produkt / die gelieferte Ware','所送達的產品 / 貨物'],
+      ['vereinbart','die vereinbarte Qualität / der vereinbarte Termin','約定的品質 / 約定的日期'],
+      ['versprochen','die versprochene Reparatur / der versprochene Ersatz','承諾的維修 / 承諾的替換'],
+      ['beschädigt','das beschädigte Gerät / das beschädigte Paket','損壞的設備 / 損壞的包裹'],
+    ]},
+    {cat:'公司措施',rows:[
+      ['angekündigt','die angekündigte Maßnahme / die angekündigten Änderungen','已宣布的措施 / 變更'],
+      ['eingeführt','die eingeführte Regelung / das eingeführte System','已引入的規定 / 系統'],
+      ['geplant','die geplante Umstrukturierung / die geplante Änderung','計畫中的重組 / 變更'],
+      ['betroffen','die betroffenen Mitarbeitenden / die betroffene Abteilung','受影響的員工 / 部門'],
+    ]},
+  ]
+};
+
+function buildPTable(d) {
+  const rows = d.groups.map(g => {
+    const catRow = `<tr><td colspan="3" class="pt-cat">${g.cat}</td></tr>`;
+    const dataRows = g.rows.map(r =>
+      `<tr><td class="pt-adj">${r[0]}</td><td class="pt-noun">${r[1]}</td><td class="pt-zh">${r[2]}</td></tr>`
+    ).join('');
+    return catRow + dataRows;
+  }).join('');
+  return `<div class="ptable-wrap">
+    <div class="ptable-title">${d.title}</div>
+    <table class="ptable">
+      <thead><tr>${d.cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+  </div>`;
+}
+
+// ── State & Storage ───────────────────────────────────────────────────────
+const LS_KEY = 'schreiben_grammatik_v2';
+let savedSet = new Set();
+let currentFilter = 'all';
+function loadSaved(){ try { const r=localStorage.getItem(LS_KEY); if(r) savedSet=new Set(JSON.parse(r)); } catch(e){} }
+function persistSaved(){ try { localStorage.setItem(LS_KEY, JSON.stringify([...savedSet])); } catch(e){} }
+
+// ── TTS ───────────────────────────────────────────────────────────────────
+let activeEl=null;
+function speak(text,el){
+  if(!text||typeof speechSynthesis==='undefined') return;
+  if(activeEl===el&&speechSynthesis.speaking){speechSynthesis.cancel();return;}
+  speechSynthesis.cancel();
+  if(activeEl){activeEl.classList.remove('speaking');activeEl=null;}
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang='de-DE'; u.rate=0.88;
+  const v=speechSynthesis.getVoices().find(v=>v.lang.startsWith('de')); if(v) u.voice=v;
+  if(el){el.classList.add('speaking');activeEl=el;}
+  const s=document.getElementById('tts-status');
+  s.textContent='🔊 朗讀中：'+text.slice(0,70)+(text.length>70?'…':''); s.className='tts-playing';
+  u.onend=u.onerror=()=>{ if(activeEl===el){el?.classList.remove('speaking');activeEl=null;} s.textContent='點擊例句朗讀'; s.className='tts-hint'; };
+  speechSynthesis.speak(u);
+}
+if(typeof speechSynthesis!=='undefined'){ speechSynthesis.getVoices(); if(speechSynthesis.onvoiceschanged!==undefined) speechSynthesis.onvoiceschanged=()=>speechSynthesis.getVoices(); }
+
+// ── Jump to card ──────────────────────────────────────────────────────────
+function jumpTo(id){
+  if(currentFilter!=='all') setFilter('all', document.querySelector('.filter-btn'));
+  const el=document.getElementById('card-'+id); if(!el) return;
+  el.scrollIntoView({behavior:'smooth',block:'start'});
+  el.classList.add('flash'); setTimeout(()=>el.classList.remove('flash'),1200);
+  document.querySelectorAll('.tag-item').forEach(t=>t.classList.remove('active'));
+  const hit=[...document.querySelectorAll('.tag-item')].find(t=>(t.getAttribute('onclick')||'').includes("'"+id+"'"));
+  if(hit) hit.classList.add('active');
+}
+
+// ── Toggle saved ──────────────────────────────────────────────────────────
+function toggleSaved(id,checked){
+  if(checked) savedSet.add(id); else savedSet.delete(id);
+  persistSaved(); updateCounters();
+  if(currentFilter==='reply'||currentFilter==='forum') renderSavedPanel();
+  const el=document.querySelector(`[data-exid="${id}"]`); if(el) el.classList.toggle('is-saved',checked);
+}
+function clearSaved(){
+  if(!confirm('清除全部已勾選的例句？')) return;
+  savedSet.clear(); persistSaved(); updateCounters(); renderSavedPanel(); syncCBs();
+}
+function removeSaved(id){ savedSet.delete(id); persistSaved(); updateCounters(); renderSavedPanel(); syncCBs(); }
+
+// ── Counters ──────────────────────────────────────────────────────────────
+function updateCounters(){
+  let rc=0,fc=0;
+  for(const id of savedSet){ const f=findEx(id); if(!f) continue; f.type==='reply'?rc++:fc++; }
+  document.getElementById('stat-reply').textContent=rc;
+  document.getElementById('stat-forum').textContent=fc;
+  document.getElementById('reply-tab-btn').textContent=`✉️ 已勾回信句 (${rc})`;
+  document.getElementById('forum-tab-btn').textContent=`💬 已勾論壇句 (${fc})`;
+  document.getElementById('sc-big').textContent=savedSet.size;
+}
+function findEx(id){ for(const g of GRAMMAR){const e=g.examples.find(e=>e.id===id); if(e) return{...e,gname:g.name};} return null; }
+
+// ── Build card ────────────────────────────────────────────────────────────
+function buildCard(g){
+  const exHtml=g.examples.map(ex=>{
+    const saved=savedSet.has(ex.id);
+    const label=ex.type==='reply'?'✉️ 抱怨信':'💬 論壇';
+    const sub=ex.sub?`<span class="ex-sublabel">（${ex.sub}）</span>`:'';
+    const cb=ex.type==='reply'?'reply-box':'forum-box';
+    const de=ex.de.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    return `<div class="example ${ex.type}${saved?' is-saved':''}" data-exid="${ex.id}" onclick="speak('${de}',this.querySelector('.ex-de'))">
+      <div class="ex-header">
+        <span class="ex-label">${label} ${sub}</span>
+        <label class="sent-check-wrap" onclick="event.stopPropagation()">
+          <input type="checkbox" class="sent-check" data-exid="${ex.id}" ${saved?'checked':''} onchange="toggleSaved('${ex.id}',this.checked)">
+          <span class="sent-check-box ${cb}"></span>
+        </label>
+      </div>
+      <div class="ex-de">${ex.de}</div>
+      <div class="ex-zh">${ex.zh}</div>
+    </div>`;
+  }).join('');
+  const pt=(g.p1table?buildPTable(P1_DATA):'')+(g.p2table?buildPTable(P2_DATA):'');
+  return `<div class="card" id="card-${g.id}">
+    <div class="card-header">
+      <span class="grammar-name">${g.name}</span>
+      <span class="grammar-badge">${g.badge}</span>
+    </div>
+    <div class="formula-box">${g.formula}</div>
+    ${pt}
+    <div class="examples">${exHtml}</div>
+  </div>`;
+}
+
+// ── Render cards ──────────────────────────────────────────────────────────
+function renderCards(){
+  document.getElementById('cards').innerHTML=GRAMMAR.map(buildCard).join('');
+  document.getElementById('stat-total').textContent=GRAMMAR.length;
+}
+
+// ── Saved panel ───────────────────────────────────────────────────────────
+function renderSavedPanel(){
+  const list=document.getElementById('saved-list');
+  const empty=document.getElementById('saved-empty');
+  const items=[];
+  for(const id of savedSet){
+    const f=findEx(id); if(!f) continue;
+    if(currentFilter==='reply'&&f.type!=='reply') continue;
+    if(currentFilter==='forum'&&f.type!=='forum') continue;
+    items.push(f);
+  }
+  if(!items.length){list.innerHTML='';empty.style.display='block';return;}
+  empty.style.display='none';
+  list.innerHTML=items.map(item=>{
+    const lbl=item.type==='reply'?'✉️ 抱怨信':'💬 論壇';
+    const de=item.de.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    return `<div class="saved-row ${item.type}-row">
+      <div class="saved-row-main">
+        <div class="saved-gram">${item.gname}</div>
+        <div class="saved-de" onclick="speak('${de}',this)">${item.de}</div>
+        <div class="saved-zh">${item.zh}</div>
+      </div>
+      <span class="saved-type ${item.type}">${lbl}</span>
+      <button class="saved-remove" onclick="removeSaved('${item.id}')">移除</button>
+    </div>`;
+  }).join('');
+}
+
+// ── Filter ────────────────────────────────────────────────────────────────
+function setFilter(f,btn){
+  currentFilter=f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const cp=document.getElementById('cards-panel');
+  const sp=document.getElementById('saved-panel');
+  if(f==='all'){cp.style.display='block';sp.style.display='none';}
+  else{cp.style.display='none';sp.style.display='block';renderSavedPanel();}
+}
+function syncCBs(){
+  document.querySelectorAll('.sent-check').forEach(cb=>{
+    const id=cb.dataset.exid; cb.checked=savedSet.has(id);
+    const el=cb.closest('.example'); if(el) el.classList.toggle('is-saved',savedSet.has(id));
+  });
+}
+
+// ── Checkpoint ────────────────────────────────────────────────────────────
+const CP_FILENAME='Schreiben_grammatik_checkpoint.json';
+function exportCP(){
+  const blob=new Blob([JSON.stringify([...savedSet].sort(),null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a'); a.href=url; a.download=CP_FILENAME; a.click();
+  URL.revokeObjectURL(url);
+}
+function importCP(){
+  const inp=document.getElementById('cp-file-input'); inp.value='';
+  inp.onchange=ev=>{
+    const f=ev.target.files[0]; if(!f) return;
+    const r=new FileReader();
+    r.onload=e=>{
+      try{
+        const arr=JSON.parse(e.target.result);
+        if(!Array.isArray(arr)||arr.some(x=>typeof x!=='string')){alert('格式錯誤：JSON 應為字串陣列');return;}
+        const all=new Set(); GRAMMAR.forEach(g=>g.examples.forEach(e=>all.add(e.id)));
+        savedSet=new Set(arr.filter(x=>all.has(x)));
+        persistSaved(); updateCounters(); renderCards(); syncCBs();
+        const ok=document.getElementById('cp-ok'); ok.style.display='inline';
+        setTimeout(()=>{ok.style.display='none';},3000);
+      }catch(err){alert('格式錯誤：無法解析 JSON\n'+err.message);}
+    };
+    r.readAsText(f);
+  };
+  inp.click();
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────
+loadSaved(); renderCards(); updateCounters();
+</script>
+</body>
+</html>
