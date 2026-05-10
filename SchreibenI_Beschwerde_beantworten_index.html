@@ -492,6 +492,18 @@ const URSACHEN_BEHANDLUNG = [
   ]
 },
 
+
+{id:"ub-service-2", title:"schlechter Service", zh:"服務品質不佳", num:2,
+  subtitle:"範例二：團隊內部重組導致職責不清",
+  pairs:[
+    {de:"Zu den Problemen mit unserem Service kam es dadurch, dass es aufgrund einer vorübergehenden Umstrukturierung unseres Teams zu Unklarheiten in den Zuständigkeiten gekommen ist.",
+     zh:"我們的服務出現問題，是因為團隊的短暫重組導致職責分工不明。"},
+    {de:"Um das Problem zu beheben, haben wir eine interne Besprechung abgehalten, indem erfahrene Mitarbeiterinnen und Mitarbeiter die Aufgabenanforderungen detailliert erklärt haben.",
+     zh:"為了解決這個問題，我們召開了一次內部會議，讓有經驗的員工詳細說明了各項工作要求。"},
+    {de:"Durch regelmäßige Schulungen stellen wir sicher, dass solche Fehler nicht mehr vorkommen.",
+     zh:"透過定期培訓，我們確保此類失誤不再發生。"},
+  ]
+},
 {id:"ub-fehlende-rechnung-1", title:"fehlende Rechnung", zh:"發票遺失", num:3,
   subtitle:"範例：系統技術錯誤導致發票未自動產生",
   pairs:[
@@ -859,7 +871,16 @@ const SITUATIONS = [
        body:`Hallo,\ndie angehängte Mail bekam ich gestern. Bitte kümmern Sie sich darum und antworten Sie der Kundin höflich. Frau DeLuca ist schon sehr lange unsere Kundin. Erklären Sie ihr, warum es zu den Problemen kommt und welche Lösung wir anbieten können.\n\nKlaus Wegener`},
       {role:"kunde",
        meta:{von:"Carina DeLuca", an:"Klaus Wegener", betreff:"FW: Beschwerde Probleme mit Lieferungen"},
-       body:`Sehr geehrter Herr Wegener,\n\nbei Ihrer letzten Lieferung vom 17.03. war wieder etwas nicht in Ordnung: Uns sind 50 Bögen mit Etiketten zu wenig geliefert worden und das Briefpapier hat nicht die bestellte Qualität.\n\nIch erwarte, dass Sie das umgehend in Ordnung bringen.\n\nMit freundlichen Grüßen\nCarina DeLuca`}
+       body:`Sehr geehrter Herr Wegener,
+
+leider muss ich Ihnen mitteilen, dass es bei der letzten Lieferung wieder zu Fehlern gekommen ist. Wir sind schon lange bei Ihnen Kunde und waren immer sehr zufrieden, aber seit ein paar Monaten müssen wir immer wieder bei Ihnen nachhaken. Einmal haben Sie viel zu viel Druckerpapier geschickt, bei der folgenden Lieferung entsprachen die Briefumschläge nicht der Bestellung.
+
+Sie haben immer sehr schnell reagiert und ich weiß, dass natürlich mal ein Fehler passieren kann, aber auch bei Ihrer letzten Lieferung vom 17.03. war wieder etwas nicht in Ordnung: Uns sind 50 Bögen mit Etiketten zu wenig geliefert worden und das Briefpapier hat nicht die bestellte Qualität.
+
+Ich erwarte, dass Sie das umgehend in Ordnung bringen. Sollte es auch künftig zu Problemen mit unserer Bestellung kommen, müssen wir leider eine andere Druckerei beauftragen.
+
+Mit freundlichen Grüßen
+Carina DeLuca`}
     ],
     mc:[
       {q:"1. Frau DeLuca …", opts:["beschwert sich über die Qualität des Druckerpapiers.","hat die falschen Umschläge bekommen.","hat weniger Etiketten erhalten als bestellt."], correct:1},
@@ -870,7 +891,55 @@ const SITUATIONS = [
   }]
 },
 
-{id:"fehlerhafte-lieferung", title:"fehlerhafte Lieferung", zh:"送錯貨品", examples:[]},
+{id:"fehlerhafte-lieferung", title:"fehlerhafte Lieferung", zh:"送錯貨品",
+  examples:[{
+    source:"Aspekte Beruf B2 S. 133 / Klett Prüfungstraining",
+    summary:{
+      boss:["1. Wie es zu den Problemen kommen konnte","2. Welche Lösung angeboten werden kann","3. Eine Wiedergutmachung anbieten, um sie nicht als Kundin zu verlieren"],
+      complaint:["1. Falsche Waschbecken-Modelle geliefert (andere als bestellt)","2. Bereits zwei Vormerkungen auf die richtigen Modelle vorhanden","3. Kunden müssen vertröstet werden — wirft kein gutes Licht auf Frau Wenger"],
+      gruende:["Versehen im Lager, Modelle vertauscht"]
+    },
+    emails:[
+      {role:"teamleitung",
+       meta:{von:"Tim Holzmann (Teamleiter)", an:"[dich]", betreff:"FW: Beschwerde: Mangelhafte Ware"},
+       body:`Hallo,
+könnten Sie sich bitte um die angehängte Mail kümmern? Frau Wenger von Bade-Traum hat das erste Mal unsere Badezimmer-Produkte bestellt und sich gleich mit diesem Problem gemeldet. Das ist natürlich nicht gut.
+Bitte schreiben Sie an Frau Wenger und erklären Sie ihr höflich, wie es zu den Problemen kommen konnte. Eine Wiedergutmachung können wir natürlich auch anbieten, um sie nicht als Kundin zu verlieren.
+
+Danke und beste Grüße
+Tim Holzmann
+Teamleiter`},
+      {role:"kunde",
+       meta:{von:"Jutta Wenger, Bade-Traum", an:"Tim Holzmann", betreff:"Beschwerde: Mangelhafte Ware"},
+       body:`Sehr geehrter Herr Holzmann,
+
+vor zwei Tagen kam Ihre Lieferung an: je zwei Waschbecken in drei Farben. Leider musste ich feststellen, dass es sich bei den Waschbecken um andere Modelle als bestellt handelt. Ich erwarte die Ware, die ich geordert habe. Da meine Kundinnen und Kunden sehr anspruchsvoll sind, sind die gelieferten Produkte leider nicht akzeptabel. Es gab sogar schon zwei Vormerkungen auf die Modelle, die ich erwartet hatte. Diese Kunden muss ich nun vertrösten, was kein gutes Licht auf mich wirft.
+
+Holen Sie die falschen Waschbecken schnellstmöglich ab und liefern Sie mir die richtigen. Bei Ihren Preisen setze ich einen besseren Service voraus. Ob ich weiter bei Ihnen bestellen werde, hängt auch von einem entsprechenden Angebot Ihrerseits ab.
+
+Mit freundlichen Grüßen
+Jutta Wenger`}
+    ],
+    mc:[
+      {q:"1. Frau Wenger beschwert sich, weil …", opts:["die Waschbecken keine gute Qualität haben.","ihre Kunden nicht zufrieden waren.","sie die falsche Ware bekommen hat."], correct:2},
+      {q:"2. Frau Wenger …", opts:["erwartet Ersatz für die Waschbecken.","will nicht mehr bei der Firma bestellen.","will weniger für die Lieferung bezahlen."], correct:0},
+    ],
+    sample:`Betreff: Ihre Reklamation vom 10/05/2026 – Waschbecken
+
+Sehr geehrte Frau Wenger,
+
+bezugnehmend auf Ihre Beschwerde über die fehlerhafte Lieferung bedanken wir uns für Ihre Mitteilung. Als neue Kundin ist uns Ihre Zufriedenheit besonders wichtig, und es tut uns sehr leid, dass Ihr erster Eindruck von uns nicht positiv war. Wir entschuldigen uns für die Unannehmlichkeiten, die dadurch entstanden sind, dass Sie nicht die bestellten Modelle erhalten haben.
+
+Zu den Problemen bei der Lieferung kam es dadurch, dass wir kürzlich ein internes Systemupdate zum Schutz vor Cyberangriffen durchgeführt haben. Da einige Mitarbeiterinnen und Mitarbeiter mit dem neuen System noch nicht vollständig vertraut sind, kam es leider zu einem Eingabefehler.
+
+Um das Problem zu beheben, werden wir die korrekte Ware umgehend versenden und die fehlerhafte Lieferung bei Ihnen abholen. Als Entgegenkommen für die Unannehmlichkeiten bieten wir Ihnen bei einer Folgebestellung einen Rabatt von 10% auf alle unsere Produkte an. Wir können Ihnen versichern, dass solche Fehler in Zukunft nicht mehr auftreten werden, indem wir gezielte Schulungen für alle betroffenen Mitarbeitenden durchführen.
+
+Bei Rückfragen stehen wir Ihnen selbstverständlich zur Verfügung. Wir danken Ihnen für Ihr Verständnis und hoffen auf eine weiterhin gute Zusammenarbeit.
+
+Mit freundlichen Grüßen i.A. YiTing`,
+    note:"💡 示範回信（YiTing 撰寫）。注意第一段同時涵蓋引言＋道歉＋說明問題；原因使用「dadurch, dass」句型；解決方案包含取回＋補送＋折扣＋培訓保證四個要素。"
+  }]
+},
 
 {id:"lieferverzoegerung", title:"Lieferverzögerung", zh:"交貨延遲",
   examples:[{
@@ -1209,6 +1278,24 @@ function buildUrsachen() {
   }).join('');
 }
 
+// ── Build Ursachen nav buttons (called from init) ──
+function buildUrsachenNavBtns(navBar) {
+  const seen = new Set();
+  const order = [];
+  URSACHEN_BEHANDLUNG.forEach(e => {
+    const key = e.num + '|' + e.title + '|' + e.zh;
+    if (!seen.has(key)) { seen.add(key); order.push({num:e.num, title:e.title, zh:e.zh}); }
+  });
+  order.forEach(g => {
+    const btn = document.createElement('button');
+    btn.className = 'nav-btn';
+    btn.dataset.ubNum = g.num;
+    btn.textContent = `${g.num}. ${g.title}`;
+    btn.onclick = () => showTab('ursachen', document.querySelector('.nav-btn[data-ub-parent]'));
+    navBar.appendChild(btn);
+  });
+}
+
 // ── Build summary box ──
 function buildSummary(s) {
   if (!s) return '';
@@ -1398,24 +1485,37 @@ async function tryAutoLoadCheckpoint() {
   grBtn.onclick = () => showTab('gruende', grBtn);
   navBar.appendChild(grBtn);
 
-  // Ursachen & Behandlung
+  // Ursachen & Behandlung — parent tab + numbered sub-buttons
   const ubDiv = document.createElement('div');
   ubDiv.className = 'tab-section'; ubDiv.id = 'tab-ursachen';
   ubDiv.innerHTML = buildUrsachen();
   content.appendChild(ubDiv);
+
+  // Parent button (shows full tab)
   const ubBtn = document.createElement('button');
-  ubBtn.className = 'nav-btn'; ubBtn.textContent = '🔧 Ursachen & Behandlung';
-  ubBtn.onclick = () => showTab('ursachen', ubBtn);
+  ubBtn.className = 'nav-btn';
+  ubBtn.dataset.ubParent = '1';
+  ubBtn.textContent = '🔧 Ursachen & Behandlung';
+  ubBtn.onclick = () => { showTab('ursachen', ubBtn); };
   navBar.appendChild(ubBtn);
 
+
+
   // Situations
+  const sitNums = {
+    'mangelanzeige':1,'service':2,'fehlende-rechnung':3,
+    'fehlerhafte-rechnung':4,'fehlende-lieferung':5,
+    'fehlerhafte-lieferung':6,'lieferverzoegerung':7
+  };
   SITUATIONS.forEach(sit => {
     const div = document.createElement('div');
     div.className = 'tab-section'; div.id = 'tab-'+sit.id;
     div.innerHTML = buildSituation(sit);
     content.appendChild(div);
     const btn = document.createElement('button');
-    btn.className = 'nav-btn'; btn.textContent = sit.title;
+    const num = sitNums[sit.id];
+    btn.className = 'nav-btn';
+    btn.textContent = num ? `${num}. ${sit.title}` : sit.title;
     btn.onclick = () => showTab(sit.id, btn);
     navBar.appendChild(btn);
   });
