@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A2 → B2 單字升級表</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", Arial, sans-serif; background: #f5f5f3; color: #1a1a1a; font-size: 14px; }
+
+/* ── Header ── */
+.chapter-info { background: #1a3a6b; padding: 16px 20px 14px; border-bottom: 2px solid #2a5a9b; }
+.chapter-info h1 { color: #fff; font-size: 18px; font-weight: 600; margin-bottom: 3px; }
+.chapter-info .subtitle { color: #a8c8f0; font-size: 11.5px; line-height: 1.6; }
+
+/* ── Checkpoint bar ── */
+.checkpoint-bar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 8px 20px; background: #f0f4ff; border-bottom: 1px solid #d0d8f0; font-size: 12px; color: #555; }
+.checkpoint-bar span.label { color: #888; margin-right: 4px; }
+.cp-btn { padding: 4px 12px; border-radius: 5px; border: 1px solid #b0c0e8; background: #fff; color: #1a3a6b; font-size: 12px; cursor: pointer; font-weight: 500; transition: background 0.15s; }
+.cp-btn:hover { background: #e8f0fe; }
+.cp-btn.primary { background: #1a3a6b; color: #fff; border-color: #1a3a6b; }
+.cp-btn.primary:hover { background: #2a5a9b; }
+.cp-status { font-size: 11px; color: #2a7a4a; font-weight: 600; margin-left: 4px; }
+#cpFileInput { display: none; }
+
+/* ── Toolbar ── */
+.page { max-width: 1180px; margin: 0 auto; padding: 16px 18px 40px; }
+.toolbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; background: #fff; border: 0.5px solid #ddd; border-radius: 10px; padding: 9px 14px; position: sticky; top: 0; z-index: 50; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+.toolbar-left { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.filter-btn { padding: 5px 13px; border-radius: 6px; border: 0.5px solid #ccc; background: #fff; color: #333; font-size: 12.5px; cursor: pointer; white-space: nowrap; }
+.filter-btn.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+.cat-btn { padding: 5px 13px; border-radius: 6px; border: 1px solid #b8cce0; background: #fff; color: #2563a8; font-size: 12.5px; cursor: pointer; white-space: nowrap; }
+.cat-btn.active { background: #2563a8; color: #fff; border-color: #2563a8; }
+.stats { font-size: 11.5px; color: #888; margin-left: 4px; }
+.search-box { margin-left: auto; padding: 6px 13px; border: 1.5px solid #c5d0e0; border-radius: 20px; font-size: 12.5px; width: 180px; outline: none; }
+.search-box:focus { border-color: #2563a8; }
+.clear-btn { padding: 5px 12px; border-radius: 6px; border: 0.5px solid #f0c0c0; background: #fff; color: #c0392b; font-size: 12px; cursor: pointer; }
+
+/* ── Section header ── */
+.section-header { font-size: 11px; font-weight: 700; color: #fff; padding: 7px 12px; letter-spacing: 0.06em; text-transform: uppercase; background: #2a5a9b; border-radius: 6px 6px 0 0; margin-top: 18px; }
+.section-header:first-of-type { margin-top: 0; }
+
+/* ── Table ── */
+table { width: 100%; border-collapse: collapse; background: #fff; border: 0.5px solid #ddd; border-radius: 0 0 8px 8px; overflow: hidden; table-layout: fixed; margin-bottom: 4px; }
+th { text-align: left; padding: 7px 10px; background: #fafaf8; color: #777; font-weight: 600; font-size: 10.5px; border-bottom: 0.5px solid #e0e0e0; letter-spacing: 0.03em; }
+td { padding: 7px 10px; border-bottom: 0.5px solid #efefed; vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+tr.unfamiliar td { background: #fff6f6; }
+tr.hidden { display: none; }
+
+.dot-cell { width: 26px; cursor: pointer; user-select: none; }
+.dot-cell:hover .dot { border-color: #e24b4a; }
+.dot { display: block; width: 10px; height: 10px; border-radius: 50%; border: 1.5px solid #ccc; margin-top: 3px; transition: all 0.15s; }
+tr.unfamiliar .dot { background: #e24b4a; border-color: #e24b4a; }
+
+.col-dot { width: 26px; }
+.col-b2  { width: 17%; }
+.col-a2  { width: 13%; }
+.col-tr  { width: 22%; }
+.col-ex  { width: 48%; }
+
+.speak-cell { cursor: pointer; }
+.speak-cell:hover { background: #f0f6ff; }
+tr.unfamiliar .speak-cell:hover { background: #ffe0e0; }
+
+.word-b2 { font-weight: 700; font-size: 13.5px; color: #1a5fc8; display: block; }
+.word-a2 { font-size: 12.5px; color: #555; display: block; }
+.word-en { font-size: 11.5px; color: #222; line-height: 1.55; display: block; }
+.word-zh { font-size: 11px; color: #999; font-style: italic; display: block; }
+.ex-de { font-size: 12px; color: #222; line-height: 1.55; display: block; }
+.ex-zh { font-size: 11px; color: #999; font-style: italic; display: block; margin-top: 1px; }
+
+.empty { text-align: center; padding: 40px; color: #aaa; font-size: 13px; background: #fff; border: 0.5px solid #ddd; border-radius: 8px; }
+
+.note-box-inline { background: #fff8e8; border-left: 3px solid #d8a030; border-radius: 4px; padding: 5px 8px; margin-top: 4px; font-size: 10.5px; color: #7a5a10; line-height: 1.5; }
+
+.sub-header { font-size: 10.5px; font-weight: 600; color: #2a5a9b; padding: 6px 12px 4px; background: #eef3fb; border: 0.5px solid #ddd; border-bottom: none; letter-spacing: 0.03em; }
+.sub-header:not(:first-of-type) { margin-top: 10px; }
+</style>
+</head>
+<body>
+
+<div class="chapter-info">
+  <h1>A2 → B2 單字升級表（口語與書面表達）</h1>
+  <p class="subtitle">🔊 點德文字／句子可朗讀　⭕ 點圓圈標記不熟悉　依分類瀏覽：動詞・形容詞與副詞・連接詞與固定用法</p>
+</div>
+
+<div class="checkpoint-bar">
+  <span class="label">💾 勾選備份：</span>
+  <button class="cp-btn primary" onclick="exportCheckpoint()">匯出 checkpoint.json</button>
+  <button class="cp-btn" onclick="document.getElementById('cpFileInput').click()">匯入 checkpoint.json</button>
+  <input type="file" id="cpFileInput" accept=".json" onchange="importCheckpoint(event)">
+  <span class="cp-status" id="cpStatus"></span>
+</div>
+
+<div class="page">
+
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <button class="filter-btn active" onclick="setFilter('all',this)">全部</button>
+      <button class="filter-btn" onclick="setFilter('unfamiliar',this)">不熟悉</button>
+      <button class="filter-btn" onclick="setFilter('familiar',this)">已掌握</button>
+      <button class="cat-btn active" onclick="setCat('all',this)">所有分類</button>
+      <button class="cat-btn" onclick="setCat('verb',this)">動詞</button>
+      <button class="cat-btn" onclick="setCat('adj',this)">形容詞／副詞</button>
+      <button class="cat-btn" onclick="setCat('konn',this)">連接詞／固定用法</button>
+      <span class="stats" id="stats"></span>
+    </div>
+    <div style="display:flex;gap:8px;align-items:center;">
+      <button class="clear-btn" onclick="clearAll()">清除所有標記</button>
+      <input class="search-box" id="searchBox" placeholder="搜尋單字…" oninput="runSearch(this.value)">
+    </div>
+  </div>
+
+  <div id="mainContent"></div>
+  <div class="empty" id="noResults" style="display:none;">沒有符合條件的單字</div>
+
+</div>
+
+<script>
+const STORAGE_KEY = 'a2b2upgrade_unfamiliar_v1';
+
+const SUBCATS = {
+  verb: { kognition:'認知／思考', kommunikation:'溝通／表達', handlung:'行為／處理', geschaeft:'商業／職場義務' },
+  adj:  { grad:'程度', haeufigkeit:'頻率', geschwindigkeit:'速度／時間', bewertung:'評價／態度' },
+  konn: { konn:'連接詞／固定用法' },
+};
+
+const VOCAB = [
+// ── Verben：認知／思考 ───────────────────────────────────────────────
+{cat:'verb', sub:'kognition', b2:'begreifen', a2:'verstehen', en:'understand / grasp', zh:'理解、領悟', ex:'Ich kann diese Entscheidung nicht begreifen.', ez:'我無法理解這個決定。', note:'begreifen 偏「智力上的理解、想通」；nachvollziehen 偏「換位理解、能跟上對方的邏輯或感受」。'},
+{cat:'verb', sub:'kognition', b2:'nachvollziehen', a2:'verstehen', en:'comprehend / trace', zh:'理解、追溯理解', ex:'Ich kann den Standpunkt des Kunden gut nachvollziehen.', ez:'我能很好地理解客戶的立場。'},
+{cat:'verb', sub:'kognition', b2:'wahrnehmen', a2:'sehen', en:'perceive', zh:'察覺、感知', ex:'Ich habe die Veränderung sofort wahrgenommen.', ez:'我立刻察覺到了這個變化。'},
+{cat:'verb', sub:'kognition', b2:'vernehmen', a2:'hören', en:'perceive (by ear)', zh:'聽聞、得知', ex:'Wie ich vernommen habe, wird die Stelle neu ausgeschrieben.', ez:'據我所聞，這個職位將重新招募。'},
+{cat:'verb', sub:'kognition', b2:'überlegen', a2:'denken', en:'consider', zh:'考慮、思索', ex:'Ich überlege mir noch, wie ich darauf antworten soll.', ez:'我還在考慮要怎麼回應這件事。'},
+{cat:'verb', sub:'kognition', b2:'erwägen', a2:'denken', en:'weigh / consider', zh:'考慮、衡量', ex:'Wir erwägen, das Projekt zu verschieben.', ez:'我們正在考慮將這個專案延後。'},
+{cat:'verb', sub:'kognition', b2:'vermuten', a2:'glauben', en:'assume', zh:'猜測、推測', ex:'Ich vermute, dass die Lieferung sich verzögert.', ez:'我猜測這次配送會延誤。'},
+{cat:'verb', sub:'kognition', b2:'entdecken', a2:'finden', en:'discover', zh:'發現', ex:'Wir haben einen Fehler im System entdeckt.', ez:'我們在系統中發現了一個錯誤。'},
+{cat:'verb', sub:'kognition', b2:'ausfindig machen', a2:'finden', en:'locate', zh:'找出、查出', ex:'Es ist uns gelungen, die Ursache ausfindig zu machen.', ez:'我們成功地找出了原因。'},
+{cat:'verb', sub:'kognition', b2:'sich aneignen', a2:'lernen', en:'acquire (a skill)', zh:'學會、習得', ex:'Sie hat sich die neue Software schnell angeeignet.', ez:'她很快就學會了這套新軟體。'},
+{cat:'verb', sub:'kognition', b2:'nachforschen', a2:'suchen', en:'investigate', zh:'追查、調查', ex:'Wir forschen nach, warum der Fehler entstanden ist.', ez:'我們正在調查這個錯誤是怎麼產生的。'},
+{cat:'verb', sub:'kognition', b2:'beherrschen', a2:'wissen', en:'master', zh:'掌握、精通', ex:'Sie beherrscht das Thema sehr gut.', ez:'她對這個主題掌握得非常好。'},
+
+// ── Verben：溝通／表達 ───────────────────────────────────────────────
+{cat:'verb', sub:'kommunikation', b2:'sich erkundigen', a2:'fragen', en:'inquire', zh:'詢問、查詢', ex:'Ich möchte mich nach dem aktuellen Stand erkundigen.', ez:'我想詢問目前的進度。'},
+{cat:'verb', sub:'kommunikation', b2:'behaupten', a2:'sagen', en:'claim', zh:'聲稱、主張', ex:'Der Kunde behauptet, das Paket nicht erhalten zu haben.', ez:'客戶聲稱沒有收到包裹。'},
+{cat:'verb', sub:'kommunikation', b2:'mitteilen', a2:'sagen', en:'inform', zh:'告知、通知', ex:'Ich möchte Ihnen mitteilen, dass der Termin sich ändert.', ez:'我想通知您，這個約定的時間有變動。'},
+{cat:'verb', sub:'kommunikation', b2:'äußern', a2:'sprechen', en:'express', zh:'表達、發表意見', ex:'Der Kollege hat seine Bedenken offen geäußert.', ez:'同事坦率地表達了他的疑慮。'},
+{cat:'verb', sub:'kommunikation', b2:'kommunizieren', a2:'sprechen', en:'communicate', zh:'溝通', ex:'Wir kommunizieren hauptsächlich per E-Mail.', ez:'我們主要透過電子郵件溝通。'},
+{cat:'verb', sub:'kommunikation', b2:'verfassen', a2:'schreiben', en:'compose', zh:'撰寫', ex:'Ich habe den Beschwerdebrief sorgfältig verfasst.', ez:'我仔細地撰寫了這份投訴信。'},
+{cat:'verb', sub:'kommunikation', b2:'übermitteln', a2:'schicken', en:'transmit', zh:'傳達、傳送', ex:'Wir übermitteln Ihnen die Unterlagen noch heute.', ez:'我們今天就會把文件傳送給您。'},
+{cat:'verb', sub:'kommunikation', b2:'erläutern', a2:'erklären', en:'explain in detail', zh:'詳細說明、闡述', ex:'Der Lehrer erläutert die Regel anhand eines Beispiels.', ez:'老師透過一個例子詳細說明了這個規則。'},
+{cat:'verb', sub:'kommunikation', b2:'erwidern', a2:'antworten', en:'reply', zh:'回應、回答', ex:'Auf die Kritik hat er ruhig erwidert.', ez:'面對批評，他冷靜地做出了回應。'},
+{cat:'verb', sub:'kommunikation', b2:'reklamieren', a2:'sich beschweren', en:'lodge a complaint', zh:'投訴、抗議（正式用語）', ex:'Der Kunde reklamiert die fehlerhafte Lieferung.', ez:'客戶針對有缺陷的貨品提出投訴。', note:'比 sich beschweren 更正式、常見於商業書信／客訴情境，較少用在日常口語。'},
+
+// ── Verben：行為／處理 ───────────────────────────────────────────────
+{cat:'verb', sub:'handlung', b2:'erledigen', a2:'machen', en:'handle / complete', zh:'處理、完成', ex:'Ich werde die Aufgabe noch heute erledigen.', ez:'我今天就會把這項任務處理完。'},
+{cat:'verb', sub:'handlung', b2:'durchführen', a2:'machen', en:'carry out', zh:'執行、實施', ex:'Wir führen die Schulung nächste Woche durch.', ez:'我們下週將進行培訓。'},
+{cat:'verb', sub:'handlung', b2:'auftreten', a2:'vorkommen', en:'occur / appear', zh:'出現、發生', ex:'Bei der Lieferung sind mehrere Probleme aufgetreten.', ez:'這次配送出現了好幾個問題。', note:'常用於描述問題、症狀、現象的出現，是 vorkommen／es gibt Probleme 的升級版，例如 Schwierigkeiten treten auf。'},
+{cat:'verb', sub:'handlung', b2:'beheben', a2:'lösen', en:'fix / resolve (a problem)', zh:'排除、解決（問題、故障）', ex:'Der Techniker hat den Fehler innerhalb einer Stunde behoben.', ez:'技術人員在一小時內排除了這個故障。', note:'beheben 處理的是一個「具體的問題／故障」；bewältigen 處理的是「較大的挑戰或工作量」，兩者搭配對象不同，不能互換。'},
+{cat:'verb', sub:'handlung', b2:'bewältigen', a2:'schaffen', en:'cope with / master (a challenge)', zh:'克服、應付（挑戰、工作量）', ex:'Sie hat den hohen Arbeitsaufwand erfolgreich bewältigt.', ez:'她成功應付了龐大的工作量。', note:'與 beheben 的差異：bewältigen 強調「扛住、應付得了」整體的負荷或困難，而不是修好單一個故障。'},
+{cat:'verb', sub:'handlung', b2:'sich bemühen', a2:'versuchen', en:'make an effort', zh:'努力、盡力', ex:'Wir bemühen uns, das Problem so schnell wie möglich zu lösen.', ez:'我們正盡力盡快解決這個問題。'},
+{cat:'verb', sub:'handlung', b2:'veranlassen', a2:'machen, dass', en:'arrange / cause to happen', zh:'促使、安排進行', ex:'Wir haben sofort eine Überprüfung veranlasst.', ez:'我們立刻安排進行了一次檢查。'},
+{cat:'verb', sub:'handlung', b2:'in Kauf nehmen', a2:'akzeptieren', en:'accept (a drawback)', zh:'接受（不利的後果）', ex:'Dafür müssen wir eine kurze Verzögerung in Kauf nehmen.', ez:'為此我們必須接受短暫的延誤。'},
+{cat:'verb', sub:'handlung', b2:'verrichten', a2:'arbeiten', en:'perform (a task)', zh:'從事、進行（工作）', ex:'Er verrichtet seine Arbeit stets sehr gründlich.', ez:'他總是非常仔細地完成他的工作。'},
+{cat:'verb', sub:'handlung', b2:'tätig sein', a2:'arbeiten', en:'be active / employed', zh:'從事於、在職', ex:'Sie ist seit drei Jahren in dieser Abteilung tätig.', ez:'她在這個部門已經任職三年了。'},
+{cat:'verb', sub:'handlung', b2:'verzehren', a2:'essen', en:'consume', zh:'食用、消耗', ex:'Bitte verzehren Sie die Speisen innerhalb von zwei Tagen.', ez:'請在兩天內食用完這些食物。'},
+{cat:'verb', sub:'handlung', b2:'konsumieren', a2:'trinken', en:'consume', zh:'飲用、消費', ex:'Die Mitarbeiter konsumieren während der Pause Kaffee.', ez:'員工在休息時間飲用咖啡。'},
+{cat:'verb', sub:'handlung', b2:'abwarten', a2:'warten', en:'wait out', zh:'觀望、等待結果', ex:'Wir sollten die Rückmeldung des Kunden abwarten.', ez:'我們應該先等客戶的回覆。'},
+{cat:'verb', sub:'handlung', b2:'starten', a2:'beginnen', en:'start', zh:'開始、啟動', ex:'Das neue Projekt startet im Januar.', ez:'這個新專案在一月開始。'},
+{cat:'verb', sub:'handlung', b2:'begegnen', a2:'treffen', en:'encounter', zh:'遇見、面對', ex:'Im Beruf begegnet man häufig unerwarteten Herausforderungen.', ez:'在工作中常常會遇到意想不到的挑戰。'},
+{cat:'verb', sub:'handlung', b2:'abschließen', a2:'schließen', en:'conclude', zh:'結束、簽訂、完成', ex:'Wir haben den Vertrag erfolgreich abgeschlossen.', ez:'我們已經成功簽訂了這份合約。'},
+{cat:'verb', sub:'handlung', b2:'erscheinen', a2:'kommen', en:'appear', zh:'出現、到場', ex:'Der Kunde ist leider nicht zum Termin erschienen.', ez:'客戶很遺憾並沒有出席這次約定。'},
+{cat:'verb', sub:'handlung', b2:'ausüben', a2:'spielen', en:'practice / exercise', zh:'從事（職業、活動）', ex:'Er übt diesen Beruf seit zehn Jahren aus.', ez:'他從事這個職業已經十年了。'},
+{cat:'verb', sub:'handlung', b2:'sich begeben', a2:'gehen', en:'proceed', zh:'前往', ex:'Bitte begeben Sie sich zum Empfang.', ez:'請前往櫃台。'},
+{cat:'verb', sub:'handlung', b2:'verweilen', a2:'bleiben', en:'linger / stay', zh:'停留、逗留', ex:'Die Gäste verweilen gerne länger im Foyer.', ez:'客人們喜歡在大廳多停留一會兒。'},
+{cat:'verb', sub:'handlung', b2:'residieren', a2:'wohnen', en:'reside', zh:'居住、駐留', ex:'Die Firma residiert seit Jahren in München.', ez:'這間公司多年來駐留在慕尼黑。'},
+
+// ── Verben：商業／職場義務 ──────────────────────────────────────────
+{cat:'verb', sub:'geschaeft', b2:'erwerben', a2:'kaufen', en:'acquire', zh:'購得、獲得', ex:'Das Unternehmen hat neue Maschinen erworben.', ez:'公司購入了新的機器。'},
+{cat:'verb', sub:'geschaeft', b2:'vertreiben', a2:'verkaufen', en:'sell / distribute', zh:'銷售、經銷', ex:'Das Produkt wird europaweit vertrieben.', ez:'這項產品在全歐洲銷售。'},
+{cat:'verb', sub:'geschaeft', b2:'benötigen', a2:'brauchen', en:'require', zh:'需要', ex:'Für diesen Antrag benötigen wir Ihre Unterschrift.', ez:'這份申請需要您的簽名。'},
+{cat:'verb', sub:'geschaeft', b2:'unterstützen', a2:'helfen', en:'support', zh:'支持、協助', ex:'Das Team unterstützt mich bei der Umsetzung.', ez:'團隊在執行上協助了我。'},
+{cat:'verb', sub:'geschaeft', b2:'verwenden', a2:'benutzen', en:'use', zh:'使用', ex:'Bitte verwenden Sie das aktuelle Formular.', ez:'請使用最新版的表格。'},
+{cat:'verb', sub:'geschaeft', b2:'erhalten', a2:'bekommen', en:'receive', zh:'收到、獲得', ex:'Ich habe Ihre Nachricht erst gestern erhalten.', ez:'我昨天才收到您的訊息。'},
+{cat:'verb', sub:'geschaeft', b2:'begleichen', a2:'zahlen', en:'settle (a bill)', zh:'結清、償付', ex:'Die offene Rechnung wurde bereits begleichen.', ez:'未付的帳款已經結清了。'},
+{cat:'verb', sub:'geschaeft', b2:'optimieren', a2:'verbessern', en:'optimize', zh:'優化', ex:'Wir möchten den Arbeitsablauf weiter optimieren.', ez:'我們想要進一步優化工作流程。'},
+{cat:'verb', sub:'geschaeft', b2:'gewährleisten', a2:'sicherstellen', en:'ensure / guarantee', zh:'確保、保證', ex:'Wir gewährleisten eine pünktliche Lieferung.', ez:'我們確保準時交貨。'},
+{cat:'verb', sub:'geschaeft', b2:'berücksichtigen', a2:'beachten', en:'take into consideration', zh:'考量、顧及', ex:'Bitte berücksichtigen Sie auch die Lieferzeiten.', ez:'請也將交貨時間納入考量。'},
+{cat:'verb', sub:'geschaeft', b2:'in Anspruch nehmen', a2:'nutzen', en:'make use of / utilize', zh:'使用、佔用（服務、時間）', ex:'Viele Kunden nehmen unseren Reparaturservice in Anspruch.', ez:'許多客戶使用我們的維修服務。'},
+{cat:'verb', sub:'geschaeft', b2:'sich auswirken auf', a2:'beeinflussen', en:'have an effect on', zh:'對……產生影響', ex:'Die Verzögerung wirkt sich auf den gesamten Zeitplan aus.', ez:'這次延誤對整個時程都產生了影響。'},
+{cat:'verb', sub:'geschaeft', b2:'einhalten', a2:'schaffen', en:'comply with / meet (a deadline)', zh:'遵守、達成（期限、規定）', ex:'Wir konnten den vereinbarten Termin leider nicht einhalten.', ez:'我們很遺憾無法遵守約定的期限。'},
+{cat:'verb', sub:'geschaeft', b2:'sich verpflichten', a2:'versprechen', en:'commit oneself', zh:'承諾、承擔義務', ex:'Das Unternehmen verpflichtet sich zu einer raschen Bearbeitung.', ez:'公司承諾會快速處理。'},
+
+// ── Adjektive／Adverbien：程度 ───────────────────────────────────────
+{cat:'adj', sub:'grad', b2:'mühelos', a2:'einfach', en:'effortless', zh:'輕鬆地、不費力', ex:'Die Aufgabe lässt sich mühelos erledigen.', ez:'這項任務可以輕鬆完成。'},
+{cat:'adj', sub:'grad', b2:'wesentlich', a2:'wichtig', en:'essential', zh:'重要的、本質的', ex:'Pünktlichkeit ist ein wesentlicher Bestandteil der Zusammenarbeit.', ez:'準時是合作中重要的一環。'},
+{cat:'adj', sub:'grad', b2:'unverzichtbar', a2:'wichtig', en:'indispensable', zh:'不可或缺的', ex:'Gute Kommunikation ist im Team unverzichtbar.', ez:'良好的溝通在團隊中是不可或缺的。', note:'比 wesentlich 語氣更強，強調「少了它根本行不通」，常用於強調關鍵能力或條件。'},
+{cat:'adj', sub:'grad', b2:'winzig', a2:'klein', en:'tiny', zh:'微小的', ex:'Es gab nur einen winzigen Unterschied zwischen den beiden Versionen.', ez:'兩個版本之間只有一個微小的差異。'},
+{cat:'adj', sub:'grad', b2:'enorm', a2:'groß', en:'huge', zh:'巨大的', ex:'Die Nachfrage nach diesem Produkt ist enorm gestiegen.', ez:'這項產品的需求大幅增加了。'},
+{cat:'adj', sub:'grad', b2:'vollständig', a2:'ganz', en:'completely', zh:'完整地', ex:'Das Formular muss vollständig ausgefüllt werden.', ez:'這份表格必須完整填寫。'},
+{cat:'adj', sub:'grad', b2:'ausreichend', a2:'genügend', en:'sufficient', zh:'足夠的', ex:'Es stehen ausreichend Mitarbeiter zur Verfügung.', ez:'目前有足夠的員工可以調度。'},
+{cat:'adj', sub:'grad', b2:'beinahe', a2:'fast', en:'almost', zh:'幾乎', ex:'Wir haben das Ziel beinahe erreicht.', ez:'我們幾乎達成了目標。'},
+
+// ── Adjektive／Adverbien：頻率 ───────────────────────────────────────
+{cat:'adj', sub:'haeufigkeit', b2:'täglich', a2:'jeden Tag', en:'daily', zh:'每天', ex:'Ich überprüfe die Bestellungen täglich.', ez:'我每天都會檢查訂單。'},
+{cat:'adj', sub:'haeufigkeit', b2:'ständig', a2:'immer', en:'constantly', zh:'不斷地、持續地', ex:'Die Anforderungen ändern sich ständig.', ez:'這些需求一直在不斷變化。'},
+{cat:'adj', sub:'haeufigkeit', b2:'häufig', a2:'oft', en:'frequently', zh:'經常、頻繁地', ex:'Diese Frage wird häufig gestellt.', ez:'這個問題經常被提出。'},
+{cat:'adj', sub:'haeufigkeit', b2:'gelegentlich', a2:'manchmal', en:'occasionally', zh:'偶爾', ex:'Gelegentlich kommt es zu kurzen Verzögerungen.', ez:'偶爾會出現短暫的延誤。'},
+{cat:'adj', sub:'haeufigkeit', b2:'erneut', a2:'wieder', en:'again', zh:'再次', ex:'Bitte prüfen Sie die Angaben erneut.', ez:'請再次檢查這些資料。'},
+{cat:'adj', sub:'haeufigkeit', b2:'bereits', a2:'schon', en:'already', zh:'已經', ex:'Die Unterlagen sind bereits versendet worden.', ez:'這些文件已經寄出了。'},
+
+// ── Adjektive／Adverbien：速度／時間 ──────────────────────────────────
+{cat:'adj', sub:'geschwindigkeit', b2:'zügig', a2:'schnell', en:'swiftly / efficiently', zh:'迅速且有效率地', ex:'Der Antrag wird zügig bearbeitet.', ez:'這份申請會被有效率地處理。', note:'zügig 強調「有效率地持續推進」，常搭配 bearbeiten／vorankommen；rasch 單純強調「動作快」，常搭配 reagieren／reagieren。'},
+{cat:'adj', sub:'geschwindigkeit', b2:'rasch', a2:'schnell', en:'quickly', zh:'迅速地', ex:'Wir haben rasch auf die Beschwerde reagiert.', ez:'我們對這項投訴迅速做出了反應。'},
+{cat:'adj', sub:'geschwindigkeit', b2:'umgehend', a2:'sofort', en:'immediately (formal)', zh:'立即地（正式用語）', ex:'Wir werden uns umgehend um Ihr Anliegen kümmern.', ez:'我們會立即處理您的事情。', note:'umgehend 是商業書信中「立刻」最常見的正式用法；auf Anhieb 則特指「第一次嘗試就成功」，意思不同，不可互換。'},
+{cat:'adj', sub:'geschwindigkeit', b2:'auf Anhieb', a2:'sofort', en:'right away (on the first try)', zh:'一下子就、第一次就……', ex:'Das Problem konnte auf Anhieb gelöst werden.', ez:'這個問題一次就被解決了。'},
+{cat:'adj', sub:'geschwindigkeit', b2:'demnächst', a2:'bald', en:'soon', zh:'近期、不久', ex:'Die neuen Richtlinien werden demnächst veröffentlicht.', ez:'新的規範將在近期公布。'},
+{cat:'adj', sub:'geschwindigkeit', b2:'rechtzeitig', a2:'pünktlich', en:'punctually / in time', zh:'及時、準時', ex:'Die Ware wurde rechtzeitig geliefert.', ez:'貨品有及時送達。'},
+{cat:'adj', sub:'geschwindigkeit', b2:'nachfolgend', a2:'später', en:'subsequently', zh:'接下來、隨後', ex:'Die nachfolgenden Schritte werden im Detail erklärt.', ez:'接下來的步驟將會詳細說明。'},
+{cat:'adj', sub:'geschwindigkeit', b2:'aktuell', a2:'jetzt', en:'currently', zh:'目前、現行', ex:'Der aktuelle Stand wird Ihnen morgen mitgeteilt.', ez:'目前的進度明天會通知您。'},
+
+// ── Adjektive／Adverbien：評價／態度 ─────────────────────────────────
+{cat:'adj', sub:'bewertung', b2:'erschöpft', a2:'müde', en:'exhausted', zh:'疲憊不堪', ex:'Nach der langen Schicht war ich völlig erschöpft.', ez:'經過長時間的班次後，我感到非常疲憊。'},
+{cat:'adj', sub:'bewertung', b2:'zufrieden', a2:'glücklich', en:'content', zh:'滿意的', ex:'Der Kunde war mit der Lösung sehr zufrieden.', ez:'客戶對這個解決方案非常滿意。'},
+{cat:'adj', sub:'bewertung', b2:'faszinierend', a2:'interessant', en:'fascinating', zh:'引人入勝的', ex:'Die Forschungsergebnisse waren wirklich faszinierend.', ez:'這些研究結果真的非常引人入勝。'},
+{cat:'adj', sub:'bewertung', b2:'attraktiv', a2:'schön', en:'attractive', zh:'吸引人的', ex:'Das Unternehmen bietet ein attraktives Gehaltspaket.', ez:'這間公司提供了一個吸引人的薪資方案。'},
+{cat:'adj', sub:'bewertung', b2:'preiswert', a2:'günstig', en:'affordable', zh:'價格實惠的', ex:'Die Materialien sind preiswert und qualitativ hochwertig.', ez:'這些材料價格實惠且品質優良。'},
+{cat:'adj', sub:'bewertung', b2:'mangelhaft', a2:'schlecht', en:'deficient', zh:'有缺陷的、不足的', ex:'Die Qualitätskontrolle war in diesem Fall mangelhaft.', ez:'這次的品質管控有所不足。'},
+{cat:'adj', sub:'bewertung', b2:'gravierend', a2:'schlimm', en:'serious / grave', zh:'嚴重的', ex:'Es handelt sich um einen gravierenden Fehler.', ez:'這是一個嚴重的錯誤。'},
+{cat:'adj', sub:'bewertung', b2:'zuverlässig', a2:'gut', en:'reliable', zh:'可靠的', ex:'Unser Lieferant arbeitet sehr zuverlässig.', ez:'我們的供應商工作非常可靠。'},
+{cat:'adj', sub:'bewertung', b2:'angemessen', a2:'passend', en:'appropriate', zh:'恰當的、合理的', ex:'Das Vorgehen war in dieser Situation angemessen.', ez:'這樣的做法在這個情況下是恰當的。'},
+{cat:'adj', sub:'bewertung', b2:'verbindlich', a2:'sicher', en:'binding / committed', zh:'具約束力的、確定的', ex:'Der Termin ist verbindlich und kann nicht verschoben werden.', ez:'這個時間是確定的，無法更改。'},
+{cat:'adj', sub:'bewertung', b2:'reibungslos', a2:'gut', en:'smooth(ly)', zh:'順利地、無摩擦地', ex:'Die Zusammenarbeit verlief reibungslos.', ez:'這次合作進行得很順利。'},
+{cat:'adj', sub:'bewertung', b2:'lärmend', a2:'laut', en:'noisy', zh:'吵雜的', ex:'Die lärmende Maschine wurde inzwischen ausgetauscht.', ez:'那台吵雜的機器目前已經被換掉了。'},
+{cat:'adj', sub:'bewertung', b2:'geräuscharm', a2:'leise', en:'quiet / low-noise', zh:'低噪音的', ex:'Die neue Anlage arbeitet deutlich geräuschärmer.', ez:'這套新設備運作起來明顯更安靜。'},
+{cat:'adj', sub:'bewertung', b2:'selbstverständlich', a2:'natürlich', en:'naturally / of course', zh:'不言而喻地、自然地', ex:'Selbstverständlich kümmern wir uns sofort um Ihr Anliegen.', ez:'我們當然會立即處理您的事情。'},
+{cat:'adj', sub:'bewertung', b2:'möglicherweise', a2:'vielleicht', en:'possibly', zh:'可能、也許', ex:'Möglicherweise verschiebt sich der Liefertermin.', ez:'交貨日期可能會有所延後。'},
+{cat:'adj', sub:'bewertung', b2:'ebenfalls', a2:'auch', en:'likewise', zh:'同樣地、也', ex:'Die zweite Abteilung ist ebenfalls betroffen.', ez:'第二個部門同樣也受到了影響。'},
+{cat:'adj', sub:'bewertung', b2:'präzise', a2:'genau', en:'precisely', zh:'精確地', ex:'Bitte beschreiben Sie das Problem möglichst präzise.', ez:'請盡可能精確地描述這個問題。'},
+{cat:'adj', sub:'bewertung', b2:'bedauerlicherweise', a2:'leider', en:'unfortunately', zh:'遺憾地', ex:'Bedauerlicherweise können wir den Termin nicht einhalten.', ez:'很遺憾，我們無法遵守這個期限。'},
+{cat:'adj', sub:'bewertung', b2:'jedoch', a2:'aber', en:'however', zh:'然而、但是', ex:'Der Plan war gut, jedoch fehlte die Zeit zur Umsetzung.', ez:'這個計畫很好，然而卻缺乏執行的時間。'},
+
+// ── Konnektoren / 固定用法 ─────────────────────────────────────────────
+{cat:'konn', sub:'konn', b2:'darüber hinaus', a2:'außerdem', en:'moreover', zh:'此外、不僅如此', ex:'Darüber hinaus möchte ich auf einen weiteren Punkt hinweisen.', ez:'此外，我想指出另一點。'},
+{cat:'konn', sub:'konn', b2:'im Weiteren', a2:'außerdem', en:'furthermore', zh:'進一步來說', ex:'Im Weiteren werden die Kosten detailliert aufgeschlüsselt.', ez:'進一步來說，這些費用將會詳細列出。'},
+{cat:'konn', sub:'konn', b2:'in Endeffekt', a2:'schließlich', en:'ultimately', zh:'最終、歸根結底', ex:'In Endeffekt hat sich die Investition gelohnt.', ez:'最終，這項投資是值得的。'},
+{cat:'konn', sub:'konn', b2:'des Weiteren', a2:'außerdem', en:'furthermore', zh:'此外（書面用語）', ex:'Des Weiteren bitten wir Sie um eine schnelle Rückmeldung.', ez:'此外，我們也請您盡快回覆。'},
+];
+
+let currentFilter = 'all';
+let currentCat = 'all';
+let currentSearch = '';
+let unfamiliarSet = new Set();
+
+function load() {
+  try { const s = localStorage.getItem(STORAGE_KEY); if (s) unfamiliarSet = new Set(JSON.parse(s)); } catch(e) {}
+}
+function save() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify([...unfamiliarSet])); } catch(e) {}
+}
+
+const CATS = { verb: '動詞', adj: '形容詞／副詞', konn: '連接詞／固定用法' };
+
+function buildRow(v, i) {
+  const unfam = unfamiliarSet.has(i);
+  const noteHtml = v.note ? `<div class="note-box-inline">💡 ${v.note}</div>` : '';
+  return `<tr class="${unfam?'unfamiliar':''}" data-idx="${i}" data-cat="${v.cat}" data-sub="${v.sub}" data-search="${(v.b2+' '+v.a2+' '+v.en+' '+v.zh).toLowerCase()}">
+    <td class="dot-cell" onclick="toggleMark(${i})"><span class="dot"></span></td>
+    <td class="speak-cell" onclick="speakText('${escAttr(v.b2)}','de-DE')"><span class="word-b2">${v.b2}</span></td>
+    <td class="speak-cell" onclick="speakText('${escAttr(v.a2)}','de-DE')"><span class="word-a2">${v.a2}</span></td>
+    <td>
+      <span class="word-en">${v.en}</span>
+      <span class="word-zh">${v.zh}</span>
+      ${noteHtml}
+    </td>
+    <td class="speak-cell" onclick="speakText('${escAttr(v.ex)}','de-DE')">
+      <span class="ex-de">${v.ex}</span>
+      <span class="ex-zh">${v.ez}</span>
+    </td>
+  </tr>`;
+}
+
+function escAttr(s) { return s.replace(/'/g, "\\'"); }
+
+function buildTable(items) {
+  if (!items.length) return '';
+  let rows = items.map(([v,i]) => buildRow(v,i)).join('');
+  return `<table>
+    <thead><tr>
+      <th class="col-dot"></th>
+      <th class="col-b2">B2 進階單字</th>
+      <th class="col-a2">A2 初階單字</th>
+      <th class="col-tr">中／英文翻譯</th>
+      <th class="col-ex">例句（僅 B2 單字）</th>
+    </tr></thead>
+    <tbody>${rows}</tbody>
+  </table>`;
+}
+
+function render() {
+  const grouped = { verb: {}, adj: {}, konn: {} };
+  VOCAB.forEach((v,i) => {
+    const isUnfam = unfamiliarSet.has(i);
+    const okFilter = currentFilter==='all' || (currentFilter==='unfamiliar'&&isUnfam) || (currentFilter==='familiar'&&!isUnfam);
+    const okCat = currentCat==='all' || currentCat===v.cat;
+    const srch = (v.b2+' '+v.a2+' '+v.en+' '+v.zh).toLowerCase();
+    const okSearch = !currentSearch || srch.includes(currentSearch);
+    if (okFilter && okCat && okSearch) {
+      if (!grouped[v.cat][v.sub]) grouped[v.cat][v.sub] = [];
+      grouped[v.cat][v.sub].push([v,i]);
+    }
+  });
+
+  let html = '';
+  let total = 0;
+  Object.keys(grouped).forEach(cat => {
+    const subKeys = Object.keys(grouped[cat]);
+    const catCount = subKeys.reduce((s,k) => s + grouped[cat][k].length, 0);
+    if (!catCount) return;
+    html += `<div class="section-header">${CATS[cat]}（${catCount}）</div>`;
+    subKeys.forEach(sub => {
+      const items = grouped[cat][sub];
+      if (!items.length) return;
+      const subLabel = SUBCATS[cat][sub] || sub;
+      html += `<div class="sub-header">${subLabel}（${items.length}）</div>`;
+      html += buildTable(items);
+      total += items.length;
+    });
+  });
+
+  document.getElementById('mainContent').innerHTML = html;
+  document.getElementById('noResults').style.display = total===0 ? 'block' : 'none';
+  document.getElementById('stats').textContent = `共 ${VOCAB.length} 組　顯示 ${total} 組　不熟悉 ${unfamiliarSet.size} 組`;
+}
+
+function toggleMark(i) {
+  if (unfamiliarSet.has(i)) unfamiliarSet.delete(i); else unfamiliarSet.add(i);
+  save();
+  render();
+}
+
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.toolbar-left .filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+function setCat(c, btn) {
+  currentCat = c;
+  document.querySelectorAll('.toolbar-left .cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+function runSearch(q) { currentSearch = q.toLowerCase(); render(); }
+function clearAll() {
+  if (!confirm('確定要清除所有「不熟悉」標記嗎？')) return;
+  unfamiliarSet = new Set(); save(); render();
+}
+
+// ── TTS ──────────────────────────────────────────────────────────────────
+function loadVoices() { if (typeof speechSynthesis !== 'undefined') speechSynthesis.getVoices(); }
+if (typeof speechSynthesis !== 'undefined') {
+  loadVoices();
+  if (speechSynthesis.onvoiceschanged !== undefined) speechSynthesis.onvoiceschanged = loadVoices;
+}
+function speakText(text, lang) {
+  if (typeof speechSynthesis === 'undefined' || !text) return;
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = lang; u.rate = 0.9;
+  const voices = speechSynthesis.getVoices();
+  const v = voices.find(v => v.lang.startsWith(lang.split('-')[0]));
+  if (v) u.voice = v;
+  speechSynthesis.speak(u);
+}
+
+// ── Checkpoint export / import ───────────────────────────────────────────
+const CP_FILENAME = 'Wortschatz_A2-B2-Upgrade_checkpoint.json';
+
+function exportCheckpoint() {
+  const data = JSON.stringify([...unfamiliarSet].sort((a,b)=>a-b), null, 2);
+  const blob = new Blob([data], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = CP_FILENAME; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function importCheckpoint(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const arr = JSON.parse(e.target.result);
+      if (!Array.isArray(arr) || arr.some(x => typeof x !== 'number')) {
+        alert('格式錯誤：JSON 應為數字陣列，例如 [0, 3, 12]');
+        return;
+      }
+      unfamiliarSet = new Set(arr.filter(x => x>=0 && x<VOCAB.length));
+      save();
+      render();
+      setCpStatus('✓ 匯入成功');
+    } catch(err) {
+      alert('格式錯誤：無法解析 JSON 檔案\n' + err.message);
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function setCpStatus(msg) {
+  const el = document.getElementById('cpStatus');
+  el.textContent = msg;
+  setTimeout(() => { el.textContent = ''; }, 3000);
+}
+
+load();
+render();
+</script>
+</body>
+</html>
