@@ -231,8 +231,8 @@ const REDEMITTEL = [
   left_de:"Wir können Ihnen versichern / zusichern, dass …",
   left_zh:"我們可以向您保證……（versichern = 保證事實為真；zusichern = 承諾未來行動，更精確）",
   ex:[
-    {de:"Wir können Ihnen versichern, dass [solche Fehler / derartige Fehler] in Zukunft nicht mehr [passieren / auftreten] werden.",
-     zh:"我們可以向您保證，此類/這樣的失誤將來不會再[發生/出現]。"},
+    {de:"Wir können Ihnen versichern, dass [solche Fehler / derartige Fehler] in Zukunft nicht mehr [passieren / auftreten / vorkommen] werden.",
+     zh:"我們可以向您保證，此類/這樣的失誤將來不會再[發生/出現/發生]。（passieren/auftreten/vorkommen 三者均可，意思相近）"},
     {de:"Wir können Ihnen zusichern, dass wir in Zukunft bei Verzögerungen sofort Kontakt aufnehmen werden.",
      zh:"我們承諾，今後遇到延誤會立即聯繫您。"},
     {de:"Wir möchten Ihnen versichern, dass wir diese Probleme zukünftig so lösen werden, dass wir unseren neuen Mitarbeitern nicht nur Weiterbildungen anbieten, sondern auch genügend Personal einstellen.",
@@ -478,7 +478,7 @@ const URSACHEN_BEHANDLUNG = [
   pairs:[
     {de:"Zu den Problemen mit unserem Service kam es dadurch, dass unsere zuständige Mitarbeiterin sich derzeit in Elternzeit befindet und ihre Vertretung die spezifischen Anforderungen dieses Aufgabenbereichs zunächst nicht vollständig erfasst hatte.",
      zh:"我們的服務出現問題，是因為負責此業務的員工目前正在請育嬰假，而其代理人員起初尚未完全掌握此職責範疇的具體要求。"},
-    {de:"Um das Problem zu beheben, haben wir eine interne Besprechung abgehalten, indem erfahrene Mitarbeitende der Vertretung die Abläufe detailliert erläutert haben.",
+    {de:"Um das Problem zu beheben, haben wir eine interne Besprechung durchgeführt, indem erfahrene Mitarbeitende der Vertretung die Abläufe detailliert erläutert haben.",
      zh:"為了解決這個問題，我們召開了一次內部會議，讓有經驗的員工向代理人員詳細說明了工作流程。"},
     {de:"Durch regelmäßige Schulungen stellen wir sicher, dass solche Fehler nicht mehr vorkommen.",
      zh:"透過定期培訓，我們確保此類失誤不再發生。"},
@@ -489,9 +489,9 @@ const URSACHEN_BEHANDLUNG = [
 {id:"ub-service-2", title:"schlechter Service", zh:"服務品質不佳", num:2,
   subtitle:"範例二：團隊內部重組導致職責不清",
   pairs:[
-    {de:"Zu den Problemen mit unserem Service kam es dadurch, dass es aufgrund einer vorübergehenden Umstrukturierung unseres Teams zu Unklarheiten in den Zuständigkeiten gekommen ist.",
-     zh:"我們的服務出現問題，是因為團隊的短暫重組導致職責分工不明。"},
-    {de:"Um das Problem zu beheben, haben wir eine interne Besprechung abgehalten, indem erfahrene Mitarbeiterinnen und Mitarbeiter die Aufgabenanforderungen detailliert erklärt haben.",
+    {de:"Zu den Problemen mit unserem Service kam es dadurch, dass unser Team vorübergehend umstrukturiert wurde und die Zuständigkeiten dadurch zeitweise unklar waren.",
+     zh:"我們的服務出現問題，是因為團隊進行了短暫重組，導致職責在一段時間內不夠明確。"},
+    {de:"Um das Problem zu beheben, haben wir eine interne Besprechung durchgeführt, indem erfahrene Mitarbeiterinnen und Mitarbeiter die Aufgabenanforderungen detailliert erklärt haben.",
      zh:"為了解決這個問題，我們召開了一次內部會議，讓有經驗的員工詳細說明了各項工作要求。"},
     {de:"Durch regelmäßige Schulungen stellen wir sicher, dass solche Fehler nicht mehr vorkommen.",
      zh:"透過定期培訓，我們確保此類失誤不再發生。"},
@@ -500,18 +500,22 @@ const URSACHEN_BEHANDLUNG = [
 {id:"ub-fehlende-rechnung-1", title:"fehlende Rechnung", zh:"發票遺失", num:3,
   subtitle:"範例：系統技術錯誤導致發票未自動產生",
   pairs:[
-    {de:"Zu den Problemen mit der Rechnung kam es dadurch, dass aufgrund eines technischen Fehlers in unserem System die Rechnung nicht automatisch generiert und versendet wurde.",
-     zh:"發票出現問題，是因為我們系統中的技術故障，導致發票未能自動生成並寄送。"},
+    {de:"【方案A: dadurch, dass + aufgrund】Zu den Problemen mit der Rechnung kam es dadurch, dass aufgrund eines technischen Fehlers in unserem System die Rechnung nicht automatisch generiert und versendet wurde.",
+     zh:"發票出現問題，是因為我們系統中的技術故障，導致發票未能自動生成並寄送。（dadurch dass 內再嵌 aufgrund，句子較複雜）"},
+    {de:"【方案B: aufgrund 句首】Aufgrund eines technischen Fehlers in unserem System wurde die Rechnung leider nicht automatisch generiert und versendet.",
+     zh:"由於我們系統的技術故障，發票未能自動生成並寄送。（句首 aufgrund + Genitiv，簡潔清楚）"},
+    {de:"【方案C: 兩句拆解】In unserem System ist leider ein technischer Fehler aufgetreten. Dadurch wurde die Rechnung nicht automatisch generiert und Ihnen zugesandt.",
+     zh:"我們的系統不幸發生了技術故障。因此發票未能自動生成並寄送給您。（拆成兩句，最易讀）"},
     {de:"Um das Problem zu beheben, haben wir die Rechnung erneut erstellt und senden Ihnen diese mit dieser E-Mail als Anhang zu.",
      zh:"為了解決這個問題，我們已重新開立發票，並隨此封電子郵件以附件形式寄送給您。"},
   ]
 },
 
-{id:"ub-fehlerhafte-rechnung-1", title:"fehlerhafte Rechnung", zh:"發票錯誤", num:4,
-  subtitle:"範例：系統更新後員工輸入失誤",
+{id:"ub-fehlerhafte-rechnung-1a", title:"fehlerhafte Rechnung", zh:"發票錯誤", num:4,
+  subtitle:"範例一：系統安全更新後員工輸入失誤",
   pairs:[
     {de:"Zu den Problemen mit der Rechnung kam es dadurch, dass wir kürzlich ein internes Systemupdate zum Schutz vor Cyberangriffen durchgeführt haben.",
-     zh:"發票出現問題，是因為我們近期為防範網路攻擊進行了內部系統更新。"},
+     zh:"發票出現問題，是因為我們近期為防範網路攻擊進行了內部系統安全更新。"},
     {de:"Da einige Mitarbeiterinnen und Mitarbeiter mit dem neuen System noch nicht vollständig vertraut sind, kam es leider zu einem Eingabefehler.",
      zh:"由於部分員工對新系統尚未完全熟悉，不幸發生了輸入失誤。"},
     {de:"Um das Problem zu beheben, werden wir eine gezielte Schulung für alle betroffenen Mitarbeitenden durchführen.",
@@ -522,12 +526,29 @@ const URSACHEN_BEHANDLUNG = [
      zh:"敬請忽略原始發票。"},
   ]
 },
+{id:"ub-fehlerhafte-rechnung-1b", title:"fehlerhafte Rechnung", zh:"發票錯誤", num:4,
+  subtitle:"範例二：價目更新後舊資料未同步導致錯誤",
+  pairs:[
+    {de:"Zu den Problemen mit der Rechnung kam es dadurch, dass wir kürzlich unsere Preisliste aktualisiert haben und dabei ein Fehler bei der Übertragung der neuen Preise in unser Rechnungssystem aufgetreten ist.",
+     zh:"發票出現問題，是因為我們近期更新了價目表，在將新價格匯入發票系統時發生了錯誤。"},
+    {de:"Dadurch wurden bei einigen Bestellungen noch die alten Preise berechnet.",
+     zh:"因此部分訂單仍按舊價格計算。"},
+    {de:"Um das Problem zu beheben, haben wir den Fehler im System bereits korrigiert und senden Ihnen eine berichtigte Rechnung als Anhang zu.",
+     zh:"為了解決這個問題，我們已修正系統中的錯誤，並隨信附上一份更正後的發票。"},
+    {de:"Wir bitten Sie, die ursprüngliche Rechnung zu ignorieren.",
+     zh:"敬請忽略原始發票。"},
+  ]
+},
 
 {id:"ub-fehlende-lieferung-1", title:"fehlende Lieferung", zh:"貨物未送達", num:5,
   subtitle:"範例：物流服務商罷工導致延誤",
   pairs:[
-    {de:"Zu den Problemen bei der Lieferung kam es dadurch, dass es aufgrund eines Streiks beim Logistikdienstleister zu unvorhergesehenen Verzögerungen gekommen ist.",
-     zh:"交貨出現問題，是因為物流服務商發生罷工，導致了無法預見的延誤。"},
+    {de:"【方案A: dadurch, dass + aufgrund】Zu den Problemen bei der Lieferung kam es dadurch, dass es aufgrund eines Streiks beim Logistikdienstleister zu unvorhergesehenen Verzögerungen gekommen ist.",
+     zh:"交貨出現問題，是因為物流服務商發生罷工，導致了無法預見的延誤。（dadurch dass 內再嵌 aufgrund）"},
+    {de:"【方案B: aufgrund 句首】Aufgrund eines Streiks beim Logistikdienstleister kam es leider zu unvorhergesehenen Verzögerungen bei Ihrer Lieferung.",
+     zh:"由於物流服務商發生罷工，您的貨品不幸出現了無法預見的延誤。（句首 aufgrund，簡潔）"},
+    {de:"【方案C: 兩句拆解】Beim Logistikdienstleister ist leider ein Streik ausgebrochen. Dadurch kam es zu unvorhergesehenen Verzögerungen bei Ihrer Lieferung.",
+     zh:"物流服務商不幸爆發了罷工。因此您的貨品出現了無法預見的延誤。（拆成兩句，最易讀）"},
     {de:"Um das Problem zu beheben, haben wir bereits einen alternativen Versanddienstleister beauftragt.",
      zh:"為了解決這個問題，我們已委託另一家快遞服務商。"},
     {de:"Sie können mit dem Eingang Ihrer Bestellung innerhalb von [X] Werktagen rechnen.",
@@ -538,8 +559,8 @@ const URSACHEN_BEHANDLUNG = [
 {id:"ub-fehlerhafte-lieferung-1", title:"fehlerhafte Lieferung", zh:"送錯貨", num:6,
   subtitle:"範例：系統更新後員工操作失誤導致送錯貨",
   pairs:[
-    {de:"Zu den Problemen bei der Lieferung kam es dadurch, dass wir kürzlich ein internes Systemupdate zum Schutz vor Cyberangriffen durchgeführt haben, wodurch es bei einigen Mitarbeiterinnen und Mitarbeitern zu Unsicherheiten im Umgang mit dem neuen System gekommen ist und leider ein Dateneingabefehler aufgetreten ist.",
-     zh:"交貨出現問題，是因為我們近期為防範網路攻擊進行了內部系統更新，導致部分員工在操作新系統時出現不確定性，不幸發生了資料輸入錯誤。"},
+    {de:"Zu den Problemen bei der Lieferung kam es dadurch, dass wir kürzlich ein internes Systemupdate durchgeführt haben. Einige Mitarbeitende waren mit dem neuen System noch nicht vollständig vertraut, sodass leider ein Dateneingabefehler aufgetreten ist.",
+     zh:"交貨出現問題，是因為我們近期進行了內部系統更新。部分員工對新系統尚未完全熟悉，因此不幸發生了資料輸入錯誤。（拆成兩句，避免過長的從句鏈）"},
     {de:"Um das Problem zu beheben, werden wir die korrekte Ware umgehend versenden und einen Kurier beauftragen, die fehlerhafte Lieferung bei Ihnen abzuholen.",
      zh:"為了解決這個問題，我們將立即寄送正確的貨品，並委託快遞人員前往取回送錯的貨品。"},
   ]
@@ -584,12 +605,21 @@ const URSACHEN_BEHANDLUNG = [
 },
 
 {id:"ub-catering-1", title:"Essen auf Konferenz kalt", zh:"會議餐點變涼", num:10,
-  subtitle:"範例：低溫導致餐點冷卻過快",
+  subtitle:"範例一：塞車導致送餐延誤，餐點已冷",
   pairs:[
-    {de:"Zu den Problemen mit dem Catering bei der Konferenz kam es dadurch, dass die ungewöhnlich niedrigen Temperaturen an diesem Tag dazu geführt haben, dass die Speisen schneller als erwartet abgekühlt sind.",
-     zh:"會議餐飲出現問題，是因為當天異常低溫，導致餐點冷卻速度比預期更快。"},
-    {de:"Um das Problem zu beheben, haben wir bereits mit dem Cateringunternehmen gesprochen und vereinbart, künftig Speisen auszuwählen, die auch bei Raumtemperatur qualitativ hochwertig und genussvoll sind, sodass die Qualität nicht von der Außentemperatur abhängt.",
-     zh:"為了解決這個問題，我們已與餐飲公司協商，並達成協議，今後將選擇即使在室溫下也能保持高品質且美味的餐點，使品質不受外部溫度影響。"},
+    {de:"Zu den Problemen mit dem Catering bei der Konferenz kam es dadurch, dass unser Lieferfahrzeug auf dem Weg zu Ihnen in einen unvorhergesehenen Stau geriet und die Speisen dadurch erst deutlich verspätet ankamen.",
+     zh:"會議餐飲出現問題，是因為我們的送餐車輛在前往您處途中遭遇了意外塞車，導致餐點送達時已大幅延誤。"},
+    {de:"Um das Problem zu beheben, werden wir künftig für solche Veranstaltungen mehr Zeit für die Anlieferung einplanen und bei Verzögerungen sofort Kontakt aufnehmen.",
+     zh:"為了解決這個問題，今後我們將為此類活動預留更充裕的送餐時間，並在出現延誤時立即聯繫您。"},
+  ]
+},
+{id:"ub-catering-2", title:"Essen auf Konferenz kalt", zh:"會議餐點變涼", num:10,
+  subtitle:"範例二：保溫設備故障導致餐點變涼",
+  pairs:[
+    {de:"Zu den Problemen mit dem Catering bei der Konferenz kam es dadurch, dass an unserem Warmhaltegerät ein technischer Defekt aufgetreten ist, der dazu geführt hat, dass die Speisen nicht auf der gewünschten Temperatur gehalten werden konnten.",
+     zh:"會議餐飲出現問題，是因為我們的保溫設備發生了技術故障，導致餐點無法保持在所需的溫度。"},
+    {de:"Um das Problem zu beheben, haben wir das defekte Gerät sofort ersetzt und unsere gesamten Warmhaltegeräte einer gründlichen technischen Überprüfung unterzogen.",
+     zh:"為了解決這個問題，我們已立即更換了故障設備，並對所有保溫設備進行了全面的技術檢查。"},
   ]
 },
 
@@ -598,7 +628,7 @@ const URSACHEN_BEHANDLUNG = [
   pairs:[
     {de:"Zu den Problemen im Gebäudemanagement kam es dadurch, dass ein Personalwechsel in der zuständigen Abteilung zu Unklarheiten in den Zuständigkeiten geführt hat.",
      zh:"物業管理出現問題，是因為負責部門的人員更替導致職責分工不明。"},
-    {de:"Um das Problem zu beheben, haben wir eine interne Besprechung abgehalten und die Aufgabenverteilung neu geregelt.",
+    {de:"Um das Problem zu beheben, haben wir eine interne Besprechung durchgeführt und die Aufgabenverteilung neu geregelt.",
      zh:"為了解決這個問題，我們召開了內部會議，重新規劃了任務分配。"},
     {de:"Durch regelmäßige Schulungen stellen wir sicher, dass solche Fehler nicht mehr vorkommen.",
      zh:"透過定期培訓，我們確保此類失誤不再發生。"},
@@ -606,6 +636,117 @@ const URSACHEN_BEHANDLUNG = [
 },
 
 ]; // end URSACHEN_BEHANDLUNG
+
+// ══════════════════════════════════════════════════════════
+// URSACHEN_AUFGRUND（同樣 11 題，改寫為 aufgrund 句型）
+// ══════════════════════════════════════════════════════════
+
+const URSACHEN_AUFGRUND = [
+
+{num:1, title:"Mängelanzeige", zh:"瑕疵通報",
+  items:[
+    {label:"範例一：製造商缺陷",
+     de:"Aufgrund eines Qualitätsfehlers im Herstellungsprozess wurden die Mängel an [Produkt] erst nach der Lieferung festgestellt.",
+     zh:"由於製造過程中的品質問題，[產品]的瑕疵直到交貨後才被發現。"},
+    {label:"範例二：新製造商不熟悉",
+     de:"Aufgrund mangelnder Erfahrung des neuen Herstellers mit unseren spezifischen Produktanforderungen kam es zu den genannten Mängeln.",
+     zh:"由於新製造商對我們具體產品要求的經驗不足，導致了上述瑕疵。"},
+    {label:"範例三：機台更換",
+     de:"Aufgrund technischer Anpassungen nach der Erneuerung unserer Produktionsanlage kam es zu unvorhergesehenen Qualitätsschwankungen.",
+     zh:"由於更新生產設備後的技術調整，出現了無法預見的品質波動。"},
+  ]
+},
+
+{num:2, title:"schlechter Service", zh:"服務品質不佳",
+  items:[
+    {label:"範例一：育嬰假代理",
+     de:"Aufgrund der Elternzeit unserer zuständigen Mitarbeiterin und der damit verbundenen Einarbeitungszeit der Vertretung kam es zu den Problemen mit unserem Service.",
+     zh:"由於負責員工請育嬰假，以及代理人員的交接適應期，導致了服務問題。"},
+    {label:"範例二：團隊重組",
+     de:"Aufgrund einer vorübergehenden Umstrukturierung unseres Teams waren die Zuständigkeiten zeitweise unklar, was zu den genannten Problemen geführt hat.",
+     zh:"由於團隊的短暫重組，職責一時不夠明確，導致了上述問題。"},
+  ]
+},
+
+{num:3, title:"fehlende Rechnung", zh:"發票遺失",
+  items:[
+    {label:"範例：系統技術錯誤",
+     de:"Aufgrund eines technischen Fehlers in unserem System wurde die Rechnung leider nicht automatisch generiert und versendet.",
+     zh:"由於我們系統的技術故障，發票未能自動生成並寄送。"},
+  ]
+},
+
+{num:4, title:"fehlerhafte Rechnung", zh:"發票錯誤",
+  items:[
+    {label:"範例一：系統安全更新",
+     de:"Aufgrund eines internen Systemupdates und der damit verbundenen Eingewöhnungsphase der Mitarbeitenden kam es leider zu einem Eingabefehler.",
+     zh:"由於內部系統更新以及員工的適應期，不幸發生了輸入失誤。"},
+    {label:"範例二：價目更新",
+     de:"Aufgrund eines Fehlers bei der Übertragung der aktualisierten Preisliste in unser Rechnungssystem wurden bei einigen Bestellungen noch die alten Preise berechnet.",
+     zh:"由於更新後的價目表在匯入發票系統時發生錯誤，部分訂單仍按舊價格計算。"},
+  ]
+},
+
+{num:5, title:"fehlende Lieferung", zh:"貨物未送達",
+  items:[
+    {label:"範例：物流罷工",
+     de:"Aufgrund eines Streiks beim Logistikdienstleister kam es leider zu unvorhergesehenen Verzögerungen bei Ihrer Lieferung.",
+     zh:"由於物流服務商發生罷工，您的貨品不幸出現了無法預見的延誤。"},
+  ]
+},
+
+{num:6, title:"fehlerhafte Lieferung", zh:"送錯貨",
+  items:[
+    {label:"範例：系統更新後輸入失誤",
+     de:"Aufgrund eines internen Systemupdates und eines damit verbundenen Dateneingabefehlers wurde leider die falsche Ware für Ihre Bestellung versandt.",
+     zh:"由於內部系統更新及相關的資料輸入失誤，不幸為您的訂單發送了錯誤的貨品。"},
+  ]
+},
+
+{num:7, title:"Lieferverzögerung", zh:"交貨延誤",
+  items:[
+    {label:"範例：供應商生產瓶頸",
+     de:"Aufgrund von Produktionsengpässen bei unserem Lieferanten konnte die Ware leider nicht rechtzeitig bereitgestellt werden.",
+     zh:"由於我們供應商的生產瓶頸，貨品不幸無法及時備妥。"},
+  ]
+},
+
+{num:8, title:"Lieferung war unvollständig", zh:"交貨不完整",
+  items:[
+    {label:"範例：包裝漏裝",
+     de:"Aufgrund eines internen Fehlers im Verpackungsprozess wurde ein Teil der bestellten Waren versehentlich nicht eingepackt.",
+     zh:"由於包裝過程中的內部失誤，部分訂購商品被不慎遺漏未裝箱。"},
+  ]
+},
+
+{num:9, title:"Der Handwerker kommt nicht", zh:"技工未到場",
+  items:[
+    {label:"範例：途中事故",
+     de:"Aufgrund eines Verkehrsunfalls auf dem Weg zu Ihnen konnte unser zuständiger Mitarbeiter den vereinbarten Termin leider nicht wahrnehmen.",
+     zh:"由於前往您處途中發生交通事故，我們的負責員工不幸無法赴約。"},
+  ]
+},
+
+{num:10, title:"Essen auf Konferenz kalt", zh:"會議餐點變涼",
+  items:[
+    {label:"範例一：塞車",
+     de:"Aufgrund eines unvorhergesehenen Staus auf dem Lieferweg kamen die Speisen deutlich verspätet an.",
+     zh:"由於送餐途中遭遇意外塞車，餐點大幅延誤送達。"},
+    {label:"範例二：保溫設備故障",
+     de:"Aufgrund eines technischen Defekts an unserem Warmhaltegerät konnten die Speisen nicht auf der gewünschten Temperatur gehalten werden.",
+     zh:"由於保溫設備的技術故障，餐點無法保持在所需溫度。"},
+  ]
+},
+
+{num:11, title:"Gebäudemanagement arbeitet nicht gut", zh:"物業管理品質下降",
+  items:[
+    {label:"範例：人員更替",
+     de:"Aufgrund eines Personalwechsels in der zuständigen Abteilung kam es zu Unklarheiten in den Zuständigkeiten.",
+     zh:"由於負責部門的人員更替，導致職責分工不明。"},
+  ]
+},
+
+]; // end URSACHEN_AUFGRUND
 
 
 // ══════════════════════════════════════════════════════════
@@ -615,14 +756,14 @@ const URSACHEN_BEHANDLUNG = [
 const SITUATIONS = [
 
 // ── Mängelanzeige ──────────────────────────────────────
-{id:"mangelanzeige", title:"Mängelanzeige", zh:"瑕疵通知",
+{id:"mangelanzeige", title:"beschädigt Produkt / Mängelanzeige", zh:"瑕疵通知",
   examples:[
   {
     source:"Prüfungstraining S. 38",
     summary:{
       boss:["1. Weshalb es zu diesen Mängeln kommen konnte","2. Dass Sie die Angelegenheit sofort in Ordnung bringen werden","3. Was Sie machen werden, damit solche Fehler in Zukunft nicht mehr passieren"],
       complaint:["1. Vier Kunststofffenster schließen nach Einbau nicht richtig","2. Bereits früher gab es Probleme mit Einbauarbeiten (Schiebetüren)"],
-      gruende:["Fehler eines unerfahrenen Mitarbeiters beim Einbau"]
+      gruende:["Technischer Fehler bei der Einstellung der Fensterrahmen"]
     },
     emails:[
       {role:"teamleitung",
@@ -636,30 +777,8 @@ const SITUATIONS = [
       {q:"19. Thomas Hoger …", opts:["möchte gelieferte Fenster umtauschen.","reklamiert einen nicht vorhandenen Service.","fordert funktionsfähige Fenster."], correct:2},
       {q:"20. Die genannten Mängel …", opts:["sind nicht zum ersten Mal aufgetreten.","sollen rasch beseitigt werden.","sind auf Verzögerungen beim Service zurückzuführen."], correct:0},
     ],
-    sample:`Sehr geehrter Herr Hoger,\n\nbezugnehmend auf Ihre Beschwerde vom heutigen Tag entschuldigen wir uns für die nicht richtig ausgeführten Einbauarbeiten. Grund für die Mängel waren Fehler eines neuen Mitarbeiters, der die Fenster eingebaut hat.\n\nWir werden Ihnen sofort einen erfahrenen Kollegen schicken, der die Mängel beheben wird. Weiter versichern wir Ihnen, dass wir unsere Qualitätskontrolle verbessert haben, sodass solche Fehler in Zukunft nicht mehr passieren werden.\n\nVielen Dank für Ihr Verständnis.\n\nMit freundlichen Grüßen\n[Name]`,
+    sample:`Sehr geehrter Herr Hoger,\n\nbezugnehmend auf Ihre Beschwerde vom heutigen Tag entschuldigen wir uns für die nicht richtig ausgeführten Einbauarbeiten. Grund für die Mängel war ein technischer Fehler bei der Einstellung der Fensterrahmen während des Einbaus.\n\nWir werden Ihnen sofort einen Kollegen schicken, der die Mängel beheben wird. Weiter versichern wir Ihnen, dass wir unsere Qualitätskontrolle verbessert haben, sodass solche Fehler in Zukunft nicht mehr passieren werden.\n\nVielen Dank für Ihr Verständnis.\n\nMit freundlichen Grüßen\n[Name]`,
     note:"💡 避免所有句子都以「Wir」開頭。善用 bezugnehmend auf / Grund für … war … / Weiter versichern wir … 來變化句首。"
-  },
-  {
-    source:"Aspekte Beruf B2 S. 133",
-    summary:{
-      boss:["1. Wie es zu den Problemen kommen konnte","2. Welche Lösung angeboten werden kann","3. Eine Wiedergutmachung anbieten"],
-      complaint:["1. Falsche Waschbecken-Modelle geliefert (andere als bestellt)","2. Bereits zwei Vormerkungen auf die richtigen Modelle vorhanden"],
-      gruende:["Versehen im Lager, Modelle vertauscht"]
-    },
-    emails:[
-      {role:"teamleitung",
-       meta:{von:"Tim Holzmann (Teamleiter)", an:"[dich]", betreff:"FW: Beschwerde: Mangelhafte Ware"},
-       body:`Hallo,\nkönnten Sie sich bitte um die angehängte Mail kümmern? Frau Wenger von Bade-Traum hat das erste Mal unsere Badezimmer-Produkte bestellt und sich gleich mit diesem Problem gemeldet. Bitte schreiben Sie an Frau Wenger und erklären Sie ihr höflich, wie es zu den Problemen kommen konnte. Eine Wiedergutmachung können wir natürlich auch anbieten.\n\nDanke\nTim Holzmann`},
-      {role:"kunde",
-       meta:{von:"Jutta Wenger, Bade-Traum", an:"Tim Holzmann", betreff:"Beschwerde: Mangelhafte Ware"},
-       body:`Sehr geehrter Herr Holzmann,\n\nvor zwei Tagen kam Ihre Lieferung an: je zwei Waschbecken in drei Farben. Leider musste ich feststellen, dass es sich bei den Waschbecken um andere Modelle als bestellt handelt. Da meine Kundinnen und Kunden sehr anspruchsvoll sind, sind die gelieferten Produkte leider nicht akzeptabel.\n\nHolen Sie die falschen Waschbecken schnellstmöglich ab und liefern Sie mir die richtigen.\n\nMit freundlichen Grüßen\nJutta Wenger`}
-    ],
-    mc:[
-      {q:"1. Frau Wenger beschwert sich, weil …", opts:["die Waschbecken keine gute Qualität haben.","ihre Kunden nicht zufrieden waren.","sie die falsche Ware bekommen hat."], correct:2},
-      {q:"2. Frau Wenger …", opts:["erwartet Ersatz für die Waschbecken.","will nicht mehr bei der Firma bestellen.","will weniger für die Lieferung bezahlen."], correct:0},
-    ],
-    sample:`Sehr geehrte Frau Wenger,\n\nbezugnehmend auf Ihre Beschwerde entschuldigen wir uns für die falsch gelieferten Waschbecken. Dies war leider ein Versehen in unserem Lager, bei dem die Modelle vertauscht wurden.\n\nWir werden die falschen Waschbecken schnellstmöglich abholen und Ihnen sofort die richtigen Modelle liefern. Als Entgegenkommen für die Unannehmlichkeiten bieten wir Ihnen bei Ihrer nächsten Bestellung 10% Rabatt an.\n\nVielen Dank für Ihr Verständnis und wir hoffen auf eine weiterhin gute Zusammenarbeit.\n\nMit freundlichen Grüßen\n[Name]`,
-    note:"💡 解決方案有兩個動作（取回+補送），用 und 連接成一句，避免重複以 Wir 開頭。"
   },
   {
     source:"Klett Mit Erfolg zum DTB B2 S. 66–67",
@@ -683,6 +802,92 @@ const SITUATIONS = [
     sample:`Sehr geehrter Herr Raueisen,\n\nbezugnehmend auf Ihre Reklamation vom 29. Juni entschuldigen wir uns für den entstandenen Defekt am Spülbecken. Ich habe mich sofort nach den Gründen erkundigt und dabei Folgendes herausgefunden: Beim Einbau der Schränke ist einem unserer Mitarbeiter leider ein Werkzeug in das Spülbecken gefallen, wodurch der Kratzer entstanden ist.\n\nWir werden das Spülbecken so schnell wie möglich reparieren oder bei Bedarf austauschen. Wir werden Ihnen bis zum 4. Juli mitteilen, wie wir genau vorgehen werden.\n\nVielen Dank für Ihr Verständnis.\n\nMit freundlichen Grüßen\n[Name]`,
     note:"💡 注意：老師說「可以直接承認原因」。這裡用 Ich habe mich sofort nach den Gründen erkundigt 展示主動性，然後說明具體原因。"
   }
+
+  ,{
+    source:"v.Trautheim/Pilzner: DTB B2 Lesen und Schreiben Test 7, S. 28",
+    summary:{
+      boss:["1. Gründe für den Defekt nennen (nach Klärung mit dem Kollegen)","2. Wie wir das Problem lösen werden"],
+      complaint:["1. Spiegel hat einen Sprung","2. Toilettenkasten ist defekt","3. Vermutung: Mitarbeiter hat das Malheur verursacht","4. Antwort innerhalb von drei Tagen erwartet (wegen Planung)"],
+      gruende:["Vermutlich ist dem Mitarbeiter beim Einbau ein Missgeschick passiert"]
+    },
+    emails:[
+      {role:"teamleitung",
+       meta:{von:"Lilo Pulver (Teamleiterin)", an:"[dich]", betreff:"FW: Gäste-WC-/ Toiletteneinbau"},
+       body:`Hallo,
+
+heute habe ich die untenstehende E-Mail von Frau Mc Kinney erhalten. Bitte antworten Sie ihr höflich, da sie eine geschätzte Kundin von uns ist. Nachdem Sie mit dem Kollegen geklärt haben, der bei ihr war, was genau passiert ist, informieren Sie sie bitte dahin gehend und nennen Sie entsprechende Gründe für den Defekt.
+
+Schreiben Sie ihr auch, wie wir das Problem lösen werden.
+
+Danke und liebe Grüße
+Lilo Pulver
+Teamleiterin`},
+      {role:"kunde",
+       meta:{von:"Birgit Mc Kinney", an:"Lilo Pulver", betreff:"Gäste-WC-/ Toiletteneinbau"},
+       body:`Sehr geehrte Frau Pulver,
+
+am 17. und 18. Mai haben Sie bei uns die Gästetoilette erneuert. Dazu gehörte der Einbau der Toilette, des Toilettenkastens sowie die Installation des Waschbeckens und Anbringung des Spiegels.
+
+Die Arbeiten wurden zügig durchgeführt und wir sind sehr damit zufrieden. Leider mussten wir feststellen, dass der Spiegel einen Sprung hat und der Toilettenkasten defekt ist. Wir können uns das nicht erklären, jedoch vermuten wir, dass Ihrem Mitarbeiter dieses Malheur passiert ist.
+
+Wir müssen daher von Ihnen verlangen, dass der Spiegel ausgetauscht und der Toilettenkasten repariert wird. Da wir entsprechend planen wollen, bitten wir um eine Antwort innerhalb der nächsten drei Tage.
+
+Mit freundlichen Grüßen
+Birgit Mc Kinney`}
+    ],
+    mc:[],
+    sample:`Sehr geehrte Frau Mc Kinney,
+
+bezugnehmend auf Ihre Beschwerde vom heutigen Tag entschuldigen wir uns für den entstandenen Defekt am Spiegel und am Toilettenkasten. Es freut uns, dass Sie mit der zügigen Durchführung der Arbeiten zufrieden waren, und wir bedauern sehr, dass es dennoch zu diesen Mängeln gekommen ist.
+
+Ich habe mich mit dem Kollegen, der bei Ihnen vor Ort war, abgestimmt und dabei Folgendes herausgefunden: Beim Transport der Materialien ist ihm versehentlich ein Werkzeug gegen den Spiegel gefallen, wodurch der Sprung entstanden ist; der Toilettenkasten wurde dabei ebenfalls beschädigt.
+
+Um das Problem zu beheben, werden wir Ihnen innerhalb der nächsten drei Tage einen Techniker schicken, der den Spiegel austauscht und den Toilettenkasten reparieren wird.
+
+Wir bitten Sie, die Unannehmlichkeiten zu entschuldigen, und stehen Ihnen bei Rückfragen jederzeit zur Verfügung.
+
+Mit freundlichen Grüßen
+[Name]`,
+    note:"💡 注意：客戶要求三天內回覆是因為「entsprechend planen」，回信務必明確回應這個時間點。"
+  }
+  ,{
+    source:"v.Trautheim/Pilzner: DTB B2 Lesen und Schreiben Test 3, S. 14",
+    summary:{
+      boss:["1. Wie es zu diesen Mängeln kommen konnte","2. Versichern, dass die Angelegenheit sofort in Ordnung gebracht wird","3. Was wir unternehmen, damit diese Fehler in Zukunft nicht mehr passieren"],
+      complaint:["1. 250 neue Bürolampen verursachen Stromausfall in beiden Gebäuden","2. Bereits frühere Probleme beim Montieren der Lampen in anderen Gebäuden","3. Mängel sollen bis Freitag behoben sein, sonst Beauftragung einer anderen Firma"],
+      gruende:["Technischer Defekt bei der Montage / Inkompatibilität der neuen Lampen mit dem Stromnetz"]
+    },
+    emails:[
+      {role:"teamleitung",
+       meta:{von:"Agata Schmalschmidt (Teamleiterin)", an:"[dich]", betreff:"FW: Fehlerhafte Lampenlieferung"},
+       body:`Guten Morgen,\n\ngestern Abend habe ich die untenstehende E-Mail bekommen. Ich möchte Sie bitten, diese umgehend zu bearbeiten. Seit vielen Jahren haben wir mit der Firma Morgenstern sehr gute Geschäftsbeziehungen. Bitte vergessen Sie auf keinen Fall, Frau Wilson mitzuteilen, wie es zu diesen Mängeln kommen konnte, und versichern Sie, dass wir die Angelegenheit sofort in Ordnung bringen werden. Erklären Sie auch, was wir unternehmen, damit diese Fehler in Zukunft nicht mehr passieren.\n\nVielen Dank.\nAgata Schmalschmidt\nTeamleiterin`},
+      {role:"kunde",
+       meta:{von:"Annegret Wilson, Firma Morgenstern", an:"Agata Schmalschmidt", betreff:"Fehlerhafte Lampenlieferung"},
+       body:`Sehr geehrte Frau Schmalschmidt,\n\nwir haben bei Ihnen neue Bürolampen aus Italien für unsere Gebäude 1 und 2 bestellt, die auch fristgemäß am 15. Mai geliefert wurden. Es handelt sich dabei um 250 Lampen der Marke Montatori. Drei Ihrer Mitarbeiter haben die Lampen montiert, aber schon nach kurzer Zeit mussten wir feststellen, dass die neuen Lampen einen Stromausfall in beiden Gebäuden verursachten.\n\nDürfen wir Sie daran erinnern, dass es schon in der Vergangenheit Probleme beim Montieren der Lampen in Gebäude 4 und 5 gab? Erst nach mehrfacher Reklamation haben Sie uns Ihr Team zur Überprüfung geschickt, um diese Mängel zu beheben.\n\nWir bitten Sie, die aktuellen Mängel bis Freitag aus der Welt zu schaffen. Sollte dies nicht der Fall sein, sehen wir uns gezwungen, eine andere Firma mit der Reparatur zu beauftragen und diese Ihnen dann in Rechnung zu stellen.\n\nWir hoffen jedoch, dass es dazu nicht kommt.\n\nMit freundlichen Grüßen\nAnnegret Wilson`}
+    ],
+    mc:[],
+    sample:`Sehr geehrte Frau Wilson,\n\nbezugnehmend auf Ihre Beschwerde über die fehlerhafte Lampenlieferung entschuldigen wir uns für die entstandenen Mängel. Wir bedauern sehr, dass es in beiden Gebäuden zu einem Stromausfall kam.\n\nZu den Mängeln an den Lampen kam es dadurch, dass wir kürzlich auf einen neuen Hersteller umgestiegen sind, der mit den elektrischen Anforderungen Ihres Gebäudes noch nicht vollständig vertraut war.\n\nUm das Problem zu beheben, werden wir Ihnen bis spätestens Freitag unsere Techniker schicken, um die Lampen zu überprüfen und gegebenenfalls auszutauschen. Wir können Ihnen versichern, dass solche Fehler in Zukunft nicht mehr auftreten werden, indem wir wieder mit unserem früheren Hersteller zusammenarbeiten.\n\nVielen Dank für Ihr Verständnis.\n\nMit freundlichen Grüßen\n[Name]`,
+    note:"💡 注意此題涉及兩個歷史前科（Gebäude 4 und 5），回信時可以承認過去確實也發生過問題，展現誠實態度，但避免過度道歉影響專業形象。"
+  }
+  ,{
+    source:"Lesen und Schreiben — Reklamation der verlegten Fliesen",
+    summary:{
+      boss:["1. Den Sachverhalt geprüft: Fliesengröße teilweise unser Fehler (wird ausgetauscht)","2. Fliesenmodell entspricht der vereinbarten Vorgabe (kein Handlungsbedarf)","3. Keine weiteren kostenfreien Änderungen, da Herr Müller bereits mehrfach Änderungswünsche geäußert hat","4. Weiteres Modell oder zusätzliche Arbeiten: Kosten von 500 Euro","5. Herrn Müller informieren und um Bestätigung bitten, ob er einverstanden ist"],
+      complaint:["1. Verlegte Fliesen entsprechen nicht dem bestellten Modell","2. Fliesen in einigen Räumen haben unterschiedliche Größen (v.a. Eingangsbereich, Besprechungsraum)","3. Gesamtbild dadurch ungleichmäßig, entspricht nicht den Vorstellungen"],
+      gruende:["Teilweise interner Fehler bei der Fliesengröße; beim Modell wurde jedoch nach den vereinbarten Vorgaben gearbeitet"]
+    },
+    emails:[
+      {role:"teamleitung",
+       meta:{von:"Andreas Schneider, a.schneider@bau-design.de", an:"[dich]", betreff:"Antwort an Herrn Müller"},
+       body:`Herr Müller hat sich bereits mehrfach mit Änderungs- und Korrekturwünschen an uns gewandt. Nach Prüfung des Falls haben wir festgestellt, dass die unterschiedlichen Fliesengrößen teilweise auf einen Fehler unsererseits zurückzuführen sind. Die betroffenen Fliesen werden wir daher austauschen.\n\nBezüglich des Fliesenmodells sehen wir jedoch keinen Handlungsbedarf, da die Arbeiten entsprechend der vereinbarten Vorgaben ausgeführt wurden.\n\nDa Herr Müller bereits mehrfach Änderungswünsche geäußert hat, werden wir keine weiteren kostenfreien Änderungen vornehmen. Sollte er ein anderes Fliesenmodell wünschen oder zusätzliche Arbeiten beauftragen wollen, fallen hierfür Kosten in Höhe von 500 Euro an.\n\nBitte informieren Sie Herrn Müller über unsere Entscheidung und bitten Sie ihn um eine Bestätigung, ob er mit diesem Vorgehen einverstanden ist.`},
+      {role:"kunde",
+       meta:{von:"Thomas Müller, t.mueller@restaurant-mueller.de", an:"info@bau-design.de", betreff:"Reklamation der verlegten Fliesen"},
+       body:`Sehr geehrte Damen und Herren,\n\nvor zwei Wochen haben Ihre Mitarbeiter die Fliesen in meinen Geschäftsräumen verlegt. Leider musste ich nach Abschluss der Arbeiten feststellen, dass die gelieferten und verlegten Fliesen nicht dem Modell entsprechen, das ich bei Ihnen bestellt habe.\n\nAußerdem habe ich bemerkt, dass die Fliesen in einigen Räumen unterschiedliche Größen haben. Besonders im Eingangsbereich und im Besprechungsraum wirkt das Gesamtbild dadurch ungleichmäßig und entspricht nicht meinen Vorstellungen.\n\nDa ich großen Wert auf ein einheitliches Erscheinungsbild meiner Geschäftsräume lege, bin ich mit dem Ergebnis nicht zufrieden. Ich bitte Sie daher, den Sachverhalt zu prüfen und mir mitzuteilen, wie Sie die festgestellten Mängel beheben möchten.\n\nIch freue mich auf Ihre zeitnahe Rückmeldung.\n\nMit freundlichen Grüßen\nThomas Müller`}
+    ],
+    mc:[],
+    sample:`Sehr geehrter Herr Müller,\n\nbezugnehmend auf Ihre Reklamation vom 15. September bedanken wir uns für Ihre Mitteilung und haben den Sachverhalt umgehend geprüft.\n\nBezüglich der unterschiedlichen Fliesengrößen müssen wir Ihnen leider mitteilen, dass es sich teilweise um einen Fehler unsererseits handelt. Die betroffenen Fliesen werden wir daher kostenfrei austauschen.\n\nBezüglich des Fliesenmodells können wir jedoch keinen Handlungsbedarf erkennen, da die Arbeiten entsprechend der mit Ihnen vereinbarten Vorgaben ausgeführt wurden. Da Sie bereits mehrfach Änderungswünsche geäußert haben, können wir Ihnen leider keine weiteren kostenfreien Änderungen anbieten. Sollten Sie ein anderes Fliesenmodell wünschen oder zusätzliche Arbeiten beauftragen wollen, fallen hierfür Kosten in Höhe von 500 Euro an.\n\nWir bitten Sie um eine kurze Bestätigung, ob Sie mit diesem Vorgehen einverstanden sind.\n\nMit freundlichen Grüßen\n[Name]`,
+    note:"💡 此題的特殊之處：客戶提出兩個訴求，但公司只在「尺寸」上承認錯誤並道歉，在「型號」上則堅持立場，不承擔責任。這種「部分接受、部分反駁」的回信策略在考試中也可能出現，不一定每次都要全盤道歉妥協。"
+  }
   ]
 },
 
@@ -694,7 +899,7 @@ const SITUATIONS = [
     summary:{
       boss:["1. Den Grund für die aktuellen Probleme nennen","2. Wie wir diese Probleme zukünftig lösen werden"],
       complaint:["1. Personal nicht mehr freundlich und höflich","2. Service im Restaurant wesentlich schlechter","3. Lange Wartezeiten","4. Servicepersonal häufig gewechselt, unhöflich und gestresst"],
-      gruende:["Krankheitsfälle", "Personalwechsel / neue Mitarbeiter ohne ausreichende Schulung"]
+      gruende:["Krankheitsfälle", "Kurzfristiger Personalwechsel im Servicebereich"]
     },
     emails:[
       {role:"teamleitung",
@@ -708,7 +913,7 @@ const SITUATIONS = [
       {q:"1. Frau Loibl beschwert sich über …", opts:["die Qualität des Essens im Restaurant.","das unhöfliche und gestresste Personal.","die zu hohen Preise im Hotel."], correct:1},
       {q:"2. Frau Loibl …", opts:["möchte eine Entschädigung für ihren Aufenthalt.","droht, das Hotel nicht mehr zu besuchen.","hofft auf eine Verbesserung des Services."], correct:2},
     ],
-    sample:`Sehr geehrte Frau Loibl,\n\nbezüglich des schlechten Services und des unhöflichen Personals haben wir Ihre Beschwerde erhalten und möchten uns für die entstandenen Unannehmlichkeiten entschuldigen. Wir können Ihren Ärger gut verstehen.\n\nDer Grund für Ihre Beanstandung waren zahlreiche Krankheitsfälle unserer Mitarbeiter. Darüber hinaus haben wir vor Kurzem drei Azubis eingestellt, die noch nicht über ausreichende Erfahrung verfügen.\n\nWir möchten Ihnen versichern, dass wir diese Probleme zukünftig so lösen werden, dass wir unseren neuen Mitarbeitern nicht nur Weiterbildungen anbieten, sondern auch genügend Personal einstellen, um im Krankheitsfall schnelle und kompetente Vertretung zu finden.\n\nWir hoffen, dass Sie uns in Zukunft eine weitere Chance geben werden, Ihnen eine positive Erfahrung zu bieten.\n\nMit freundlichen Grüßen\ni.A. [Name]`,
+    sample:`Sehr geehrte Frau Loibl,\n\nbezüglich des schlechten Services und des unhöflichen Personals haben wir Ihre Beschwerde erhalten und möchten uns für die entstandenen Unannehmlichkeiten entschuldigen. Wir können Ihren Ärger gut verstehen.\n\nDer Grund für Ihre Beanstandung waren zahlreiche Krankheitsfälle unserer Mitarbeiter. Darüber hinaus kam es aufgrund eines kurzfristigen Personalwechsels zu Engpässen im Servicebereich.\n\nWir möchten Ihnen versichern, dass wir diese Probleme zukünftig so lösen werden, dass wir unseren Mitarbeitern regelmäßige Weiterbildungen anbieten und zugleich genügend Personal einstellen, um im Krankheitsfall schnelle und kompetente Vertretung zu finden.\n\nWir hoffen, dass Sie uns in Zukunft eine weitere Chance geben werden, Ihnen eine positive Erfahrung zu bieten.\n\nMit freundlichen Grüßen\ni.A. [Name]`,
     note:"💡 老師示範信。第一段引言+道歉+同理心合一；第二段兩個原因用 Darüber hinaus 連接；第三段用 nicht nur … sondern auch 展示具體改善。"
   },
   {
@@ -820,6 +1025,95 @@ const SITUATIONS = [
     sample:`Sehr geehrter Herr Mateusz,\n\nbezugnehmend auf Ihre Beschwerde vom heutigen Tag möchten wir uns für die entstandenen Unannehmlichkeiten entschuldigen. Wir können Ihren Ärger gut verstehen.\n\nIch habe mich sofort nach den Gründen erkundigt und dabei Folgendes herausgefunden: Mehrere unserer Mitarbeiter sind kurzfristig erkrankt, sodass wir leider keine erfahrene Fachkraft für die Installation schicken konnten und der Termin für die IT-Zugänge nicht eingehalten werden konnte.\n\nUm das Problem zu beheben, werden wir Ihnen noch heute einen qualifizierten Techniker schicken, der die Telefonanlage korrekt einrichtet. Den Termin für die IT-Zugänge werden wir so schnell wie möglich nachholen. Wir werden Ihnen bis morgen früh einen neuen Termin bestätigen.\n\nVielen Dank für Ihr Verständnis.\n\nMit freundlichen Grüßen\n[Name]`,
     note:"💡 此題涉及兩個問題（電話+IT），回信時需要分別處理兩個解決方案。學生示範信提供了兩種常見錯誤，值得參考。"
   }
+
+  ,{
+    source:"v.Trautheim/Pilzner: DTB B2 Lesen und Schreiben Test 8, S. 31",
+    summary:{
+      boss:["1. Wie es zu diesen Problemen kam","2. Vorschläge, wie wir die Probleme in Zukunft vermeiden wollen","3. 50% Rabatt auf die nächste Veranstaltung geben"],
+      complaint:["1. Veranstaltung musste sich wegen technischer Probleme um eine Stunde verschieben","2. Nach einer Stunde funktionierte weder Lautsprecher noch Beamer","3. Licht fiel beim geselligen Zusammensein aus, Kunden mussten den Raum frühzeitig verlassen"],
+      gruende:["Technische Störung der Veranstaltungsausstattung (Lautsprecher, Beamer, Beleuchtung)"]
+    },
+    emails:[
+      {role:"teamleitung",
+       meta:{von:"Antonia Hilt (Teamleiterin)", an:"[dich]", betreff:"FW: Mängel Konferenzraum"},
+       body:`Hallo,
+
+gestern ist die u.a. E-Mail bei mir eingegangen. Es ist sehr ärgerlich, dass einer unserer besten Kunden mit unserem Service nicht zufrieden ist, da unser Service anscheinend nicht richtig funktioniert hat.
+
+Wir müssen daher alles tun, dass wir unseren Stammkunden nicht verlieren. Bitte antworten Sie Frau Vladiskaya höflich und erklären Sie ihr, wie es zu diesen Problemen kam. Machen Sie eventuell Vorschläge, wie wir die Probleme in Zukunft vermeiden wollen. Geben Sie 50 % Rabatt auf die nächste Veranstaltung.
+
+Vielen Dank und liebe Grüße
+Antonia Hilt`},
+      {role:"kunde",
+       meta:{von:"T. Vladiskaya, Geschäftsführerin LAGA GmbH", an:"Antonia Hilt", betreff:"Mängel Konferenzraum"},
+       body:`Sehr geehrte Frau Hilt,
+
+wie Ihnen sicherlich bekannt ist, veranstalten wir jedes Jahr auf der Buchmesse in Ihren Messehallen auf Ebene 2, Konferenzraum 17, eine große Tagung für unsere besten Kunden. Bisher waren wir mit dem Service sowie der technischen Ausstattung und dem Catering sehr zufrieden.
+
+Doch leider gab es bei unserer letzten Veranstaltung erhebliche Probleme. Gleich am Anfang wurde uns mitgeteilt, dass die gesamte Veranstaltung sich um eine Stunde verschieben würde, da es technische Probleme mit der Ausrüstung gäbe.
+
+Nach einer Stunde sollte alles behoben sein, jedoch funktionierte weder der Lautsprecher noch der Beamer. Es war eine einzige Katastrophe. Als dann noch das Licht beim geselligen Zusammensein ausfiel, mussten unsere Kunden frühzeitig den Konferenzraum verlassen.
+
+Ich gehe davon aus, dass sich dieser Vorfall nie wieder wiederholt, und wir den von Ihnen gewohnten Service erhalten. Ansonsten sehen wir uns gezwungen, bei Ihrer Konkurrenz einen Konferenzraum für September 20xx zu mieten.
+
+Mit freundlichen Grüßen
+Tina Vladiskaya
+Geschäftsführerin LAGA GmbH`}
+    ],
+    mc:[],
+    sample:`Sehr geehrte Frau Vladiskaya,
+
+bezugnehmend auf Ihre Beschwerde über die Probleme bei Ihrer letzten Veranstaltung möchten wir uns aufrichtig entschuldigen. Wir bedauern sehr, dass die technische Ausstattung versagt hat und Ihre Gäste den Raum frühzeitig verlassen mussten.
+
+Zu den Problemen kam es dadurch, dass an unserer Veranstaltungstechnik ein technischer Defekt aufgetreten ist, der weder Lautsprecher noch Beamer korrekt funktionieren ließ; die anschließende Beleuchtungsstörung war eine Folge desselben technischen Problems.
+
+Um das Problem zu beheben, lassen wir die gesamte technische Ausstattung der Konferenzräume umfassend überprüfen und werden vor künftigen Veranstaltungen einen zusätzlichen technischen Testlauf durchführen. Als Wiedergutmachung bieten wir Ihnen einen Rabatt von 50% auf Ihre nächste Veranstaltung an.
+
+Wir hoffen, Sie auch in Zukunft als geschätzte Kundin begrüßen zu dürfen.
+
+Mit freundlichen Grüßen
+[Name]`,
+    note:"💡 老闆明確指定補償為 50%，不可自行更改數字。注意此例同時涉及三個技術故障（Lautsprecher, Beamer, Licht），可以用一句話歸納成同一個原因（同一套設備系統故障）。"
+  }
+  ,{
+    source:"Obsidian 學習筆記 2026-05-28",
+    summary:{
+      boss:["1. Warum wir diese Probleme hatten erklären","2. Eine kleine Wiedergutmachung anbieten","3. Vermeiden, dass Kundin negative Kommentare abgibt oder kündigt"],
+      complaint:["1. Umkleidekabinen nicht sauber, fremde Kleidungsstücke vorhanden","2. Chipstüten-Reste und Flaschen in den Kabinen","3. Erwartung: saubere Kabinen beim nächsten Besuch am Freitag, sonst Kündigung aller Teilnehmerinnen"],
+      gruende:["Vorübergehende Umstrukturierung, Vertretung war mit den Reinigungsaufgaben noch nicht vollständig vertraut"]
+    },
+    emails:[
+      {role:"teamleitung",
+       meta:{von:"Aida Neumann (Teamleiterin)", an:"[dich]", betreff:"FW: Schmutzige Umzugskabinen in Ihrer Ballettschule"},
+       body:`Hallo,\n\ndie untenstehende Mail habe ich gerade bekommen. Bitte kümmern Sie sich sofort darum und antworten Sie der Kundin umgehend und höflich. Wir möchten Sie als Kundin nicht verlieren. Ferner ist es uns sehr wichtig, dass sie über unsere Ballettschule keine negativen Kommentare abgeben wird. Bitte geben Sie an, warum wir diese Probleme hatten. Eine kleine Wiedergutmachung wäre hier auch angebracht.\n\nVielen Dank und freundliche Grüße\nAida Neumann, Teamleiterin`},
+      {role:"kunde",
+       meta:{von:"Nicole Bier", an:"Aida Neumann", betreff:"Schmutzige Umzugskabinen in der Ballettschule"},
+       body:`Sehr geehrte Frau Neumann,\n\nleider muss ich mich in dieser Form an Sie wenden. Meine Freundinnen und ich haben unsere Töchter in Ihrer Ballettschule seit 2 Jahren. Sie nehmen an den Ballettkursen Bambini 6-7 dreimal die Woche teil, am Montag, Mittwoch und Freitag ab 17:30 Uhr.\n\nBisher waren wir mit allem sehr zufrieden, jedoch mussten wir beim letzten Mal feststellen, dass die Umkleidekabinen nicht sauber gemacht wurden und noch andere Kleidungsstücke von Teilnehmern vorhanden waren. Außerdem lagen überall die Reste von Chipstüten und in zwei Kabinen sogar Flaschen herum.\n\nAls wir die Trainerin darauf hinwiesen, wurde uns versichert, dass sie sich darum kümmern wird. Nichtsdestotrotz möchte ich Sie darauf aufmerksam machen, dass in einer stadtbekannten Ballettschule wie der Ihren so etwas nicht vorkommen darf. Wir erwarten, dass Sie unverzüglich diese Probleme lösen, damit wir bei unserem nächsten Besuch am Freitag saubere Kabinen vorfinden werden, sonst werden wir alle sofort kündigen.\n\nMit freundlichen Grüßen\nNicole Bier`}
+    ],
+    mc:[],
+    sample:`Sehr geehrte Frau Bier,\n\nbezugnehmend auf Ihre Beschwerde über die schmutzigen Umkleidekabinen bedanken wir uns für Ihre Mitteilung. Wir entschuldigen uns für die Unannehmlichkeiten, die dadurch entstanden sind.\n\nZu dem Problem mit den Umkleidekabinen kam es dadurch, dass wir kürzlich eine vorübergehende Umstrukturierung vorgenommen haben. Da die Mitarbeitenden mit den neuen Aufgaben noch nicht vollständig vertraut waren, wurden die Umkleidekabinen versehentlich nicht gereinigt.\n\nAls Wiedergutmachung bieten wir Ihnen einen Preisnachlass von 10% auf den nächsten Kurs an. Wir können Ihnen versichern, dass die Umkleidekabinen bis zu Ihrem nächsten Besuch am Freitag gründlich gereinigt sein werden.\n\nWir hoffen, dass Sie uns eine weitere Chance geben, Ihnen einen einwandfreien Service zu bieten.\n\nMit freundlichen Grüßen\ni.A. [Name]`,
+    note:"💡 客戶有明確的下次到訪日期（週五），回信務必針對這個具體時間點承諾改善，而非只說「在未來」。"
+  }
+  ,{
+    source:"Mängel Aufenthalt vom 12.10.–15.10.20XX — Konferenzhotel",
+    summary:{
+      boss:["1. Erklären, warum es Probleme gab","2. Beschreiben, wie wir die Probleme lösen werden"],
+      complaint:["1. Geschäftspartner mussten über eine Stunde auf Zimmer warten","2. Beamer in der Konferenztechnik defekt, Reparatur dauerte über eine halbe Stunde","3. Mikrofon funktionierte ebenfalls nicht, weitere halbe Stunde Zeitverlust","4. Erwartung: keine Wiederholung solcher Vorfälle, sonst Wechsel zu anderem Konferenzhotel"],
+      gruende:["Technische Defekte an der Konferenzausstattung (Beamer, Mikrofon) und verzögerte Zimmerübergabe"]
+    },
+    emails:[
+      {role:"teamleitung",
+       meta:{von:"Herbert Kuhn, Hotelmanager", an:"[dich]", betreff:"FW: Mängel Aufenthalt vom 12.10.–15.10.20XX"},
+       body:`Hallo,\n\ngestern ist die unten stehende E-Mail eingegangen. Es ist wirklich ärgerlich, dass unser Service diesmal nicht richtig funktioniert hat. Frau Spieß ist eine wichtige Kundin. Wir sollten daher alles tun, um diese Stammkundin nicht zu verlieren. Bitte antworten Sie Frau Spieß höflich und erklären Sie ihr, warum es Probleme gab. Beschreiben Sie bitte auch, wie wir die Probleme lösen werden.\n\nVielen Dank und viele Grüße\nHerbert Kuhn\nHotelmanager`},
+      {role:"kunde",
+       meta:{von:"Helga Spieß, Geschäftsführerin CONCEPT IDEA GMBH", an:"Herbert Kuhn", betreff:"Mängel Aufenthalt vom 12.10.–15.10.20XX"},
+       body:`Sehr geehrter Herr Kuhn,\n\nwie Sie wissen, veranstalten wir jährlich mehrere Tagungen in Ihrem Konferenzhotel. Bisher waren wir mit dem Service und der technischen Ausstattung der Konferenzräume sehr zufrieden.\n\nDoch bei unserer Veranstaltung im Oktober gab es erhebliche Probleme. Bei der Ankunft mussten unsere Geschäftspartner über eine Stunde warten, bis sie ihre Zimmer beziehen konnten. Als wir verspätet mit unserem Meeting beginnen wollten, funktionierte die Konferenztechnik nicht. Der Beamer war defekt. Es dauerte mehr als eine halbe Stunde, bis ein Techniker kam und das Gerät austauschte. Als unser Geschäftspartner dann mit seiner Präsentation beginnen wollte, funktionierte das Mikrofon nicht. Bis dieses Problem gelöst war, war die nächste halbe Stunde vorbei.\n\nIch gehe davon aus, dass sich vergleichbare Vorfälle nicht wiederholen und wir zukünftig den gewohnten Service erwarten dürfen. Andernfalls werden wir unsere Veranstaltungen in einem anderen Konferenzhotel durchführen.\n\nMit freundlichen Grüßen\nHelga Spieß\nGeschäftsführerin CONCEPT IDEA GMBH`}
+    ],
+    mc:[],
+    sample:`Sehr geehrte Frau Spieß,\n\nbezugnehmend auf Ihre Beschwerde über die Mängel bei Ihrem Aufenthalt vom 12.10. bis 15.10. entschuldigen wir uns aufrichtig für die entstandenen Unannehmlichkeiten. Wir können Ihren Ärger über die verlorene Zeit sehr gut verstehen.\n\nZu der verspäteten Zimmerübergabe kam es dadurch, dass die vorherige Veranstaltung sich verzögert hatte und die Zimmer dadurch später als vorgesehen vorbereitet werden konnten. Der Defekt am Beamer und am Mikrofon war auf einen technischen Fehler in unserer Konferenzausstattung zurückzuführen, der zufällig bei beiden Geräten gleichzeitig auftrat.\n\nUm das Problem zu beheben, werden wir unsere gesamte Konferenztechnik vor jeder Veranstaltung künftig einem Funktionstest unterziehen und zusätzliches Ersatzgerät bereithalten. Außerdem werden wir unsere Zimmerübergaben bei Tagungen besser mit dem vorherigen Veranstaltungsablauf koordinieren.\n\nWir können Ihnen versichern, dass sich solche Vorfälle nicht wiederholen werden, und hoffen, Sie auch in Zukunft als geschätzte Kundin begrüßen zu dürfen.\n\nMit freundlichen Grüßen\n[Name]`,
+    note:"💡 此題有三個獨立問題（房間延遲、投影機故障、麥克風故障），建議分別說明原因，但可以歸納成兩類（場地協調延誤 + 設備技術故障），避免條列式重複。"
+  }
+
   ]
 },
 
@@ -847,7 +1141,57 @@ const SITUATIONS = [
     ],
     sample:`Sehr geehrte Frau de Groot,\n\nbezugnehmend auf Ihre E-Mail entschuldigen wir uns für die wiederholten Mahnungen. Grund dafür war ein interner Fehler in unserer Rechnungsabteilung, bei dem der Skontoabzug nicht korrekt verbucht wurde.\n\nWir haben die Angelegenheit sofort korrigiert und Ihr Konto ausgeglichen. Weiter versichern wir Ihnen, dass wir unsere internen Prozesse überarbeitet haben, damit Ähnliches in Zukunft nicht mehr passiert.\n\nVielen Dank für Ihr Verständnis.\n\nMit freundlichen Grüßen\n[Name]`,
     note:"💡 此情境的原因是「帳務部門內部失誤」，用 bei dem … nicht korrekt verbucht wurde 描述具體失誤內容。"
-  }]
+  }
+
+  ,{
+    source:"Obsidian 學習筆記 2026-06-17",
+    summary:{
+      boss:["1. Warum es zu diesem Problem in der Rechnungsabteilung kam","2. Wie der Sachverhalt umgehend geklärt und in Ordnung gebracht wird","3. Versichern, dass so etwas nicht mehr passieren wird"],
+      complaint:["1. Zweite ungerechtfertigte Mahnung für nie bestellte Ware erhalten","2. Alle Rechnungen wurden bereits umgehend beglichen, keine offenen Posten","3. Drohung: Anwalt einschalten und Lieferanten wechseln"],
+      gruende:["Technisches Problem bei der Kontoverbindung / verzögerte Gutschrift der Bank"]
+    },
+    emails:[
+      {role:"teamleitung",
+       meta:{von:"Ali Alzahout (Teamleiter)", an:"[dich]", betreff:"WG: Mahnung Rechnungsnummer 2022-457689"},
+       body:`Hallo,
+
+gestern habe ich die unten aufgeführte E-Mail erhalten, die ich Ihnen zur umgehenden Bearbeitung weiterleite. Da die Firma Yilmaz eine unserer besten Kunden ist, ist es äußerst wichtig, dass wir die Beschwerde umgehend bearbeiten und höflichst beantworten.
+
+Lassen Sie den Kunden wissen, warum es zu diesen Problemen in unserer Rechnungsabteilung kam und wie wir den Sachverhalt umgehend klären werden und in Ordnung bringen. Versichern Sie dem Kunden, dass so etwas nicht mehr passieren wird.
+
+Danke
+Ali Alzahout, Teamleiter`},
+      {role:"kunde",
+       meta:{von:"Armin Wattenscheid, Firma Yilmaz", an:"Ali Alzahout", betreff:"Mahnung Rechnungsnummer 2022-457689"},
+       body:`Sehr geehrter Herr Alzahout,
+
+heute Morgen haben wir die zweite Mahnung aus Ihrem Hause für Ware erhalten, die wir nie bestellt haben. Es handelt sich hierbei um die Rechnungsnummer 2022-457689. Es muss sich hierbei um ein Missverständnis Ihrerseits handeln.
+
+Alle unsere Rechnungen, die wir von Ihnen erhalten haben, wurden von uns umgehend beglichen und es sind keine offenen Posten vorhanden. Dies ist nun schon das zweite Mal, dass wir eine ungerechtfertigte Mahnung von Ihnen erhalten.
+
+Wir fordern Sie daher umgehend auf, diese Angelegenheit mit Ihrer Buchhaltung zu klären. Ansonsten müssen wir den Sachverhalt unserem Anwalt übergeben und uns einen anderen Zulieferer suchen, auf den man sich verlassen kann.
+
+Wir bitten um sofortige Rückmeldung.
+
+Mit freundlichen Grüßen
+Armin Wattenscheid`}
+    ],
+    mc:[],
+    sample:`Sehr geehrter Herr Wattenscheid,
+
+bezugnehmend auf Ihre Beschwerde über die fehlerhafte Mahnung bedanken wir uns für Ihre Mitteilung. Wir entschuldigen uns für die Unannehmlichkeiten, die durch die zweite falsche Mahnung entstanden sind.
+
+Zu dem Problem kam es dadurch, dass bei unserer Kontoverbindung ein technisches Problem aufgetreten ist: Wir erhalten die Zahlungsbestätigung später als üblich von der Bank, sodass das Mahnsystem die Mahnung bereits automatisch verschickt hat, bevor die Bank uns den Betrag bestätigt hatte.
+
+Um das Problem zu beheben, haben wir mit der Bank Kontakt aufgenommen und besprochen, wie wir künftig sicherstellen können, dass Zahlungen rechtzeitig erfasst werden. Gleichzeitig haben wir unsere Buchhaltung gebeten, die betroffene Mahnung sofort zurückzuziehen.
+
+Wir können Ihnen versichern, dass solche Fehler in Zukunft nicht mehr auftreten werden. Wir danken Ihnen für Ihr Verständnis und hoffen, Ihnen weiterhin einen einwandfreien Service anbieten zu können.
+
+Mit freundlichen Grüßen
+[Name]`,
+    note:"💡 注意：Anrede 應與信末署名性別一致（Armin = 男性，故應用 Herr Wattenscheid）。這題的關鍵詞彙：der Sachverhalt（案情/事實情況）、keine offenen Posten（沒有未結清款項）、ungerechtfertigt（不合理的）。"
+  }
+  ]
 },
 
 {id:"fehlende-lieferung", title:"fehlende Lieferung", zh:"貨品遺漏/不足",
@@ -931,7 +1275,101 @@ Bei Rückfragen stehen wir Ihnen selbstverständlich zur Verfügung. Wir danken 
 
 Mit freundlichen Grüßen i.A. YiTing`,
     note:"💡 示範回信（YiTing 撰寫）。注意第一段同時涵蓋引言＋道歉＋說明問題；原因使用「dadurch, dass」句型；解決方案包含取回＋補送＋折扣＋培訓保證四個要素。"
-  }]
+  }
+
+  ,{
+    source:"Obsidian 學習筆記 2026-06-15",
+    summary:{
+      boss:["1. Mit den Zustellern klären, was genau passiert ist","2. Gründe nennen, die zu diesen Problemen führten","3. Erklären, wie wir das Problem in Zukunft lösen werden"],
+      complaint:["1. Falsche Fliesen geliefert: Rosa Beta statt der bestellten Rosa Tupin (350 m²)","2. Fliesenleger bereits für Montag bestellt, Termin nicht verschiebbar","3. Korrekte Fliesen werden spätestens bis Montag 08:00 Uhr benötigt"],
+      gruende:["Neue Spedition war mit den Lagerabläufen noch nicht vollständig vertraut, Fliesen wurden mit denen anderer Kunden verwechselt"]
+    },
+    emails:[
+      {role:"teamleitung",
+       meta:{von:"Lothar Grund (Teamleiter)", an:"[dich]", betreff:"FW: Falsche Lieferung"},
+       body:`Hallo,
+
+soeben habe ich die untenstehende E-Mail erhalten. Bitte klären Sie mit den Zustellern, die bei unserem Kunden waren, was genau passiert ist, und schreiben Sie an unseren Kunden höflich eine E-Mail. Nennen Sie ruhig die Gründe, die zu diesen Problemen führten. Vergessen Sie nicht zu erklären, wie wir das Problem in Zukunft lösen werden, damit so etwas nicht mehr passiert.
+
+Danke schon mal und beste Grüße
+Lothar Grund, Teamleiter`},
+      {role:"kunde",
+       meta:{von:"Alessandra Riccetti", an:"Lothar Grund", betreff:"Falsche Lieferung"},
+       body:`Sehr geehrter Herr Grund,
+
+gestern haben wir von Ihnen die neuen Granitfliesen erhalten, die bei uns im Eingangsbereich gelegt werden sollten. Wir haben 350 m² von der Fliese Rosa Tupin bestellt.
+
+Leider mussten wir heute Morgen feststellen, dass wir nicht die Fliese Rosa Tupin, sondern Rosa Beta erhalten haben. Sie können sich sicherlich vorstellen, wie bestürzt wir waren, eine falsche Lieferung vorzufinden.
+
+Ein weiteres Problem ist, dass wir die Fliesenleger für Montag bestellt haben und dies nicht rückgängig machen können. Wir wissen, dass die Fliesen aus Spanien kommen und möchten Sie daher bitten, umgehend eine Lösung zu finden. Wir benötigen die Fliesen Rosa Tupin spätestens bis Montagmorgen um 08:00 Uhr.
+
+Bitte haben Sie dafür Verständnis, dass wir auf den o.a. Liefertermin bestehen müssen, da wir ansonsten mit unserer Planung nicht hinkommen.
+
+Mit freundlichen Grüßen
+Alessandra Riccetti`}
+    ],
+    mc:[],
+    sample:`Sehr geehrte Frau Riccetti,
+
+bezugnehmend auf Ihre Beschwerde über die fehlerhafte Lieferung bedanken wir uns für Ihre Mitteilung. Wir entschuldigen uns für die Unannehmlichkeiten, die durch die Lieferung der falschen Fliese Rosa Beta anstelle der bestellten Rosa Tupin entstanden sind.
+
+Zu dem Problem kam es dadurch, dass unsere neue Spedition mit unseren Lagerabläufen noch nicht vollständig vertraut war. Dies hatte zur Folge, dass die bestellten Fliesen mit denen anderer Kunden verwechselt wurden.
+
+Um das Problem zu beheben, haben wir mit der Spedition unverzüglich Kontakt aufgenommen. Die Spedition hat uns versichert, dass sie spätestens am Montag um 08:00 Uhr Ihre Fliesen Rosa Tupin zusenden und gleichzeitig das versehentlich zugeschickte Produkt zurücknehmen wird. Ihr Termin mit dem Fliesenleger am Montag wird daher wie geplant stattfinden können.
+
+Wir werden mit der Spedition weiter klären, wie sie die Waren korrekt entnehmen und überprüfen kann, sodass solche Fehler in Zukunft vermieden werden.
+
+Mit freundlichen Grüßen
+[Name]`,
+    note:"💡 此題截止時間非常具體（週一早上8點），務必在解決方案中明確回應，並說明補送和取回兩個動作。"
+  }
+  ,{
+    source:"Obsidian 學習筆記 2026-05-20",
+    summary:{
+      boss:["1. Sich entschuldigen","2. Die umgehende Zusendung der richtigen Produkte zusagen","3. Versichern, dass man sich sofort um die Bestellung kümmert","4. Überlegen, was man der Kundin als Entschuldigung anbieten kann"],
+      complaint:["1. Falsches Produkt erhalten: Haarspülung statt Shampoo Haaraktiv","2. 15 Packungen Haarfarbe Nr. 21 und 23 von Goldlocke fehlten komplett","3. Drohung: anderer Großhändler, falls Ware nicht morgen eintrifft"],
+      gruende:["Mitarbeitende waren mit dem neuen System noch nicht vertraut und haben Aufträge verschiedener Kunden verwechselt"]
+    },
+    emails:[
+      {role:"teamleitung",
+       meta:{von:"Frieda Blume", an:"[dich]", betreff:"FW: Falsche Lieferung"},
+       body:`Hallo,
+
+ich leite dir eine E-Mail vom Frisörsalon Schnell weiter. Frau Schnell ist zurecht verärgert, weil ihre Lieferung wieder nicht in Ordnung war. Bitte beantworte das Schreiben. Entschuldige dich und sag Frau Schnell die umgehende Zusendung der richtigen Produkte zu. Versichere ihr, dass du dich sofort um die Bestellung kümmerst. Überlege dir bitte, was wir der Kundin als Entschuldigung anbieten können, und teile ihr das mit.
+
+Vielen Dank und Gruß
+Frieda`},
+      {role:"kunde",
+       meta:{von:"Margarete Schnell, Frisörsalon Schnell", an:"Frieda Blume", betreff:"Falsche Lieferung"},
+       body:`Sehr geehrte Frau Blume,
+
+leider ist bei unserer Bestellung vergangene Woche wieder etwas schiefgegangen. Zwar kam die Lieferung diesmal pünktlich bei uns an, aber sie war falsch bzw. unvollständig. Statt des bestellten Shampoos „Haaraktiv“ haben wir eine Haarspülung bekommen. Außerdem hatten wir jeweils 15 Packungen der Haarfarben Nr. 21 und 23 von „Goldlocke“ bestellt. Diese waren leider gar nicht in der Lieferung enthalten.
+
+Ich bitte Sie, uns die richtigen Produkte umgehend zukommen zu lassen. Sollte die bestellte Ware nicht morgen bei uns eintreffen, werden wir uns einen anderen Großhändler suchen. Das würden wir sehr bedauern, da wir bis vor Kurzem immer mit der Lieferung und der Qualität Ihrer Produkte zufrieden waren.
+
+Bitte bestätigen Sie den Eingang dieses Schreibens und den Liefertermin schriftlich.
+
+Mit freundlichen Grüßen
+Margarete Schnell`}
+    ],
+    mc:[],
+    sample:`Sehr geehrte Frau Schnell,
+
+bezugnehmend auf Ihre Beschwerde über die fehlerhafte Lieferung bedanken wir uns für Ihre Mitteilung und bestätigen hiermit den Eingang Ihres Schreibens. Wir entschuldigen uns für die Unannehmlichkeiten.
+
+Zu der fehlerhaften Lieferung kam es dadurch, dass wir kürzlich ein Systemupdate durchgeführt haben. Da die Mitarbeitenden mit dem neuen System noch nicht vertraut sind, haben sie die Aufträge von Ihnen und anderen Kunden verwechselt.
+
+Um das Problem zu beheben, werden wir die richtigen Produkte umgehend versenden. Wir können Ihnen versichern, dass Sie das Shampoo „Haaraktiv“ sowie die Haarfarben Nr. 21 und 23 von „Goldlocke“ spätestens morgen erhalten werden; die falsch gelieferte Haarspülung können Sie direkt an unseren Lieferanten zurückgeben.
+
+Als Entschädigung bieten wir Ihnen einen Preisnachlass von 15% auf Ihre nächste Bestellung an.
+
+Wir danken Ihnen für Ihr Verständnis.
+
+Mit freundlichen Grüßen
+[Name]`,
+    note:"💡 客戶要求書面確認收件及交貨日期（den Liefertermin schriftlich bestätigen），這個細節容易被忽略，記得在回信開頭就確認。"
+  }
+  ]
 },
 
 {id:"lieferverzoegerung", title:"Lieferverzögerung", zh:"交貨延遲",
@@ -948,7 +1386,7 @@ Mit freundlichen Grüßen i.A. YiTing`,
        body:`Guten Morgen,\nder Kurierdienst express ist ein neuer Kunde, den wir nicht verlieren dürfen. Bitte bearbeiten Sie die Beschwerde sofort und teilen Sie dem Kunden per E-Mail mit, wie es zu den Problemen gekommen ist und wie wir die genannten Probleme in Zukunft lösen werden.\n\nVerena Glück`},
       {role:"kunde",
        meta:{von:"Mischa Kohlmann, Kurierdienst express", an:"Verena Glück, Fahrradmanufaktur Hanau", betreff:"Lieferung Lastenfahrräder Cora XC5"},
-       body:`Sehr geehrte Frau Glück,\n\nam 10. Februar haben wir bei Ihnen fünf Lastenfahrräder Cora XC5 bestellt. In Ihrer Auftragsbestätigung hatten Sie uns als verbindlichen Liefertermin den 10. April angegeben.\n\nInzwischen ist auch der zweite Termin um 14 Tage überschritten, ohne dass Sie sich mit uns in Verbindung gesetzt haben. Wieso melden Sie sich nie bei Problemen?\n\nWir bestehen auf umgehender Lieferung. Sonst müssen wir vom Kauf zurücktreten.\n\nMit freundlichen Grüßen\nMischa Kohlmann`}
+       body:`Sehr geehrte Frau Glück,\n\nam 10. Februar haben wir bei Ihnen fünf Lastenfahrräder Cora XC5 bestellt. In Ihrer Auftragsbestätigung hatten Sie uns als verbindlichen Liefertermin den 10. April angegeben.\n\nDa die Räder am 17. April bei uns immer noch nicht eingetroffen waren, haben wir bei Ihnen per E-Mail nachgefragt. Nachdem Sie nicht geantwortet hatten, versuchten wir, Sie telefonisch zu erreichen. Nach mehreren Versuchen bekamen wir die Information, dass mehrere Bauteile für die Räder aus dem Ausland kämen und es hier größere Lieferengpässe gäbe. Sie hätten aber auch einen Zulieferer im Inland und könnten verbindlich bis zum 10. Mai liefern.\n\nInzwischen ist auch dieser Termin um 14 Tage überschritten, ohne dass Sie sich deswegen mit uns in Verbindung gesetzt haben, und wir haben die Ware immer noch nicht bekommen.\n\nWir bestehen auf umgehender Lieferung und bitten um sofortige Antwort, wie Sie das Problem lösen werden. Sonst müssen wir vom Kauf zurücktreten und uns nach einem neuen Lieferanten umsehen.\n\nMit freundlichen Grüßen\nMischa Kohlmann\nKurierdienst express`}
     ],
     mc:[
       {q:"19. Mischa Kohlmann …", opts:["weist auf eine fehlerhafte Auftragsbestätigung hin.","reklamiert fehlende Bauteile.","beschwert sich über eine Lieferverzögerung."], correct:2},
@@ -956,7 +1394,172 @@ Mit freundlichen Grüßen i.A. YiTing`,
     ],
     sample:`Sehr geehrter Herr Kohlmann,\n\nbezugnehmend auf Ihre E-Mail entschuldigen wir uns für die Lieferverzögerung und die schlechte Kommunikation. Grund dafür waren größere Lieferengpässe bei unseren Zulieferern aus dem Ausland.\n\nWir können Ihnen mitteilen, dass die fünf Lastenfahrräder Cora XC5 innerhalb der nächsten Woche geliefert werden. Weiter versichern wir Ihnen, dass wir in Zukunft bei Verzögerungen sofort Kontakt aufnehmen werden.\n\nWir danken Ihnen für Ihr Verständnis.\n\nMit freundlichen Grüßen\n[Name]`,
     note:"💡 此情境除了道歉延遲，還需承認「溝通不足」，因為客戶特別提到了這點。"
-  }]
+  }
+
+  ,{
+    source:"Obsidian 學習筆記 2026-05-13",
+    summary:{
+      boss:["1. Warum es bei dem Hochzeitsbuffet Probleme gab","2. Was wir als Ausgleich für die Unannehmlichkeiten vorschlagen"],
+      complaint:["1. Buffet kam erst um 13:35 Uhr statt 12:00 Uhr","2. Hochzeitstorte erst um 15 Uhr serviert, alle bereits satt","3. Hohe Anzahlung bereits geleistet, Entgegenkommen beim offenen Betrag erwartet"],
+      gruende:["Lieferant musste wegen einer Baustelle einen langen Umweg fahren und kannte die neue Route nicht"]
+    },
+    emails:[
+      {role:"teamleitung",
+       meta:{von:"Petra Speichert (Teamleiterin)", an:"[dich]", betreff:"FW: Beschwerde: Hochzeitsbuffet am 20.08."},
+       body:`Hallo,
+
+die unten stehende Mail habe ich gerade bekommen. Bitte kümmern Sie sich darum und antworten Sie der Kundin höflich. Ich möchte nicht, dass Frau McEvoy uns eine schlechte Bewertung im Internet gibt. Sie können der Kundin ruhig schreiben, warum es bei dem Hochzeitsbuffet Probleme gab. Ganz wichtig: Bitte schreiben Sie der Kundin auch, was wir ihr als Ausgleich für die Unannehmlichkeiten vorschlagen.
+
+Vielen Dank und mit Grüßen
+Petra Speichert, Teamleiterin`},
+      {role:"kunde",
+       meta:{von:"Donna McEvoy", an:"Petra Speichert", betreff:"Beschwerde: Hochzeitsbuffet am 20.08."},
+       body:`Sehr geehrte Frau Speichert,
+
+wir hatten für unsere Hochzeit am 20.08. bei Ihnen das Hochzeitsbuffet Premium (Mittagessen, 25 Personen) bestellt. Das Buffet sollte bis 12 Uhr geliefert und bis 12:30 Uhr aufgebaut sein. Ebenfalls sollten Sie für verschiedene Getränke zum Abschluss des Essens (Kaffee, Espresso etc.) sorgen.
+
+Leider ist alles schiefgegangen: Das Buffet war um 12:35 Uhr noch nicht da und wir konnten erst um halb zwei mit dem Essen beginnen. Als die Hochzeitstorte um 15 Uhr serviert wurde, waren alle noch satt. Sie haben einen Tag, den wir lange im Voraus und mit Liebe geplant hatten, fast verdorben. Wir haben bereits eine hohe Anzahlung geleistet und erwarten jetzt, dass Sie uns mit dem noch offenen Betrag entgegenkommen. Nur eine Entschuldigung reicht nicht aus!
+
+Mit freundlichen Grüßen
+Donna McEvoy`}
+    ],
+    mc:[],
+    sample:`Sehr geehrte Frau McEvoy,
+
+bezugnehmend auf Ihre Beschwerde über die Lieferverzögerung des Hochzeitsbuffets bedanken wir uns für Ihre Mitteilung. Wir entschuldigen uns aufrichtig für die Unannehmlichkeiten, die durch die verspätete Lieferung an einem so wichtigen Tag entstanden sind.
+
+Zu dem unpünktlichen Service kam es dadurch, dass unser Lieferant aufgrund einer Baustelle einen langen Umweg fahren musste und mit der neuen Route nicht vertraut war.
+
+Als Ausgleich für die Unannehmlichkeiten bieten wir Ihnen einen Preisnachlass von 15% auf das Hochzeitsbuffet Premium an, das Sie am 20.08. bestellt haben. Wir werden außerdem unsere Fahrer künftig besser über aktuelle Baustellen und Streckenänderungen informieren, damit so etwas nicht mehr vorkommt.
+
+Wir danken Ihnen für Ihr Verständnis.
+
+Mit freundlichen Grüßen
+[Name]`,
+    note:"💡 注意：題幹用詞是 Ausgleich，回信中也應對應使用同一詞，而非自行換成 Entschädigung，更貼合題目用語。"
+  }
+  ,{
+    source:"telc Prüfungstraining DTB B2, S. 44",
+    summary:{
+      boss:["1. Erklären, wie es zu der Situation gekommen ist","2. Erklären, wie wir den vereinbarten Termin trotzdem halten können"],
+      complaint:["1. Renovierungsarbeiten anfangs zügig, seit Wochen kaum Fortschritte","2. Arbeiter kommen gar nicht oder nur stundenweise","3. Termin (Firmenjubiläum am 6. September) gefährdet: Parkett, Türen/Fenster, Beleuchtung noch nicht fertig","4. Zusage: alle Arbeiten 10 Tage vor dem Termin abgeschlossen"],
+      gruende:["Arbeiter werden gleichzeitig auf einer anderen Baustelle gebraucht"]
+    },
+    emails:[
+      {role:"teamleitung",
+       meta:{von:"Michael Kögel", an:"Darius Liutikas", betreff:"FW: Renovierungsarbeiten"},
+       body:`Hallo,\n\nich habe eben diese Mail von einer Kundin bekommen. Bitte erklären Sie ihr, wie es zu der Situation gekommen ist und wie wir den vereinbarten Termin trotzdem halten können. Antworten Sie bitte sehr höflich. Wir möchten den guten Ruf unserer Firma nicht gefährden.\n\nViele Grüße\nM. Kögel`},
+      {role:"kunde",
+       meta:{von:"Zofia Mauch", an:"Michael Kögel", betreff:"Renovierungsarbeiten"},
+       body:`Sehr geehrter Herr Kögel,\n\nIhre Firma ist für qualitativ hochwertige und termingerechte Leistungen bekannt. Aus diesem Grund haben wir uns auch entschieden, Sie mit der Renovierung unserer Geschäftsräume zu beauftragen. Die Arbeiten sind anfangs gut angelaufen und zügig vorangekommen, aber seit einigen Wochen sehen wir kaum noch Fortschritte. Die Arbeiter kommen entweder gar nicht oder nur stundenweise. Auf unsere Nachfrage hin erklärten sie uns, dass sie auf einer anderen Baustelle gebraucht würden.\n\nUnser 30-jähriges Firmenjubiläum soll am 6. September in den renovierten Räumlichkeiten gefeiert werden. Sie hatten uns zugesichert, dass alle Arbeiten zehn Tage vor diesem Termin abgeschlossen wären. Inzwischen frage ich mich allerdings, ob Sie diese Vereinbarung einhalten können: Das Parkett wurde noch nicht verlegt, die Türen und Fenster sind noch nicht eingebaut und die Beleuchtung wurde nicht einmal geliefert.\n\nBitte teilen Sie mir umgehend mit, wie es mit der Renovierung nun weitergeht.\n\nFreundliche Grüße\nZofia Mauch`}
+    ],
+    mc:[],
+    sample:`Sehr geehrte Frau Mauch,\n\nbezugnehmend auf Ihre Beschwerde über den Stillstand der Renovierungsarbeiten möchten wir uns aufrichtig entschuldigen. Wir können Ihre Sorge um das bevorstehende Firmenjubiläum sehr gut verstehen.\n\nZu der Verzögerung kam es dadurch, dass mehrere unserer Handwerker kurzfristig auf einer anderen, bereits vertraglich zugesicherten Baustelle eingesetzt werden mussten. Dies hätte intern besser koordiniert werden müssen.\n\nUm das Problem zu beheben, werden wir Ihnen ab morgen wieder das vollständige Team zur Verfügung stellen und zusätzlich am Wochenende arbeiten lassen, um den verlorenen Zeitraum aufzuholen. Wir können Ihnen versichern, dass das Parkett, die Türen und Fenster sowie die Beleuchtung spätestens zehn Tage vor dem 6. September fertiggestellt sind, wie ursprünglich vereinbart.\n\nWir danken Ihnen für Ihr Verständnis und Ihre Geduld.\n\nMit freundlichen Grüßen\n[Name]`,
+    note:"💡 此題重點在於「明確承諾能否趕上原定期限」，回信務必針對三項未完成工作（Parkett、Türen/Fenster、Beleuchtung）逐一回應，而不能只籠統說「會儘快完成」。"
+  }
+  ]
 },
 
 ]; // end SITUATIONS
+
+// ══════════════════════════════════════════════════════════
+// WORTFELD: Fehler / Mangel / Defekt / Beschädigung
+// ══════════════════════════════════════════════════════════
+
+const WORTFELD = {
+  intro: "這四個字都可以翻成「問題/瑕疵/缺陷」，但語意範圍與來源不同。排列順序依照「範圍由廣到窄」：Fehler（最廣義）→ Mangel（廣義，較正式）→ Defekt（指功能損壞）→ Beschädigung（最具體，僅指外力造成的損壞）。",
+  columns: [
+    {
+      key: "fehler",
+      noun: "der Fehler",
+      adj: "fehlerhaft",
+      en: "error / mistake",
+      zh: "錯誤、失誤",
+      scope: "範圍最廣、最一般化的「錯誤」。可以是人為操作失誤，也可以是系統/流程上的錯誤。來源可以是人，也可以是機器或系統。",
+      adjCollocations: [
+        "die fehlerhafte Lieferung（錯誤的交貨）",
+        "die fehlerhafte Rechnung（錯誤的發票）",
+        "ein fehlerhaftes Produkt（有缺陷的產品）",
+      ],
+      nounCollocations: [
+        "einen Fehler machen / begehen（犯錯）",
+        "einen Fehler feststellen / beheben / korrigieren（發現/修復/更正錯誤）",
+        "es kam zu einem Fehler（發生了一個錯誤）",
+      ]
+    },
+    {
+      key: "mangel",
+      noun: "der Mangel（複數 die Mängel）",
+      adj: "mangelhaft",
+      en: "deficiency / flaw",
+      zh: "瑕疵、不足",
+      scope: "強調「品質不符合標準或期望」，是較正式、較廣義的瑕疵概念，常見於法律/投訴用語（如 Mängelanzeige）。來源可以是設計、製造，或服務品質的不足。與 Fehler 在某些情境下可互換，但 Mangel 語氣更正式。",
+      adjCollocations: [
+        "die mangelhafte Qualität（不足的品質）",
+        "der mangelhafte Service（不足的服務）",
+        "mangelhafte Ware（有瑕疵的商品）",
+      ],
+      nounCollocations: [
+        "einen Mangel feststellen / melden / beheben（發現/通報/修復瑕疵）",
+        "Mängel aufweisen（顯示瑕疵）",
+        "eine Mängelanzeige（瑕疵通報）",
+      ]
+    },
+    {
+      key: "defekt",
+      noun: "der Defekt",
+      adj: "defekt",
+      en: "defect / malfunction",
+      zh: "故障、缺陷",
+      scope: "強調技術性、機械性的故障——東西本身功能失效，無法正常運作，通常是內部零件或系統的問題。來源：產品本身的技術缺陷，導致無法使用。",
+      adjCollocations: [
+        "das defekte Gerät（故障的設備）",
+        "die defekte Maschine（故障的機器）",
+        "ein defektes Bauteil（故障的零件）",
+      ],
+      nounCollocations: [
+        "einen Defekt aufweisen / feststellen / beheben（出現/發現/修復故障）",
+        "Ein Defekt liegt vor.（存在故障）",
+        "an etw. einen Defekt haben（某物有故障）",
+      ]
+    },
+    {
+      key: "beschaedigung",
+      noun: "die Beschädigung",
+      adj: "beschädigt",
+      en: "damage",
+      zh: "損壞",
+      scope: "唯一強調「外力造成」的字，暗示有一個損壞的動作或過程發生過（例如碰撞、刮傷、運送中受損）。來源：外部撞擊、運輸、操作不當等外力因素，而非產品本身原有的缺陷。",
+      adjCollocations: [
+        "das beschädigte Produkt（受損的產品）",
+        "die beschädigte Verpackung（受損的包裝）",
+        "ein beschädigtes Bauteil（受損的零件）",
+      ],
+      nounCollocations: [
+        "eine Beschädigung feststellen / melden（發現/通報損壞）",
+        "etwas wurde beschädigt（某物被損壞了，被動式）",
+        "die Beschädigung der Ware（貨物的損壞）",
+      ]
+    },
+  ],
+  comparisonBoxes: [
+    {
+      title: "⚖️ 比較：Fehler vs. fehlend",
+      content: [
+        {de:"Fehler（錯誤）強調「做錯了什麼」——東西存在，但是不對的。", zh:""},
+        {de:"fehlend（缺少的）強調「該有的東西不存在」——東西根本沒有，或數量不足。", zh:""},
+        {de:"例：eine fehlerhafte Lieferung", zh:"送錯貨——東西寄到了，但是錯的。"},
+        {de:"例：eine fehlende Lieferung", zh:"缺少的貨——東西根本沒寄到，或數量不足。"},
+      ]
+    },
+    {
+      title: "📖 三點關鍵差異說明",
+      content: [
+        {de:"① 這個字主要在講「商品或服務」上有哪些問題", zh:"Fehler、Mangel、Defekt、Beschädigung 都可以描述商品或服務本身出現的狀況，但側重點不同：Fehler 與 Mangel 較廣泛、可涵蓋服務品質；Defekt 偏向「功能性失效」；Beschädigung 則僅描述外觀或結構上的損傷。"},
+        {de:"② 問題的「來源」是什麼", zh:"Fehler 的來源可以是人或系統；Mangel 的來源可以是設計、製造或服務缺失；Defekt 的來源是產品本身內部的技術問題；Beschädigung 的來源必定是外力（運輸、碰撞、操作不當）。"},
+        {de:"③ 正式程度與使用情境", zh:"Mangel 較正式，常見於法律投訴語境（Mängelanzeige）；Fehler 最日常、最泛用；Defekt 偏技術／機械語境；Beschädigung 偏物流／運輸語境。"},
+      ]
+    }
+  ],
+  relatedWords: "其他類似但不需要獨立成欄的字：die Störung（故障/干擾，常用於技術系統，如 eine technische Störung）；der Schaden（損害，範圍更廣，可指財產損失或人身傷害，常用於保險/法律語境，如 Schadenersatz 賠償金）；die Panne（故障，口語化，常用於車輛或機械臨時故障，如 eine Autopanne）。"
+};

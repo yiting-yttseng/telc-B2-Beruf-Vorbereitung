@@ -33,6 +33,12 @@ const REDEMITTEL = [
 {s:`R2: Angebot machen（報價與提案）`,k:`ein Abonnement abschließen`,kz:`簽訂訂閱合約`,en:`to take out a subscription`,ex:`Danach können Sie mit einer dreimonatigen Kündigungsfrist ein Abonnement abschließen.`,ez:`之後您可以以三個月的通知期簽訂訂閱合約。`},
 {s:`R2: Angebot machen（報價與提案）`,k:`sich in Verbindung setzen mit`,kz:`與…取得聯繫`,en:`to get in touch with / contact`,ex:`Unser Mitarbeiter wird sich zur Terminvereinbarung direkt mit Ihnen in Verbindung setzen.`,ez:`我們的員工將直接與您聯繫約定時間。`},
 {s:`R2: Angebot machen（報價與提案）`,k:`zu den Kunden zählen`,kz:`成為（我們的）客戶`,en:`to count among one's customers`,ex:`Wir hoffen, auch Sie bald zu unseren zufriedenen Kunden zählen zu dürfen.`,ez:`我們希望很快也能讓您加入我們滿意客戶的行列。`},
+{s:`R2: Angebot machen（報價與提案）`,k:`beiliegende Unterlagen entnehmen`,kz:`從隨附文件中查看`,en:`to find in the enclosed documents`,ex:`Den genauen Funktionsumfang können Sie den beiliegenden Unterlagen entnehmen.`,ez:`您可以從隨附文件中查看詳細的功能範圍。`},
+{s:`R2: Angebot machen（報價與提案）`,k:`Angebot anpassen`,kz:`調整報價`,en:`to adjust an offer`,ex:`Falls sich unsere Preiskalkulation außerhalb Ihrer Vorstellungen bewegt, können wir das Angebot gern anpassen.`,ez:`如果我們的報價超出您的預期，我們可以樂意調整這份報價。`},
+{s:`R2: Angebot machen（報價與提案）`,k:`Zustimmung finden`,kz:`獲得認同、被接受`,en:`to meet with approval`,ex:`Wir würden uns sehr freuen, wenn unser Angebot Ihre Zustimmung findet.`,ez:`如果您認同我們的報價，我們會非常高興。`},
+{s:`R2: Angebot machen（報價與提案）`,k:`ohne Abzug fällig sein`,kz:`不扣除折扣到期應付`,en:`due in full, without deduction`,ex:`Der Kaufpreis ist innerhalb von 30 Tagen nach Rechnungsdatum ohne Abzug fällig.`,ez:`購買價款須在發票日後30天內全額付清。`},
+{s:`R2: Angebot machen（報價與提案）`,k:`Lieferzeit beträgt`,kz:`交貨期為…`,en:`delivery time amounts to`,ex:`Die Lieferzeit beträgt ca. zwei Wochen, nachdem der Auftrag erteilt wurde.`,ez:`下單後交貨期約為兩週。`},
+{s:`R2: Angebot machen（報價與提案）`,k:`Angebot ist gültig`,kz:`報價有效期為…`,en:`offer is valid for`,ex:`Dieses Angebot ist sechs Wochen gültig.`,ez:`本報價有效期為六週。`},
 
 {s:`R2: Angebot machen（報價與提案）`,k:`ein Angebot annehmen`,kz:`接受提議／報價`,en:`to accept an offer`,ex:`Wir haben Ihr Angebot geprüft und möchten es gerne annehmen.`,ez:`我們已審閱您的報價，很樂意接受。`},
 {s:`R2: Angebot machen（報價與提案）`,k:`der folgenden Tabelle entnehmen`,kz:`從下表中查看／得知`,en:`to refer to / find in the following table`,ex:`Die Preise entnehmen Sie bitte der folgenden Tabelle.`,ez:`請從下表中查看各項價格。`},

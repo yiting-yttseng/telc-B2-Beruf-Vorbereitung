@@ -118,7 +118,7 @@ tr.unfamiliar .speak-cell:hover { background: #ffe0e0; }
 </div>
 
 <script>
-const STORAGE_KEY = 'a2b2upgrade_unfamiliar_v1';
+const STORAGE_KEY = 'a2b2upgrade_unfamiliar_v2';
 
 const SUBCATS = {
   verb: { kognition:'認知／思考', kommunikation:'溝通／表達', handlung:'行為／處理', geschaeft:'商業／職場義務' },
@@ -191,6 +191,7 @@ const VOCAB = [
 {cat:'verb', sub:'geschaeft', b2:'sich auswirken auf', a2:'beeinflussen', en:'have an effect on', zh:'對……產生影響', ex:'Die Verzögerung wirkt sich auf den gesamten Zeitplan aus.', ez:'這次延誤對整個時程都產生了影響。'},
 {cat:'verb', sub:'geschaeft', b2:'einhalten', a2:'schaffen', en:'comply with / meet (a deadline)', zh:'遵守、達成（期限、規定）', ex:'Wir konnten den vereinbarten Termin leider nicht einhalten.', ez:'我們很遺憾無法遵守約定的期限。'},
 {cat:'verb', sub:'geschaeft', b2:'sich verpflichten', a2:'versprechen', en:'commit oneself', zh:'承諾、承擔義務', ex:'Das Unternehmen verpflichtet sich zu einer raschen Bearbeitung.', ez:'公司承諾會快速處理。'},
+{cat:'verb', sub:'geschaeft', b2:'festlegen', a2:'bestimmen', en:'determine / fix / set', zh:'確定、訂定（規則、日期、價格）', ex:'Wir müssen einen neuen Termin festlegen.', ez:'我們必須訂定一個新的日期。', note:'festlegen 是「訂定、確立規則／日期／標準」，和 finden（找到）語意不同；若要表達「找到、查到」的升級版，請用 ausfindig machen 或 entdecken。'},
 
 // ── Adjektive／Adverbien：程度 ───────────────────────────────────────
 {cat:'adj', sub:'grad', b2:'mühelos', a2:'einfach', en:'effortless', zh:'輕鬆地、不費力', ex:'Die Aufgabe lässt sich mühelos erledigen.', ez:'這項任務可以輕鬆完成。'},
@@ -232,6 +233,7 @@ const VOCAB = [
 {cat:'adj', sub:'bewertung', b2:'angemessen', a2:'passend', en:'appropriate', zh:'恰當的、合理的', ex:'Das Vorgehen war in dieser Situation angemessen.', ez:'這樣的做法在這個情況下是恰當的。'},
 {cat:'adj', sub:'bewertung', b2:'verbindlich', a2:'sicher', en:'binding / committed', zh:'具約束力的、確定的', ex:'Der Termin ist verbindlich und kann nicht verschoben werden.', ez:'這個時間是確定的，無法更改。'},
 {cat:'adj', sub:'bewertung', b2:'reibungslos', a2:'gut', en:'smooth(ly)', zh:'順利地、無摩擦地', ex:'Die Zusammenarbeit verlief reibungslos.', ez:'這次合作進行得很順利。'},
+{cat:'adj', sub:'bewertung', b2:'einwandfrei', a2:'gut', en:'flawless / impeccable', zh:'無瑕的、完美無缺的', ex:'Die Ausführung der Arbeiten war einwandfrei.', ez:'這些工作的執行完美無缺。'},
 {cat:'adj', sub:'bewertung', b2:'lärmend', a2:'laut', en:'noisy', zh:'吵雜的', ex:'Die lärmende Maschine wurde inzwischen ausgetauscht.', ez:'那台吵雜的機器目前已經被換掉了。'},
 {cat:'adj', sub:'bewertung', b2:'geräuscharm', a2:'leise', en:'quiet / low-noise', zh:'低噪音的', ex:'Die neue Anlage arbeitet deutlich geräuschärmer.', ez:'這套新設備運作起來明顯更安靜。'},
 {cat:'adj', sub:'bewertung', b2:'selbstverständlich', a2:'natürlich', en:'naturally / of course', zh:'不言而喻地、自然地', ex:'Selbstverständlich kümmern wir uns sofort um Ihr Anliegen.', ez:'我們當然會立即處理您的事情。'},
@@ -262,11 +264,12 @@ function save() {
 
 const CATS = { verb: '動詞', adj: '形容詞／副詞', konn: '連接詞／固定用法' };
 
-function buildRow(v, i) {
-  const unfam = unfamiliarSet.has(i);
+function buildRow(v) {
+  const id = v.b2;
+  const unfam = unfamiliarSet.has(id);
   const noteHtml = v.note ? `<div class="note-box-inline">💡 ${v.note}</div>` : '';
-  return `<tr class="${unfam?'unfamiliar':''}" data-idx="${i}" data-cat="${v.cat}" data-sub="${v.sub}" data-search="${(v.b2+' '+v.a2+' '+v.en+' '+v.zh).toLowerCase()}">
-    <td class="dot-cell" onclick="toggleMark(${i})"><span class="dot"></span></td>
+  return `<tr class="${unfam?'unfamiliar':''}" data-id="${escAttr(id)}" data-cat="${v.cat}" data-sub="${v.sub}" data-search="${(v.b2+' '+v.a2+' '+v.en+' '+v.zh).toLowerCase()}">
+    <td class="dot-cell" onclick="toggleMark('${escAttr(id)}')"><span class="dot"></span></td>
     <td class="speak-cell" onclick="speakText('${escAttr(v.b2)}','de-DE')"><span class="word-b2">${v.b2}</span></td>
     <td class="speak-cell" onclick="speakText('${escAttr(v.a2)}','de-DE')"><span class="word-a2">${v.a2}</span></td>
     <td>
@@ -285,7 +288,7 @@ function escAttr(s) { return s.replace(/'/g, "\\'"); }
 
 function buildTable(items) {
   if (!items.length) return '';
-  let rows = items.map(([v,i]) => buildRow(v,i)).join('');
+  let rows = items.map(v => buildRow(v)).join('');
   return `<table>
     <thead><tr>
       <th class="col-dot"></th>
@@ -300,15 +303,16 @@ function buildTable(items) {
 
 function render() {
   const grouped = { verb: {}, adj: {}, konn: {} };
-  VOCAB.forEach((v,i) => {
-    const isUnfam = unfamiliarSet.has(i);
+  VOCAB.forEach((v) => {
+    const id = v.b2;
+    const isUnfam = unfamiliarSet.has(id);
     const okFilter = currentFilter==='all' || (currentFilter==='unfamiliar'&&isUnfam) || (currentFilter==='familiar'&&!isUnfam);
     const okCat = currentCat==='all' || currentCat===v.cat;
     const srch = (v.b2+' '+v.a2+' '+v.en+' '+v.zh).toLowerCase();
     const okSearch = !currentSearch || srch.includes(currentSearch);
     if (okFilter && okCat && okSearch) {
       if (!grouped[v.cat][v.sub]) grouped[v.cat][v.sub] = [];
-      grouped[v.cat][v.sub].push([v,i]);
+      grouped[v.cat][v.sub].push(v);
     }
   });
 
@@ -334,8 +338,8 @@ function render() {
   document.getElementById('stats').textContent = `共 ${VOCAB.length} 組　顯示 ${total} 組　不熟悉 ${unfamiliarSet.size} 組`;
 }
 
-function toggleMark(i) {
-  if (unfamiliarSet.has(i)) unfamiliarSet.delete(i); else unfamiliarSet.add(i);
+function toggleMark(id) {
+  if (unfamiliarSet.has(id)) unfamiliarSet.delete(id); else unfamiliarSet.add(id);
   save();
   render();
 }
@@ -376,10 +380,13 @@ function speakText(text, lang) {
 }
 
 // ── Checkpoint export / import ───────────────────────────────────────────
+// 重要：checkpoint 儲存的是「B2 單字本身的文字」，不是陣列位置（index）。
+// 這樣即使之後在表格中間插入新單字，舊的 checkpoint 仍能正確對應到同一個單字。
 const CP_FILENAME = 'Wortschatz_A2-B2-Upgrade_checkpoint.json';
+const VALID_IDS = new Set(VOCAB.map(v => v.b2));
 
 function exportCheckpoint() {
-  const data = JSON.stringify([...unfamiliarSet].sort((a,b)=>a-b), null, 2);
+  const data = JSON.stringify([...unfamiliarSet].sort(), null, 2);
   const blob = new Blob([data], {type:'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -394,14 +401,21 @@ function importCheckpoint(event) {
   reader.onload = (e) => {
     try {
       const arr = JSON.parse(e.target.result);
-      if (!Array.isArray(arr) || arr.some(x => typeof x !== 'number')) {
-        alert('格式錯誤：JSON 應為數字陣列，例如 [0, 3, 12]');
+      if (!Array.isArray(arr)) {
+        alert('格式錯誤：JSON 應為陣列，例如 ["begreifen", "bewältigen"]');
         return;
       }
-      unfamiliarSet = new Set(arr.filter(x => x>=0 && x<VOCAB.length));
+      // 相容舊版（純數字 index）格式：若偵測到全為數字，提醒使用者舊檔已不適用新版結構
+      if (arr.length && arr.every(x => typeof x === 'number')) {
+        alert('這是舊版（以位置編號儲存）的 checkpoint 檔案，與目前版本不相容，且新版表格已重新分類排序，無法安全轉換。\n建議：忽略此檔案，重新勾選一次不熟悉的單字（之後匯出的新檔案就不會再有這個問題）。');
+        return;
+      }
+      const newSet = new Set(arr.filter(x => typeof x === 'string' && VALID_IDS.has(x)));
+      const skipped = arr.length - newSet.size;
+      unfamiliarSet = newSet;
       save();
       render();
-      setCpStatus('✓ 匯入成功');
+      setCpStatus(skipped > 0 ? `✓ 匯入成功（略過 ${skipped} 個目前清單中找不到的單字）` : '✓ 匯入成功');
     } catch(err) {
       alert('格式錯誤：無法解析 JSON 檔案\n' + err.message);
     }

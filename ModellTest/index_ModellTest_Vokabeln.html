@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modelltest Vokabeln — DTB B2</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; background: #f5f5f3; color: #1a1a1a; font-size: 14px; }
+
+/* ── Chapter info bar (same blue as B2) ─────────────────── */
+.chapter-info {
+  background: #1a3a6b; color: #fff;
+  padding: 14px 20px 12px;
+}
+.chapter-info h1 { font-size: 17px; font-weight: 500; margin-bottom: 2px; }
+.chapter-info p  { font-size: 12px; opacity: .7; }
+
+/* ── Checkpoint bar ─────────────────────────────────────── */
+.checkpoint-bar {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  padding: 8px 20px; background: #f0f4ff;
+  border-bottom: 1px solid #d0d8f0; font-size: 12px; color: #555;
+}
+.checkpoint-bar span { color: #888; margin-right: 4px; }
+.cp-btn {
+  padding: 4px 12px; border-radius: 5px; border: 1px solid #b0c0e8;
+  background: #fff; color: #1a3a6b; font-size: 12px;
+  cursor: pointer; font-weight: 500; transition: background 0.15s;
+}
+.cp-btn:hover { background: #e8f0fe; }
+.cp-btn.primary { background: #1a3a6b; color: #fff; border-color: #1a3a6b; }
+.cp-btn.primary:hover { background: #2a5a9b; }
+.cp-status { font-size: 11px; color: #5a8a5a; margin-left: 4px; }
+#cpFileInput { display: none; }
+
+/* ── Toolbar ─────────────────────────────────────────────── */
+.page { max-width: 1280px; margin: 0 auto; padding: 20px 20px 40px; }
+.toolbar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap; margin-bottom: 16px;
+  background: #fff; border: 0.5px solid #ddd; border-radius: 10px;
+  padding: 10px 14px;
+}
+.toolbar-left { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+.filter-btn {
+  padding: 5px 14px; border-radius: 6px;
+  border: 0.5px solid #ccc; background: #fff;
+  color: #333; font-size: 13px; cursor: pointer;
+}
+.filter-btn.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+.stats { font-size: 12px; color: #888; margin-left: 4px; }
+
+/* Speaking badge */
+.speaking-badge {
+  display: none; align-items: center; gap: 5px;
+  font-size: 11px; color: #666; padding: 3px 10px;
+  border: 0.5px solid #ddd; border-radius: 20px; background: #fafaf8;
+}
+.speaking-badge.active { display: flex; }
+.speaking-dot { width: 7px; height: 7px; border-radius: 50%; background: #4a9eff; animation: pulse 0.9s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* ── Teil tabs ───────────────────────────────────────────── */
+.teil-tabs {
+  display: flex; gap: 6px; flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+.teil-tab {
+  padding: 6px 16px; border-radius: 6px;
+  border: 0.5px solid #ccc; background: #fff;
+  color: #333; font-size: 13px; cursor: pointer; font-weight: 500;
+  transition: all 0.15s;
+}
+.teil-tab.active { background: #1a3a6b; color: #fff; border-color: #1a3a6b; }
+
+/* ── Source filter ───────────────────────────────────────── */
+.src-tabs {
+  display: flex; gap: 6px; flex-wrap: wrap;
+  margin-bottom: 16px; align-items: center;
+}
+.src-label { font-size: 12px; color: #888; margin-right: 2px; }
+.src-tab {
+  padding: 4px 12px; border-radius: 5px;
+  border: 0.5px solid #ccc; background: #fff;
+  color: #555; font-size: 12px; cursor: pointer;
+}
+.src-tab.active { background: #1a3a6b; color: #fff; border-color: #1a3a6b; }
+
+/* ── Section block ───────────────────────────────────────── */
+.section-block { margin-bottom: 20px; }
+.section-header {
+  font-size: 11px; font-weight: 600; color: #555;
+  padding: 8px 10px 6px; letter-spacing: 0.06em; text-transform: uppercase;
+  background: #efefed; border-radius: 6px 6px 0 0;
+  border: 0.5px solid #ddd; border-bottom: none;
+}
+
+/* ── Table ───────────────────────────────────────────────── */
+table {
+  width: 100%; border-collapse: collapse; background: #fff;
+  border: 0.5px solid #ddd; border-radius: 0 0 8px 8px;
+  overflow: hidden; table-layout: fixed;
+}
+th {
+  text-align: left; padding: 7px 10px;
+  background: #fafaf8; color: #777; font-weight: 500; font-size: 11px;
+  border-bottom: 0.5px solid #e0e0e0; letter-spacing: 0.03em;
+}
+td { padding: 7px 10px; border-bottom: 0.5px solid #efefed; vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+tr.marked td { background: #fff6f6; }
+
+/* Column widths */
+.col-dot  { width: 28px; }
+.col-mt   { width: 52px; }
+.col-teil { width: 42px; }
+.col-de   { width: 14%; }
+.col-enzh { width: 15%; }
+.col-koll { width: 25%; }
+.col-satz { width: 32%; }
+
+/* Dot / mark cell */
+.dot-cell { width: 28px; cursor: pointer; user-select: none; }
+.dot-cell:hover .dot { border-color: #e24b4a; }
+.dot {
+  display: block; width: 10px; height: 10px; border-radius: 50%;
+  border: 1.5px solid #ccc; margin-top: 3px; transition: all 0.15s;
+}
+tr.marked .dot { background: #e24b4a; border-color: #e24b4a; }
+
+/* Click-to-speak rows */
+.speak-cell { cursor: pointer; }
+tr:hover td { background: #f8f8f6; }
+tr.marked:hover td { background: #ffe6e6; }
+
+/* Teil tag */
+.teil-tag {
+  display: inline-block; font-size: 10px; font-weight: 700;
+  padding: 1px 5px; border-radius: 3px; letter-spacing: .03em;
+  font-family: monospace;
+}
+.tag-L2, .tag-L4 { background: #dbeafe; color: #1d4ed8; }
+.tag-H2, .tag-H3 { background: #ede9fe; color: #6d28d9; }
+.tag-SB1, .tag-SB2 { background: #fef3c7; color: #92400e; }
+
+/* MT tag */
+.mt-tag {
+  display: inline-block; font-size: 10px;
+  padding: 1px 5px; border-radius: 3px;
+  background: #f0f4ff; color: #1a3a6b; font-weight: 600;
+  font-family: monospace;
+}
+
+/* Word column */
+.artikel  { font-size: 11px; color: #aaa; font-style: italic; display: block; line-height: 1.4; }
+.word-de  { font-weight: 700; font-size: 13px; color: #1a5fc8; display: block; cursor: pointer; }
+.plural   { font-size: 11px; color: #bbb; display: block; line-height: 1.4; }
+
+/* EN/ZH column */
+.word-en  { font-size: 12px; color: #222; line-height: 1.6; display: block; }
+.word-zh  { font-size: 11px; color: #999; font-style: italic; display: block; }
+
+/* Kollokation column */
+.koll-de  { font-size: 12px; color: #222; line-height: 1.6; display: block; }
+.koll-verb { color: #1a5fc8; font-weight: 700; }
+.koll-zh  { font-size: 11px; color: #999; font-style: italic; display: block; }
+
+/* Satz column */
+.satz-de  { font-size: 12px; color: #222; line-height: 1.6; display: block; }
+.satz-zh  { font-size: 11px; color: #999; font-style: italic; display: block; }
+
+mark { background:#fff3b0; border-radius:2px; padding:0 1px; }
+.empty { text-align:center; padding:40px; color:#aaa; font-size:13px; background:#fff; border:0.5px solid #ddd; border-radius:8px; }
+</style>
+</head>
+<body>
+
+<!-- ── Header ─────────────────────────────────────────────── -->
+<div class="chapter-info">
+  <h1>📋 Modelltest Vokabeln — DTB B2</h1>
+  <p>模擬考中不熟悉的單字 · 按 Prüfungsteil 分類</p>
+</div>
+
+<!-- ── Checkpoint bar ─────────────────────────────────────── -->
+<div class="checkpoint-bar">
+  <span>💾 勾選備份：</span>
+  <button class="cp-btn primary" onclick="exportCheckpoint()">匯出</button>
+  <button class="cp-btn" onclick="document.getElementById('cpFileInput').click()">匯入</button>
+  <input type="file" id="cpFileInput" accept=".json" onchange="importCheckpoint(event)">
+  <span id="cpStatus" class="cp-status"></span>
+</div>
+
+<div class="page">
+
+  <!-- ── Toolbar ─────────────────────────────────────────── -->
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <button class="filter-btn active" onclick="setFilter('all',this)">全部</button>
+      <button class="filter-btn" onclick="setFilter('marked',this)">已標記 ●</button>
+      <button class="filter-btn" onclick="setFilter('unmarked',this)">未標記</button>
+      <span class="stats" id="statsBar"></span>
+    </div>
+    <div id="speakingBadge" class="speaking-badge">
+      <span class="speaking-dot"></span> 朗讀中…
+    </div>
+  </div>
+
+  <!-- ── Teil tabs ───────────────────────────────────────── -->
+  <div class="teil-tabs" id="teilTabs">
+    <button class="teil-tab active" onclick="setTeil('lesen',this)">📖 Lesen</button>
+    <button class="teil-tab" onclick="setTeil('hoeren',this)">🎧 Hören</button>
+    <button class="teil-tab" onclick="setTeil('sb',this)">✏️ Sprachbausteine &amp; Schreiben</button>
+  </div>
+
+  <!-- ── Source tabs ─────────────────────────────────────── -->
+  <div class="src-tabs" id="srcTabs"></div>
+
+  <!-- ── Main content ───────────────────────────────────── -->
+  <div id="mainContent"></div>
+
+</div><!-- /page -->
+
+<!-- ── Data scripts MT1–MT10 ──────────────────────────────── -->
+<script>window.MODELLTEST_ALL = [];</script>
+<script src="data_ModellTest1.js"  onerror="void 0"></script>
+<script src="data_ModellTest2.js"  onerror="void 0"></script>
+<script src="data_ModellTest3.js"  onerror="void 0"></script>
+<script src="data_ModellTest4.js"  onerror="void 0"></script>
+<script src="data_ModellTest5.js"  onerror="void 0"></script>
+<script src="data_ModellTest6.js"  onerror="void 0"></script>
+<script src="data_ModellTest7.js"  onerror="void 0"></script>
+<script src="data_ModellTest8.js"  onerror="void 0"></script>
+<script src="data_ModellTest9.js"  onerror="void 0"></script>
+<script src="data_ModellTest10.js" onerror="void 0"></script>
+<script src="data_ModellTest11.js" onerror="void 0"></script>
+
+<script>
+// ── Constants ─────────────────────────────────────────────
+const LS_KEY = 'modelltest_marked_v1';
+const TEIL_MAP = {
+  lesen:  ['L1','L2','L3','L4','L5'],
+  hoeren: ['H1','H2','H3','H4'],
+  sb:     ['SB1','SB2','SCH'],
+};
+
+// ── State ─────────────────────────────────────────────────
+let currentTeil   = 'lesen';
+let currentFilter = 'all';
+let currentSrc    = 'all';
+let markedSet     = loadMarked();
+
+function loadMarked() {
+  try { return new Set(JSON.parse(localStorage.getItem(LS_KEY) || '[]')); }
+  catch { return new Set(); }
+}
+function saveMarked() {
+  try { localStorage.setItem(LS_KEY, JSON.stringify([...markedSet])); } catch(e){}
+}
+
+// ── Speech ────────────────────────────────────────────────
+let synth = window.speechSynthesis;
+let deVoice = null, enVoice = null;
+function loadVoices() {
+  const voices = synth.getVoices();
+  deVoice = voices.find(v => v.lang.startsWith('de')) || null;
+  enVoice = voices.find(v => v.lang.startsWith('en')) || null;
+}
+loadVoices();
+if (speechSynthesis.onvoiceschanged !== undefined) speechSynthesis.onvoiceschanged = loadVoices;
+
+function speakText(text, lang) {
+  lang = lang || 'de-DE';
+  synth.cancel();
+  const badge = document.getElementById('speakingBadge');
+  badge.classList.add('active');
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = lang;
+  u.voice = lang.startsWith('de') ? deVoice : enVoice;
+  u.rate = 0.88;
+  u.onend = u.onerror = () => badge.classList.remove('active');
+  synth.speak(u);
+}
+
+// ── Verb highlight ────────────────────────────────────────
+const VERB_RE = /\b(sein|haben|werden|machen|geben|nehmen|kommen|gehen|sehen|stehen|lassen|bringen|zeigen|sorgen|stellen|einhalten|benutzen|nutzen|erhalten|sichern|übernehmen|tragen|leisten|erbringen|einreichen|vorlegen|beantragen|ausüben|einsetzen|reinigen|desinfizieren|ausstatten|sorgen|äußern|spenden|absprechen|erläutern|ersparen|misstrauen|stornieren|liefern|bestätigen|garantieren|einreichen|tragen|übernehmen|zeigen|vertrauen)\b/g;
+
+function highlightVerbs(text) {
+  return text.replace(VERB_RE, m => `<span class="koll-verb">${m}</span>`);
+}
+
+// ── Helpers ───────────────────────────────────────────────
+function allSources() {
+  const s = new Set((window.MODELLTEST_ALL||[]).map(d => d.mt));
+  return [...s].sort();
+}
+
+function teilLabel(teil) {
+  return teil.replace('SB','SB-');
+}
+
+function tagClass(teil) {
+  return 'tag-' + teil.replace(/\d/,'') + teil.replace(/\D/,'');
+  // simpler:
+}
+function tClass(t) { return 'tag-' + t; }
+
+// ── Toggle mark ───────────────────────────────────────────
+function toggleMark(id) {
+  if (markedSet.has(id)) markedSet.delete(id);
+  else markedSet.add(id);
+  saveMarked();
+  render();
+}
+
+// ── Build source tabs ─────────────────────────────────────
+function buildSrcTabs() {
+  const srcs = allSources();
+  const container = document.getElementById('srcTabs');
+  if (srcs.length <= 1) { container.innerHTML = ''; return; }
+  let html = '<span class="src-label">來源：</span>';
+  html += `<button class="src-tab ${currentSrc==='all'?'active':''}" onclick="setSrc('all')">全部</button>`;
+  srcs.forEach(s => {
+    html += `<button class="src-tab ${currentSrc===s?'active':''}" onclick="setSrc('${s}')">${s}</button>`;
+  });
+  container.innerHTML = html;
+}
+
+// ── Build one row ─────────────────────────────────────────
+function buildRow(d, uid) {
+  const isMarked = markedSet.has(uid);
+  const deSpeak = ((d.a?d.a+' ':'')+d.w).replace(/'/g,"&#39;");
+  const enSpeak = (d.en||'').split('/')[0].trim().replace(/'/g,"&#39;");
+  const kSpeak  = (d.k||'').replace(/'/g,"&#39;");
+  const exSpeak = (d.ex||'').replace(/'/g,"&#39;");
+  const enParts = (d.en||'').split('/').map(s=>s.trim()).join('<br>');
+  const kParts  = highlightVerbs((d.k||'').split(';').map(s=>s.trim()).join('<br>'));
+  const kzParts = (d.kz||'').split('；').map(s=>s.trim()).join('<br>');
+
+  return `<tr class="${isMarked?'marked':''}">
+    <td class="dot-cell" onclick="event.stopPropagation();toggleMark('${uid}')"><span class="dot"></span></td>
+    <td><span class="mt-tag">${d.mt}</span></td>
+    <td><span class="teil-tag ${tClass(d.teil)}">${d.teil}</span></td>
+    <td onclick="speakText('${deSpeak}','de-DE')" style="cursor:pointer">
+      ${d.a?`<span class="artikel">${d.a}</span>`:''}
+      <span class="word-de">${d.w}</span>
+      ${d.p?`<span class="plural">${d.p}</span>`:''}
+    </td>
+    <td onclick="speakText('${enSpeak}','en-US')" style="cursor:pointer">
+      <span class="word-en">${enParts}</span>
+      <span class="word-zh">${d.zh||''}</span>
+    </td>
+    <td onclick="speakText('${kSpeak}','de-DE')" style="cursor:pointer">
+      <span class="koll-de">${kParts}</span>
+      <span class="koll-zh">${kzParts}</span>
+    </td>
+    <td onclick="speakText('${exSpeak}','de-DE')" style="cursor:pointer">
+      <span class="satz-de">${d.ex||''}</span>
+      <span class="satz-zh">${d.ez||''}</span>
+    </td>
+  </tr>`;
+}
+
+// ── Render ────────────────────────────────────────────────
+function render() {
+  buildSrcTabs();
+
+  const all = (window.MODELLTEST_ALL || []);
+  const tParts = TEIL_MAP[currentTeil];
+
+  let items = all.filter((d, i) => {
+    const uid = d.mt + '_' + i;
+    if (!tParts.includes(d.teil)) return false;
+    if (currentSrc !== 'all' && d.mt !== currentSrc) return false;
+    if (currentFilter === 'marked'   && !markedSet.has(uid)) return false;
+    if (currentFilter === 'unmarked' &&  markedSet.has(uid)) return false;
+    return true;
+  }).map((d, _, arr) => {
+    // need original index for uid
+    const origIdx = all.indexOf(d);
+    return { d, uid: d.mt + '_' + origIdx };
+  });
+
+  // Sort by teil part order, then mt
+  items.sort((a,b) => {
+    const ia = tParts.indexOf(a.d.teil);
+    const ib = tParts.indexOf(b.d.teil);
+    if (ia !== ib) return ia - ib;
+    return a.d.mt.localeCompare(b.d.mt);
+  });
+
+  // Stats
+  const totalInTeil = all.filter((d,i) => tParts.includes(d.teil)).length;
+  const markedInTeil = all.filter((d,i) => tParts.includes(d.teil) && markedSet.has(d.mt+'_'+i)).length;
+  document.getElementById('statsBar').textContent =
+    `已標記 ${markedInTeil} / ${totalInTeil} 個`;
+
+  if (!items.length) {
+    document.getElementById('mainContent').innerHTML =
+      `<div class="empty">沒有符合的單字</div>`;
+    return;
+  }
+
+  // Group by teil
+  const groups = {};
+  items.forEach(({d, uid}) => {
+    if (!groups[d.teil]) groups[d.teil] = [];
+    groups[d.teil].push({d, uid});
+  });
+
+  const TEIL_NAMES = {
+    L1:'Lesen Teil 1', L2:'Lesen Teil 2', L3:'Lesen Teil 3',
+    L4:'Lesen Teil 4 — Protokoll', L5:'Lesen Teil 5',
+    H1:'Hören Teil 1', H2:'Hören Teil 2', H3:'Hören Teil 3', H4:'Hören Teil 4',
+    SB1:'Sprachbausteine Teil 1', SB2:'Sprachbausteine Teil 2', SCH:'Schreiben',
+  };
+
+  let html = '';
+  for (const t of tParts) {
+    if (!groups[t]) continue;
+    html += `<div class="section-block">
+      <div class="section-header">${TEIL_NAMES[t]||t} <span style="font-weight:400;opacity:.6;">(${groups[t].length} 個)</span></div>
+      <table>
+        <thead><tr>
+          <th class="col-dot"></th>
+          <th class="col-mt">模擬考</th>
+          <th class="col-teil">Teil</th>
+          <th class="col-de">德文</th>
+          <th class="col-enzh">英文 / 中文</th>
+          <th class="col-koll">固定搭配</th>
+          <th class="col-satz">例句</th>
+        </tr></thead>
+        <tbody>
+          ${groups[t].map(({d,uid}) => buildRow(d, uid)).join('')}
+        </tbody>
+      </table>
+    </div>`;
+  }
+  document.getElementById('mainContent').innerHTML = html;
+}
+
+// ── Filter / tab setters ──────────────────────────────────
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+function setTeil(t, btn) {
+  currentTeil = t;
+  document.querySelectorAll('.teil-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+function setSrc(s) {
+  currentSrc = s;
+  render();
+}
+
+// ── Checkpoint export / import ────────────────────────────
+function exportCheckpoint() {
+  const data = { marked: [...markedSet] };
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'modelltest-checkpoint.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  setCpStatus('✓ 已匯出');
+}
+
+function importCheckpoint(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (Array.isArray(data.marked)) {
+        markedSet = new Set(data.marked);
+        saveMarked();
+        render();
+        setCpStatus(`✓ 已匯入 ${data.marked.length} 個標記`);
+      } else {
+        alert('格式錯誤：找不到 marked 陣列');
+      }
+    } catch(err) {
+      alert('檔案格式錯誤，請確認是正確的 JSON 檔案');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+// Auto-load checkpoint from GitHub Pages
+async function tryAutoLoad() {
+  if (!location.protocol.startsWith('http')) return;
+  try {
+    const res = await fetch('./modelltest-checkpoint.json', {cache:'no-cache'});
+    if (!res.ok) return;
+    const data = await res.json();
+    if (Array.isArray(data.marked) && !localStorage.getItem(LS_KEY)) {
+      markedSet = new Set(data.marked);
+      saveMarked();
+      render();
+      setCpStatus(`✓ 自動載入 ${data.marked.length} 個標記`);
+    }
+  } catch(e) {}
+}
+
+function setCpStatus(msg) {
+  const el = document.getElementById('cpStatus');
+  if (!el) return;
+  el.textContent = msg;
+  setTimeout(() => { el.textContent = ''; }, 4000);
+}
+
+// ── Init ──────────────────────────────────────────────────
+tryAutoLoad();
+render();
+</script>
+</body>
+</html>

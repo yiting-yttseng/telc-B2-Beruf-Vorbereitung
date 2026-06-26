@@ -579,6 +579,68 @@ const SECTIONS = [
           {q:`空格 56：如果在此期間___`, options:[`a) dringende Anrufe erhalten`,`b) neue Hinweise geben`,`c) weitere Fragen haben`], answer:2, label:`c) weitere Fragen haben`, explain:`weitere Fragen haben = 有進一步的問題。這是商業信函中提供聯絡管道時的標準說法。`},
           {q:`空格 57：我期待___`, options:[`a) Ihre zeitnahe Rückmeldung`,`b) Ihren ausführlichen Bericht`,`c) unseren längeren Termin`], answer:0, label:`a) Ihre zeitnahe Rückmeldung`, explain:`Ich freue mich auf Ihre zeitnahe Rückmeldung. = 我期待您的及時回覆。zeitnahe Rückmeldung（及時的回覆）是商業信函結尾常見套語。`}
         ]
+      },
+      {
+        badgeCls: `klett`, badgeLabel: `Klett`, src: `Aspekte Beruf B2 – Sprachbausteine Teil 2 (Telefonanlage)`,
+        paragraphs: [
+          `Sehr geehrter Herr Schwan,`,
+          `vielen Dank für __52__ vom 12.04.20XX. __53__ erhalten Sie das gewünschte Angebot für eine virtuelle Telefonanlage, um die Kommunikation in Ihrem Unternehmen zu optimieren. Die AllTel 3000 ist eine softwarebasierte Telefonanlage und ermöglicht Telefonieren über Cloud. __54__ alle Funktionen herkömmlicher Telefonanlagen.`,
+          `__55__ können Sie den genauen Funktionsumfang der für Sie zusammengestellten Telefonanlage entnehmen. Zu diesem gehören neben Standardfunktionen wie Rufnummernumleitungen und Konferenzschaltungen auch die Möglichkeit, Voicemails zu versenden, ein Fax per E-Mail zu empfangen oder Videokonferenzen durchzuführen.`,
+          `Falls sich unsere Preiskalkulation außerhalb Ihrer Preisvorstellungen bewegt, können wir das Angebot __56__. Wir könnten die Telefonanlage spätestens vier Wochen __57__.`,
+          `Darf ich Sie Montagvormittag anrufen, um noch offene Fragen zu klären? Über die Erteilung des Auftrags würden wir uns sehr freuen und wir versichern Ihnen eine professionelle und termingerechte Ausführung.`,
+          `Mit freundlichen Grüßen / Peter Miller`
+        ],
+        paragraphs_zh: [
+          `親愛的 Schwan 先生，`,
+          `非常感謝您___52___，日期為4月12日。___53___，您將收到您所需的虛擬電話系統報價，以優化您公司的通訊。AllTel 3000 是一套基於軟體的電話系統，可透過雲端進行通話。___54___傳統電話系統的所有功能。`,
+          `您可以從___55___中查看為您配置的電話系統的詳細功能範圍。除了標準功能（如來電轉接和會議通話）外，還包括發送語音留言、透過電子郵件接收傳真，或進行視訊會議的功能。`,
+          `如果我們的報價超出您的預期價格範圍，我們可以___56___這份報價。我們最快可以在四週內___57___電話系統。`,
+          `我是否可以在星期一上午致電您，以澄清尚未解決的問題？我們將非常樂意接受您的訂單委託，並向您保證提供專業且按時完成的服務。`,
+          `致上敬意 / Peter Miller`
+        ],
+        qa: [
+          {q:`空格 52：非常感謝您___，日期為4月12日`, options:[`a) Ihre Anfrage`,`b) Ihren Antrag`,`c) Ihren Auftrag`], answer:0, label:`a) Ihre Anfrage`, explain:`vielen Dank für Ihre Anfrage = 非常感謝您的詢問。這是報價回覆信開頭最常見的套語，因為對方還沒下單，只是詢問。`},
+          {q:`空格 53：___，您將收到報價`, options:[`a) Aufgrund Ihrer Bestätigung`,`b) In der Anlage`,`c) Mit der Zusage`], answer:1, label:`b) In der Anlage`, explain:`In der Anlage erhalten Sie das Angebot = 隨函附件您將收到報價。In der Anlage（隨附件）是商業信函中說明附件內容的標準用語。`},
+          {q:`空格 54：雲端電話系統___傳統系統所有功能`, options:[`a) Sie bietet`,`b) Sie bekommt`,`c) Sie erhält`], answer:0, label:`a) Sie bietet`, explain:`Sie bietet alle Funktionen = 它提供所有功能。bieten（提供）用來描述產品本身具備的功能特性，符合語境主詞是「系統」。`},
+          {q:`空格 55：您可以從___中查看詳細功能範圍`, options:[`a) Dem angefügten Prospekt`,`b) Dem versandten Schreiben`,`c) Den beiliegenden Unterlagen`], answer:2, label:`c) Den beiliegenden Unterlagen`, explain:`den beiliegenden Unterlagen entnehmen = 從隨附文件中查看得知。beiliegende Unterlagen（隨附文件）是描述附件資料最常見的說法。`},
+          {q:`空格 56：如果報價超出預期，我們可以___這份報價`, options:[`a) gern anpassen`,`b) Ihnen unterbreiten`,`c) nicht zurücknehmen`], answer:0, label:`a) gern anpassen`, explain:`das Angebot gern anpassen = 樂意調整報價。語境是如果價格不符合預期，廠商表示願意調整（而非撤回或重新提出）。`},
+          {q:`空格 57：我們最快可以在四週內___電話系統`, options:[`a) nach Auftragserteilung liefern`,`b) nach Ihrer Zusage herstellen`,`c) vor der Lieferung bestellen`], answer:1, label:`b) nach Ihrer Zusage herstellen`, explain:`nach Ihrer Zusage herstellen = 在您確認後製作完成。Zusage（確認、承諾）指客戶下單確認，herstellen（製作/安裝）符合電話系統客製化的語境。`}
+        ]
+      },
+      {
+        badgeCls: `klett`, badgeLabel: `Klett`, src: `Aspekte Beruf B2 – Sprachbausteine Teil 2 (Fernseher-Angebot)`,
+        paragraphs: [
+          `Angebot`,
+          `Sehr geehrte Damen und Herren,`,
+          `wir danken Ihnen für __52__ vom 15.07.20XX und unterbreiten Ihnen folgendes Angebot:`,
+          `Pos. 1: Suang GXT 173 LED-Fernseher (108 cm/43 Zoll, 4K Ultra HD, Smart-TV) — 17 Stück — Einzel 486,44 € — Gesamt 8.269,48 €`,
+          `Pos. 2: Anfahrt und Aufbau — Pauschal — 320,00 € — 320,00 €`,
+          `Summe Netto: 8.589,48 € / Umsatzsteuer 19,00%: 1.632,00 € / Rechnungsbetrag: 10.221,48 €`,
+          `__53__ ca. 2 Wochen, nachdem der Auftrag erteilt wurde. Wir weisen Sie darauf hin, dass der Kaufpreis innerhalb von 30 Tagen nach Rechnungsdatum __54__. Auf die Geräte geben wir drei Jahre Garantie. Dieses Angebot ist 6 Wochen gültig.`,
+          `Gern möchten wir Ihnen zu den Fernsehern passende Wandhalterungen anbieten. Die WMF XV-125 ist aus __55__ hergestellt, um höchste Stabilität und Langlebigkeit zu gewährleisten.`,
+          `Wir würden uns sehr freuen, wenn unser Angebot __56__. Für Fragen stehe ich Ihnen jederzeit __57__.`,
+          `Mit freundlichen Grüßen / Johanna Stuft`
+        ],
+        paragraphs_zh: [
+          `報價`,
+          `敬啟者，`,
+          `感謝您___52___，日期為7月15日，我們向您提呈以下報價：`,
+          `項目1：Suang GXT 173 LED電視（108公分/43吋，4K UHD，智慧電視）— 17台 — 單價486.44€ — 總計8,269.48€`,
+          `項目2：運送與安裝 — 固定費用 — 320.00€ — 320.00€`,
+          `未稅總額：8,589.48€ / 19%營業稅：1,632.00€ / 帳單總額：10,221.48€`,
+          `下單後約2週___53___。我們提醒您，購買價款須在發票日後30天內___54___。我們對這些設備提供三年保固。本報價有效期為6週。`,
+          `我們也樂意為您提供與電視機相配的壁掛架。WMF XV-125 採用___55___製造，以確保最高的穩定性與耐用性。`,
+          `如果您___56___我們的報價，我們會非常高興。如有任何問題，我隨時___57___。`,
+          `致上敬意 / Johanna Stuft`
+        ],
+        qa: [
+          {q:`空格 52：感謝您___，日期為7月15日`, options:[`a) Ihr Anschreiben`,`b) Ihre Anfrage`,`c) Ihre Ankunft`], answer:1, label:`b) Ihre Anfrage`, explain:`wir danken Ihnen für Ihre Anfrage = 感謝您的詢問。這是報價信開頭的標準用語，對應對方先前的詢價行為。`},
+          {q:`空格 53：下單後約2週___`, options:[`a) Das Angebot umfasst`,`b) Die Lieferzeit beträgt`,`c) Die Lieferung enthält`], answer:1, label:`b) Die Lieferzeit beträgt`, explain:`die Lieferzeit beträgt ca. 2 Wochen = 交貨期約為2週。beträgt（betragen的第三人稱單數）用來說明具體的時間或金額。`},
+          {q:`空格 54：購買價款須在發票日後30天內___`, options:[`a) mit Kosten verbunden ist`,`b) mit Zinsen höher ist`,`c) ohne Abzug fällig ist`], answer:2, label:`c) ohne Abzug fällig ist`, explain:`ohne Abzug fällig sein = 不扣除（折扣）到期應付。意指30天內須全額付清，沒有提前付款折扣。`},
+          {q:`空格 55：壁掛架採用___製造`, options:[`a) hochwertigem Material`,`b) modernem Design`,`c) neuartiger Technik`], answer:0, label:`a) hochwertigem Material`, explain:`aus hochwertigem Material hergestellt = 採用高品質材料製造。語境強調「穩定性與耐用性」，所以是材質（Material）而非設計或技術。`},
+          {q:`空格 56：如果您___我們的報價`, options:[`a) bald geliefert wird`,`b) Ihre Zustimmung findet`,`c) zur Diskussion steht`], answer:1, label:`b) Ihre Zustimmung findet`, explain:`das Angebot findet Ihre Zustimmung = 您對這份報價表示同意。固定搭配 Zustimmung finden（獲得認同），是報價信中期待對方接受的禮貌說法。`},
+          {q:`空格 57：如有任何問題，我隨時___`, options:[`a) zum Telefongespräch`,`b) zur Beratung`,`c) zur Verfügung`], answer:2, label:`c) zur Verfügung`, explain:`jederzeit zur Verfügung stehen = 隨時可供使用、隨時為您服務。這是商業信函結尾提供聯絡管道的標準套語。`}
+        ]
       }
     ]
   },
