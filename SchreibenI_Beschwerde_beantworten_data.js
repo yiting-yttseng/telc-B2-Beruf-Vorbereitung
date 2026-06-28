@@ -382,6 +382,126 @@ const REDEMITTEL = [
 
 
 // ══════════════════════════════════════════════════════════
+// 🏆 滿分寫作要點 (MEISTERSCHREIBEN)
+// ══════════════════════════════════════════════════════════
+
+const MEISTERSCHREIBEN = {
+  corePrinciple: "核心原則：老闆和客戶要求的事項一定要寫，不多也不少。",
+  sections: [
+    {
+      title: "一、道歉",
+      intro: "必須具體，不能 general。好的道歉句要讓讀者能反推出題目的問題。",
+      template: {
+        de: "Wir entschuldigen uns für die Unannehmlichkeiten, die durch [具體問題] entstanden sind.",
+        zh: "我們為由[具體問題]造成的不便道歉。"
+      },
+      table: {
+        headers: ["情境", "填入內容"],
+        rows: [
+          ["送錯貨", "die Lieferung der falschen Ware anstelle der bestellten"],
+          ["延誤送貨", "die verspätete Lieferung ohne rechtzeitige Benachrichtigung"],
+          ["服務問題", "den mangelhaften Service während Ihrer Veranstaltung"],
+          ["沒主動聯繫", "dass wir Sie nicht rechtzeitig über die Verzögerungen informiert haben"],
+        ]
+      }
+    },
+    {
+      title: "二、說明原因",
+      intro: "原因要貼近題目，不能太 general。",
+      table: {
+        headers: ["題型", "建議原因", "避免"],
+        rows: [
+          ["貨品缺失", "Lieferengpässe beim Auslandslieferanten", "只說「Engpass」不夠具體"],
+          ["送錯貨", "neuer Spediteur nicht mit Lagerabläufen vertraut / Systemupdate → Eingabefehler", "避免說員工能力不足"],
+          ["服務太差（設備/餐點）", "kurzfristige Umstrukturierung → Vertretung nicht vollständig vertraut, wie die Raumausstattung und die Verpflegung", "用 wie + 具體列舉避免 general"],
+          ["場地突然更換", "technische Störung im ursprünglichen Raum", "比「代理人問題」更具體"],
+          ["清潔問題", "vorübergehende Umstrukturierung → Vertretung die Reinigungsaufgaben nicht vollständig übernommen hat", "具體說明哪個任務被遺漏"],
+          ["工程瑕疵（原因不明）", "Wir klären derzeit intern, wie es zu diesem Defekt kommen konnte", "誠實說在調查中也可以"],
+          ["工程瑕疵（製造商問題）", "ein Fehler beim Hersteller / an der Verbindungsstelle", "歸因給製造商"],
+          ["送貨延誤（路況）", "Baustelle → Umweg → längere Anfahrtszeit", "具體說明繞路原因"],
+        ]
+      },
+      specialNote: {
+        title: "關於「代理人問題」太 general 的解法：",
+        content: "問題不在於用 Vertretung，而在於後面沒有說具體忽略了什麼。",
+        bad: "Der Vertreter war mit den Aufgaben nicht vertraut.",
+        good: "Der Vertreter war mit den Aufgaben nicht vollständig vertraut, wie die Raumausstattung und die Verpflegung.",
+        tip: "只需要加 `wie + 具體項目`，立刻從 general 變具體。"
+      }
+    },
+    {
+      title: "三、短期解決方案",
+      intro: "必須寫出具體時間（日期或星期幾）。",
+      table: {
+        headers: ["情境", "寫法"],
+        rows: [
+          ["派人去修", "Wir werden spätestens bis [日期] einen Techniker schicken."],
+          ["重新送貨", "Die korrekte Ware wird spätestens bis [日期] bei Ihnen eintreffen."],
+          ["替換人員", "Wir haben den zuständigen Mitarbeiter bereits ersetzt."],
+        ]
+      },
+      specialNote: {
+        title: "關於日期的問題：",
+        content: "用「寫考卷那天」作為當下時間是完全正確的，老師看得懂。通常可以寫「bis [Wochentag], den [Datum]」，例如 `bis Freitag, den 20.06.`"
+      }
+    },
+    {
+      title: "四、長期預防措施",
+      intro: "不外乎以下幾種，選一個貼近題目的。",
+      table: {
+        headers: ["情境", "寫法"],
+        rows: [
+          ["員工訓練", "Durch regelmäßige Schulungen stellen wir sicher, dass solche Fehler nicht mehr vorkommen."],
+          ["供應鏈管理", "Wir werden unsere Lieferkette regelmäßig überprüfen und eng mit unserem Inlandslieferanten zusammenarbeiten."],
+          ["流程改善", "Wir werden unsere internen Abläufe überprüfen und optimieren."],
+          ["供應商更換", "Wir werden mit unserem früheren Hersteller wieder zusammenarbeiten."],
+        ]
+      }
+    },
+    {
+      title: "五、補償措施",
+      intro: "只有在老闆明確授權時才可以寫，否則絕對不寫。",
+      table: {
+        headers: ["情境", "補償方式"],
+        rows: [
+          ["一般商業客戶", "Preisnachlass von X% auf die nächste Bestellung"],
+          ["特殊場合（如婚禮）", "不適合寫「未來合作」，可寫 Preisnachlass"],
+          ["課程/體驗類", "kostenlose Probestunde / ein kostenloses Kursmodul"],
+        ]
+      }
+    },
+  ],
+  scoringAnalysis: {
+    title: "📊 為什麼一直得 5 分（B 級）而不是 7 分（A 級）？",
+    aCondition: {
+      de: "「Setzt die Aufgabe entsprechend der Situierung am Arbeitsplatz und dem angezielten Niveau voll adäquat um.」",
+      zh: "老闆要求的每一點都要完整回應，而且語氣和格式都完全符合職場情境。"
+    },
+    problemTable: {
+      headers: ["問題", "具體例子", "改善方法"],
+      rows: [
+        ["道歉太 general", "只說 Unannehmlichkeiten，沒提具體問題", "加 `die durch [具體問題] entstanden sind`"],
+        ["原因太 general", "只說代理人不熟悉，沒說哪個方面", "加 `wie [具體項目]`"],
+        ["缺少長期預防", "只寫短期解決，沒寫未來措施", "在短期解決後加一句長期預防"],
+        ["缺少具體時間", "寫 nächste Woche 而非具體日期", "改成 `bis Freitag, den XX.XX.`"],
+      ]
+    },
+    sevenPoints: [
+      "道歉句具體化（`die durch [具體問題] entstanden sind`）",
+      "原因說明用 `wie + 具體項目` 避免 general",
+      "短期解決寫出具體日期",
+      "加一句長期預防措施",
+      "結尾不套話，針對題目情境收尾",
+    ]
+  },
+  realityNote: {
+    title: "💭 關於「考試不貼近現實」",
+    content: "現實中的抱怨信確實就是禮貌的罐頭訊息。但考試的邏輯是在測試你能不能針對不同情境靈活調整，而不是背固定模板。所以評分者特別在意「這封信有沒有讓我感覺是針對這個具體情況寫的」。芭蕾舞教室那題，老師說的「換掉負責的 service person」其實也很 general，只是方向不同。那個答案本身也沒有說明原因。這類題目本來就沒有標準答案，關鍵是你的說法聽起來合理、不負面、有針對性。"
+  }
+};
+
+
+// ══════════════════════════════════════════════════════════
 // 💡 MÖGLICHE GRÜNDE
 // ══════════════════════════════════════════════════════════
 
@@ -419,6 +539,9 @@ const GRUENDE = [
   items:[
     {de:"ein technisches Problem / ein technischer Defekt", zh:"技術問題/技術故障"},
     {de:"der Systemausfall des Netzwerks", zh:"網路系統當機"},
+    {de:"ein plötzlicher Stromausfall", zh:"突然的停電"},
+    {de:"ein unvorhergesehener Wasserschaden", zh:"無法預見的水損/漏水損害"},
+    {de:"eine geplante Systemwartung", zh:"系統維護（計畫性的）"},
     {de:"Aufgrund eines technischen Problems wurde eine falsche Adresse angezeigt.", zh:"由於技術問題，顯示了錯誤的地址。"},
     {de:"ein Virus hat sich in unser System eingeschlichen", zh:"病毒入侵了我們的系統"},
     {de:"unser System wurde mit einem Virus (Trojaner, Spam, Malware, …) infiziert", zh:"我們的系統被病毒（木馬、垃圾郵件、惡意軟體……）感染"},
@@ -886,7 +1009,28 @@ Mit freundlichen Grüßen
     ],
     mc:[],
     sample:`Sehr geehrter Herr Müller,\n\nbezugnehmend auf Ihre Reklamation vom 15. September bedanken wir uns für Ihre Mitteilung und haben den Sachverhalt umgehend geprüft.\n\nBezüglich der unterschiedlichen Fliesengrößen müssen wir Ihnen leider mitteilen, dass es sich teilweise um einen Fehler unsererseits handelt. Die betroffenen Fliesen werden wir daher kostenfrei austauschen.\n\nBezüglich des Fliesenmodells können wir jedoch keinen Handlungsbedarf erkennen, da die Arbeiten entsprechend der mit Ihnen vereinbarten Vorgaben ausgeführt wurden. Da Sie bereits mehrfach Änderungswünsche geäußert haben, können wir Ihnen leider keine weiteren kostenfreien Änderungen anbieten. Sollten Sie ein anderes Fliesenmodell wünschen oder zusätzliche Arbeiten beauftragen wollen, fallen hierfür Kosten in Höhe von 500 Euro an.\n\nWir bitten Sie um eine kurze Bestätigung, ob Sie mit diesem Vorgehen einverstanden sind.\n\nMit freundlichen Grüßen\n[Name]`,
-    note:"💡 此題的特殊之處：客戶提出兩個訴求，但公司只在「尺寸」上承認錯誤並道歉，在「型號」上則堅持立場，不承擔責任。這種「部分接受、部分反駁」的回信策略在考試中也可能出現，不一定每次都要全盤道歉妥協。"
+    note:"💡 此題的特殊之處：客戶提出兩個訴求，但公司只在「尺寸」上承認錯誤並道歉，在「型號」上則堅持立場，不承擔責任。這種「部分接受、部分反駁」的回信策略在考試中也可能出現，不一定每次都要全盤道歉妥協。",
+    teacherSample:`Sehr geehrter Herr Müller,\n\nwir haben Ihre Beschwerde bezüglich der verlegten Fliesen erhalten und möchten uns hiermit für die entstandenen Unannehmlichkeiten entschuldigen.\n\nNach der gründlichen Überprüfung haben wir gemerkt, dass die unterschiedlichen Fliesengrößen durch fälschlicherweise von uns gelegt wurden. (Nachdem wir den Vorfall gründlich kontrolliert hatten, merkten wir, dass dies unser Fehler war.) Aus diesem Grund wird sich unser Fliesenleger/Handwerker schnellstmöglich um den Austausch der Fliesen kümmern.\n\nDa wir uns in Bezug auf das Fiesenmodell an Ihre Vorgaben gehalten haben, wäre ein Wechsel des Modells in diesem Fall für Sie kostenpflichtig. Solche Änderung würde 500 Euro zusätzlich betragen. Bitte teilen Sie uns mit, ob Sie mit dieser Vorgehensweise einverstanden sind, damit wir die zusätzlichen Arbeiten für Sie zeitlich einplanen können.\n\n*Bitte haben Sie Verständnis dafür, dass solche Änderung zusätzlich 500 Euro kosten würde.\n\nVielen Dank für Ihr Verständnis.`,
+    teacherNote:"📌 這是老師提供的版本（白板拍攝整理）。注意句構差異：老師版本先說「徹底檢查後才發現是我方失誤」（Nachdem wir den Vorfall gründlich kontrolliert hatten），語氣上更顯謹慎負責；最後用「Bitte teilen Sie uns mit, ob Sie einverstanden sind」直接要求客戶確認，方便安排時程。"
+  }
+  ,{
+    source:"Reklamation – Kühlschrank und beschädigte Wand",
+    summary:{
+      boss:["1. Sich für die Unannehmlichkeiten entschuldigen","2. Einen Elektriker schicken, der den Kühlschrank bis Ende der Woche überprüft und ggf. reparieren/austauschen lässt","3. Bezüglich der Wand: mitteilen, dass die Mitarbeiter für Wandreparaturen derzeit viele Aufträge haben, Reparatur kann nicht sofort erfolgen, aber Termin wird vereinbart"],
+      complaint:["1. Neuer Kühlschrank in der Kantine funktioniert nicht richtig, kühlt kaum noch","2. Lebensmittel können nicht mehr sicher gelagert werden (hohe Außentemperaturen)","3. Bei der Installation wurde die Wand neben dem Kühlschrank beschädigt"],
+      gruende:["Technischer Defekt am Kühlschrank (Ursache unklar/nicht im Detail genannt); Beschädigung der Wand durch den Installationsvorgang"]
+    },
+    emails:[
+      {role:"teamleitung",
+       meta:{von:"Peter Schmitt, p.schmitt@cooltech.de", an:"[dich]", betreff:"Antwort an Herrn Weber"},
+       body:`Bitte beantworten Sie die E-Mail von Herrn Weber.\n\nWir bedauern die entstandenen Unannehmlichkeiten und möchten uns für die Probleme entschuldigen.\n\nSchicken Sie einen Elektriker, der den Kühlschrank spätestens bis Ende der Woche überprüft und – falls erforderlich – repariert oder austauscht.\n\nBezüglich der beschädigten Wand informieren Sie Herrn Weber bitte darüber, dass unsere Mitarbeiter für Wandreparaturen derzeit sehr viele Aufträge bearbeiten. Deshalb kann die Reparatur leider nicht sofort erfolgen. Wir werden uns jedoch mit ihm in Verbindung setzen, um zeitnah einen Termin zu vereinbaren.\n\nVielen Dank und viele Grüße\nPeter Schmitt`},
+      {role:"kunde",
+       meta:{von:"Markus Weber, m.weber@architekt-weber.de", an:"service@cooltech.de", betreff:"Reklamation – Kühlschrank und beschädigte Wand"},
+       body:`Sehr geehrte Damen und Herren,\n\nvor drei Tagen wurde in unserer Kantine ein neuer Kühlschrank von Ihrer Firma geliefert und installiert. Leider mussten wir bereits am nächsten Tag feststellen, dass das Gerät nicht richtig funktioniert. Der Kühlschrank kühlt kaum noch, sodass wir unsere Lebensmittel nicht mehr sicher lagern können.\n\nDa die Temperaturen in den letzten Tagen sehr hoch sind, ist die Situation für unsere Mitarbeiter besonders problematisch. Ich bitte Sie deshalb, spätestens bis Ende dieser Woche einen Mitarbeiter zu schicken und den Kühlschrank zu reparieren oder gegebenenfalls auszutauschen.\n\nAußerdem wurde bei der Installation die Wand neben dem Kühlschrank beschädigt. Auch dieser Schaden sollte möglichst zeitnah behoben werden.\n\nIch bitte um eine schnelle Rückmeldung und eine Lösung des Problems.\n\nMit freundlichen Grüßen\nMartin Weber`}
+    ],
+    mc:[],
+    sample:`Sehr geehrter Herr Weber,\n\nbezugnehmend auf Ihre Reklamation bedanken wir uns für Ihre Mitteilung. Wir bedauern die entstandenen Unannehmlichkeiten sehr und möchten uns für die Probleme mit dem Kühlschrank sowie für die beschädigte Wand entschuldigen.\n\nWir werden Ihnen spätestens bis Ende dieser Woche einen Elektriker schicken, der den Kühlschrank überprüft und ihn bei Bedarf reparieren oder austauschen wird.\n\nBezüglich der beschädigten Wand müssen wir Sie leider darüber informieren, dass unsere Mitarbeiter für Wandreparaturen derzeit sehr viele Aufträge bearbeiten, sodass die Reparatur nicht sofort erfolgen kann. Wir werden uns jedoch in den nächsten Tagen mit Ihnen in Verbindung setzen, um zeitnah einen passenden Termin zu vereinbaren.\n\nWir bitten um Ihr Verständnis und danken Ihnen für Ihre Geduld.\n\nMit freundlichen Grüßen\n[Name]`,
+    note:"💡 此題有兩個問題但處理速度不同：冰箱問題用「spätestens bis Ende der Woche」明確承諾，牆面問題則需要委婉說明「目前無法立即處理」，但要表達會主動聯繫安排時間，避免讓客戶覺得被忽略。"
   }
   ]
 },
