@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sprachbausteine Teil 1 — Konnektoren & Verweiswörter</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif; background: #f5f5f3; color: #1a1a1a; font-size: 14px; }
+.top-bar { background: #1a3a6b; color: #fff; padding: 14px 20px 12px; }
+.top-bar h1 { font-size: 17px; font-weight: 500; margin-bottom: 2px; }
+.top-bar p { font-size: 12px; opacity: .75; }
+
+.tabs { display: flex; background: #fff; border-bottom: 1px solid #ddd; }
+.tab-btn { flex: 1; padding: 12px; text-align: center; cursor: pointer; font-size: 13px; font-weight: 600; color: #888; border-bottom: 3px solid transparent; background: #fafaf8; }
+.tab-btn.active { color: #1a3a6b; border-bottom-color: #1a3a6b; background: #fff; }
+
+.page { max-width: 1100px; margin: 0 auto; padding: 20px; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* ── Tag 1: 詞彙表 ───────────────────────── */
+.cat-title { font-size: 13px; font-weight: 700; color: #1a3a6b; background: #e8eef8; padding: 8px 12px; border-radius: 6px 6px 0 0; border: 1px solid #c8d6ec; border-bottom: none; }
+table.vocab { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #c8d6ec; margin-bottom: 22px; }
+table.vocab th { background: #fafaf8; font-size: 11px; color: #888; text-align: left; padding: 6px 10px; border-bottom: 1px solid #eee; }
+table.vocab td { padding: 8px 10px; border-bottom: 1px solid #f0f0ee; vertical-align: top; font-size: 13px; }
+.w-de { font-weight: 700; color: #1a3a6b; cursor: pointer; white-space: nowrap; }
+.w-de:hover { text-decoration: underline; }
+.w-tr-zh { display: block; color: #222; }
+.w-tr-en { display: block; color: #999; font-size: 11px; font-style: italic; }
+.w-fn { color: #555; font-size: 12.5px; line-height: 1.5; }
+.w-ex-de { color: #333; font-size: 12.5px; line-height: 1.5; cursor: pointer; }
+.w-ex-de:hover { background: #f0f4ff; }
+.w-ex-zh { color: #999; font-size: 11.5px; line-height: 1.5; font-style: italic; margin-top: 2px; display: block; }
+.src-tag { display: inline-block; font-size: 10px; color: #1a7840; background: #e8f5ee; border-radius: 3px; padding: 1px 5px; margin-left: 4px; white-space: nowrap; }
+
+/* ── Tag 2: 練習題 ───────────────────────── */
+.type-nav { display: flex; flex-wrap: wrap; gap: 6px; background: #fff; border: 1px solid #ddd; border-radius: 8px; padding: 10px 14px; margin-bottom: 18px; font-size: 12px; }
+.type-nav a { color: #1a3a6b; text-decoration: none; background: #eef2fb; padding: 4px 10px; border-radius: 5px; font-weight: 600; }
+.type-nav a:hover { background: #dbe6fb; }
+.type-divider { font-size: 13px; font-weight: 700; color: #fff; background: #1a3a6b; padding: 8px 14px; border-radius: 6px; margin: 28px 0 14px; }
+.type-divider:first-of-type { margin-top: 0; }
+.ex-block { background: #fff; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 22px; overflow: hidden; }
+.ex-head { background: #2E4057; color: #fff; padding: 9px 14px; font-size: 12.5px; font-weight: 600; }
+.para-row { display: grid; grid-template-columns: 1.3fr 1fr; border-bottom: 1px solid #eee; }
+.para-row:last-of-type { border-bottom: none; }
+.para-de, .para-zh { padding: 12px 14px; font-size: 13.5px; line-height: 1.75; }
+.para-de { border-right: 1px solid #eee; cursor: pointer; }
+.para-de:hover { background: #f5f8ff; }
+.para-zh { color: #444; background: #fafaf8; }
+.blank { display: inline-block; min-width: 26px; border-bottom: 2px solid #1a3a6b; text-align: center; font-weight: 700; color: #1a3a6b; }
+.speak-icon { font-size: 11px; color: #aaa; margin-right: 4px; }
+.ans-inline { font-weight: 700; color: #1a7840; }
+.opt-box { padding: 10px 14px; background: #f5f7fb; border-top: 1px solid #eee; font-size: 12px; color: #666; }
+.opt-box b { color: #1a3a6b; }
+.note-box { padding: 10px 14px; background: #fffaf0; border-top: 1px solid #f0e0c0; font-size: 12px; color: #7d6000; }
+.note-row { padding: 2px 0; }
+.note-num { font-weight: 700; margin-right: 6px; }
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <h1>📋 Sprachbausteine Teil 1 — Konnektoren & Verweiswörter</h1>
+  <p>完整版 12 組 · 詞彙表涵蓋全部選項 · 練習題依情境類型分組</p>
+</div>
+
+<div class="tabs">
+  <div class="tab-btn active" onclick="setTab('tag1', this)">Tag 1 · 高頻詞彙表（全選項）</div>
+  <div class="tab-btn" onclick="setTab('tag2', this)">Tag 2 · 練習題（依類型分組）</div>
+</div>
+
+<div class="page">
+
+<!-- ══════════════════════════ TAG 1 ══════════════════════════ -->
+<div class="tab-content active" id="tag1">
+
+  <div class="cat-title">① 因果連接詞（Kausal / Konsekutiv，主句/從屬句）</div>
+  <table class="vocab">
+  <tr><th style="width:13%">單字</th><th style="width:15%">翻譯</th><th style="width:34%">功能與用法</th><th>例句</th></tr>
+  <tr><td class="w-de" onclick="speakText('deshalb')">deshalb</td>
+    <td><span class="w-tr-zh">因此</span><span class="w-tr-en">therefore</span></td>
+    <td class="w-fn">主句副詞，放句首觸發V2倒裝。前因後果。<span class="src-tag">telc1</span><span class="src-tag">klett2</span><span class="src-tag">klett1-Lösung</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Nur einmal im Monat gibt es freitags einen Präsenztermin, deshalb müsste ich an diesen Tagen früher Feierabend machen.')">Nur einmal im Monat gibt es freitags einen Präsenztermin, <b>deshalb</b> müsste ich früher Feierabend machen.</span><span class="w-ex-zh">每月只有一次週五實體課程，所以那天得提早下班。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('daher')">daher</td>
+    <td><span class="w-tr-zh">因此、由此</span><span class="w-tr-en">therefore</span></td>
+    <td class="w-fn">同 deshalb，書面感較強，常用於結論段落。<span class="src-tag">telc2</span><span class="src-tag">Cornelsen2</span><span class="src-tag">telc_online_1</span><span class="src-tag">Hauber1</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Eine rasche Antwort wäre für mich auch deshalb sehr wichtig, denn das Pflegezentrum schließt. Daher muss ich mich schnell nach einer neuen Stelle umsehen.')"><b>Daher</b> muss ich mich schnell nach einer neuen Stelle umsehen.</span><span class="w-ex-zh">因此我必須趕快找新工作。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('da')">da（從屬）</td>
+    <td><span class="w-tr-zh">既然、由於</span><span class="w-tr-en">since</span></td>
+    <td class="w-fn">從屬連接詞，動詞放句尾，語氣比 weil 委婉書面。<span class="src-tag">klett3</span><span class="src-tag">klett2</span><span class="src-tag">Cornelsen1</span><span class="src-tag">Cornelsen2</span><span class="src-tag">telc_online_1</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Da ich an der Stelle außerordentlich interessiert bin, würde ich mich über eine Einladung sehr freuen.')"><b>Da</b> ich an der Stelle außerordentlich interessiert bin, würde ich mich sehr freuen.</span><span class="w-ex-zh">既然我對職位非常有興趣，我會很開心受邀。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('weil')">weil（從屬）</td>
+    <td><span class="w-tr-zh">因為</span><span class="w-tr-en">because</span></td>
+    <td class="w-fn">最常見因果從屬連接詞，動詞放句尾。語氣中性，比 da 更直接陳述原因。<span class="src-tag">klett1-Lösung干擾選項</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Ich bin beeindruckt, weil Sie das Gespräch auf Augenhöhe geführt haben.')">Ich bin beeindruckt, <b>weil</b> Sie das Gespräch auf Augenhöhe geführt haben.</span><span class="w-ex-zh">我印象深刻，因為您以平等的態度進行了這次談話。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('denn')">denn（並列）</td>
+    <td><span class="w-tr-zh">因為（並列連接詞）</span><span class="w-tr-en">because (coordinating)</span></td>
+    <td class="w-fn">並列連接詞，動詞位置不變（不倒裝）。後面直接接「主詞+動詞」原順序，與從屬連接詞 weil 動詞放句尾不同。<span class="src-tag">Cornelsen2</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Eine rasche Antwort wäre wichtig, denn das Pflegezentrum schließt Ende des Jahres.')">Eine rasche Antwort wäre wichtig, <b>denn</b> das Pflegezentrum schließt Ende des Jahres.</span><span class="w-ex-zh">快速回覆很重要，因為照護中心年底就要關閉了。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('deswegen')">deswegen</td>
+    <td><span class="w-tr-zh">因此、為此</span><span class="w-tr-en">therefore</span></td>
+    <td class="w-fn">與 deshalb 幾乎同義可互換，純粹是同義詞干擾選項。<span class="src-tag">Cornelsen1干擾選項</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Ich werde Ende des Jahres umziehen, deswegen bitte ich um eine schnelle Bearbeitung.')">Ich werde Ende des Jahres umziehen, <b>deswegen</b> bitte ich um eine schnelle Bearbeitung.</span><span class="w-ex-zh">我年底要搬家，因此請求盡快處理。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('folglich')">folglich</td>
+    <td><span class="w-tr-zh">因而、結果</span><span class="w-tr-en">consequently</span></td>
+    <td class="w-fn">書面語氣最強的因果副詞，常見於正式報告/論述，口語書信中較少見，多作干擾選項。<span class="src-tag">klett1干擾選項</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Das Praktikum war sehr lehrreich, folglich konnte ich viel über die Branche lernen.')">Das Praktikum war sehr lehrreich, <b>folglich</b> konnte ich viel über die Branche lernen.</span><span class="w-ex-zh">這次實習收穫很多，因而我能對這個行業有更多了解。</span></td>
+  </tr>
+  </table>
+
+  <div class="cat-title">② 原因介系詞（Präposition + Genitiv）</div>
+  <table class="vocab">
+  <tr><th style="width:13%">單字</th><th style="width:15%">翻譯</th><th style="width:34%">功能與用法</th><th>例句</th></tr>
+  <tr><td class="w-de" onclick="speakText('aufgrund')">aufgrund + Gen.</td>
+    <td><span class="w-tr-zh">由於、基於</span><span class="w-tr-en">due to</span></td>
+    <td class="w-fn">介系詞（非連接詞），後接屬格名詞，整個片語可放句首或句中，不影響動詞位置（不是V2倒裝觸發詞，是介系詞片語本身佔位）。<span class="src-tag">Cornelsen2</span><span class="src-tag">Cornelsen3</span><span class="src-tag">telc_online_1</span><span class="src-tag">Hauber1</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Eine Tätigkeit bei Ihnen würde mir mehr zusagen, allein schon aufgrund der guten Erreichbarkeit des Arbeitsplatzes.')">Eine Tätigkeit bei Ihnen würde mir mehr zusagen, allein schon <b>aufgrund</b> der guten Erreichbarkeit.</span><span class="w-ex-zh">在您這裡工作會更吸引我，光是因為交通方便就已經是理由。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('anlaesslich')">anlässlich + Gen.</td>
+    <td><span class="w-tr-zh">趁…的機會、因…之故</span><span class="w-tr-en">on the occasion of</span></td>
+    <td class="w-fn">介系詞+屬格，語氣比 aufgrund 更正式，常用於「因應某個特定場合/事件」，與單純因果（aufgrund）略有不同，強調「藉由這個機會」。<span class="src-tag">Cornelsen1/Cornelsen3干擾選項</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Anlässlich meiner Kündigung möchte ich mich für die gute Zusammenarbeit bedanken.')"><b>Anlässlich</b> meiner Kündigung möchte ich mich für die gute Zusammenarbeit bedanken.</span><span class="w-ex-zh">藉著離職的機會，我想感謝這段良好的合作。</span></td>
+  </tr>
+  </table>
+
+  <div class="cat-title">③ 讓步／轉折連接詞（Konzessiv / Adversativ）</div>
+  <table class="vocab">
+  <tr><th style="width:13%">單字</th><th style="width:15%">翻譯</th><th style="width:34%">功能與用法</th><th>例句</th></tr>
+  <tr><td class="w-de" onclick="speakText('trotzdem')">trotzdem</td>
+    <td><span class="w-tr-zh">儘管如此</span><span class="w-tr-en">nevertheless</span></td>
+    <td class="w-fn">主句副詞，V2倒裝。表示「雖有不利情況，結果仍然…」。<span class="src-tag">telc1干擾選項</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Das Gespräch war sehr kurz, trotzdem hat es mich überzeugt.')">Das Gespräch war sehr kurz, <b>trotzdem</b> hat es mich überzeugt.</span><span class="w-ex-zh">面談時間很短，儘管如此還是說服了我。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('jedoch')">jedoch</td>
+    <td><span class="w-tr-zh">然而、但是</span><span class="w-tr-en">however</span></td>
+    <td class="w-fn">書面語的「但是」，比 aber 正式，可放句首或句中。<span class="src-tag">telc2干擾選項</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Eine Tätigkeit bei Ihnen würde mir jedoch mehr zusagen.')">Eine Tätigkeit bei Ihnen würde mir <b>jedoch</b> mehr zusagen.</span><span class="w-ex-zh">然而在您這裡工作會更吸引我。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('allerdings')">allerdings</td>
+    <td><span class="w-tr-zh">不過、然而</span><span class="w-tr-en">however / though</span></td>
+    <td class="w-fn">主句副詞，帶有「補充但稍微相反的資訊」語氣，常用於先肯定一件事、再補充限制條件。<span class="src-tag">telc_online_2</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Ich weiß, dass ich eine Kündigungsfrist von drei Monaten habe. Allerdings habe ich noch 13 Tage Resturlaub.')">Ich weiß, dass ich eine Kündigungsfrist habe. <b>Allerdings</b> habe ich noch 13 Tage Resturlaub.</span><span class="w-ex-zh">我知道有預告期，不過我還有13天特休。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('obwohl')">obwohl（從屬）</td>
+    <td><span class="w-tr-zh">儘管、雖然</span><span class="w-tr-en">although</span></td>
+    <td class="w-fn">從屬連接詞，動詞放句尾，與 trotzdem（主句副詞）對應的從屬版本，意思相同但句構不同。<span class="src-tag">Cornelsen1干擾選項</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Obwohl ich das Unternehmen verlasse, behalte ich die Zusammenarbeit in guter Erinnerung.')"><b>Obwohl</b> ich das Unternehmen verlasse, behalte ich die Zusammenarbeit in guter Erinnerung.</span><span class="w-ex-zh">雖然我要離開公司，我仍會記得這段良好的合作。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('aber')">aber（並列）</td>
+    <td><span class="w-tr-zh">但是</span><span class="w-tr-en">but</span></td>
+    <td class="w-fn">最基本的並列轉折詞，動詞位置不受影響。語氣中性口語，比 jedoch 更直接。<span class="src-tag">Cornelsen1</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Ich bedaure es sehr, auszuscheiden. Aber ich werde Ende des Jahres ins Ausland ziehen.')">Ich bedaure es sehr, auszuscheiden. <b>Aber</b> ich werde Ende des Jahres ins Ausland ziehen.</span><span class="w-ex-zh">我很遺憾要離職。但我年底要搬到國外。</span></td>
+  </tr>
+  </table>
+
+  <div class="cat-title">④ 條件連接詞（Konditional）</div>
+  <table class="vocab">
+  <tr><th style="width:13%">單字</th><th style="width:15%">翻譯</th><th style="width:34%">功能與用法</th><th>例句</th></tr>
+  <tr><td class="w-de" onclick="speakText('wenn')">wenn（從屬）</td>
+    <td><span class="w-tr-zh">如果、假如</span><span class="w-tr-en">if</span></td>
+    <td class="w-fn">從屬連接詞，動詞放句尾，常與 Konjunktiv II（würde/könnte）搭配表委婉假設。<span class="src-tag">klett3</span><span class="src-tag">klett1-Lösung</span><span class="src-tag">telc_online_1</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Ich würde mich sehr freuen, wenn ich Ihr Unternehmen zukünftig unterstützen könnte.')">Ich würde mich sehr freuen, <b>wenn</b> ich Ihr Unternehmen unterstützen könnte.</span><span class="w-ex-zh">如果未來能支援您的公司，我會非常開心。</span></td>
+  </tr>
+  </table>
+
+  <div class="cat-title">⑤ 時間副詞／連接詞（Temporal）</div>
+  <table class="vocab">
+  <tr><th style="width:13%">單字</th><th style="width:15%">翻譯</th><th style="width:34%">功能與用法</th><th>例句</th></tr>
+  <tr><td class="w-de" onclick="speakText('zwischenzeitlich')">zwischenzeitlich</td>
+    <td><span class="w-tr-zh">這段期間</span><span class="w-tr-en">in the meantime</span></td>
+    <td class="w-fn">主句副詞，描述過渡期間發生的事，語氣比 inzwischen 稍正式。<span class="src-tag">klett3</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Zwischenzeitlich werde ich telefonisch nicht gut erreichbar sein.')"><b>Zwischenzeitlich</b> werde ich telefonisch nicht gut erreichbar sein.</span><span class="w-ex-zh">這段期間我電話不太容易聯絡到。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('dazwischen')">dazwischen</td>
+    <td><span class="w-tr-zh">在那期間</span><span class="w-tr-en">in between</span></td>
+    <td class="w-fn">da-複合副詞，回指前面提到的時間段。<span class="src-tag">klett3</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Natürlich können Sie mich dazwischen aber immer per E-Mail erreichen.')">Natürlich können Sie mich <b>dazwischen</b> aber immer per E-Mail erreichen.</span><span class="w-ex-zh">當然這段期間您還是可以隨時用email聯絡我。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('schon')">schon</td>
+    <td><span class="w-tr-zh">已經</span><span class="w-tr-en">already</span></td>
+    <td class="w-fn">表動作已發生/狀態已達成，常見於詢問對方「是否已知道/完成」。<span class="src-tag">telc_online_1干擾選項</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Falls Sie schon wissen, wann die Vorstellungsgespräche stattfinden werden, wäre ich dankbar.')">Falls Sie <b>schon</b> wissen, wann die Gespräche stattfinden, wäre ich dankbar.</span><span class="w-ex-zh">如果您已經知道面談時間，我會很感激。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('noch')">noch</td>
+    <td><span class="w-tr-zh">仍然、還</span><span class="w-tr-en">still</span></td>
+    <td class="w-fn">表狀態持續至今未變。<span class="src-tag">klett3</span><span class="src-tag">Cornelsen2</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Sollten noch Unterlagen fehlen, lassen Sie mich das bitte wissen.')">Sollten <b>noch</b> Unterlagen fehlen, lassen Sie mich das bitte wissen.</span><span class="w-ex-zh">如果還缺少文件，請讓我知道。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('jetzt')">jetzt</td>
+    <td><span class="w-tr-zh">現在</span><span class="w-tr-en">now</span></td>
+    <td class="w-fn">表「經過前述過程後，目前的狀態/結論」，常用於信件中段轉折成「現在我確定…」。<span class="src-tag">klett1</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Aber jetzt bin ich mir sicher, dass ich sehr gut in Ihr Team passen würde.')">Aber <b>jetzt</b> bin ich mir sicher, dass ich gut in Ihr Team passen würde.</span><span class="w-ex-zh">但現在我確定我會非常適合您的團隊。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('danach')">danach</td>
+    <td><span class="w-tr-zh">關於那（之後/about that，依語境）</span><span class="w-tr-en">after that / about that</span></td>
+    <td class="w-fn">時間副詞「之後」，但搭配 Frage 時引申為「針對那件事的問題」（Frage danach = 問及那件事）。<span class="src-tag">klett1</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Ein wenig verunsichert hat mich Ihre Frage danach, wie ich mir einen guten Umgang vorstelle.')">Ein wenig verunsichert hat mich Ihre Frage <b>danach</b>, wie ich mir das vorstelle.</span><span class="w-ex-zh">您問及這件事讓我有點不確定該如何回答。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('bisher')">bisher</td>
+    <td><span class="w-tr-zh">至今、到目前為止</span><span class="w-tr-en">so far</span></td>
+    <td class="w-fn">表「從過去到現在為止」尚未發生/未改變的狀態，常與否定句搭配（bisher nicht / noch nicht）。<span class="src-tag">telc_online_1</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Eine weitere Rückmeldung habe ich bisher nicht bekommen.')">Eine weitere Rückmeldung habe ich <b>bisher</b> nicht bekommen.</span><span class="w-ex-zh">到目前為止我還沒收到進一步的回覆。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('bereits')">bereits</td>
+    <td><span class="w-tr-zh">已經</span><span class="w-tr-en">already</span></td>
+    <td class="w-fn">與 schon 同義但更書面正式，常見於正式信函。<span class="src-tag">telc_online_2</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Wie ich Ihnen im persönlichen Gespräch bereits mitgeteilt habe, muss ich meine Arbeitsstelle aufgeben.')">Wie ich Ihnen <b>bereits</b> mitgeteilt habe, muss ich meine Arbeitsstelle aufgeben.</span><span class="w-ex-zh">如我已經告知您的，我必須放棄這個職位。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('nachdem')">nachdem（從屬）</td>
+    <td><span class="w-tr-zh">在…之後</span><span class="w-tr-en">after</span></td>
+    <td class="w-fn">從屬連接詞，動詞放句尾，引導「先發生的事」，常搭配完成時態（nachdem ... ist/hat）。<span class="src-tag">Cornelsen3</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Nachdem mehr als ein Monat vergangen ist, wollte ich freundlich nachfragen.')"><b>Nachdem</b> mehr als ein Monat vergangen ist, wollte ich freundlich nachfragen.</span><span class="w-ex-zh">在超過一個月過去之後，我想禮貌地詢問一下。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('inzwischen')">inzwischen</td>
+    <td><span class="w-tr-zh">這期間、目前已經</span><span class="w-tr-en">in the meantime / by now</span></td>
+    <td class="w-fn">表「在等待期間，已經發生了某件新事」，常見於補充近況更新。<span class="src-tag">Cornelsen3</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Inzwischen habe ich die Sprachprüfung Deutsch für den Beruf B2 erfolgreich abgelegt.')"><b>Inzwischen</b> habe ich die Sprachprüfung B2 erfolgreich abgelegt.</span><span class="w-ex-zh">在這期間我已經成功通過了B2德語考試。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('mittlerweile')">mittlerweile</td>
+    <td><span class="w-tr-zh">在這期間（同inzwischen）</span><span class="w-tr-en">meanwhile / by now</span></td>
+    <td class="w-fn">與 inzwischen 幾乎同義，純粹是同義詞干擾選項。<span class="src-tag">klett2干擾選項</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Mittlerweile habe ich auch andere Angebote erhalten.')"><b>Mittlerweile</b> habe ich auch andere Angebote erhalten.</span><span class="w-ex-zh">在這期間我也收到了其他的機會。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('seitdem')">seitdem</td>
+    <td><span class="w-tr-zh">自那時起</span><span class="w-tr-en">since then</span></td>
+    <td class="w-fn">回指一個已發生的時間點（如某次面談/事件），表「從那之後到現在」的時間段。<span class="src-tag">klett2</span><span class="src-tag">Hauber1</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Leider habe ich seitdem nichts mehr von Ihrem Unternehmen gehört.')">Leider habe ich <b>seitdem</b> nichts mehr von Ihrem Unternehmen gehört.</span><span class="w-ex-zh">很遺憾自那之後我就沒再收到您公司的消息。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('sofort')">sofort</td>
+    <td><span class="w-tr-zh">立刻、馬上</span><span class="w-tr-en">immediately</span></td>
+    <td class="w-fn">表動作毫無延遲地立即發生。<span class="src-tag">Cornelsen3</span><span class="src-tag">Hauber1</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Den Eingang meiner Unterlagen hatte man mir auch sofort bestätigt.')">Den Eingang meiner Unterlagen hatte man mir auch <b>sofort</b> bestätigt.</span><span class="w-ex-zh">我的文件送達後也立刻得到了確認。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('nochmals')">nochmals</td>
+    <td><span class="w-tr-zh">再一次</span><span class="w-tr-en">once again</span></td>
+    <td class="w-fn">表「重複再做一次」，常見於書信開頭/結尾的「再次感謝」。<span class="src-tag">klett1-Lösung</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Nochmals vielen Dank für die angenehme Atmosphäre bei meinem Vorstellungsgespräch.')"><b>Nochmals</b> vielen Dank für die angenehme Atmosphäre.</span><span class="w-ex-zh">再次感謝您在面談中營造的愉快氣氛。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('zurzeit')">zurzeit</td>
+    <td><span class="w-tr-zh">目前、此刻</span><span class="w-tr-en">currently</span></td>
+    <td class="w-fn">表「現在這個時間點」的狀態描述，與 derzeit 同義，純干擾選項。<span class="src-tag">klett1干擾選項</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Ich bin zurzeit noch in einem ungekündigten Arbeitsverhältnis.')">Ich bin <b>zurzeit</b> noch in einem ungekündigten Arbeitsverhältnis.</span><span class="w-ex-zh">我目前仍處於未終止的僱用關係中。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('bevor')">bevor（從屬）</td>
+    <td><span class="w-tr-zh">在…之前</span><span class="w-tr-en">before</span></td>
+    <td class="w-fn">從屬連接詞，動詞放句尾，與 nachdem 相對（之前 vs 之後）。<span class="src-tag">telc_online_2</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Bevor ich offiziell kündige, habe ich aber noch eine Frage.')"><b>Bevor</b> ich offiziell kündige, habe ich noch eine Frage.</span><span class="w-ex-zh">在我正式辭職之前，我還有一個問題。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('immer')">immer（noch）</td>
+    <td><span class="w-tr-zh">一直、總是</span><span class="w-tr-en">always / still</span></td>
+    <td class="w-fn">與 noch 搭配「immer noch」＝「依然、還在」，強調等待時間之長。<span class="src-tag">Cornelsen2</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Jetzt sind zwei Monate vergangen und ich warte immer noch auf eine positive Nachricht.')">Jetzt sind zwei Monate vergangen und ich warte <b>immer</b> noch auf eine Nachricht.</span><span class="w-ex-zh">現在已經過了兩個月，我還是一直在等消息。</span></td>
+  </tr>
+  </table>
+
+  <div class="cat-title">⑥ 方式／手段連接詞（Modal）</div>
+  <table class="vocab">
+  <tr><th style="width:13%">單字</th><th style="width:15%">翻譯</th><th style="width:34%">功能與用法</th><th>例句</th></tr>
+  <tr><td class="w-de" onclick="speakText('indem')">indem（從屬）</td>
+    <td><span class="w-tr-zh">透過…的方式</span><span class="w-tr-en">by (doing)</span></td>
+    <td class="w-fn">從屬連接詞，動詞放句尾，說明完成某事的手段/方法。<span class="src-tag">telc2</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Mein Praktikum habe ich absolviert, indem ich zwei Wochen lang die IT-System-Elektroniker begleiten durfte.')">Mein Praktikum habe ich absolviert, <b>indem</b> ich zwei Wochen lang die Techniker begleiten durfte.</span><span class="w-ex-zh">我完成實習的方式，是跟著技師工作了兩週。</span></td>
+  </tr>
+  </table>
+
+  <div class="cat-title">⑦ 對等／補充連接詞（sondern/sowohl/wie/wo/aber）</div>
+  <table class="vocab">
+  <tr><th style="width:13%">單字</th><th style="width:15%">翻譯</th><th style="width:34%">功能與用法</th><th>例句</th></tr>
+  <tr><td class="w-de" onclick="speakText('sondern')">sondern</td>
+    <td><span class="w-tr-zh">而是</span><span class="w-tr-en">but rather</span></td>
+    <td class="w-fn">與 nicht nur 配對「不只…而且…」。前句必為否定，sondern後接肯定對比內容。<span class="src-tag">telc2</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Ich interessiere mich nicht nur für die Arbeit mit EDV-Programmen, sondern auch für Elektronik.')">Ich interessiere mich nicht nur für EDV, <b>sondern</b> auch für Elektronik.</span><span class="w-ex-zh">我不僅對電腦感興趣，也對電子學感興趣。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('sowohl')">sowohl</td>
+    <td><span class="w-tr-zh">不論是…還是…</span><span class="w-tr-en">both ... and</span></td>
+    <td class="w-fn">與 als auch 配對，表兩者皆成立，無否定意涵（與sondern不同）。<span class="src-tag">telc2干擾選項</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Die Stelle passt sowohl zu meiner Ausbildung als auch zu meinen Interessen.')">Die Stelle passt <b>sowohl</b> zu meiner Ausbildung als auch zu meinen Interessen.</span><span class="w-ex-zh">這份工作不論在培訓或興趣上都合適。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('wie')">wie（補語子句）</td>
+    <td><span class="w-tr-zh">正如、如同</span><span class="w-tr-en">as</span></td>
+    <td class="w-fn">引導補充說明子句，常見「…, wie Sie ... entnehmen/sehen können」。<span class="src-tag">telc2</span><span class="src-tag">klett2</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Man war mit meiner Leistung sehr zufrieden, wie Sie dem Praktikumszeugnis entnehmen können.')">Man war sehr zufrieden, <b>wie</b> Sie dem Zeugnis entnehmen können.</span><span class="w-ex-zh">大家很滿意，這點您可以從證明中看出。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('wo')">wo（地點關係副詞）</td>
+    <td><span class="w-tr-zh">在那裡</span><span class="w-tr-en">where</span></td>
+    <td class="w-fn">關係副詞，引導修飾地點的關係子句。注意若句子內容是方式/原因而非地點，不能選 wo。<span class="src-tag">telc2干擾選項</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Das Unternehmen, wo ich mein Praktikum gemacht habe, liegt in Goslar.')">Das Unternehmen, <b>wo</b> ich mein Praktikum gemacht habe, liegt in Goslar.</span><span class="w-ex-zh">我實習的那家公司位於Goslar。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('aber')">aber（並列）</td>
+    <td><span class="w-tr-zh">但是</span><span class="w-tr-en">but</span></td>
+    <td class="w-fn">已列於②，此處作為對等連接詞補充：動詞位置不受影響，可放句中插入。<span class="src-tag">Cornelsen1</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Bevor ich offiziell kündige, habe ich aber noch eine Frage.')">Bevor ich offiziell kündige, habe ich <b>aber</b> noch eine Frage.</span><span class="w-ex-zh">在我正式辭職之前，我還有一個問題。</span></td>
+  </tr>
+  </table>
+
+  <div class="cat-title">⑧ 從屬連接詞：引導補語子句／間接問句（dass/ob/wann）</div>
+  <table class="vocab">
+  <tr><th style="width:13%">單字</th><th style="width:15%">翻譯</th><th style="width:34%">功能與用法</th><th>例句</th></tr>
+  <tr><td class="w-de" onclick="speakText('dass')">dass</td>
+    <td><span class="w-tr-zh">（引導內容子句）</span><span class="w-tr-en">that</span></td>
+    <td class="w-fn">從屬連接詞，動詞放句尾，引導「betonen/sagen/wissen + dass...」這類內容子句，本身無否定/疑問意涵，純粹陳述事實。<span class="src-tag">Cornelsen1</span><span class="src-tag">klett1-Lösung</span><span class="src-tag">telc_online_2</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Ich möchte noch einmal betonen, dass ich es sehr bedaure, aus Ihrem Unternehmen auszuscheiden.')">Ich möchte betonen, <b>dass</b> ich es sehr bedaure, auszuscheiden.</span><span class="w-ex-zh">我想再次強調，我很遺憾要離開公司。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('ob')">ob</td>
+    <td><span class="w-tr-zh">是否</span><span class="w-tr-en">whether</span></td>
+    <td class="w-fn">從屬連接詞，動詞放句尾，引導「不確定/詢問是否」的間接問句，與 dass 的差別：ob 帶有疑問/不確定語氣。<span class="src-tag">klett2</span><span class="src-tag">Cornelsen3</span><span class="src-tag">telc_online_1</span><span class="src-tag">telc_online_2</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Ich würde gerne wissen, ob Sie damit einverstanden sind.')">Ich würde gerne wissen, <b>ob</b> Sie damit einverstanden sind.</span><span class="w-ex-zh">我想知道您是否同意這件事。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('wann')">wann</td>
+    <td><span class="w-tr-zh">何時</span><span class="w-tr-en">when</span></td>
+    <td class="w-fn">疑問副詞兼從屬連接詞，動詞放句尾，引導「詢問時間點」的間接問句，與 ob（是否）的差別在於 wann 問的是具體時間。<span class="src-tag">Cornelsen3</span><span class="src-tag">klett1-Lösung</span><span class="src-tag">telc_online_1</span><span class="src-tag">Hauber1</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Es wäre sehr hilfreich, wenn Sie mir mitteilen könnten, wann ich frühestens mit einer Antwort rechnen kann.')">Es wäre hilfreich zu wissen, <b>wann</b> ich mit einer Antwort rechnen kann.</span><span class="w-ex-zh">如果能知道我最快何時能收到回覆會很有幫助。</span></td>
+  </tr>
+  </table>
+
+  <div class="cat-title">⑨ 回指代副詞（da-複合詞：darüber／dazu／dabei／darauf／damit／dafür）</div>
+  <table class="vocab">
+  <tr><th style="width:13%">單字</th><th style="width:15%">翻譯</th><th style="width:34%">功能與用法</th><th>例句</th></tr>
+  <tr><td class="w-de" onclick="speakText('darueber')">darüber</td>
+    <td><span class="w-tr-zh">關於這件事</span><span class="w-tr-en">about that</span></td>
+    <td class="w-fn">固定搭配：sprechen über／informieren über／sich freuen über。<span class="src-tag">telc1</span><span class="src-tag">klett3</span><span class="src-tag">klett1-Lösung</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Ich wollte Sie nur kurz darüber informieren.')">Ich wollte Sie nur kurz <b>darüber</b> informieren.</span><span class="w-ex-zh">我想簡短地通知您這件事。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('dazu')">dazu</td>
+    <td><span class="w-tr-zh">關於此事、為此</span><span class="w-tr-en">regarding that</span></td>
+    <td class="w-fn">固定搭配「Fragen dazu haben」「sich entschließen zu → dazu entschlossen」。<span class="src-tag">telc1</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Sollten Sie Fragen dazu haben, stehe ich Ihnen jederzeit zur Verfügung.')">Sollten Sie Fragen <b>dazu</b> haben, stehe ich jederzeit zur Verfügung.</span><span class="w-ex-zh">如果您對此還有問題，歡迎隨時與我聯繫。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('dabei')">dabei</td>
+    <td><span class="w-tr-zh">同時、在那過程中</span><span class="w-tr-en">in doing so</span></td>
+    <td class="w-fn">回指「在做前述動作的同時」，強調兩動作同時發生。<span class="src-tag">klett2</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Ich habe mich Ihnen persönlich vorgestellt und Ihnen dabei auch meine Bewerbungsunterlagen gegeben.')">Ich habe mich vorgestellt und Ihnen <b>dabei</b> auch die Unterlagen gegeben.</span><span class="w-ex-zh">我自我介紹的同時也把文件交給了您。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('darauf')">darauf</td>
+    <td><span class="w-tr-zh">在那之後、針對那件事</span><span class="w-tr-en">thereafter / to that</span></td>
+    <td class="w-fn">回指剛發生的事，常見「kurz darauf」＝不久之後，或固定搭配「sich freuen darauf」（期待未發生的事，與freuen über區分）。<span class="src-tag">telc_online_1</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Kurz darauf hatte ich eine Bestätigung über den Eingang der Bewerbungsunterlagen erhalten.')">Kurz <b>darauf</b> hatte ich eine Bestätigung erhalten.</span><span class="w-ex-zh">不久之後我就收到了確認。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('damit')">damit（從屬，目的）</td>
+    <td><span class="w-tr-zh">為了（讓）、以便</span><span class="w-tr-en">so that</span></td>
+    <td class="w-fn">作從屬連接詞時表「目的」，動詞放句尾，與 um...zu 的差別是 damit 可用於主詞不同的兩個子句。也可作回指代詞「藉此」。<span class="src-tag">telc_online_2干擾選項</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Ich schreibe Ihnen, damit Sie über meine Pläne informiert sind.')">Ich schreibe Ihnen, <b>damit</b> Sie über meine Pläne informiert sind.</span><span class="w-ex-zh">我寫信給您，是為了讓您知道我的計畫。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('dafuer')">dafür</td>
+    <td><span class="w-tr-zh">為此、對此</span><span class="w-tr-en">for that</span></td>
+    <td class="w-fn">固定搭配「sich bedanken für → dafür bedanken」＝為此事道謝。<span class="src-tag">Cornelsen1</span><span class="src-tag">Cornelsen2</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Ich möchte mich noch einmal dafür bedanken, dass ich mich bei Ihnen so gut weiterentwickeln konnte.')">Ich möchte mich <b>dafür</b> bedanken, dass ich mich so gut weiterentwickeln konnte.</span><span class="w-ex-zh">我想為此再次感謝，讓我能有這麼好的成長機會。</span></td>
+  </tr>
+  </table>
+
+  <div class="cat-title">⑩ wo-複合關係副詞（worüber／worauf）</div>
+  <table class="vocab">
+  <tr><th style="width:13%">單字</th><th style="width:15%">翻譯</th><th style="width:34%">功能與用法</th><th>例句</th></tr>
+  <tr><td class="w-de" onclick="speakText('woraueber')">worüber</td>
+    <td><span class="w-tr-zh">關於那件事（疑問/關係）</span><span class="w-tr-en">about which</span></td>
+    <td class="w-fn">wo-複合詞，用於關係子句指代「已經發生的事」，搭配 freuen über（已發生才用 worüber，未發生用 worauf）。判斷關鍵：事情已經發生→worüber。<span class="src-tag">klett2</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Sie haben mir angeboten, meine Unterlagen weiterzuleiten, worüber ich mich sehr gefreut habe.')">Sie haben mir das angeboten, <b>worüber</b> ich mich sehr gefreut habe.</span><span class="w-ex-zh">您提供了這個機會，這讓我很開心（已發生的事）。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('worauf')">worauf</td>
+    <td><span class="w-tr-zh">關於那件事（尚未發生）</span><span class="w-tr-en">for which / on which</span></td>
+    <td class="w-fn">wo-複合詞，用於指代「尚未發生、期待中的事」，搭配 freuen auf。與 worüber 成對比，此題中為干擾選項（因為原句指已發生的事）。<span class="src-tag">klett2干擾選項</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Ich habe mich auf das Gespräch vorbereitet, worauf ich mich schon lange gefreut hatte.')">Ich habe mich vorbereitet, <b>worauf</b> ich mich schon lange gefreut hatte.</span><span class="w-ex-zh">我做了準備，這是我期待已久的事（尚未發生前的期待）。</span></td>
+  </tr>
+  </table>
+
+  <div class="cat-title">⑪ 時間／範圍介系詞</div>
+  <table class="vocab">
+  <tr><th style="width:13%">單字</th><th style="width:15%">翻譯</th><th style="width:34%">功能與用法</th><th>例句</th></tr>
+  <tr><td class="w-de" onclick="speakText('ausserhalb')">außerhalb + Gen.</td>
+    <td><span class="w-tr-zh">在…之外</span><span class="w-tr-en">outside of</span></td>
+    <td class="w-fn">介系詞+屬格，表時間/空間範圍之外。<span class="src-tag">telc1</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Ich könnte außerhalb meiner Arbeitszeiten an dem Fernstudiengang teilnehmen.')">Ich könnte <b>außerhalb</b> meiner Arbeitszeiten teilnehmen.</span><span class="w-ex-zh">我可以在工作時間之外參加。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('zwischen')">zwischen + D</td>
+    <td><span class="w-tr-zh">在…之間</span><span class="w-tr-en">between</span></td>
+    <td class="w-fn">表數值/時間範圍之間，後接兩個並列數字+und。<span class="src-tag">telc1</span><span class="src-tag">Hauber1干擾選項</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Das Studium würde zwischen acht und zehn Stunden pro Woche in Anspruch nehmen.')">Das Studium würde <b>zwischen</b> acht und zehn Stunden in Anspruch nehmen.</span><span class="w-ex-zh">這個學程每週會佔用八到十小時之間的時間。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('bis')">bis + A（時間）</td>
+    <td><span class="w-tr-zh">直到</span><span class="w-tr-en">until</span></td>
+    <td class="w-fn">表時間終點「直到某個時間點為止」，常見「bis heute」＝直到今天。<span class="src-tag">Cornelsen1</span><span class="src-tag">Hauber1</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Leider wurde mir das Zeugnis bis heute noch nicht zugestellt.')">Leider wurde mir das Zeugnis <b>bis</b> heute noch nicht zugestellt.</span><span class="w-ex-zh">很遺憾證明文件直到今天還沒送達給我。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('seit')">seit + D（時間）</td>
+    <td><span class="w-tr-zh">自從</span><span class="w-tr-en">since</span></td>
+    <td class="w-fn">表時間起點，常與現在完成時/現在時搭配，表「從過去某時間點持續到現在」。<span class="src-tag">Cornelsen1/telc_online_1干擾選項</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Seit unserem Gespräch im Juni habe ich nichts mehr von Ihnen gehört.')"><b>Seit</b> unserem Gespräch im Juni habe ich nichts mehr von Ihnen gehört.</span><span class="w-ex-zh">自從六月那次談話之後我就沒有您的消息了。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('vor')">vor + D（時間）</td>
+    <td><span class="w-tr-zh">在…之前</span><span class="w-tr-en">before / ago</span></td>
+    <td class="w-fn">表時間上「在…之前」，與從屬連接詞 bevor（接子句）不同，vor 是介系詞，後接名詞/代詞。<span class="src-tag">telc_online_2干擾選項</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Vor drei Monaten habe ich meinen Arbeitsvertrag gekündigt.')"><b>Vor</b> drei Monaten habe ich meinen Arbeitsvertrag gekündigt.</span><span class="w-ex-zh">三個月前我終止了我的工作合約。</span></td>
+  </tr>
+  </table>
+
+  <div class="cat-title">⑫ 動詞／名詞固定搭配介系詞（Rektion）</div>
+  <table class="vocab">
+  <tr><th style="width:13%">單字</th><th style="width:15%">翻譯</th><th style="width:34%">功能與用法</th><th>例句</th></tr>
+  <tr><td class="w-de" onclick="speakText('von')">von + D</td>
+    <td><span class="w-tr-zh">從、由</span><span class="w-tr-en">from / of</span></td>
+    <td class="w-fn">基本介系詞，後接Dativ，表來源/所屬/被動執行者。常作干擾選項，需確認動詞固定搭配是否真是 von。<span class="src-tag">telc1干擾選項</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Die Zustimmung von meinem Chef liegt bereits vor.')">Die Zustimmung <b>von</b> meinem Chef liegt bereits vor.</span><span class="w-ex-zh">我主管的同意已經提供了。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('um')">bitten <b>um</b> + A</td>
+    <td><span class="w-tr-zh">請求（某事）</span><span class="w-tr-en">ask for</span></td>
+    <td class="w-fn">記憶單位是「bitten um」整組固定搭配。<span class="src-tag">telc1</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Ich bitte Sie hiermit um die schriftliche Erlaubnis.')">Ich bitte Sie hiermit <b>um</b> die schriftliche Erlaubnis.</span><span class="w-ex-zh">我在此向您請求書面許可。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('fuer')">sich bewerben <b>für</b> + A</td>
+    <td><span class="w-tr-zh">應徵（某職位）</span><span class="w-tr-en">apply for</span></td>
+    <td class="w-fn">記憶單位是「bewerben für」整組固定搭配。<span class="src-tag">telc2</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Betreff: Bewerbung für die Ausbildung zum IT-System-Elektroniker.')">Betreff: Bewerbung <b>für</b> die Ausbildung.</span><span class="w-ex-zh">主旨：應徵這個培訓職位。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('ueber')">sich freuen <b>über</b> + A</td>
+    <td><span class="w-tr-zh">為（已發生的事）開心</span><span class="w-tr-en">be glad about</span></td>
+    <td class="w-fn">記憶單位是「freuen über」整組，與 sich freuen auf（期待未發生的事）要區分。<span class="src-tag">telc2</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Über einen Terminvorschlag zum Bewerbungsgespräch freue ich mich.')"><b>Über</b> einen Terminvorschlag freue ich mich.</span><span class="w-ex-zh">很期待您提出面談時間的建議。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('in')">Einblick <b>in</b> + A</td>
+    <td><span class="w-tr-zh">對（某事）的深入了解</span><span class="w-tr-en">insight into</span></td>
+    <td class="w-fn">記憶單位是「Einblick in」整組固定搭配。<span class="src-tag">klett3</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Besonders interessant waren die Einblicke in die Pläne für die Expansion.')">Besonders interessant waren die Einblicke <b>in</b> die Pläne.</span><span class="w-ex-zh">特別有趣的是對計畫的深入了解。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('an')">Teilnahme <b>an</b> + D</td>
+    <td><span class="w-tr-zh">參與（某事）</span><span class="w-tr-en">participation in</span></td>
+    <td class="w-fn">記憶單位是「Teilnahme an」整組固定搭配，名詞固定搭配介系詞。<span class="src-tag">Cornelsen1</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Vielleicht könnten Sie auch meine erfolgreiche Teilnahme an den IT-Seminaren erwähnen.')">Könnten Sie meine Teilnahme <b>an</b> den IT-Seminaren erwähnen?</span><span class="w-ex-zh">您能否提及我參加IT研習課程的事？</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('mit')">sich entschließen <b>mit</b>／<b>zu</b></td>
+    <td><span class="w-tr-zh">決定（做某事）</span><span class="w-tr-en">decide to</span></td>
+    <td class="w-fn">此題中作為干擾選項出現，與正確答案 dazu（entschließen zu→dazu entschlossen）做對比，mit 在此語境不成立。<span class="src-tag">Cornelsen2干擾選項</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Ich beschäftige mich seit Jahren mit Elektronik.')">Ich beschäftige mich seit Jahren <b>mit</b> Elektronik.</span><span class="w-ex-zh">我多年來一直在研究電子學。</span></td>
+  </tr>
+  </table>
+
+  <div class="cat-title">⑬ 程度／強調副詞（auch / besonders / davon / nicht / sehr / vor allem / weiterhin / mehrfach）</div>
+  <table class="vocab">
+  <tr><th style="width:13%">單字</th><th style="width:15%">翻譯</th><th style="width:34%">功能與用法</th><th>例句</th></tr>
+  <tr><td class="w-de" onclick="speakText('auch')">auch</td>
+    <td><span class="w-tr-zh">也、同樣</span><span class="w-tr-en">also</span></td>
+    <td class="w-fn">最基本的附加副詞，表示「除了前述之外，這個也…」。<span class="src-tag">klett1</span><span class="src-tag">Cornelsen2干擾選項</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Danke, dass Sie mir die Chance gegeben haben, mich auch bei Ihnen persönlich vorzustellen.')">Danke, dass Sie mir die Chance gegeben haben, mich <b>auch</b> persönlich vorzustellen.</span><span class="w-ex-zh">謝謝您給我機會，也能親自向您自我介紹。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('besonders')">besonders</td>
+    <td><span class="w-tr-zh">特別、尤其</span><span class="w-tr-en">especially</span></td>
+    <td class="w-fn">表「在眾多項目中，這一點特別突出」。<span class="src-tag">klett1</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Besonders gut hat mir gefallen, dass Sie den Mitarbeitenden genug Zeit geben.')"><b>Besonders</b> gut hat mir gefallen, dass Sie den Mitarbeitenden genug Zeit geben.</span><span class="w-ex-zh">特別讓我喜歡的是您給員工足夠的時間。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('davon')">davon</td>
+    <td><span class="w-tr-zh">因此（被那件事）</span><span class="w-tr-en">by that</span></td>
+    <td class="w-fn">da-複合詞，固定搭配「beeindruckt sein von → davon beeindruckt sein」＝被那件事感動/印象深刻。<span class="src-tag">klett1</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Unser Gespräch hat mir gute Einblicke gegeben, davon war ich sehr beeindruckt.')">Unser Gespräch hat mir gute Einblicke gegeben, <b>davon</b> war ich sehr beeindruckt.</span><span class="w-ex-zh">我們的談話讓我有很好的了解，這讓我印象深刻。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('nicht')">nicht</td>
+    <td><span class="w-tr-zh">不</span><span class="w-tr-en">not</span></td>
+    <td class="w-fn">基本否定詞，此題中作干擾選項（文意是肯定句，不應選nicht）。<span class="src-tag">klett1干擾選項</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Die Stelle ist nicht weit von meiner Wohnung entfernt.')">Die Stelle ist <b>nicht</b> weit von meiner Wohnung entfernt.</span><span class="w-ex-zh">這個職位離我家不遠。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('sehr')">sehr</td>
+    <td><span class="w-tr-zh">非常</span><span class="w-tr-en">very</span></td>
+    <td class="w-fn">程度副詞，修飾形容詞/動詞，此題中作干擾選項（句構上不需要程度副詞，需要連接詞）。<span class="src-tag">klett1-Lösung干擾選項</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Ich war sehr beeindruckt von dem Gespräch.')">Ich war <b>sehr</b> beeindruckt von dem Gespräch.</span><span class="w-ex-zh">我對這次談話印象非常深刻。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('vorallem')">vor allem</td>
+    <td><span class="w-tr-zh">尤其、最重要的是</span><span class="w-tr-en">above all</span></td>
+    <td class="w-fn">表「在所有提到的事項中，這項最重要/最突出」，常用於補充強調。<span class="src-tag">klett1-Lösung</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Besonders Ihre Ausführungen zum Unternehmen, vor allem zur Unternehmenskultur, haben mich sehr überzeugt.')">Ihre Ausführungen, <b>vor allem</b> zur Unternehmenskultur, haben mich überzeugt.</span><span class="w-ex-zh">您的說明，尤其是關於企業文化的部分，讓我很信服。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('weiterhin')">weiterhin</td>
+    <td><span class="w-tr-zh">繼續、依然</span><span class="w-tr-en">still / continuing to</span></td>
+    <td class="w-fn">表「狀態持續不變，繼續下去」，常見於「依然很感興趣」這類句型。<span class="src-tag">klett1</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Ich möchte Ihnen deshalb zurückmelden, dass ich weiterhin sehr an der Stelle interessiert bin.')">Ich bin <b>weiterhin</b> sehr an der Stelle interessiert.</span><span class="w-ex-zh">我依然對這個職位非常有興趣。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('mehrfach')">mehrfach</td>
+    <td><span class="w-tr-zh">多次</span><span class="w-tr-en">multiple times</span></td>
+    <td class="w-fn">表「重複多次」，此題中作干擾選項。<span class="src-tag">telc_online_2干擾選項</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Ich habe mehrfach versucht, Sie telefonisch zu erreichen.')">Ich habe <b>mehrfach</b> versucht, Sie zu erreichen.</span><span class="w-ex-zh">我已經多次嘗試聯絡您。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('ebenfalls')">ebenfalls</td>
+    <td><span class="w-tr-zh">同樣地、也</span><span class="w-tr-en">likewise</span></td>
+    <td class="w-fn">與 auch 同義但較書面，表「同樣也」，此題中作干擾選項。<span class="src-tag">telc0干擾選項</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Das Formular habe ich ebenfalls ausgefüllt.')">Das Formular habe ich <b>ebenfalls</b> ausgefüllt.</span><span class="w-ex-zh">這份表格我也同樣填寫好了。</span></td>
+  </tr>
+  </table>
+
+  <div class="cat-title">⑭ 身份／例外／方式關係詞（als / ausnahmsweise / wobei / zeitweise）</div>
+  <table class="vocab">
+  <tr><th style="width:13%">單字</th><th style="width:15%">翻譯</th><th style="width:34%">功能與用法</th><th>例句</th></tr>
+  <tr><td class="w-de" onclick="speakText('als')">als（身份標示）</td>
+    <td><span class="w-tr-zh">作為、身為</span><span class="w-tr-en">as</span></td>
+    <td class="w-fn">表示「以…的身份/角色」，常放句首修飾整句主語的身份，後面通常不接動詞（不是從屬連接詞的als，是介系詞性質的用法）。判斷關鍵：句子描述「我這個人具備什麼條件/身份」。<span class="src-tag">telc0</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Als Tourismuskaufmann mit chilenischen Wurzeln passe ich sehr gut in Ihr Anforderungsprofil.')"><b>Als</b> Tourismuskaufmann mit chilenischen Wurzeln passe ich sehr gut in Ihr Profil.</span><span class="w-ex-zh">作為一個有智利血統的旅遊業務人員，我非常符合您的要求條件。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('ausnahmsweise')">ausnahmsweise</td>
+    <td><span class="w-tr-zh">例外地、破例</span><span class="w-tr-en">as an exception</span></td>
+    <td class="w-fn">表示「平常不這樣做，但這次破例」，常用於請求對方通融某個規定之外的做法。<span class="src-tag">telc0</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Kann ich Ihnen meine Bewerbung in diesem Fall ausnahmsweise per E-Mail zukommen lassen?')">Kann ich Ihnen meine Bewerbung <b>ausnahmsweise</b> per E-Mail zukommen lassen?</span><span class="w-ex-zh">在這個情況下，我可以例外地用電子郵件寄送我的申請嗎？</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('wobei')">wobei（關係副詞）</td>
+    <td><span class="w-tr-zh">在這過程中、然而</span><span class="w-tr-en">whereby / in which case</span></td>
+    <td class="w-fn">關係副詞，回指前面整個句子的情況，引出附帶的補充說明或對比，與 indem（手段）不同，wobei 不表「方法」而是「補充情境」。此題中為干擾選項。<span class="src-tag">telc0干擾選項</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Ich arbeite seit drei Jahren im Vertrieb, wobei ich auch Erfahrung im Kundenservice habe.')">Ich arbeite seit drei Jahren im Vertrieb, <b>wobei</b> ich auch Erfahrung im Kundenservice habe.</span><span class="w-ex-zh">我在銷售部門工作三年了，同時我也有客服經驗。</span></td>
+  </tr>
+  <tr><td class="w-de" onclick="speakText('zeitweise')">zeitweise</td>
+    <td><span class="w-tr-zh">有時候、暫時</span><span class="w-tr-en">at times / temporarily</span></td>
+    <td class="w-fn">表「並非一直都是，只是某些時段」，與 zwischen（時間區間之間）不同，zeitweise 強調「不連續、間歇性」。此題中為干擾選項。<span class="src-tag">telc0干擾選項</span></td>
+    <td><span class="w-ex-de" onclick="speakText('Telefonisch bin ich zeitweise nicht erreichbar.')">Telefonisch bin ich <b>zeitweise</b> nicht erreichbar.</span><span class="w-ex-zh">我電話有時候會聯絡不到。</span></td>
+  </tr>
+  </table>
+
+</div>
+
+<!-- ══════════════════════════ TAG 2 ══════════════════════════ -->
+<div class="tab-content" id="tag2">
+
+  <div class="type-nav">
+    <a href="#type1">類型一：求職信／初次應徵（5組）</a>
+    <a href="#type2">類型二：應徵後追問進度（2組）</a>
+    <a href="#type3">類型三：面試後感謝信（3組）</a>
+    <a href="#type4">類型四：離職／證明文件（2組）</a>
+    <a href="#type5">類型五：在職進修申請（1組）</a>
+  </div>
+
+  <!-- ════════ 類型一 ════════ -->
+  <div class="type-divider" id="type1">類型一：求職信／初次應徵</div>
+
+  <div class="ex-block">
+    <div class="ex-head">類型一：求職信 — telc Online-Übungstest 2 — Betreff: Bewerbung für die Ausbildung zum IT-System-Elektroniker</div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Sehr geehrter Herr Dr. Winterhalder, seit Jahren interessiere ich mich nicht nur für die Arbeit mit EDV-Programmen, sondern auch für Elektronik. Dieses Interesse zeigt sich auch in meinen guten Noten in Informatik und Physik.')">
+        <span class="speak-icon">🔊</span>Sehr geehrter Herr Dr. Winterhalder,<br><br>
+        seit Jahren interessiere ich mich nicht nur für die Arbeit mit EDV-Programmen, <span class="blank">47</span> auch für Elektronik. Dieses Interesse zeigt sich auch in meinen guten Noten in Informatik und Physik.
+      </div>
+      <div class="para-zh">親愛的溫特霍德博士，<br><br>多年來我不僅對電腦程式工作感興趣，<span class="ans-inline">47 sondern（而且）</span>也對電子學感興趣。這份興趣也體現在我資訊和物理的好成績上。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Mein Praktikum zur Berufsorientierung habe ich bei der Holister GmbH in Goslar absolviert, indem ich zwei Wochen lang die IT-System-Elektroniker des Unternehmens begleiten durfte. Diese Arbeit hat mir gut gefallen und man war mit meiner Leistung sehr zufrieden, wie Sie dem Praktikumszeugnis entnehmen können.')">
+        <span class="speak-icon">🔊</span>Mein Praktikum zur Berufsorientierung habe ich bei der Holister GmbH in Goslar absolviert, <span class="blank">48</span> ich zwei Wochen lang die IT-System-Elektroniker des Unternehmens begleiten durfte. Diese Arbeit hat mir gut gefallen und man war mit meiner Leistung sehr zufrieden, <span class="blank">49</span> Sie dem Praktikumszeugnis entnehmen können.
+      </div>
+      <div class="para-zh">我在Goslar的Holister GmbH完成了職業導向實習，<span class="ans-inline">48 indem（透過…的方式）</span>跟著公司的IT系統電子技師工作了兩週。大家對我的表現很滿意，<span class="ans-inline">49 wie（正如）</span>您可以從實習證明中看出。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Auf der Job-Messe vergangene Woche habe ich Ihr Unternehmen kennengelernt und das Gespräch mit Ihnen hat mich nachhaltig beeindruckt und in dem Wunsch bestärkt, meine Ausbildung bei FSM zu absolvieren. Daher bewerbe ich mich bei Ihnen. Gern überzeuge ich Sie von meiner Motivation und Eignung persönlich. Über einen Terminvorschlag zum Bewerbungsgespräch freue ich mich.')">
+        <span class="speak-icon">🔊</span>Auf der Job-Messe vergangene Woche habe ich Ihr Unternehmen kennengelernt und das Gespräch mit Ihnen hat mich nachhaltig beeindruckt und in dem Wunsch bestärkt, meine Ausbildung bei „FSM“ zu absolvieren. <span class="blank">50</span> bewerbe ich mich bei Ihnen. Gern überzeuge ich Sie von meiner Motivation und Eignung persönlich. <span class="blank">51</span> einen Terminvorschlag zum Bewerbungsgespräch freue ich mich.<br><br>Mit freundlichen Grüßen<br>Kevin Taylor
+      </div>
+      <div class="para-zh">上週在就業博覽會上我認識了您的公司，談話讓我更加堅定想在「FSM」完成培訓的願望。<span class="ans-inline">50 daher（因此）</span>我向您提出申請。我很樂意當面說明我的動機和能力，<span class="ans-inline">51 über（期待）</span>面談時間的建議。</div>
+    </div>
+    <div class="opt-box"><b>選項：</b>a dabei　b daher　c für　d indem　e jedoch　f sowohl　g sondern　h über　i wie　j wo</div>
+    <div class="note-box">
+      <div class="note-row"><span class="note-num">46</span>für — sich bewerben für</div>
+      <div class="note-row"><span class="note-num">47</span>sondern — nicht nur... sondern auch</div>
+      <div class="note-row"><span class="note-num">48</span>indem — 完成的方式/手段</div>
+      <div class="note-row"><span class="note-num">49</span>wie — wie Sie ... entnehmen können</div>
+      <div class="note-row"><span class="note-num">50</span>daher — 前述理由→結論</div>
+      <div class="note-row"><span class="note-num">51</span>über — sich freuen über</div>
+    </div>
+  </div>
+
+  <div class="ex-block">
+    <div class="ex-head">類型一：求職信 — Cornelsen Prüfungstraining Test 2 — Betreff: Meine Bewerbung vom 1. September 2021 (Krankenpfleger)</div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Sehr geehrte Damen und Herren, am 1. September habe ich mich in Ihrer Klinik für die Stelle als Krankenpfleger beworben. Am 14. September haben Sie mir eine Bestätigung geschickt, dass Sie meine Unterlagen erhalten haben, dafür herzlichen Dank.')">
+        <span class="speak-icon">🔊</span>Sehr geehrte Damen und Herren,<br><br>
+        am 1. September habe ich mich in Ihrer Klinik für die Stelle als Krankenpfleger beworben. Am 14. September haben Sie mir eine Bestätigung geschickt, dass Sie meine Unterlagen erhalten haben, <span class="blank">46</span> herzlichen Dank.
+      </div>
+      <div class="para-zh">敬啟者：<br><br>9月1日我應徵了您診所的護理師職位。9月14日您寄來確認信，告知收到我的文件，<span class="ans-inline">46 dafür（為此）</span>非常感謝。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Jetzt sind zwei Monate vergangen und ich warte immer noch auf eine hoffentlich positive Nachricht von Ihnen. Ich möchte noch einmal betonen, dass ich großes Interesse habe, in Ihrer Klinik tätig zu sein.')">
+        <span class="speak-icon">🔊</span>Jetzt sind zwei Monate vergangen und ich warte <span class="blank">47</span> noch auf eine hoffentlich positive Nachricht von Ihnen. Ich möchte noch einmal betonen, dass ich großes Interesse habe, in Ihrer Klinik tätig zu sein.
+      </div>
+      <div class="para-zh">現在已經過了兩個月，我<span class="ans-inline">47 immer（一直）</span>還在等待希望是正面的消息。我想再次強調，我非常有興趣在您的診所工作。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Eine rasche Antwort wäre für mich auch deshalb sehr wichtig, denn das Pflegezentrum, in dem ich momentan beschäftigt bin, leider Ende des Jahres schließt. Daher muss ich mich schnell nach einer neuen Stelle umsehen.')">
+        <span class="speak-icon">🔊</span>Eine rasche Antwort wäre für mich auch deshalb sehr wichtig, <span class="blank">48</span> das Pflegezentrum, in dem ich momentan beschäftigt bin, leider Ende des Jahres schließt. <span class="blank">49</span> muss ich mich schnell nach einer neuen Stelle umsehen.
+      </div>
+      <div class="para-zh">快速回覆對我也很重要，<span class="ans-inline">48 denn（因為）</span>我目前任職的照護中心很遺憾年底將關閉。<span class="ans-inline">49 daher（因此）</span>我必須趕快找新工作。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Ich würde allerdings sehr gern bei ihnen arbeiten und denke, dass ich aufgrund meiner Qualifikationen und Berufserfahrung sehr gut in Ihr Team passen würde. Für eine schnelle Antwort wäre ich Ihnen dankbar, sollten noch Unterlagen fehlen, lassen Sie mich das bitte wissen.')">
+        <span class="speak-icon">🔊</span>Ich würde allerdings sehr gern bei ihnen arbeiten und denke, dass ich <span class="blank">50</span> meiner Qualifikationen und Berufserfahrung sehr gut in Ihr Team passen würde. Für eine schnelle Antwort wäre ich Ihnen dankbar, sollten <span class="blank">51</span> Unterlagen fehlen, lassen Sie mich das bitte wissen.<br><br>Mit freundlichen Grüßen<br>Hatice Yildiz
+      </div>
+      <div class="para-zh">我仍然很想在您這裡工作，並認為<span class="ans-inline">50 aufgrund（基於）</span>我的資歷和經驗會很適合您的團隊。若能盡快回覆我會很感激，如果<span class="ans-inline">51 noch（還）</span>缺少文件，請讓我知道。</div>
+    </div>
+    <div class="opt-box"><b>選項：</b>a auch　b aufgrund　c da　d daher　e dafür　f denn　g immer　h mit　i noch　j sobald</div>
+    <div class="note-box">
+      <div class="note-row"><span class="note-num">46</span>dafür — bedanken für → dafür</div>
+      <div class="note-row"><span class="note-num">47</span>immer — immer noch（一直還）</div>
+      <div class="note-row"><span class="note-num">48</span>denn — 並列因果，不倒裝</div>
+      <div class="note-row"><span class="note-num">49</span>daher — 前因→結論</div>
+      <div class="note-row"><span class="note-num">50</span>aufgrund — 介系詞「基於」+Gen.</div>
+      <div class="note-row"><span class="note-num">51</span>noch — 還缺少（狀態未變）</div>
+    </div>
+  </div>
+
+  <div class="ex-block">
+    <div class="ex-head">類型一：求職信 — Cornelsen Prüfungstraining Test 3 — Meine Bewerbung vom 1. Juni (Empfangsmitarbeiterin)</div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Sehr geehrte Damen und Herren, am 2. Mai hatte ich mich bei Ihrem Unternehmen für die ausgeschriebene Stelle als Empfangsmitarbeiterin beworben. Sie hatten mir mit Ihrer Mail vom 4. Mai den Empfang meiner Bewerbung bestätigt.')">
+        <span class="speak-icon">🔊</span>Sehr geehrte Damen und Herren,<br><br>
+        am 2. Mai hatte ich mich bei Ihrem Unternehmen für die ausgeschriebene Stelle als Empfangsmitarbeiterin beworben. Sie hatten mir mit Ihrer Mail vom 4. Mai den Empfang meiner Bewerbung bestätigt.
+      </div>
+      <div class="para-zh">敬啟者：<br><br>5月2日我應徵了您公司刊登的接待人員職位。您在5月4日的郵件中確認收到我的申請。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Nachdem mehr als ein Monat vergangen ist, wollte ich freundlich nachfragen, ob Sie meine Bewerbung bereits bearbeitet haben bzw. wann ich ungefähr eine Antwort erhalten könnte.')">
+        <span class="speak-icon">🔊</span><span class="blank">46</span> mehr als ein Monat vergangen ist, wollte ich freundlich nachfragen, <span class="blank">47</span> Sie meine Bewerbung bereits bearbeitet haben bzw. <span class="blank">48</span> ich ungefähr eine Antwort erhalten könnte.
+      </div>
+      <div class="para-zh"><span class="ans-inline">46 nachdem（在…之後）</span>超過一個月過去，我想禮貌地詢問，<span class="ans-inline">47 ob（是否）</span>您已經處理我的申請，或<span class="ans-inline">48 wann（何時）</span>我能大概收到回覆。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Inzwischen habe ich die Sprachprüfung Deutsch für den Beruf B2 erfolgreich abgelegt. Gerne füge ich zu Ihrer Information meinem heutigen Schreiben eine Kopie meines B2-Zeugnisses bei.')">
+        <span class="speak-icon">🔊</span><span class="blank">49</span> habe ich die Sprachprüfung Deutsch für den Beruf B2 erfolgreich abgelegt. Gerne füge ich zu Ihrer Information meinem heutigen Schreiben eine Kopie meines B2-Zeugnisses bei.
+      </div>
+      <div class="para-zh"><span class="ans-inline">49 inzwischen（在這期間）</span>我已經成功通過B2德語檢定考試。我很樂意在這次信件中附上B2證書影本供您參考。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Sollten sie noch weitere Unterlagen zu meinen Qualifikationen benötigen, lassen Sie mich das bitte wissen. Ich werde Sie Ihnen dann sofort nachreichen. Ich bin sicher, dass ich aufgrund meiner Fähigkeiten die in Ihrer Stellenanzeige geforderten Qualifikationen erfülle.')">
+        <span class="speak-icon">🔊</span>Sollten sie noch weitere Unterlagen zu meinen Qualifikationen benötigen, lassen Sie mich das bitte wissen. Ich werde Sie Ihnen dann <span class="blank">50</span> nachreichen. Ich bin sicher, dass ich <span class="blank">51</span> meiner Fähigkeiten die in Ihrer Stellenanzeige geforderten Qualifikationen erfülle.<br><br>Mit freundlichen Grüßen<br>Miren Da Costa
+      </div>
+      <div class="para-zh">如果您還需要其他關於我資歷的文件，請讓我知道，我會<span class="ans-inline">50 sofort（立刻）</span>補上。我確信<span class="ans-inline">51 aufgrund（基於）</span>我的能力符合您招聘公告中要求的資格。</div>
+    </div>
+    <div class="opt-box"><b>選項：</b>a anlässlich　b aufgrund　c daher　d dazu　e inzwischen　f nachdem　g sobald　h sofort　i ob　j wann</div>
+    <div class="note-box">
+      <div class="note-row"><span class="note-num">46</span>nachdem — 「在…之後」引導前提</div>
+      <div class="note-row"><span class="note-num">47</span>ob — 詢問「是否」</div>
+      <div class="note-row"><span class="note-num">48</span>wann — 詢問「何時」</div>
+      <div class="note-row"><span class="note-num">49</span>inzwischen — 補充近況更新</div>
+      <div class="note-row"><span class="note-num">50</span>sofort — 立刻補上</div>
+      <div class="note-row"><span class="note-num">51</span>aufgrund — 介系詞「基於」+Gen.</div>
+    </div>
+  </div>
+
+  <div class="ex-block">
+    <div class="ex-head">類型一：求職信 — Hueber Prüfung Express — Betreff: Meine Bewerbung vom 24.02. (Maschinenschlosser)</div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Sehr geehrte Damen und Herren, bezugnehmend auf Ihr Stellenangebot unter der Nummer DA-501921 bei der Bundesagentur für Arbeit hatte ich mich am 24.07. bei Ihrem Unternehmen als Maschinenschlosser beworben. Den Eingang meiner Unterlagen hatte man mir auch sofort bestätigt.')">
+        <span class="speak-icon">🔊</span>Sehr geehrte Damen und Herren,<br><br>
+        bezugnehmend auf Ihr Stellenangebot unter der Nummer DA-501921 bei der Bundesagentur für Arbeit hatte ich mich am 24.07. bei Ihrem Unternehmen als Maschinenschlosser beworben. Den Eingang meiner Unterlagen hatte man mir auch <span class="blank">46</span> bestätigt.
+      </div>
+      <div class="para-zh">敬啟者：<br><br>關於您在聯邦勞動局刊登的編號DA-501921的職位，我於7月24日應徵了您公司的機械鎖匠職位。我的文件送達後也<span class="ans-inline">46 sofort（立刻）</span>得到了確認。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Seitdem sind fast fünf Wochen vergangen, doch leider habe ich bis heute noch keine Antwort von Ihnen erhalten. Es wäre sehr hilfreich, wenn Sie mir kurz mitteilen könnten, wann ich frühestens mit einer Antwort rechnen kann, da ich gerade noch von einem anderen Unternehmen auch ein interessantes Angebot erhalten habe.')">
+        <span class="speak-icon">🔊</span><span class="blank">47</span> sind fast fünf Wochen vergangen, doch leider habe ich <span class="blank">48</span> heute noch keine Antwort von Ihnen erhalten. Es wäre sehr hilfreich, wenn Sie mir kurz mitteilen könnten, <span class="blank">49</span> ich frühestens mit einer Antwort rechnen kann, da ich gerade noch von einem anderen Unternehmen auch ein interessantes Angebot erhalten habe.
+      </div>
+      <div class="para-zh"><span class="ans-inline">47 seitdem（自那時起）</span>已經過了將近五週，但很遺憾<span class="ans-inline">48 bis（直到）</span>今天我還沒收到您的回覆。若您能告訴我<span class="ans-inline">49 wann（何時）</span>能最快收到答覆會很有幫助，因為我目前還收到另一家公司有趣的提案。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Eine Tätigkeit bei Ihnen würde mir jedoch mehr zusagen, allein schon aufgrund der guten Erreichbarkeit des Arbeitsplatzes. Daher möchte ich sicher sein, dass meine Bewerbung bei Ihnen nicht vergessen wurde. Über eine baldige Nachricht würde ich mich freuen.')">
+        <span class="speak-icon">🔊</span>Eine Tätigkeit bei Ihnen würde mir jedoch mehr zusagen, allein schon <span class="blank">50</span> der guten Erreichbarkeit des Arbeitsplatzes. <span class="blank">51</span> möchte ich sicher sein, dass meine Bewerbung bei Ihnen nicht vergessen wurde. Über eine baldige Nachricht würde ich mich freuen.<br><br>Freundliche Grüße<br>Valdis Jagodinskis
+      </div>
+      <div class="para-zh">在您這裡工作會更吸引我，光是<span class="ans-inline">50 aufgrund（基於）</span>交通便利這點就已經是理由。<span class="ans-inline">51 daher（因此）</span>我想確認我的申請沒有被遺忘。期待盡快收到您的消息。</div>
+    </div>
+    <div class="opt-box"><b>選項：</b>a aufgrund　b bis　c daher　d darüber　e ob　f seitdem　g sobald　h sofort　i wann　j zwischen</div>
+    <div class="note-box">
+      <div class="note-row"><span class="note-num">46</span>sofort — 立刻確認收件</div>
+      <div class="note-row"><span class="note-num">47</span>seitdem — 自上次申請至今</div>
+      <div class="note-row"><span class="note-num">48</span>bis — bis heute直到今天</div>
+      <div class="note-row"><span class="note-num">49</span>wann — 詢問最快何時</div>
+      <div class="note-row"><span class="note-num">50</span>aufgrund — 介系詞「基於」+Gen.</div>
+      <div class="note-row"><span class="note-num">51</span>daher — 前述理由→結論</div>
+    </div>
+  </div>
+
+  <div class="ex-block">
+    <div class="ex-head">類型一：求職信 — telc Online-Übungstest 0 — Betreff: Bewerbung als Tourismuskaufmann</div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Sehr geehrter Herr Frenzel, auf der Internetseite Ihres Unternehmens bin ich auf das Stellenangebot Reiseberater Südamerika aufmerksam geworden. Als Tourismuskaufmann mit chilenischen Wurzeln und ausgezeichneten Kenntnissen der Zielregionen passe ich sehr gut in Ihr Anforderungsprofil und möchte mich gern bewerben.')">
+        <span class="speak-icon">🔊</span>Sehr geehrter Herr Frenzel,<br><br>
+        auf der Internetseite Ihres Unternehmens bin ich auf das Stellenangebot „Reiseberater Südamerika“ aufmerksam geworden. <span class="blank">1</span> Tourismuskaufmann mit chilenischen Wurzeln und ausgezeichneten Kenntnissen der Zielregionen passe ich sehr gut in Ihr Anforderungsprofil und möchte mich gern bewerben.
+      </div>
+      <div class="para-zh">親愛的弗倫策爾先生，<br><br>我在您公司的網站上注意到「南美洲旅遊顧問」這個職缺。<span class="ans-inline">1 als（作為）</span>一位有智利血統、對目的地地區有豐富知識的旅遊業務人員，我非常符合您的需求條件，想藉此提出申請。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Das Online-Bewerbungsformular habe ich auch bereits ausgefüllt und die erforderlichen Dokumente hochgeladen, allerdings gibt es ein technisches Problem: Die Bewerbung lässt sich nicht abschicken. Jedes Mal, wenn ich auf Senden klicke, erhalte ich die Meldung Senden fehlgeschlagen.')">
+        <span class="speak-icon">🔊</span>Das Online-Bewerbungsformular habe ich auch <span class="blank">2</span> ausgefüllt und die erforderlichen Dokumente hochgeladen, allerdings gibt es ein technisches Problem: Die Bewerbung lässt sich nicht abschicken. Jedes Mal, <span class="blank">3</span> ich auf „Senden“ klicke, erhalte ich die Meldung „Senden fehlgeschlagen“.
+      </div>
+      <div class="para-zh">線上申請表我也<span class="ans-inline">2 bereits（已經）</span>填好了，需要的文件也上傳了，不過有個技術問題：申請無法送出。每次<span class="ans-inline">3 wenn（當）</span>我點擊「送出」，就會收到「送出失敗」的訊息。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Kann ich Ihnen meine Bewerbung in diesem Fall ausnahmsweise per E-Mail zukommen lassen, obwohl in der Stellenanzeige steht, dass Sie ausschließlich Online-Bewerbungen akzeptieren?')">
+        <span class="speak-icon">🔊</span>Kann ich Ihnen meine Bewerbung in diesem Fall <span class="blank">4</span> per E-Mail zukommen lassen – obwohl in der Stellenanzeige steht, <span class="blank">5</span> Sie ausschließlich Online-Bewerbungen akzeptieren?
+      </div>
+      <div class="para-zh">在這種情況下，我可以<span class="ans-inline">4 ausnahmsweise（例外地）</span>用電子郵件把申請寄給您嗎？儘管職缺公告上寫著<span class="ans-inline">5 dass（您）</span>只接受線上申請。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Ich freue mich über Ihre Rückmeldung. Sie erreichen mich telefonisch unter 0555 26091930 oder per E-Mail. Telefonisch bin ich in der Regel zwischen 8:00 und 20:00 Uhr gut erreichbar. Vielen Dank.')">
+        <span class="speak-icon">🔊</span>Ich freue mich über Ihre Rückmeldung. Sie erreichen mich telefonisch unter 0555 26091930 oder per E-Mail. Telefonisch bin ich in der Regel <span class="blank">6</span> 8:00 und 20:00 Uhr gut erreichbar. Vielen Dank.<br><br>Mit freundlichen Grüßen<br>Javier Guzmán
+      </div>
+      <div class="para-zh">期待您的回覆。您可以透過電話0555 26091930或電子郵件聯繫我。電話通常在<span class="ans-inline">6 zwischen（…之間）</span>早上8點到晚上8點之間都能聯絡到我。非常感謝。</div>
+    </div>
+    <div class="opt-box"><b>選項：</b>a als　b ausnahmsweise　c bereits　d dass　e ebenfalls　f von　g wenn　h wobei　i zeitweise　j zwischen</div>
+    <div class="note-box">
+      <div class="note-row"><span class="note-num">1</span>als — 身份標示「作為」</div>
+      <div class="note-row"><span class="note-num">2</span>bereits — 表單已經填好</div>
+      <div class="note-row"><span class="note-num">3</span>wenn — 「每次當…」</div>
+      <div class="note-row"><span class="note-num">4</span>ausnahmsweise — 請求破例</div>
+      <div class="note-row"><span class="note-num">5</span>dass — 引導內容子句</div>
+      <div class="note-row"><span class="note-num">6</span>zwischen — 時間區間之間</div>
+    </div>
+  </div>
+  <div class="type-divider" id="type2">類型二：應徵後追問進度</div>
+
+  <div class="ex-block">
+    <div class="ex-head">類型二：應徵後追問 — Klett Modelltest 2 — Betreff: Meine Bewerbung am 25.06. auf der Job-Messe</div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Sehr geehrter Herr Radebrecht, im Juni hatte ich mich Ihnen auf der Job-Messe in Dresden persönlich vorgestellt und Ihnen dabei auch meine Bewerbungsunterlagen gegeben. Nach einem intensiven Gespräch über die Tätigkeiten als Social-Media-Manager, haben Sie mir angeboten, meine Unterlagen an Ihre Marketingleiterin weiterzuleiten, worüber ich mich sehr gefreut habe.')">
+        <span class="speak-icon">🔊</span>Sehr geehrter Herr Radebrecht,<br><br>
+        im Juni hatte ich mich Ihnen auf der Job-Messe in Dresden persönlich vorgestellt und Ihnen <span class="blank">46</span> auch meine Bewerbungsunterlagen gegeben. Nach einem intensiven Gespräch über die Tätigkeiten als Social-Media-Manager, haben Sie mir angeboten, meine Unterlagen an Ihre Marketingleiterin weiterzuleiten, <span class="blank">47</span> ich mich sehr gefreut habe.
+      </div>
+      <div class="para-zh">親愛的拉德布雷希特先生，<br><br>六月在德雷斯登的就業博覽會上，我向您當面自我介紹，<span class="ans-inline">46 dabei（同時）</span>也把我的申請文件交給了您。經過一番關於社群媒體經理職務的深入談話，您提議將我的文件轉交給您的行銷主管，<span class="ans-inline">47 worüber（這讓我很開心，已發生的事）</span>。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Leider habe ich seitdem nichts mehr von Ihrem Unternehmen gehört und bin nun unsicher, ob die Unterlagen vielleicht verlorengegangen sind. Deshalb melde ich mich schriftlich bei Ihnen und hänge meine Bewerbungsunterlagen zur Sicherheit noch einmal an.')">
+        <span class="speak-icon">🔊</span>Leider habe ich <span class="blank">48</span> nichts mehr von Ihrem Unternehmen gehört und bin nun unsicher, ob die Unterlagen vielleicht verlorengegangen sind. <span class="blank">49</span> melde ich mich schriftlich bei Ihnen und hänge meine Bewerbungsunterlagen zur Sicherheit noch einmal an.
+      </div>
+      <div class="para-zh">很遺憾<span class="ans-inline">48 seitdem（自那之後）</span>我就沒再收到您公司的消息，現在不確定文件是否遺失了。<span class="ans-inline">49 deshalb（所以）</span>我再次用書面方式聯繫您，並再附上一次我的申請文件以防萬一。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Für Ihr Unternehmen habe ich schon einige Ideen, wie Sie Ihr Online-Kundenmagazin noch interessanter machen können und mehr junge Menschen über soziale Medien erreichen. Gerne führe ich diese in einem persönlichen Gespräch aus. Da ich zurzeit in keinem Beschäftigungsverhältnis stehe, bin ich zeitlich flexibel.')">
+        <span class="speak-icon">🔊</span>Für Ihr Unternehmen habe ich schon einige Ideen, <span class="blank">50</span> Sie Ihr Online-Kundenmagazin noch interessanter machen können und mehr junge Menschen über soziale Medien erreichen. Gerne führe ich diese in einem persönlichen Gespräch aus.<br><br><span class="blank">51</span> ich zurzeit in keinem Beschäftigungsverhältnis stehe, bin ich zeitlich flexibel.<br><br>Vielen Dank im Voraus und mit freundlichen Grüßen<br>Kevin Murr
+      </div>
+      <div class="para-zh">關於您的公司我已經有些想法，<span class="ans-inline">50 wie（要如何）</span>讓您的線上客戶雜誌更有趣，並透過社群媒體接觸更多年輕人。我很樂意在面談中具體說明。<br><br><span class="ans-inline">51 da（既然）</span>我目前沒有任職於任何公司，時間上很有彈性。</div>
+    </div>
+    <div class="opt-box"><b>選項：</b>a da　b dabei　c deshalb　d mittlerweile　e ob　f seitdem　g wann　h wie　i worauf　j worüber</div>
+    <div class="note-box">
+      <div class="note-row"><span class="note-num">46</span>dabei — 同時做兩件事</div>
+      <div class="note-row"><span class="note-num">47</span>worüber — 已發生的事（freuen über）</div>
+      <div class="note-row"><span class="note-num">48</span>seitdem — 自上次談話之後</div>
+      <div class="note-row"><span class="note-num">49</span>deshalb — 前因後果</div>
+      <div class="note-row"><span class="note-num">50</span>wie — 間接問句「如何」</div>
+      <div class="note-row"><span class="note-num">51</span>da — 從屬給理由</div>
+    </div>
+  </div>
+
+  <div class="ex-block">
+    <div class="ex-head">類型二：應徵後追問 — telc Online-Übungstest 1 — Betreff: Bewerbung als Hotelfachfrau</div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Sehr geehrte Damen und Herren, am 24.04.20XX hatte ich mich bei Ihnen auf die auf Ihrer Website unter der Kennziffer 20-AFX-10238 ausgeschriebene Stelle als Hotelfachfrau beworben. Kurz darauf hatte ich eine Bestätigung über den Eingang der Bewerbungsunterlagen erhalten. Eine weitere Rückmeldung habe ich bisher nicht bekommen.')">
+        <span class="speak-icon">🔊</span>Sehr geehrte Damen und Herren,<br><br>
+        am 24.04.20XX hatte ich mich bei Ihnen auf die auf Ihrer Website unter der Kennziffer 20-AFX-10238 ausgeschriebene Stelle als Hotelfachfrau beworben. Kurz <span class="blank">46</span> hatte ich eine Bestätigung über den Eingang der Bewerbungsunterlagen erhalten. Eine weitere Rückmeldung habe ich <span class="blank">47</span> nicht bekommen.
+      </div>
+      <div class="para-zh">敬啟者：<br><br>4月24日我應徵了您網站上編號20-AFX-10238刊登的飯店服務人員職位。<span class="ans-inline">46 darauf（不久之後）</span>我收到了文件送達的確認。<span class="ans-inline">47 bisher（至今）</span>我還沒收到進一步的回覆。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Da ich an der Stelle außerordentlich interessiert bin, würde ich mich über eine Einladung zu einem Vorstellungsgespräch sehr freuen. Ich möchte sicherstellen, dass ich an einem solchen Gespräch auch teilnehmen kann.')">
+        <span class="speak-icon">🔊</span><span class="blank">48</span> ich an der Stelle außerordentlich interessiert bin, würde ich mich über eine Einladung zu einem Vorstellungsgespräch sehr freuen. Ich möchte sicherstellen, dass ich an einem solchen Gespräch auch teilnehmen kann.
+      </div>
+      <div class="para-zh"><span class="ans-inline">48 da（既然）</span>我對這個職位非常有興趣，若能受邀面談我會很開心。我想確保自己能參加這樣的面談。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Wenn Sie schon wissen, wann die Vorstellungsgespräche in etwa stattfinden werden, wäre ich für eine kurze Information dankbar. Vom 04.06. bis 18.06.20XX habe ich eine Urlaubsreise geplant und würde gern wissen, ob ich diese wie geplant antreten kann. Ansonsten würde ich sie für das Vorstellungsgespräch verschieben.')">
+        <span class="speak-icon">🔊</span><span class="blank">49</span> Sie schon wissen, <span class="blank">50</span> die Vorstellungsgespräche in etwa stattfinden werden, wäre ich für eine kurze Information dankbar. Vom 04.06. bis 18.06.20XX habe ich eine Urlaubsreise geplant und würde gern wissen, <span class="blank">51</span> ich diese wie geplant antreten kann. Ansonsten würde ich sie für das Vorstellungsgespräch verschieben.<br><br>Mit freundlichen Grüßen<br>Carla Hirschfeld
+      </div>
+      <div class="para-zh"><span class="ans-inline">49 wenn（如果）</span>您已經知道面談大概何時舉行，簡短告知我會很感激。我安排了6月4日到18日的假期旅行，想知道<span class="ans-inline">50 wann（何時）</span>面談會舉行，以及<span class="ans-inline">51 ob（是否）</span>我能照原計畫出發。否則我會為面談延期。</div>
+    </div>
+    <div class="opt-box"><b>選項：</b>a aufgrund　b bisher　c da　d daher　e darauf　f ob　g seit　h sobald　i wann　j wenn</div>
+    <div class="note-box">
+      <div class="note-row"><span class="note-num">46</span>darauf — kurz darauf不久之後</div>
+      <div class="note-row"><span class="note-num">47</span>bisher — 至今未收到</div>
+      <div class="note-row"><span class="note-num">48</span>da — 從屬給理由</div>
+      <div class="note-row"><span class="note-num">49</span>wenn — 條件句「如果」</div>
+      <div class="note-row"><span class="note-num">50</span>wann — 詢問時間</div>
+      <div class="note-row"><span class="note-num">51</span>ob — 詢問是否可行</div>
+    </div>
+  </div>
+
+  <!-- ════════ 類型三 ════════ -->
+  <div class="type-divider" id="type3">類型三：面試後感謝信／後續聯繫</div>
+
+  <div class="ex-block">
+    <div class="ex-head">類型三：面談感謝信 — Klett Modelltest 3 — Betreff: Unser Gespräch am 19.9.</div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Sehr geehrte Frau Peters, zunächst noch einmal herzlichen Dank für das angenehme Vorstellungsgespräch in Ihrem Unternehmen. Es hat mich sehr gefreut, Sie und Ihren Kollegen Herrn Schubert kennenzulernen.')">
+        <span class="speak-icon">🔊</span>Sehr geehrte Frau Peters,<br><br>
+        zunächst noch einmal herzlichen Dank für das angenehme Vorstellungsgespräch in Ihrem Unternehmen. Es hat mich sehr gefreut, Sie und Ihren Kollegen Herrn Schubert kennenzulernen.
+      </div>
+      <div class="para-zh">親愛的彼得斯女士，<br><br>首先再次感謝您公司令人愉快的面談機會，很高興認識您和您的同事舒伯特先生。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Besonders interessant waren die Einblicke in die Pläne für die Expansion. Ich würde mich sehr freuen, wenn ich Ihr Unternehmen zukünftig unterstützen könnte.')">
+        <span class="speak-icon">🔊</span>Besonders interessant waren die Einblicke <span class="blank">46</span> die Pläne für die Expansion. Ich würde mich sehr freuen, <span class="blank">47</span> ich Ihr Unternehmen zukünftig unterstützen könnte.
+      </div>
+      <div class="para-zh">特別有趣的是對擴張計畫<span class="ans-inline">46 in（的）</span>深入了解。<span class="ans-inline">47 wenn（如果）</span>未來能支援您的公司，我會非常開心。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Wie Sie wissen, bin ich derzeit noch in einem ungekündigten Arbeitsverhältnis und reise ab Montag kurzfristig beruflich ins Ausland. Zwischenzeitlich werde ich telefonisch nicht gut erreichbar sein.')">
+        <span class="speak-icon">🔊</span>Wie Sie wissen, bin ich derzeit <span class="blank">48</span> in einem ungekündigten Arbeitsverhältnis und reise ab Montag kurzfristig beruflich ins Ausland. <span class="blank">49</span> werde ich telefonisch nicht gut erreichbar sein.
+      </div>
+      <div class="para-zh">如您所知，我目前<span class="ans-inline">48 noch（仍然）</span>處於未終止的僱用關係中，週一起會臨時出差到國外。<span class="ans-inline">49 zwischenzeitlich（這段期間）</span>我電話會不太容易聯絡到。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Ich wollte Sie nur kurz darüber informieren, da Sie sich ja in den nächsten zwei Wochen wieder bei mir melden wollten. Ich bin nach wie vor sehr an der Stelle interessiert und ab übernächster Woche auch wieder in Deutschland. Natürlich können Sie mich dazwischen aber immer per E-Mail erreichen.')">
+        <span class="speak-icon">🔊</span>Ich wollte Sie nur kurz <span class="blank">50</span> informieren, da Sie sich ja in den nächsten zwei Wochen wieder bei mir melden wollten. Ich bin nach wie vor sehr an der Stelle interessiert und ab übernächster Woche auch wieder in Deutschland. Natürlich können Sie mich <span class="blank">51</span> aber immer per E-Mail erreichen.<br><br>Mit freundlichen Grüßen<br>Sabrina Sturm
+      </div>
+      <div class="para-zh">我想簡短地<span class="ans-inline">50 darüber（通知這件事）</span>讓您知道，因為您之前說接下來兩週會再跟我聯繫。我仍然非常有興趣這個職位，下下週起我也會回到德國。當然<span class="ans-inline">51 dazwischen（這段期間之中）</span>您還是可以隨時透過電子郵件聯絡我。</div>
+    </div>
+    <div class="opt-box"><b>選項：</b>a da　b daher　c darüber　d dazwischen　e für　f in　g noch　h schon　i wenn　j zwischenzeitlich</div>
+    <div class="note-box">
+      <div class="note-row"><span class="note-num">46</span>in — Einblick in固定搭配</div>
+      <div class="note-row"><span class="note-num">47</span>wenn — 條件句「如果能…」</div>
+      <div class="note-row"><span class="note-num">48</span>noch — 仍然/還，現狀未變</div>
+      <div class="note-row"><span class="note-num">49</span>zwischenzeitlich — 出差期間聯絡不到</div>
+      <div class="note-row"><span class="note-num">50</span>darüber — informieren über</div>
+      <div class="note-row"><span class="note-num">51</span>dazwischen — 期間之中仍可email</div>
+    </div>
+  </div>
+
+  <div class="ex-block">
+    <div class="ex-head">類型三：面談感謝信 — Klett Modelltest 1 — Betreff: Mein Vorstellungsgespräch am 12. Juni</div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Sehr geehrte Frau Kiensle, danke, dass Sie mir am 12. Juni die Chance gegeben haben, mich auch bei Ihnen persönlich vorzustellen. Unser Gespräch hat mir gute Einblicke in die Abläufe und das kollegiale Betriebsklima in Ihrem Haus gegeben, davon war ich sehr beeindruckt.')">
+        <span class="speak-icon">🔊</span>Sehr geehrte Frau Kiensle,<br><br>
+        danke, dass Sie mir am 12. Juni die Chance gegeben haben, mich <span class="blank">46</span> bei Ihnen persönlich vorzustellen. Unser Gespräch hat mir gute Einblicke in die Abläufe und das kollegiale Betriebsklima in Ihrem Haus gegeben, <span class="blank">47</span> war ich sehr beeindruckt.
+      </div>
+      <div class="para-zh">親愛的金斯勒女士，<br><br>謝謝您6月12日給我機會<span class="ans-inline">46 auch（也）</span>親自向您自我介紹。我們的談話讓我對您公司的運作流程和同事間的合作氣氛有了很好的了解，<span class="ans-inline">47 davon（這）</span>讓我印象深刻。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Besonders gut hat mir gefallen, dass Sie den Mitarbeitenden genug Zeit geben, auch auf Menschen mit geistigen Einschränkungen angemessen einzugehen. Ein wenig verunsichert hat mich Ihre Frage danach, wie ich mir einen guten Umgang mit Seniorinnen und Senioren in Ihrer Einrichtung vorstelle.')">
+        <span class="speak-icon">🔊</span><span class="blank">48</span> gut hat mir gefallen, dass Sie den Mitarbeitenden genug Zeit geben, auch auf Menschen mit geistigen Einschränkungen angemessen einzugehen. Ein wenig verunsichert hat mich Ihre Frage <span class="blank">49</span>, wie ich mir einen guten Umgang mit Seniorinnen und Senioren in Ihrer Einrichtung vorstelle.
+      </div>
+      <div class="para-zh"><span class="ans-inline">48 besonders（特別）</span>讓我喜歡的是您給員工足夠的時間，妥善照顧有認知障礙的人。您<span class="ans-inline">49 danach（針對這點）</span>問我如何看待與長者良好互動的問題，讓我有點不確定該怎麼回答。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Aber jetzt bin ich mir sicher, dass ich mit meinen Erfahrungen, die ich in zwei Demenz-WGs gemacht habe, sehr gut in Ihr Team passen würde. Wie gewünscht möchte ich Ihnen deshalb zurückmelden, dass ich weiterhin sehr an der Stelle interessiert bin.')">
+        <span class="speak-icon">🔊</span>Aber <span class="blank">50</span> bin ich mir sicher, dass ich mit meinen Erfahrungen, die ich in zwei Demenz-WGs gemacht habe, sehr gut in Ihr Team passen würde. Wie gewünscht möchte ich Ihnen deshalb zurückmelden, dass ich <span class="blank">51</span> sehr an der Stelle interessiert bin.<br><br>Ich hoffe auf eine positive Rückmeldung und verbleibe<br>mit freundlichen Grüßen<br>Karina Nowitzky
+      </div>
+      <div class="para-zh">但<span class="ans-inline">50 jetzt（現在）</span>我確定，憑著我在兩個失智症照護住宅的經驗，我會非常適合您的團隊。如您所願，我想藉此回覆您，我<span class="ans-inline">51 weiterhin（依然）</span>非常有興趣這個職位。</div>
+    </div>
+    <div class="opt-box"><b>選項：</b>a auch　b besonders　c danach　d darüber　e davon　f folglich　g jetzt　h nicht　i weiterhin　j zurzeit</div>
+    <div class="note-box">
+      <div class="note-row"><span class="note-num">46</span>auch — 也能親自自我介紹</div>
+      <div class="note-row"><span class="note-num">47</span>davon — beeindruckt von</div>
+      <div class="note-row"><span class="note-num">48</span>besonders — 特別喜歡這點</div>
+      <div class="note-row"><span class="note-num">49</span>danach — Frage danach問及此事</div>
+      <div class="note-row"><span class="note-num">50</span>jetzt — 現在確定（轉折）</div>
+      <div class="note-row"><span class="note-num">51</span>weiterhin — 依然感興趣</div>
+    </div>
+  </div>
+
+  <div class="ex-block">
+    <div class="ex-head">類型三：面談感謝信 — Mit Erfolg zum DTB B2 — Betreff: (Nachfrage zum Verfahrensstand nach dem Vorstellungsgespräch)</div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Sehr geehrte Frau Held, nochmals vielen Dank für die ausgesprochen angenehme Atmosphäre bei meinem Vorstellungsgespräch. Ich habe mich sehr wohlgefühlt. Beeindruckt hat mich, dass Sie das Gespräch auf Augenhöhe geführt haben und ein professioneller Vergleich Ihrer und meiner beruflichen Vorstellungen im Vordergrund stand.')">
+        <span class="speak-icon">🔊</span>Sehr geehrte Frau Held,<br><br>
+        <span class="blank">46</span> vielen Dank für die ausgesprochen angenehme Atmosphäre bei meinem Vorstellungsgespräch. Ich habe mich sehr wohlgefühlt. Beeindruckt hat mich, <span class="blank">47</span> Sie das Gespräch auf Augenhöhe geführt haben und ein professioneller Vergleich Ihrer und meiner beruflichen Vorstellungen im Vordergrund stand.
+      </div>
+      <div class="para-zh">親愛的赫德女士，<br><br><span class="ans-inline">46 nochmals（再次）</span>非常感謝您在我面談時營造的愉快氣氛，我感到非常自在。讓我印象深刻的是<span class="ans-inline">47 dass（您）</span>以平等的態度進行了這次談話，並把我們雙方對職業的想法做了專業的比較。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Das Gespräch hat meinen Wunsch bestärkt, bei Ihnen tätig zu werden. Besonders Ihre Ausführungen zum Unternehmen, vor allem zur Unternehmenskultur, haben mich sehr überzeugt. Ich bin davon überzeugt, dass ich Ihren Vorstellungen entspreche und mir die Arbeit in Ihrem Hotelrestaurant große Freude bereiten wird. Sehr gern würde ich Teil Ihres Teams werden.')">
+        <span class="speak-icon">🔊</span>Das Gespräch hat meinen Wunsch bestärkt, bei Ihnen tätig zu werden. Besonders Ihre Ausführungen zum Unternehmen, <span class="blank">48</span> zur Unternehmenskultur, haben mich sehr überzeugt. Ich bin davon überzeugt, dass ich Ihren Vorstellungen entspreche und mir die Arbeit in Ihrem Hotelrestaurant große Freude bereiten wird. Sehr gern würde ich Teil Ihres Teams werden.
+      </div>
+      <div class="para-zh">這次談話更加堅定了我想在您這裡工作的願望。您對公司的說明，<span class="ans-inline">48 vor allem（尤其是）</span>關於企業文化的部分，讓我非常信服。我相信我符合您的期望，在您的飯店餐廳工作會讓我感到很愉快，我很想成為您團隊的一員。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Darüber hinaus möchte ich mich über den aktuellen Stand des Verfahrens informieren. Ich würde gern wissen, ob Sie schon abschätzen können, wann eine Entscheidung fallen wird.')">
+        <span class="speak-icon">🔊</span><span class="blank">49</span> möchte ich mich über den aktuellen Stand des Verfahrens informieren. Ich würde gern wissen, ob Sie schon abschätzen können, <span class="blank">50</span> eine Entscheidung fallen wird.
+      </div>
+      <div class="para-zh"><span class="ans-inline">49 darüber（此外）</span>我也想了解一下目前流程的進度。我想知道您是否已經能估計<span class="ans-inline">50 wann（何時）</span>會做出決定。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Wenn Sie noch weitere Informationen oder Unterlagen zu meiner Bewerbung benötigen, können Sie sich jederzeit entweder per E-Mail oder telefonisch an mich wenden. Ich freue mich darauf, bald von Ihnen zu hören.')">
+        <span class="speak-icon">🔊</span><span class="blank">51</span> Sie noch weitere Informationen oder Unterlagen zu meiner Bewerbung benötigen, können Sie sich jederzeit entweder per E-Mail oder telefonisch an mich wenden.<br><br>Ich freue mich darauf, bald von Ihnen zu hören.<br><br>Mit freundlichen Grüßen<br>Mert Erol
+      </div>
+      <div class="para-zh"><span class="ans-inline">51 wenn（如果）</span>您還需要關於我申請的其他資訊或文件，歡迎隨時透過電子郵件或電話與我聯繫。期待盡快收到您的消息。</div>
+    </div>
+    <div class="opt-box"><b>選項：</b>a darüber　b dass　c denn　d deshalb　e nochmals　f sehr　g vor allem　h wann　i weil　j wenn</div>
+    <div class="note-box">
+      <div class="note-row"><span class="note-num">46</span>nochmals — 再次感謝</div>
+      <div class="note-row"><span class="note-num">47</span>dass — 引導內容子句</div>
+      <div class="note-row"><span class="note-num">48</span>vor allem — 尤其強調這點</div>
+      <div class="note-row"><span class="note-num">49</span>darüber — 此處接「hinaus」表此外</div>
+      <div class="note-row"><span class="note-num">50</span>wann — 詢問何時做決定</div>
+      <div class="note-row"><span class="note-num">51</span>wenn — 條件句「如果」</div>
+    </div>
+  </div>
+
+  <!-- ════════ 類型四 ════════ -->
+  <div class="type-divider" id="type4">類型四：離職／證明文件／僱用異動</div>
+
+  <div class="ex-block">
+    <div class="ex-head">類型四：離職／證明文件 — Cornelsen Prüfungstraining Test 1 — Meine Kündigung zum 31.10.</div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Meine Kündigung zum 31.10. Sehr geehrter Herr Berger, zum 31.10 habe ich meinen Arbeitsvertrag mit Ihrem Unternehmen fristgerecht gekündigt und Sie gebeten, mir ein qualifiziertes Arbeitszeugnis auszustellen. Leider wurde mir das Zeugnis bis heute, 20.12., noch nicht zugestellt.')">
+        <span class="speak-icon">🔊</span>Meine Kündigung zum 31.10.<br><br>
+        Sehr geehrter Herr Berger,<br><br>
+        zum 31.10 habe ich meinen Arbeitsvertrag mit Ihrem Unternehmen fristgerecht gekündigt und Sie gebeten, mir ein qualifiziertes Arbeitszeugnis auszustellen. Leider wurde mir das Zeugnis <span class="blank">46</span> heute, 20.12., noch nicht zugestellt.
+      </div>
+      <div class="para-zh">我於10月31日離職。<br><br>親愛的伯格先生，<br><br>10月31日我依照預告期終止了與您公司的勞動合約，並請您開立一份合格的工作證明。很遺憾<span class="ans-inline">46 bis（直到）</span>今天12月20日，這份證明還沒送達給我。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Ich möchte noch einmal betonen, dass ich es sehr bedaure, aus Ihrem Unternehmen auszuscheiden. Aber ich werde, wie ich Ihnen bereits in einem persönlichen Gespräch mitgeteilt habe, Ende des Jahres ins Ausland ziehen.')">
+        <span class="speak-icon">🔊</span>Ich möchte noch einmal betonen, <span class="blank">47</span> ich es sehr bedaure, aus Ihrem Unternehmen auszuscheiden. <span class="blank">48</span> ich werde, wie ich Ihnen bereits in einem persönlichen Gespräch mitgeteilt habe, Ende des Jahres ins Ausland ziehen.
+      </div>
+      <div class="para-zh">我想再次強調，我<span class="ans-inline">47 dass（很遺憾要離職）</span>離開您的公司。<span class="ans-inline">48 aber（但）</span>正如我已在當面談話中告知您的，我年底要搬到國外去。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Für meine weiteren Bewerbungen wäre ein qualifiziertes Arbeitszeugnis sehr wichtig. Vielleicht könnten Sie hier auch meine erfolgreiche Teilnahme an den IT-Seminaren Ihrem Haus erwähnen?')">
+        <span class="speak-icon">🔊</span>Für meine weiteren Bewerbungen wäre ein qualifiziertes Arbeitszeugnis sehr wichtig. Vielleicht könnten Sie hier auch meine erfolgreiche Teilnahme <span class="blank">49</span> den IT-Seminaren Ihrem Haus erwähnen?
+      </div>
+      <div class="para-zh">對我之後的求職來說，一份合格的工作證明非常重要。也許您可以在裡面提及我成功參與<span class="ans-inline">49 an（…的）</span>公司IT研習課程的這件事？</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Ich möchte mich noch einmal dafür bedanken, dass ich mich bei Ihnen beruflich so gut weiterentwickeln konnte. Auch die gute und kollegiale Zusammenarbeit werde ich immer in Erinnerung behalten. Da ich bereits nächste Woche umziehen werde, bitte ich Sie, das Arbeitszeugnis gleich an meine neue Anschrift zuzusenden.')">
+        <span class="speak-icon">🔊</span>Ich möchte mich noch einmal <span class="blank">50</span> bedanken, dass ich mich bei Ihnen beruflich so gut weiterentwickeln konnte. Auch die gute und kollegiale Zusammenarbeit werde ich immer in Erinnerung behalten. <span class="blank">51</span> ich bereits nächste Woche umziehen werde, bitte ich Sie, das Arbeitszeugnis gleich an meine neue Anschrift zuzusenden.<br><br>Vielen Dank für Ihre Bemühungen.<br><br>Mit freundlichen Grüßen<br>Jose Montez
+      </div>
+      <div class="para-zh">我想再次<span class="ans-inline">50 dafür（為此）</span>感謝，讓我能在您這裡有這麼好的職業成長。我也會一直記得這段良好的同事合作關係。<span class="ans-inline">51 da（既然）</span>我下週就要搬家，請您將工作證明直接寄到我的新地址。</div>
+    </div>
+    <div class="opt-box"><b>選項：</b>a aber　b an　c anlässlich　d bis　e da　f dafür　g dass　h deswegen　i obwohl　j seit</div>
+    <div class="note-box">
+      <div class="note-row"><span class="note-num">46</span>bis — bis heute直到今天</div>
+      <div class="note-row"><span class="note-num">47</span>dass — betonen, dass...</div>
+      <div class="note-row"><span class="note-num">48</span>aber — 並列轉折「但」</div>
+      <div class="note-row"><span class="note-num">49</span>an — Teilnahme an固定搭配</div>
+      <div class="note-row"><span class="note-num">50</span>dafür — bedanken für</div>
+      <div class="note-row"><span class="note-num">51</span>da — 從屬給理由</div>
+    </div>
+  </div>
+
+  <div class="ex-block">
+    <div class="ex-head">類型四：離職／證明文件 — telc Online-Übungstest 2 — Betreff: Frage zur Beendigung des Arbeitsvertrages</div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Sehr geehrter Herr Wetzel, wie ich Ihnen im persönlichen Gespräch bereits mitgeteilt habe, muss ich meine Arbeitsstelle hier im Unternehmen aufgeben. Bevor ich offiziell kündige, habe ich aber noch eine Frage:')">
+        <span class="speak-icon">🔊</span>Betreff: Frage zur Beendigung des Arbeitsvertrages<br><br>
+        Sehr geehrter Herr Wetzel,<br><br>
+        wie ich Ihnen im persönlichen Gespräch <span class="blank">46</span> mitgeteilt habe, muss ich meine Arbeitsstelle hier im Unternehmen aufgeben.<br><br>
+        <span class="blank">47</span> ich offiziell kündige, habe ich aber noch eine Frage:
+      </div>
+      <div class="para-zh">主旨：關於終止勞動合約的問題<br><br>親愛的維策爾先生，<br><br>如我已在當面談話中<span class="ans-inline">46 bereits（已經）</span>告知您的，我必須放棄這裡的職位。<br><br><span class="ans-inline">47 bevor（在…之前）</span>我正式辭職，我還有一個問題：</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Mein Mann wird kurzfristig von seiner Firma ins Ausland versetzt und ich habe mich dazu entschlossen, ihn zu begleiten. Seine Versetzung erfolgt schon zum 01. des nächsten Monats. Natürlich weiß ich, dass ich eine Kündigungsfrist von drei Monaten habe.')">
+        <span class="speak-icon">🔊</span>Mein Mann wird kurzfristig von seiner Firma ins Ausland versetzt und ich habe mich <span class="blank">48</span> entschlossen, ihn zu begleiten. Seine Versetzung erfolgt schon zum 01. des nächsten Monats. Natürlich weiß ich, dass ich eine Kündigungsfrist von drei Monaten habe.
+      </div>
+      <div class="para-zh">我先生即將被公司臨時派往國外，我已經決定<span class="ans-inline">48 dazu（這件事）</span>陪他一起去。他的調職將從下個月1號開始。當然我知道我有三個月的預告期。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Allerdings habe ich noch 13 Tage Resturlaub und ich würde jetzt gerne wissen, ob Sie damit einverstanden sind, dass ich diese Urlaubstage ab nächstem Montag nehme und Sie mich danach sofort freistellen. Ich wäre Ihnen sehr dankbar, wenn Sie mir kurzfristig Ihre Entscheidung mitteilen könnten.')">
+        <span class="speak-icon">🔊</span><span class="blank">49</span> habe ich noch 13 Tage Resturlaub und ich würde jetzt gerne wissen, <span class="blank">50</span> Sie damit einverstanden sind, dass ich diese Urlaubstage ab nächstem Montag nehme und Sie mich danach sofort freistellen. Ich wäre Ihnen sehr dankbar, wenn Sie mir kurzfristig Ihre Entscheidung mitteilen könnten.
+      </div>
+      <div class="para-zh"><span class="ans-inline">49 allerdings（不過）</span>我還有13天特休，我想知道<span class="ans-inline">50 ob（是否）</span>您同意讓我從下週一開始休這些假，之後立刻讓我離職。若您能盡快告知決定，我會非常感激。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Sobald ich Ihre Rückmeldung habe, werde ich mein Kündigungsschreiben entsprechend formulieren und einreichen. Vielen Dank!')">
+        <span class="speak-icon">🔊</span><span class="blank">51</span> ich Ihre Rückmeldung habe, werde ich mein Kündigungsschreiben entsprechend formulieren und einreichen.<br><br>Vielen Dank!<br><br>Mit freundlichen Grüßen<br>Gabi Zettler
+      </div>
+      <div class="para-zh"><span class="ans-inline">51 sobald（一旦）</span>我收到您的回覆，我就會擬好辭職信並提交。<br><br>非常感謝！</div>
+    </div>
+    <div class="opt-box"><b>選項：</b>a allerdings　b bereits　c bevor　d damit　e dass　f dazu　g mehrfach　h ob　i sobald　j vor</div>
+    <div class="note-box">
+      <div class="note-row"><span class="note-num">46</span>bereits — 已經告知過</div>
+      <div class="note-row"><span class="note-num">47</span>bevor — 從屬「在…之前」</div>
+      <div class="note-row"><span class="note-num">48</span>dazu — entschließen zu固定搭配</div>
+      <div class="note-row"><span class="note-num">49</span>allerdings — 補充但稍相反的資訊</div>
+      <div class="note-row"><span class="note-num">50</span>ob — 詢問是否同意</div>
+      <div class="note-row"><span class="note-num">51</span>sobald — 一旦收到回覆</div>
+    </div>
+  </div>
+
+  <!-- ════════ 類型五 ════════ -->
+  <div class="type-divider" id="type5">類型五：在職進修申請</div>
+
+  <div class="ex-block">
+    <div class="ex-head">類型五：在職進修申請 — telc Online-Übungstest 1 — Betreff: Aufnahme eines Fernstudiums</div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Sehr geehrte Frau Schneider, wie Sie wissen, möchte ich mich gern im Bereich Finanzen weiterbilden. Es gibt einen Fernstudiengang mit Präsenzanteil, an dem ich außerhalb meiner Arbeitszeiten bei der Firma Krüger Bürofachhandel teilnehmen könnte.')">
+        <span class="speak-icon">🔊</span>Sehr geehrte Frau Schneider,<br><br>
+        wie Sie wissen, möchte ich mich gern im Bereich Finanzen weiterbilden. Es gibt einen Fernstudiengang mit Präsenzanteil, an dem ich <span class="blank">46</span> meiner Arbeitszeiten bei der Firma Krüger Bürofachhandel teilnehmen könnte.
+      </div>
+      <div class="para-zh">親愛的施奈德女士，<br><br>如您所知，我想在財務領域進修。有一個含實體課程的遠距學程，我可以在<span class="ans-inline">46 außerhalb（之外）</span>工作時間的情況下參加，地點在Krüger Bürofachhandel公司。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Das Studium würde zwischen acht und zehn Stunden pro Woche abends und am Wochenende in Anspruch nehmen und nicht mit meiner Arbeit hier im Unternehmen kollidieren.')">
+        <span class="speak-icon">🔊</span>Das Studium würde <span class="blank">47</span> acht und zehn Stunden pro Woche abends und am Wochenende in Anspruch nehmen und nicht mit meiner Arbeit hier im Unternehmen kollidieren.
+      </div>
+      <div class="para-zh">這個學程每週晚上和週末會佔用<span class="ans-inline">47 zwischen（…之間）</span>八到十小時，不會與公司的工作衝突。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Nur einmal im Monat gibt es freitags einen Präsenztermin, deshalb müsste ich an diesen Tagen um 16 Uhr statt um 17 Uhr Feierabend machen. Ich habe bereits mit dem Chef meiner Abteilung, Herrn Siemers, darüber gesprochen. Seine Zustimmung per Mail liegt Ihnen bereits vor.')">
+        <span class="speak-icon">🔊</span>Nur einmal im Monat gibt es freitags einen Präsenztermin, <span class="blank">48</span> müsste ich an diesen Tagen um 16 Uhr statt um 17 Uhr Feierabend machen. Ich habe bereits mit dem Chef meiner Abteilung, Herrn Siemers, <span class="blank">49</span> gesprochen. Seine Zustimmung per Mail liegt Ihnen bereits vor.
+      </div>
+      <div class="para-zh">每月只有一次週五的實體課程，<span class="ans-inline">48 deshalb（所以）</span>我那天需要提早在16點而非17點下班。我已經和部門主管西門斯先生<span class="ans-inline">49 darüber（談過這件事）</span>，他的書面同意已經提供給您。</div>
+    </div>
+    <div class="para-row">
+      <div class="para-de" onclick="speakText('Ich bitte Sie hiermit um die schriftliche Erlaubnis, dieses Studium aufzunehmen. Sollten Sie Fragen dazu haben, stehe ich Ihnen jederzeit gern zur Verfügung.')">
+        <span class="speak-icon">🔊</span>Ich bitte Sie hiermit <span class="blank">50</span> die schriftliche Erlaubnis, dieses Studium aufzunehmen. Sollten Sie Fragen <span class="blank">51</span> haben, stehe ich Ihnen jederzeit gern zur Verfügung.<br><br>Im Voraus herzlichen Dank für Ihre Unterstützung!<br><br>Mit freundlichen Grüßen<br>Greta Holler
+      </div>
+      <div class="para-zh">因此我請求您給予<span class="ans-inline">50 um（請求…）</span>書面許可讓我開始這個學程。如果您對此<span class="ans-inline">51 dazu（這件事）</span>還有任何問題，歡迎隨時與我聯繫。<br><br>提前感謝您的支持！</div>
+    </div>
+    <div class="opt-box"><b>選項：</b>a außerhalb　b darüber　c dazu　d deshalb　e für　f trotzdem　g um　h von　i zwischen　j zwischenzeitlich</div>
+    <div class="note-box">
+      <div class="note-row"><span class="note-num">46</span>außerhalb — Gen.「之外」固定搭配工作時間</div>
+      <div class="note-row"><span class="note-num">47</span>zwischen — X und Y數字區間</div>
+      <div class="note-row"><span class="note-num">48</span>deshalb — 前因後果，V2倒裝</div>
+      <div class="note-row"><span class="note-num">49</span>darüber — sprechen über</div>
+      <div class="note-row"><span class="note-num">50</span>um — bitten um固定搭配</div>
+      <div class="note-row"><span class="note-num">51</span>dazu — Fragen dazu haben固定搭配</div>
+    </div>
+  </div>
+
+</div>
+
+</div>
+
+<script>
+function setTab(id, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+function speakText(text) {
+  if (!text || !window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'de-DE'; u.rate = 0.9;
+  window.speechSynthesis.speak(u);
+}
+</script>
+</body>
+</html>

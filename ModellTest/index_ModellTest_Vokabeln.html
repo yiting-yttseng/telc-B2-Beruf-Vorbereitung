@@ -140,8 +140,11 @@ tr.marked:hover td { background: #ffe6e6; }
   padding: 1px 5px; border-radius: 3px; letter-spacing: .03em;
   font-family: monospace;
 }
+.tag-L1, .tag-L3 { background: #d1fae5; color: #047857; }
 .tag-L2, .tag-L4 { background: #dbeafe; color: #1d4ed8; }
+.tag-H1, .tag-H4 { background: #fce7f3; color: #be185d; }
 .tag-H2, .tag-H3 { background: #ede9fe; color: #6d28d9; }
+.tag-HS { background: #ffedd5; color: #c2410c; }
 .tag-SB1, .tag-SB2 { background: #fef3c7; color: #92400e; }
 
 /* MT tag */
@@ -221,8 +224,16 @@ mark { background:#fff3b0; border-radius:2px; padding:0 1px; }
 
 </div><!-- /page -->
 
-<!-- ── Data scripts MT1–MT10 ──────────────────────────────── -->
+<!-- ── Data scripts: telc Preparation Training (PT) ───────── -->
 <script>window.MODELLTEST_ALL = [];</script>
+<script src="data_PreparationTraining_Lesen.js"     onerror="void 0"></script>
+<script src="data_PreparationTraining_Hoeren.js"     onerror="void 0"></script>
+<script src="data_PreparationTraining_Schreiben.js"  onerror="void 0"></script>
+
+<!-- ── Data scripts: Cornelsen Wortschatz ──────────────────── -->
+<script src="data_Cornelsen_Wortschatz.js" onerror="void 0"></script>
+
+<!-- ── Data scripts MT1–MT11 ──────────────────────────────── -->
 <script src="data_ModellTest1.js"  onerror="void 0"></script>
 <script src="data_ModellTest2.js"  onerror="void 0"></script>
 <script src="data_ModellTest3.js"  onerror="void 0"></script>
@@ -235,14 +246,43 @@ mark { background:#fff3b0; border-radius:2px; padding:0 1px; }
 <script src="data_ModellTest10.js" onerror="void 0"></script>
 <script src="data_ModellTest11.js" onerror="void 0"></script>
 
+
 <script>
 // ── Constants ─────────────────────────────────────────────
 const LS_KEY = 'modelltest_marked_v1';
 const TEIL_MAP = {
   lesen:  ['L1','L2','L3','L4','L5'],
-  hoeren: ['H1','H2','H3','H4'],
+  hoeren: ['H1','H2','H3','H4','HS'],
   sb:     ['SB1','SB2','SCH'],
 };
+
+// ── 來源排序順序與顯示名稱 ──────────────────────────────────
+const SRC_ORDER = [
+  'PT', 'Cornelsen_Wortschatz',
+  'MT1','MT2','MT3','MT4','MT5','MT6','MT7','MT8','MT9','MT10','MT11','MT12',
+];
+const SRC_NAMES = {
+  PT:  'telc Preparation Training',
+  Cornelsen_Wortschatz: 'Cornelsen Wortschatz',
+  MT1: 'MT1：TELC Online 1',
+  MT2: 'MT2：Cornelsen Test 1',
+  MT3: 'MT3：Klett 額外版本 1',
+  MT4: 'MT4：TELC Übungstest 1',
+  MT5: 'MT5：Hueber',
+  MT6: 'MT6：Klett Test 2',
+  MT7: 'MT7：Klett Test 3',
+  MT8: 'MT8：Cornelsen Test 3',
+  MT9: 'MT9：TELC Übungstest 2',
+  MT10:'MT10：Cornelsen Test 2',
+  MT11:'MT11：Hueber Prüfung Express B2',
+};
+function srcOrderIdx(mt) {
+  const i = SRC_ORDER.indexOf(mt);
+  return i === -1 ? SRC_ORDER.length : i;
+}
+function srcLabel(mt) {
+  return SRC_NAMES[mt] || mt;
+}
 
 // ── State ─────────────────────────────────────────────────
 let currentTeil   = 'lesen';
@@ -292,7 +332,7 @@ function highlightVerbs(text) {
 // ── Helpers ───────────────────────────────────────────────
 function allSources() {
   const s = new Set((window.MODELLTEST_ALL||[]).map(d => d.mt));
-  return [...s].sort();
+  return [...s].sort((a,b) => srcOrderIdx(a) - srcOrderIdx(b));
 }
 
 function teilLabel(teil) {
@@ -321,7 +361,7 @@ function buildSrcTabs() {
   let html = '<span class="src-label">來源：</span>';
   html += `<button class="src-tab ${currentSrc==='all'?'active':''}" onclick="setSrc('all')">全部</button>`;
   srcs.forEach(s => {
-    html += `<button class="src-tab ${currentSrc===s?'active':''}" onclick="setSrc('${s}')">${s}</button>`;
+    html += `<button class="src-tab ${currentSrc===s?'active':''}" onclick="setSrc('${s}')">${srcLabel(s)}</button>`;
   });
   container.innerHTML = html;
 }
@@ -339,7 +379,7 @@ function buildRow(d, uid) {
 
   return `<tr class="${isMarked?'marked':''}">
     <td class="dot-cell" onclick="event.stopPropagation();toggleMark('${uid}')"><span class="dot"></span></td>
-    <td><span class="mt-tag">${d.mt}</span></td>
+    <td><span class="mt-tag" title="${srcLabel(d.mt)}">${d.mt}</span></td>
     <td><span class="teil-tag ${tClass(d.teil)}">${d.teil}</span></td>
     <td onclick="speakText('${deSpeak}','de-DE')" style="cursor:pointer">
       ${d.a?`<span class="artikel">${d.a}</span>`:''}
@@ -381,12 +421,12 @@ function render() {
     return { d, uid: d.mt + '_' + origIdx };
   });
 
-  // Sort by teil part order, then mt
+  // Sort by teil part order, then by source order (PT → Cornelsen → MT1...MT11)
   items.sort((a,b) => {
     const ia = tParts.indexOf(a.d.teil);
     const ib = tParts.indexOf(b.d.teil);
     if (ia !== ib) return ia - ib;
-    return a.d.mt.localeCompare(b.d.mt);
+    return srcOrderIdx(a.d.mt) - srcOrderIdx(b.d.mt);
   });
 
   // Stats
@@ -412,6 +452,7 @@ function render() {
     L1:'Lesen Teil 1', L2:'Lesen Teil 2', L3:'Lesen Teil 3',
     L4:'Lesen Teil 4 — Protokoll', L5:'Lesen Teil 5',
     H1:'Hören Teil 1', H2:'Hören Teil 2', H3:'Hören Teil 3', H4:'Hören Teil 4',
+    HS:'Hören und Schreiben',
     SB1:'Sprachbausteine Teil 1', SB2:'Sprachbausteine Teil 2', SCH:'Schreiben',
   };
 
