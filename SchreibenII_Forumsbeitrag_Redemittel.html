@@ -115,6 +115,33 @@ tr.aufbau-alt td { background: #f7f9fd; }
 .a-de { font-size: 12px; color: #222; line-height: 1.6; display: block; }
 .a-zh { font-size: 11px; color: #999; font-style: italic; display: block; }
 
+/* ── Personal skeleton table (個人固定骨架) ── */
+.placeholder { color: #b08020; font-style: italic; background: #fff8e8; padding: 0 3px; border-radius: 3px; }
+.placeholder-pos { color: #1a7a4a; font-style: italic; background: #e8f8ee; padding: 0 3px; border-radius: 3px; font-weight: 600; }
+.skeleton-func { font-size: 12px; font-weight: 600; color: #1a3a6b; vertical-align: top; width: 18%; }
+.skeleton-de   { font-size: 12.5px; color: #222; line-height: 1.65; vertical-align: top; cursor: pointer; }
+.skeleton-de:hover { background: #f0f6ff; }
+
+/* ── Positive nouns reference list ── */
+.pos-noun-box {
+  margin-top: 10px; padding: 10px 14px; background: #f4fbf6;
+  border: 1px solid #b8e0c8; border-radius: 6px;
+}
+.pos-noun-title { font-size: 11px; font-weight: 700; color: #1a7a4a; margin-bottom: 6px; }
+.pos-noun-list { display: flex; flex-wrap: wrap; gap: 6px; }
+.pos-noun-item {
+  font-size: 11.5px; color: #1a7a4a; background: #e8f8ee;
+  border: 1px solid #b8e0c8; border-radius: 12px; padding: 2px 10px;
+  cursor: pointer; transition: background 0.1s;
+}
+.pos-noun-item:hover { background: #d0f0dc; }
+.pos-noun-item .zh { color: #6a9a7a; font-style: italic; margin-left: 4px; }
+
+/* ── Bold skeleton structure highlighting in example essays ── */
+.a-de .skel-bold { font-weight: 700; color: #1a3a6b; }
+.a-de .pos-highlight { color: #1a7a4a; font-weight: 700; background: #e8f8ee; padding: 0 2px; border-radius: 2px; }
+.a-de .topic-highlight { color: #b08020; font-weight: 700; background: #fff3cc; padding: 0 2px; border-radius: 2px; }
+
 /* ── Example topic label ── */
 .topic-banner {
   font-size: 12px; font-weight: 600; color: #1a3a6b;
@@ -124,6 +151,27 @@ tr.aufbau-alt td { background: #f7f9fd; }
 }
 .topic-banner .topic-zh { font-weight: 400; color: #888; font-style: italic; font-size: 11px; }
 .topic-prompt { font-size: 11.5px; color: #555; background: #fff; border: 0.5px solid #ddd; border-radius: 4px; padding: 6px 10px; margin-bottom: 14px; line-height: 1.6; }
+
+/* ── Teacher tips box ── */
+.tips-box {
+  background: #fffbf0; border: 1px solid #f0d080;
+  border-radius: 8px; padding: 14px 18px; margin-bottom: 20px;
+}
+.tips-box-title {
+  font-size: 12px; font-weight: 700; color: #a06000;
+  letter-spacing: 0.05em; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
+}
+.tips-list { list-style: none; padding: 0; margin: 0; }
+.tips-list li {
+  font-size: 12.5px; line-height: 1.65; padding: 5px 0;
+  border-bottom: 0.5px solid #f0e0b0; display: flex; gap: 8px;
+}
+.tips-list li:last-child { border-bottom: none; }
+.tips-icon { font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+.tips-de { color: #222; display: block; font-weight: 500; }
+.tips-zh { color: #999; font-style: italic; font-size: 11px; display: block; margin-top: 1px; }
+.tips-wrong { color: #c0392b; text-decoration: line-through; }
+.tips-right { color: #27ae60; font-weight: 700; }
 </style>
 </head>
 <body>
@@ -137,7 +185,8 @@ tr.aufbau-alt td { background: #f7f9fd; }
 <div class="chapter-nav">
   <div class="tab-scroll">
     <button class="chapter-tab active" onclick="switchTab('redemittel',this)">Redemittel 句型庫</button>
-    <button class="chapter-tab" onclick="switchTab('aufbau',this)">Aufbau 框架 ＋ 範例</button>
+    <button class="chapter-tab" onclick="switchTab('aufbau',this)">Aufbau 框架</button>
+    <button class="chapter-tab" onclick="switchTab('skeleton',this)">個人骨架 ＋ 範例</button>
   </div>
 </div>
 
@@ -163,9 +212,14 @@ tr.aufbau-alt td { background: #f7f9fd; }
     <div id="mainContent"></div>
   </div>
 
-  <!-- TAB 2: Aufbau + Beispiele -->
+  <!-- TAB 2: Aufbau -->
   <div id="tab-aufbau" style="display:none;">
     <div id="aufbauContent"></div>
+  </div>
+
+  <!-- TAB 3: Personal skeleton + example essays -->
+  <div id="tab-skeleton" style="display:none;">
+    <div id="skeletonContent"></div>
   </div>
 </div>
 
@@ -186,10 +240,10 @@ function esc(s){ return (s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'"); }
 // ── TAB SWITCHING ─────────────────────────────────────────────
 function switchTab(name, btn) {
   document.getElementById('tab-redemittel').style.display = name === 'redemittel' ? '' : 'none';
-  document.getElementById('tab-aufbau').style.display    = name === 'aufbau'     ? '' : 'none';
+  document.getElementById('tab-aufbau').style.display     = name === 'aufbau'     ? '' : 'none';
+  document.getElementById('tab-skeleton').style.display   = name === 'skeleton'   ? '' : 'none';
   document.querySelectorAll('.chapter-tab').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  const titles = { redemittel: 'B2 Forumbeitrag — Redemittel 句型庫', aufbau: 'B2 Forumbeitrag — Aufbau ＋ 範例' };
   // title is fixed in header
 }
 
@@ -253,6 +307,7 @@ const REDEMITTEL = [
 {id:12, sec:"3. Meinung darstellen（表達立場／看法）", left_de:"Ich bin der Auffassung, dass ...",                  left_zh:"我的看法是……",                   ex:[{de:"Ich bin der Auffassung, dass man bei so einer weiten Strecke ernsthaft über einen Umzug nachdenken sollte.",zh:"我的看法是，面對如此遠的距離，應該認真考慮搬家。"}]},
 {id:13, sec:"3. Meinung darstellen（表達立場／看法）", left_de:"Ich finde die Idee gut / nicht so gut, weil ...",   left_zh:"我覺得這個想法好／不太好，因為……", ex:[{de:"Ich finde die Idee des Pendelns nicht so gut, weil es auf Dauer sehr anstrengend ist.",zh:"我覺得通勤這個想法不太好，因為長期來說非常累。"}]},
 {id:14, sec:"3. Meinung darstellen（表達立場／看法）", left_de:"Ich bin damit (nicht) einverstanden, weil ...",     left_zh:"我（不）同意，因為……",           ex:[{de:"Ich bin damit einverstanden, umzuziehen, weil ich näher bei meinen Kollegen sein möchte.",zh:"我同意搬家，因為我想更靠近我的同事。"}]},
+{id:141, sec:"3. Meinung darstellen（表達立場／看法）", left_de:"Ich möchte hiermit zum Ausdruck bringen, dass ...",            left_zh:"我想藉此表達……",                  ex:[{de:"Ich möchte hiermit zum Ausdruck bringen, dass diese Maßnahme sowohl für die Firma als auch für uns Mitarbeitende sinnvoll ist.",zh:"我想藉此表達，這項措施對公司和我們員工雙方都是有意義的。"}]},
 {id:15, sec:"3. Meinung darstellen（表達立場／看法）", left_de:"Ich finde / meine / denke / glaube, dass ...",      left_zh:"我認為／相信……",                 ex:[{de:"Ich glaube, dass ein neuer Standort mit moderner Technik viele Vorteile bietet.",zh:"我相信配備現代技術的新地點有很多優點。"}]},
 {id:16, sec:"3. Meinung darstellen（表達立場／看法）", left_de:"Ich habe die Erfahrung gemacht, dass ...",          left_zh:"我的經驗是……",                   ex:[{de:"Ich habe die Erfahrung gemacht, dass tägliches Pendeln auf Dauer sehr ermüdend ist.",zh:"我的經驗是每天通勤長期下來非常累。"}]},
 {id:17, sec:"3. Meinung darstellen（表達立場／看法）", left_de:"Ich kann mir (nicht) vorstellen, dass ...",         left_zh:"我（無法）想像……",               ex:[{de:"Ich kann mir nicht vorstellen, dass ich jeden Tag 75 km pendeln kann.",zh:"我無法想像我每天都能通勤75公里。"}]},
@@ -274,7 +329,10 @@ const REDEMITTEL = [
 {id:32, sec:"4. Vorteile und Nachteile benennen（列舉優缺點）", left_de:"Dafür spricht, dass ... / Dagegen spricht, dass ...", left_zh:"支持的理由是……／反對的理由是……", ex:[{de:"Dafür spricht, dass man beim Umzug Zeit spart; dagegen spricht, dass die Miete teurer sein kann.",zh:"支持的理由是搬家可以省時間；反對的理由是房租可能更貴。"}]},
 {id:33, sec:"4. Vorteile und Nachteile benennen（列舉優缺點）", left_de:"Ich kann zwar verstehen, dass ..., jedoch / aber ...", left_zh:"我雖然理解……，但是……", ex:[{de:"Ich kann zwar verstehen, dass manche nicht umziehen wollen, jedoch ist tägliches Pendeln sehr belastend.",zh:"我雖然理解有些人不想搬家，但每天通勤真的很累。"}]},
 {id:34, sec:"4. Vorteile und Nachteile benennen（列舉優缺點）", left_de:"Hervorragend finde ich ..., weniger gut finde ich ...", left_zh:"我覺得很棒的是……，不太好的是……", ex:[{de:"Hervorragend finde ich die moderne Ausstattung, weniger gut finde ich die 75 km Entfernung.",zh:"我覺得現代化設備很棒，但75公里的距離不太好。"}]},
-{id:35, sec:"4. Vorteile und Nachteile benennen（列舉優缺點）", left_de:"Das wird sich positiv / negativ auf ... auswirken.", left_zh:"這會對……造成正面／負面影響。", ex:[{de:"Das wird sich negativ auf meine Work-Life-Balance auswirken.",zh:"這會對我的工作生活平衡造成負面影響。"}]},
+{id:35, sec:"4. Vorteile und Nachteile benennen（列舉優缺點）", left_de:"Das wird sich positiv / negativ auf ... auswirken.", left_zh:"這會對……造成正面／負面影響。", ex:[
+  {de:"Das wird sich negativ auf meine Work-Life-Balance auswirken.",zh:"這會對我的工作生活平衡造成負面影響。"},
+  {de:"範例（「...」可填入）：\ndie Umwelt 環境 ／ die Work-Life-Balance 工作與生活平衡 ／ die Fairness / Gerechtigkeit 公平性 ／ die Flexibilität 靈活性 ／ den Pendelweg / die Pendelzeit 通勤路程／時間 ／ die Gesundheit 健康 ／ die Motivation 積極性 ／ das Arbeitsklima 工作氛圍 ／ die Produktivität 生產力 ／ die Teamarbeit 團隊合作 ／ die Kosten 成本 ／ den Zusammenhalt 凝聚力",zh:""},
+]},
 {id:36, sec:"4. Vorteile und Nachteile benennen（列舉優缺點）", left_de:"... hat den entscheidenden Vorteil, dass ...", left_zh:"……有決定性的優點：……", ex:[{de:"Ein Umzug hat den entscheidenden Vorteil, dass ich weniger Pendelzeit habe.",zh:"搬家的決定性優點是我通勤時間會變少。"}]},
 {id:37, sec:"4. Vorteile und Nachteile benennen（列舉優缺點）", left_de:"Ein Argument, das gegen ... spricht, ist ...", left_zh:"一個反對……的理由是……", ex:[{de:"Ein Argument, das gegen tägliches Pendeln spricht, ist der hohe Zeitverlust.",zh:"一個反對每天通勤的理由是時間浪費很大。"}]},
 // 5. Belege
@@ -282,6 +340,20 @@ const REDEMITTEL = [
 {id:39, sec:"5. Belege anführen（舉例／提出證據）", left_de:"Exemplarisch wird dies verdeutlicht an ...",           left_zh:"這點可由……具體看出。",           ex:[{de:"Exemplarisch wird dies verdeutlicht an meinen Benzinkosten, die durch Pendeln stark steigen.",zh:"這點可由我的油錢看出，通勤讓花費大幅上升。"}]},
 {id:40, sec:"5. Belege anführen（舉例／提出證據）", left_de:"Dies zeigt sich zum Beispiel an ...",                  left_zh:"這可以從……看出。",               ex:[{de:"Dies zeigt sich zum Beispiel an den häufigen Verspätungen, wenn der Verkehr stockt.",zh:"這可以從交通堵塞時經常遲到看出。"}]},
 {id:41, sec:"5. Belege anführen（舉例／提出證據）", left_de:"Klar wird dies, wenn man sich vor Augen führt, dass ...", left_zh:"當你想到……就很清楚。",        ex:[{de:"Klar wird dies, wenn man sich vor Augen führt, dass Pendeln langfristig Stress und Gesundheitsprobleme verursachen kann.",zh:"當你想到長期通勤可能帶來壓力和健康問題，就很清楚。"}]},
+{id:"42b", sec:"5. Belege anführen（舉例／提出證據）", left_de:"Zahlreiche Studien zeigen, dass ...", left_zh:"許多研究表明……", ex:[
+  {de:"[Arbeitszeit / Überstunden] Zahlreiche Studien zeigen, dass Menschen täglich nur etwa vier Stunden hochkonzentriert arbeiten können, weshalb Freizeitausgleich wichtiger ist als Überstunden.",zh:"許多研究表明，人們每天只能高度專注約四小時，因此補休比加班費更重要。"},
+  {de:"[Arbeitszeit / Work-Life-Balance] Zahlreiche Studien zeigen, dass eine gute Work-Life-Balance die Motivation der Mitarbeitenden erhöht.",zh:"許多研究表明，良好的工作與生活平衡能提升員工積極性。"},
+  {de:"[Kleidungsvorschriften] Zahlreiche Studien zeigen, dass das tägliche Treffen von Entscheidungen – wie etwa die Kleiderwahl – mentale Energie kostet und die Konzentration im Arbeitsalltag negativ beeinflusst.",zh:"許多研究表明，每天做決定（例如選擇穿什麼衣服）會消耗心理能量，並對工作中的專注力產生負面影響。"},
+  {de:"[Bewegung / Gesundheit] Zahlreiche Studien zeigen, dass regelmäßige Bewegung die Konzentration und Leistungsfähigkeit bei der Arbeit deutlich verbessert.",zh:"許多研究表明，規律運動能明顯提升工作中的專注力和表現。"},
+  {de:"[Schlafmangel] Zahlreiche Studien zeigen, dass Menschen, die weniger als sechs Stunden schlafen, am nächsten Tag so reagieren, als ob sie betrunken wären – die Konzentration und Entscheidungsfähigkeit nehmen stark ab.",zh:"許多研究表明，睡眠少於六小時的人，隔天的反應就好像喝醉一樣——專注力和決策能力大幅下降。"},
+  {de:"[Social Media] Zahlreiche Studien zeigen, dass soziale Medien die Konzentration negativ beeinflussen können.",zh:"許多研究表明，社群媒體可能對專注力產生負面影響。"},
+  {de:"[Sport / psychische Gesundheit] Zahlreiche Studien zeigen, dass regelmäßiger Sport die psychische Gesundheit verbessert.",zh:"許多研究表明，規律運動能改善心理健康。"},
+  {de:"[Pendelzeit / Glück] Zahlreiche Studien zeigen, dass ein täglicher Arbeitsweg von mehr als 45 Minuten die Arbeitszufriedenheit und das Wohlbefinden erheblich verschlechtert – jede zusätzliche Stunde Pendelzeit wirkt sich auf die Arbeitszufriedenheit aus, als ob man 19 % weniger Gehalt bekäme.",zh:"許多研究表明，每天單趟通勤超過45分鐘會顯著降低工作滿意度與幸福感——每多一個小時的通勤，對工作滿意度的影響就好像薪資被砍了19%一樣。"},
+  {de:"[Bewegungsmangel / als ob] Zahlreiche Studien zeigen, dass Personen, die sich kaum bewegen, körperlich so leistungsfähig sind, als ob sie zehn Jahre älter wären.",zh:"許多研究表明，幾乎不運動的人，身體表現就像老了十歲一樣。"},
+  {de:"[Sitzen / als ob] Zahlreiche Studien zeigen, dass Menschen, die den ganzen Tag sitzen, ohne sich zu bewegen, ein ähnlich hohes Gesundheitsrisiko haben, als ob sie rauchen würden.",zh:"許多研究表明，整天坐著不動的人，健康風險就像在抽菸一樣。"},
+  {de:"[Soziale Isolation / als ob] Zahlreiche Studien zeigen, dass soziale Isolation die Gesundheit so stark schädigt, als ob man täglich 15 Zigaretten rauchen würde.",zh:"許多研究表明，社交孤立對健康的傷害，就像每天抽15根菸一樣。"},
+  {de:"[Chronischer Stress / als ob] Zahlreiche Studien zeigen, dass chronischer Stress das Gehirn so stark belastet, als ob man schneller altert.",zh:"許多研究表明，長期慢性壓力對大腦的傷害，就像讓人加速老化一樣。"},
+]},
 // 6. Schluss
 {id:42, sec:"6. Schluss（結尾提問／收束）", left_de:"Was ist eure Meinung zu dem Thema?",                          left_zh:"你們對這個主題的看法是什麼？",   ex:[{de:"Was ist eure Meinung dazu: Lieber pendeln oder gleich umziehen?",zh:"你們怎麼看：寧願通勤還是乾脆搬家？"}]},
 {id:43, sec:"6. Schluss（結尾提問／收束）", left_de:"Was denkt ihr darüber?",                                      left_zh:"你們怎麼想？",                   ex:[{de:"Was denkt ihr darüber, jeden Tag 75 km zu pendeln?",zh:"你們怎麼看每天通勤75公里？"}]},
@@ -300,52 +372,8 @@ const REDEMITTEL = [
 // ════════════════════════════════════════════════════════════
 
 // Aufbau framework with common phrases
-const AUFBAU = [
-  { num:"①", de:"Einleitung",       zh:"引言",            alt:false, hints:[
-    {de:"Liebe Kolleginnen und Kollegen, / Hallo zusammen,",zh:"親愛的同事們，／大家好，"},
-    {de:"habt ihr schon davon gehört, dass ...? / Ich habe gehört, dass wir in Zukunft ...",zh:"你們聽說……了嗎？／我聽說未來我們……"},
-    {de:"Ich möchte gerne meine Meinung dazu äußern.",zh:"我想表達我對此的看法。"},
-  ]},
-  { num:"②", de:"Meinung äußern",   zh:"表達立場",        alt:true,  hints:[
-    {de:"Ich bin der Auffassung, dass ...",zh:"我的看法是……"},
-    {de:"Meiner Meinung nach ist das eine gute / schlechte Idee, weil ...",zh:"在我看來這是好／壞主意，因為……"},
-    {de:"Ich bin damit (nicht) einverstanden, weil ...",zh:"我（不）同意，因為……"},
-    {de:"Dafür spricht aus meiner Perspektive auf jeden Fall, dass ...",zh:"從我的角度來看，支持的理由是……"},
-  ]},
-  { num:"③", de:"Begründung",       zh:"理由說明",        alt:false, hints:[
-    {de:"Das wird sich positiv / negativ auf ... auswirken.",zh:"這會對……造成正面／負面影響。"},
-    {de:"Dafür spricht, dass ...",zh:"（支持題幹）支持的理由是……"},
-    {de:"... hat den entscheidenden Vorteil, dass ...",zh:"……有決定性的優點：……"},
-    {de:"Einerseits ...",zh:"一方面……"},
-    {de:"Ich ... lieber ..., anstatt dass ... (Anstatt...zu)",zh:"（反對題幹）我寧願……而不是……"},
-    {de:"Zwar ..., aber ...",zh:"雖然……，但是……"},
-    {de:"Es klingt zunächst gut, dass ..., aber ...",zh:"乍聽之下……不錯，但……"},
-  ]},
-  { num:"④", de:"Beispiel",         zh:"舉例",            alt:true,  hints:[
-    {de:"Beispielsweise ...",zh:"例如……"},
-    {de:"Ein weiterer Aspekt dabei ist, dass ...",zh:"另一個重點是……"},
-  ]},
-  { num:"⑤", de:"...",              zh:"（可繼續補充論點，自由發揮）", alt:false, hints:[]},
-  { num:"⑥", de:"Gegenargument",    zh:"反對意見",        alt:true,  hints:[
-    {de:"Auf der anderen Seite ...",zh:"另一方面……"},
-    {de:"Dagegen spricht allerdings, dass ...",zh:"反對的理由是……"},
-    {de:"Man sollte aber auch daran denken, dass ...",zh:"但也應該考慮到……"},
-  ]},
-  { num:"⑦", de:"Lösungsvorschlag", zh:"解決方案",        alt:false, hints:[
-    {de:"Ich würde vorschlagen, ...",zh:"我建議……"},
-    {de:"Es wäre besser, wenn ...",zh:"如果……會更好"},
-  ]},
-  { num:"⑧", de:"Schluss",          zh:"結尾",            alt:true,  hints:[
-    {de:"Zusammenfassend lässt sich sagen, dass ...",zh:"總結來說……"},
-    {de:"Abschließend möchte ich sagen, dass ...",zh:"最後我想說……"},
-    {de:"Meiner Meinung nach ...",zh:"在我看來……"},
-    {de:"Persönlich halte ich ... für eine gute oder schlechte Idee.",zh:"就我個人而言，我認為這是個好／壞主意。"},
-    {de:"Was denkt ihr darüber?",zh:"你們怎麼想？"},
-  ]},
-];
-
-// Three example essays
-const BEISPIELE = [
+// 兩篇網路範例文章（Aufbau 框架輔助範例，非個人精選）
+const WEB_BEISPIELE = [
   {
     topic: "Thema: Weniger Müll im Betrieb",
     topicZh: "職場減少垃圾",
@@ -423,6 +451,168 @@ const BEISPIELE = [
   },
 ];
 
+const AUFBAU = [
+  { num:"①", de:"Einleitung",       zh:"引言",            alt:false, hints:[
+    {de:"Liebe Kolleginnen und Kollegen, / Hallo zusammen,",zh:"親愛的同事們，／大家好，"},
+    {de:"habt ihr schon davon gehört, dass ...? / Ich habe gehört, dass wir in Zukunft ...",zh:"你們聽說……了嗎？／我聽說未來我們……"},
+    {de:"Ich möchte gerne meine Meinung dazu äußern.",zh:"我想表達我對此的看法。"},
+  ]},
+  { num:"②", de:"Meinung äußern",   zh:"表達立場",        alt:true,  hints:[
+    {de:"Ich bin der Auffassung, dass ...",zh:"我的看法是……"},
+    {de:"Meiner Meinung nach ist das eine gute / schlechte Idee, weil ...",zh:"在我看來這是好／壞主意，因為……"},
+    {de:"Ich bin damit (nicht) einverstanden, weil ...",zh:"我（不）同意，因為……"},
+    {de:"Dafür spricht aus meiner Perspektive auf jeden Fall, dass ...",zh:"從我的角度來看，支持的理由是……"},
+    {de:"Ich möchte hiermit zum Ausdruck bringen, dass ...",zh:"我想藉此表達……"},
+  ]},
+  { num:"③", de:"Begründung",       zh:"理由說明",        alt:false, hints:[
+    {de:"Das wird sich positiv / negativ auf ... auswirken.",zh:"這會對……造成正面／負面影響。"},
+    {de:"（「...」可填：die Umwelt / die Work-Life-Balance / die Fairness / die Flexibilität / den Pendelweg / die Gesundheit / die Motivation / das Arbeitsklima / die Produktivität / die Kosten）",zh:"環境 ／ 工作生活平衡 ／ 公平性 ／ 靈活性 ／ 通勤 ／ 健康 ／ 積極性 ／ 工作氛圍 ／ 生產力 ／ 成本"},
+    {de:"Dafür spricht, dass ...",zh:"（支持題幹）支持的理由是……"},
+    {de:"... hat den entscheidenden Vorteil, dass ...",zh:"……有決定性的優點：……"},
+    {de:"Einerseits ...",zh:"一方面……"},
+    {de:"Ich ... lieber ..., anstatt dass ... (Anstatt...zu)",zh:"（反對題幹）我寧願……而不是……"},
+    {de:"Zwar ..., aber ...",zh:"雖然……，但是……"},
+    {de:"Es klingt zunächst gut, dass ..., aber ...",zh:"乍聽之下……不錯，但……"},
+  ]},
+  { num:"④", de:"Beispiel",         zh:"舉例",            alt:true,  hints:[
+    {de:"Beispielsweise ...",zh:"例如……"},
+    {de:"Ein weiterer Aspekt dabei ist, dass ...",zh:"另一個重點是……"},
+    {de:"Zahlreiche Studien zeigen, dass ...",zh:"許多研究表明……"},
+  ]},
+  { num:"⑤", de:"...",              zh:"（可繼續補充論點，自由發揮）", alt:false, hints:[]},
+  { num:"⑥", de:"Gegenargument",    zh:"反對意見",        alt:true,  hints:[
+    {de:"Auf der anderen Seite ...",zh:"另一方面……"},
+    {de:"Dagegen spricht allerdings, dass ...",zh:"反對的理由是……"},
+    {de:"Man sollte aber auch daran denken, dass ...",zh:"但也應該考慮到……"},
+  ]},
+  { num:"⑦", de:"Lösungsvorschlag", zh:"解決方案",        alt:false, hints:[
+    {de:"Ich würde vorschlagen, ...",zh:"我建議……"},
+    {de:"Es wäre besser, wenn ...",zh:"如果……會更好"},
+  ]},
+  { num:"⑧", de:"Schluss",          zh:"結尾",            alt:true,  hints:[
+    {de:"Zusammenfassend lässt sich sagen, dass ...",zh:"總結來說……"},
+    {de:"Abschließend möchte ich sagen, dass ...",zh:"最後我想說……"},
+    {de:"Meiner Meinung nach ...",zh:"在我看來……"},
+    {de:"Persönlich halte ich ... für eine gute oder schlechte Idee.",zh:"就我個人而言，我認為這是個好／壞主意。"},
+    {de:"Was denkt ihr darüber?",zh:"你們怎麼想？"},
+  ]},
+];
+
+// Four example essays (個人精選範例，皆為修正版)
+const BEISPIELE = [
+  {
+    topic: "Thema A: Verpflichtender Englischkurs für alle",
+    topicZh: "強制英語課程",
+    prompt: "Alle Mitarbeiterinnen und Mitarbeiter in Ihrer Firma sollen einen verpflichtenden Englischkurs außerhalb der Arbeitszeit besuchen. Die Firma will die Kosten übernehmen. Begründen Sie Ihre Meinung und nennen Sie passende Beispiele. Gliedern Sie Ihren Text in sinnvolle Abschnitte.",
+    promptZh: "公司所有員工應在工作時間外參加一門強制性英語課程，費用由公司負擔。請說明您的看法並舉出合適的例子，並將文章分成合理的段落。",
+    rows: [
+      { num:"①", de:"Einleitung", zh:"引言",
+        blocks:[{de:"Hallo zusammen,\nich habe gehört, dass wir in Zukunft einen verpflichtenden Englischkurs, den die Firma bezahlt, außerhalb der Arbeitszeit besuchen. Ich möchte hiermit zum Ausdruck bringen, dass sich das positiv auf die Wettbewerbsfähigkeit der Mitarbeitenden auswirken wird.",zh:"大家好，\n我聽說我們未來要在工作時間外參加一門由公司支付費用的強制英語課程。我想藉此表達，這對員工的競爭力將會產生正面影響。"}]},
+      { num:"③", de:"Begründung（論點一）", zh:"理由說明：國際業務",
+        blocks:[{de:"Ein entscheidender Vorteil besteht darin, dass die Mitarbeitenden ihre Englischkenntnisse verbessern, damit wir mit den internationalen Aufgaben besser umgehen können.",zh:"一個決定性的優點在於，員工能提升英語能力，讓我們更能應對國際業務。"}]},
+      { num:"③", de:"Begründung（論點二）", zh:"理由說明：資訊取得",
+        blocks:[{de:"Darüber hinaus ermöglicht es, dass wir die internationalen Informationen unverzüglich erhalten — nicht nur durch englischsprachige Onlinezeitungen wie CNN und BBC, sondern auch durch englischsprachige Sendungen und Videos. Damit können wir die idealsten Entscheidungen für unsere Firma treffen, indem wir immer auf dem neuesten internationalen Stand bleiben. Ich bin der Auffassung, dass wir durch den Englischkurs zwei Fliegen mit einer Klappe schlagen können, was letztlich unserer gesamten Firma zugutekommt.",zh:"此外，這也讓我們能立即獲取國際資訊——不僅透過英語線上報紙如 CNN 和 BBC，也透過英語節目和影片。這樣我們就能做出對公司最理想的決策，因為我們總是保持在最新的國際狀態。我認為透過這門英語課程，我們可以一石二鳥，最終對整個公司都有益。"}]},
+      { num:"⑥", de:"Gegenargument", zh:"反方意見",
+        blocks:[{de:"Auf der anderen Seite soll man auch in Betracht ziehen, dass der Englischkurs außerhalb der Arbeitszeit stattfindet, was möglicherweise Erschöpfung zur Folge hat. Das bereitet mir Sorgen, dass nach zahlreichen bewältigten Aufgaben keine ausreichende ruhige Pause bleibt, um sich zu erholen, sodass man sich am Arbeitstag weiterhin nicht auf seine Tätigkeit konzentrieren kann.",zh:"另一方面，也應該考慮到，英語課程在工作時間外進行，可能導致疲憊。這讓我擔心，在完成大量任務後沒有足夠的安靜休息時間恢復，導致工作日當天無法繼續專注於自己的工作。"}]},
+      { num:"⑦", de:"Lösungsvorschlag", zh:"解決方案",
+        blocks:[{de:"Deshalb empfehle ich, dass wir den Englischkurs während der Arbeitszeit besuchen.",zh:"因此我建議，我們應該在工作時間內參加英語課程。"}]},
+      { num:"⑧", de:"Schluss", zh:"結尾",
+        blocks:[{de:"Zusammenfassend lässt sich sagen, dass der Englischkurs zwar unsere Wettbewerbsfähigkeit verbessern wird, aber man muss berücksichtigen, ob die Mitarbeitenden ausreichend Pause haben, um sich zu erholen.\nWas denkt ihr darüber?\nViele Grüße",zh:"總結來說，雖然英語課程會提升我們的競爭力，但必須考量員工是否有足夠的休息時間來恢復精力。\n你們怎麼想？\n誠摯問候"}]},
+    ]
+  },
+  {
+    topic: "Thema B: Einführung eines Veggie-Tages",
+    topicZh: "推行素食日",
+    prompt: "In der Kantine soll es freitags ausschließlich vegetarisches Essen geben, auf Fleisch soll an diesem Tag verzichtet werden. Begründen Sie Ihre Meinung und nennen Sie passende Beispiele. Gliedern Sie Ihren Text in sinnvolle Abschnitte.",
+    promptZh: "員工餐廳每週五將只供應素食，這天不再提供肉類。請說明您的看法並舉出合適的例子，並將文章分成合理的段落。",
+    rows: [
+      { num:"①", de:"Einleitung", zh:"引言",
+        blocks:[{de:"Hallo zusammen,\nich habe gehört, dass wir in Zukunft freitags ausschließlich vegetarisches Essen in der Kantine bekommen, ohne Fleisch essen zu können. Ich möchte hiermit zum Ausdruck bringen, dass sich das positiv auf die Arbeitseffizienz auswirken wird.",zh:"大家好，\n我聽說我們未來每週五在員工餐廳只能吃到素食，不能再吃肉。我想藉此表達，這對工作效率將會產生正面影響。"}]},
+      { num:"③", de:"Begründung（論點一：效率）", zh:"理由說明：效率",
+        blocks:[{de:"Ein entscheidender Vorteil besteht darin, dass wir uns nach dem leichten Mittagessen wie frischem Salat besser auf die Tätigkeit konzentrieren können.",zh:"一個決定性的優點在於，吃了像新鮮沙拉這種清爽的午餐後，我們更能專注於工作。"}]},
+      { num:"④", de:"Beispiel（氣候議題舉例）", zh:"舉例：氣候議題",
+        blocks:[{de:"Darüber hinaus ermöglicht es, dass wir zum Umweltschutz beitragen. Je mehr Fleisch wir essen, desto mehr CO2 entsteht in unserer Atmosphäre, was die Hitze zur Folge hat. Bei zu viel Hitze kann man im Sommer die Aufgaben nur schwer bewältigen. Ich bin der Auffassung, dass das vegetarische Essen zwei Fliegen mit einer Klappe schlägt, was letztlich unserer gesamten Firma zugutekommt.",zh:"此外，這也讓我們能對環境保護做出貢獻。我們吃的肉越多，大氣中產生的二氧化碳就越多，這會導致氣溫升高。在炎熱的夏天，過高的氣溫會讓人很難完成工作任務。我認為素食一石二鳥，最終對整個公司都有益。"}]},
+      { num:"⑥", de:"Gegenargument", zh:"反方意見",
+        blocks:[{de:"Auf der anderen Seite muss man in Betracht ziehen, dass manche Leute sich beschweren, dass sie nach dem vegetarischen Essen nicht genug Energie tanken können, sodass sie am Nachmittag schnell großen Hunger bekommen.",zh:"另一方面，也必須考慮到，有些人會抱怨吃了素食後無法補充足夠的體力，導致下午很快就感到飢餓。"}]},
+      { num:"⑦", de:"Lösungsvorschlag", zh:"解決方案",
+        blocks:[{de:"Deshalb schlage ich vor, dass wir andere kleine vegetarische Speisen wie Nüsse oder Obst in der Kaffeepause anbieten, um den vorhersehbaren Hunger zu vermeiden.",zh:"因此我建議，我們可以在咖啡休息時間提供其他小份素食點心，例如堅果或水果，以避免可預見的飢餓感。"}]},
+      { num:"⑧", de:"Schluss", zh:"結尾",
+        blocks:[{de:"Zusammenfassend lässt sich sagen, dass es außer Zweifel steht, dass vegetarisches Essen zwar eine positive Auswirkung auf unsere Arbeitseffizienz hat, aber man muss berücksichtigen, ob die Mitarbeiterinnen und Mitarbeiter ausreichende Energie dadurch bekommen können.\nWas denkt ihr darüber?\nViele Grüße",zh:"總結來說，毫無疑問素食對我們的工作效率有正面影響，但必須考量員工能否藉此獲得足夠的體力。\n你們怎麼想？\n誠摯問候"}]},
+    ]
+  },
+  {
+    topic: "Thema B: Mitarbeit im Firmengarten",
+    topicZh: "參與公司花園",
+    prompt: "Alle Mitarbeiterinnen und Mitarbeiter in Ihrer Firma sollen die Möglichkeit haben, in einem Firmengarten Pause machen zu können. Die Firmenleitung schlägt vor, dass Sie in Ihrer Freizeit beim Anlegen und Pflegen des Gartens mithelfen. Begründen Sie Ihre Meinung und nennen Sie passende Beispiele. Gliedern Sie Ihren Text in sinnvolle Abschnitte.",
+    promptZh: "公司所有員工將有機會在公司花園裡休息。公司管理層建議員工在空閒時間協助建造與維護這個花園。請說明您的看法並舉出合適的例子，並將文章分成合理的段落。",
+    rows: [
+      { num:"①", de:"Einleitung", zh:"引言",
+        blocks:[{de:"Hallo zusammen,\nIch habe gehört, dass wir in Zukunft eine Pause in einem selbstgepflegten Firmengarten machen können. Ich möchte hiermit zum Ausdruck bringen, dass sich das auf unsere Gesundheit positiv auswirken wird.",zh:"大家好，\n我聽說我們未來可以在一個由我們自行維護的公司花園裡休息。我想藉此表達，這對我們的健康將會產生正面影響。"}]},
+      { num:"③", de:"Begründung（論點一：休息與放鬆）", zh:"理由說明：休息放鬆",
+        blocks:[{de:"Ein entscheidender Vorteil besteht darin, dass wir uns zwischen zahlreichen Aufgaben und Sitzungen erholen können, indem wir in einem Garten zusammen eine Pause machen. Dabei können wir einen Kaffee trinken und gleichzeitig das Grüne genießen.",zh:"一個決定性的優點在於，我們能在眾多任務和會議之間，透過在花園裡一起休息來恢復精力。我們可以一邊喝咖啡，一邊享受綠意。"}]},
+      { num:"③", de:"Begründung（論點二：運動與專注力）", zh:"理由說明：運動與專注",
+        blocks:[{de:"Darüber hinaus ermöglicht es, dass wir kleine Bewegung im Garten machen und mehr frische Luft bekommen, sodass wir nach der Pause uns weiter auf unsere Aufgaben konzentrieren können. Ich bin der Auffassung, dass wir durch die Pause in dem Garten zwei Fliegen mit einer Klappe schlagen können, was letztlich unserer gesamten Firma zugutekommt.",zh:"此外，這也讓我們能在花園裡稍微活動身體，呼吸更多新鮮空氣，這樣休息過後我們能更專注於工作任務。我認為透過在花園裡的休息，我們可以一石二鳥，最終對整個公司都有益。"}]},
+      { num:"⑥", de:"Gegenargument", zh:"反方意見",
+        blocks:[{de:"Auf der anderen Seite soll man auch in Betracht ziehen, dass wir uns um den Garten selbst kümmern müssen. Das bereitet mir Sorgen, dass wir nicht nur nach der Tätigkeit ohne Energie sind, sondern auch nicht ausreichende Erfahrung für solchen gemeinsamen größeren Garten haben.",zh:"另一方面，也應該考慮到，我們必須自行照顧這個花園。這讓我擔心，我們不僅在工作之後已經沒有精力，而且也沒有足夠的經驗來維護這樣一個共同的大型花園。"}]},
+      { num:"⑦", de:"Lösungsvorschlag", zh:"解決方案",
+        blocks:[{de:"Ich schlage vor, dass wir eine erfahrene Gartenfirma suchen, um unseren Garten professionell zu pflegen.",zh:"我建議我們尋找一家有經驗的園藝公司，以專業的方式維護我們的花園。"}]},
+      { num:"⑧", de:"Schluss", zh:"結尾",
+        blocks:[{de:"Zusammenfassend lässt sich sagen, dass außer Zweifel steht, dass eine Pause im Garten zwar positive Auswirkungen hat, aber man muss berücksichtigen, ob die Mitarbeitenden ausreichende Energie und Erfahrung haben, sodass der Garten gut gepflegt wird.\nWas denkt ihr darüber?\nViele Grüße",zh:"總結來說，毫無疑問在花園裡休息確實有正面影響，但必須考量員工是否有足夠的精力和經驗，讓花園得到良好的維護。\n你們怎麼想？\n誠摯問候"}]},
+    ]
+  },
+  {
+    topic: "Thema B: Fitnessraum im Betrieb",
+    topicZh: "公司健身房",
+    prompt: "Für alle Mitarbeiterinnen und Mitarbeiter in Ihrer Firma soll ein Fitnessraum mit Geräten eingerichtet werden. Für den Zutritt sollen sie eine monatliche Gebühr zahlen. Begründen Sie Ihre Meinung und nennen Sie passende Beispiele. Gliedern Sie Ihren Text in sinnvolle Abschnitte.",
+    promptZh: "公司打算為所有員工設置一間配有器材的健身房，員工須支付月費以取得使用權。請說明您的看法並舉出合適的例子，並將文章分成合理的段落。",
+    rows: [
+      { num:"①", de:"Einleitung", zh:"引言",
+        blocks:[{de:"Hallo zusammen,\nich habe gehört, dass wir in Zukunft einen Fitnessraum im Betrieb haben werden. Man kann Zutritt mit einer monatlichen Gebühr bekommen. Ich möchte hiermit zum Ausdruck bringen, dass sich das positiv auf unsere Gesundheit auswirken wird.",zh:"大家好，\n我聽說我們未來公司裡會有一間健身房。可以透過支付月費取得使用權。我想藉此表達，這對我們的健康將會產生正面影響。"}]},
+      { num:"③", de:"Begründung（論點一：健康）", zh:"理由說明：健康",
+        blocks:[{de:"Ein entscheidender Vorteil besteht darin, dass man einfacher und öfter Sport machen kann. Zahlreiche Studien haben gezeigt, dass gestresste Menschen durch regelmäßige Bewegung Stress abbauen können, da dabei chemische Prozesse im Gehirn ablaufen.",zh:"一個決定性的優點在於，人們能更輕鬆、更頻繁地運動。許多研究表明，承受壓力的人透過規律運動能減輕壓力，因為運動時大腦會發生化學變化。"}]},
+      { num:"③", de:"Begründung（論點二：天氣）", zh:"理由說明：天氣因素",
+        blocks:[{de:"Darüber hinaus ermöglicht es uns, im Winter nicht nur dunkle Straßen, sondern auch das instabile Wetter während des Sports zu vermeiden. Ich bin der Auffassung, dass ein Fitnessraum für die mentale sowie die körperliche Gesundheit gut ist, was uns gleichzeitig zwei Fliegen mit einer Klappe schlagen lässt, was letztendlich dem gesamten Unternehmen zugutekommt.",zh:"此外，這也讓我們在冬天運動時，不僅能避開昏暗的街道，還能避開不穩定的天氣。我認為健身房對心理和身體健康都有益，這同時讓我們一石二鳥，最終對整個公司都有益。"}]},
+      { num:"⑥", de:"Gegenargument", zh:"反方意見",
+        blocks:[{de:"Auf der anderen Seite soll man auch in Betracht ziehen, dass die Gebühr nur für die Geräte, nicht für einen Sporttrainer gilt. Es bereitet mir Sorgen, dass nicht alle Mitarbeitenden ausreichende Erfahrung mit den Geräten haben. Wenn man nach der Arbeitszeit allein die Geräte nutzt, muss man aufpassen, um einen Unfall zu vermeiden.",zh:"另一方面，也應該考慮到，這筆費用僅涵蓋器材，不包含運動教練。這讓我擔心，並非所有員工都對器材有足夠的經驗。如果在下班後獨自使用器材，就必須小心避免意外發生。"}]},
+      { num:"⑦", de:"Lösungsvorschlag", zh:"解決方案",
+        blocks:[{de:"Deshalb empfehle ich, dass wir einmal in der Woche einen Sportkurs in unserem Fitnessraum durchführen. Mit dem professionellen Lehrer können die Mitarbeitenden die Geräte sicher nutzen und dabei gesünder werden.",zh:"因此我建議，我們每週在健身房舉辦一次運動課程。有了專業的指導老師，員工就能安全地使用器材，同時變得更健康。"}]},
+      { num:"⑧", de:"Schluss", zh:"結尾",
+        blocks:[{de:"Zusammenfassend lässt sich sagen, dass ein Fitnessraum im Betrieb zwar eine positive Auswirkung auf die Gesundheit der Mitarbeitenden hat, aber man soll berücksichtigen, ob die Mitarbeitenden ausreichende Erfahrung mit den Geräten haben, um einen Unfall zu vermeiden.\nWas denkt ihr darüber?\nViele Grüße",zh:"總結來說，雖然公司健身房對員工健康有正面影響，但應考量員工是否有足夠的器材使用經驗，以避免發生意外。\n你們怎麼想？\n誠摯問候"}]},
+    ]
+  },
+];
+
+// Personal fixed skeleton (個人固定骨架，套用於 Englischkurs 範例，可重複使用於其他題目)
+const POSITIVE_NOUNS = [
+  { de:"die Arbeitseffizienz", zh:"工作效率" },
+  { de:"die Wettbewerbsfähigkeit", zh:"競爭力" },
+  { de:"die Work-Life-Balance", zh:"工作與生活平衡" },
+  { de:"die Gesundheit", zh:"健康" },
+  { de:"das Arbeitsklima", zh:"工作氣氛" },
+  { de:"die Produktivität", zh:"生產力" },
+  { de:"die Teamarbeit", zh:"團隊合作" },
+  { de:"den Zusammenhalt", zh:"凝聚力" },
+  { de:"die Arbeitsleistung", zh:"工作表現" },
+  { de:"die Motivation", zh:"積極性" },
+  { de:"die Zufriedenheit", zh:"滿意度" },
+  { de:"die Konzentration", zh:"專注力" },
+  { de:"die Kreativität", zh:"創造力" },
+];
+
+const SKELETON = [
+  { func:"開場・引出話題", de:`ich habe gehört, dass ...` },
+  { func:"表態・說明立場", de:`Ich möchte hiermit zum Ausdruck bringen, dass sich das positiv auf <span class="placeholder-pos">|| positives Thema ||</span> auswirken wird.` },
+  { func:"第一個論點", de:`Ein entscheidender Vorteil besteht darin, dass ...` },
+  { func:"第二個論點（補充）", de:`Darüber hinaus ermöglicht es, dass ...` },
+  { func:"個人見解銜接：一石二鳥比喻", de:`Ich bin der Auffassung, dass wir durch <span class="placeholder">|| Thema ||</span> zwei Fliegen mit einer Klappe schlagen können, was letztlich unserer gesamten Firma zugutekommt.` },
+  { func:"反方意見銜接", de:`Auf der anderen Seite soll man auch in Betracht ziehen, dass ...` },
+  { func:"表達擔憂", de:`Das bereitet mir Sorgen, dass ...` },
+  { func:"提出建議", de:`Deshalb empfehle ich, dass ...` },
+  { func:"結尾總結（變體一：Auswirkung haben）", de:`Zusammenfassend lässt sich sagen, dass es außer Zweifel steht, dass <span class="placeholder">|| Thema ||</span> zwar eine positive Auswirkung auf <span class="placeholder-pos">|| positives Thema ||</span> hat, aber man muss berücksichtigen, ob die Mitarbeitenden ausreichend ... haben.` },
+  { func:"結尾總結（變體二：verbessern wird）", de:`Zusammenfassend lässt sich sagen, dass <span class="placeholder">|| Thema ||</span> zwar unsere <span class="placeholder-pos">|| positives Thema ||</span> verbessern wird, aber man muss berücksichtigen, ob ...` },
+  { func:"邀請討論", de:`Was denkt ihr darüber?` },
+];
+
 // ════════════════════════════════════════════════════════════
 // RENDER: TAB 1
 // ════════════════════════════════════════════════════════════
@@ -461,7 +651,35 @@ function render() {
     <th class="col-left">句型／Redemittel &nbsp;🔊 點擊朗讀</th>
     <th class="col-right">主題例句：Pendeln oder Umziehen &nbsp;🔊 點擊朗讀</th>
   </tr></thead>`;
-  const html = secOrder.map(sec =>
+  const tipsHtml = state.filter === 'all' ? `
+  <div class="tips-box">
+    <div class="tips-box-title">📋 老師提醒 — Forumsbeitrag 注意事項</div>
+    <ul class="tips-list">
+      <li>
+        <span class="tips-icon">①</span>
+        <span>
+          <span class="tips-de">Am Anfang nicht das Thema neu erklären — nur kurz erwähnen, worüber man schreibt.</span>
+          <span class="tips-zh">開頭不需要重新解釋題目，稍微提一下要寫哪個主題就好。</span>
+        </span>
+      </li>
+      <li>
+        <span class="tips-icon">②</span>
+        <span>
+          <span class="tips-de">Eigene Meinung, Perspektive und persönliche Haltung zeigen und begründen — nicht nur neutral beschreiben oder die Meinung von anderen wiedergeben. Keine Sätze wie: <span class="tips-wrong">„Wir sollten eine Umfrage machen."</span> / <span class="tips-wrong">„Wir sollten das mit dem Chef besprechen."</span></span>
+          <span class="tips-zh">展現個人觀點、意見、情緒和立場並加以論證，而不是描述別人的意見或做中性描述。避免寫「我們應該做問卷調查」或「我們應該和老闆討論」之類的句子。</span>
+        </span>
+      </li>
+      <li>
+        <span class="tips-icon">③ <span style="font-size:10px;color:#b0901a;font-weight:400;">（建議，非絕對）</span></span>
+        <span>
+          <span class="tips-de">Eher nicht <span class="tips-wrong">„Mitarbeiter"</span> oder <span class="tips-wrong">„Menschen"</span> schreiben → besser: <span class="tips-right">„Kollegen"</span> oder einfach <span class="tips-right">„andere / die anderen"</span> (z.&nbsp;B. „Was denken die anderen darüber?")</span>
+          <span class="tips-zh">不要寫 Mitarbeiter 或 Menschen，改用 Kollegen，或直接用 andere／die anderen 就足夠了。（因為論壇討論是同事間平等對話，用 Kollegen 比帶有員工階級意味的 Mitarbeiter 更貼近語氣，但並非絕對錯誤）</span>
+        </span>
+      </li>
+    </ul>
+  </div>` : '';
+
+  const html = tipsHtml + secOrder.map(sec =>
     `<div class="section-block">
       <div class="section-header">${sec}</div>
       <table>${thead}<tbody>${sections[sec].map(buildRow).join('')}</tbody></table>
@@ -476,8 +694,41 @@ function setFilter(f, btn) { state.filter = f; document.querySelectorAll('.filte
 // ════════════════════════════════════════════════════════════
 // RENDER: TAB 2
 // ════════════════════════════════════════════════════════════
+function renderExampleBlock(b) {
+  const rowsHtml = b.rows.map(row => {
+    const blocksHtml = row.blocks.map(bl =>
+      `<div class="analysis-item" onclick="speak('${esc(bl.de.replace(/\n/g,' '))}')">
+        <span class="a-de">${bl.de.replace(/\n/g,'<br>')}</span>
+        <span class="a-zh">${bl.zh.replace(/\n/g,'<br>')}</span>
+      </div>`
+    ).join('');
+    return `<tr>
+      <td class="label-cell col-label">
+        <span class="label-num">${row.num}</span>
+        <span class="label-de">${row.de}</span>
+        <span class="label-zh">${row.zh}</span>
+      </td>
+      <td>${blocksHtml}</td>
+    </tr>`;
+  }).join('');
+
+  return `<div class="section-block">
+    <div class="topic-banner">
+      📝 ${b.topic}
+      <span class="topic-zh">${b.topicZh}</span>
+    </div>
+    <div class="topic-prompt">${b.prompt}<br><span style="color:#aaa;font-style:italic;">${b.promptZh}</span></div>
+    <table>
+      <thead><tr>
+        <th class="col-label" style="text-align:center;">段落分類</th>
+        <th>範例文章（Beispieltext）&nbsp;🔊 點擊朗讀</th>
+      </tr></thead>
+      <tbody>${rowsHtml}</tbody>
+    </table>
+  </div>`;
+}
+
 function renderAufbau() {
-  // Part 1: Aufbau framework table
   const aufbauRows = AUFBAU.map((row, i) => {
     const altCls = row.alt ? ' class="aufbau-alt"' : '';
     const deHtml = row.hints.length
@@ -497,40 +748,7 @@ function renderAufbau() {
     </tr>`;
   }).join('');
 
-  // Part 2: example essays
-  const examplesHtml = BEISPIELE.map(b => {
-    const rowsHtml = b.rows.map(row => {
-      const blocksHtml = row.blocks.map(bl =>
-        `<div class="analysis-item" onclick="speak('${esc(bl.de.replace(/\n/g,' '))}')">
-          <span class="a-de">${bl.de.replace(/\n/g,'<br>')}</span>
-          <span class="a-zh">${bl.zh.replace(/\n/g,'<br>')}</span>
-        </div>`
-      ).join('');
-      return `<tr>
-        <td class="label-cell col-label">
-          <span class="label-num">${row.num}</span>
-          <span class="label-de">${row.de}</span>
-          <span class="label-zh">${row.zh}</span>
-        </td>
-        <td>${blocksHtml}</td>
-      </tr>`;
-    }).join('');
-
-    return `<div class="section-block">
-      <div class="topic-banner">
-        📝 ${b.topic}
-        <span class="topic-zh">${b.topicZh}</span>
-      </div>
-      <div class="topic-prompt">${b.prompt}<br><span style="color:#aaa;font-style:italic;">${b.promptZh}</span></div>
-      <table>
-        <thead><tr>
-          <th class="col-label" style="text-align:center;">段落分類</th>
-          <th>範例文章（Beispieltext）&nbsp;🔊 點擊朗讀</th>
-        </tr></thead>
-        <tbody>${rowsHtml}</tbody>
-      </table>
-    </div>`;
-  }).join('');
+  const webExamplesHtml = WEB_BEISPIELE.map(renderExampleBlock).join('');
 
   document.getElementById('aufbauContent').innerHTML = `
     <div class="section-block">
@@ -545,8 +763,154 @@ function renderAufbau() {
         <tbody>${aufbauRows}</tbody>
       </table>
     </div>
+
     <div style="margin:28px 0 10px; font-size:14px; font-weight:600; color:#1a3a6b; padding-bottom:6px; border-bottom:2px solid #d0ddf0;">
-      範例文章 Beispieltexte
+      參考範例文章 Beispieltexte（網路範例）
+    </div>
+    ${webExamplesHtml}
+  `;
+}
+
+// ════════════════════════════════════════════════════════════
+// RENDER: TAB 3 — Personal skeleton + Example essays
+// ════════════════════════════════════════════════════════════
+
+// Skeleton phrases (plain text, for matching/bolding inside example essays)
+// 每篇文章專屬的主題關鍵字（黃色標示，與 ||Thema|| 視覺一致）
+const TOPIC_KEYWORDS = {
+  "Thema A: Verpflichtender Englischkurs für alle": ["Englischkurs"],
+  "Thema B: Einführung eines Veggie-Tages": ["vegetarisches Essen", "vegetarische Essen", "vegetarischen Essen", "vegetarische Speisen"],
+  "Thema B: Mitarbeit im Firmengarten": ["Firmengarten", "den Garten", "dem Garten", "der Garten", "unseren Garten", "die Pause in dem Garten", "eine Pause im Garten"],
+  "Thema B: Fitnessraum im Betrieb": ["Fitnessraum"],
+};
+
+const SKEL_PHRASES = [
+  "ich habe gehört, dass",
+  "Ich habe gehört, dass",
+  "Ich möchte hiermit zum Ausdruck bringen, dass sich das positiv auf",
+  "Ein entscheidender Vorteil besteht darin, dass",
+  "Darüber hinaus ermöglicht es, dass",
+  "Darüber hinaus ermöglicht es uns,",
+  "Ich bin der Auffassung, dass",
+  "zwei Fliegen mit einer Klappe schlagen können, was letztlich unserer gesamten Firma zugutekommt",
+  "zwei Fliegen mit einer Klappe schlägt, was letztlich unserer gesamten Firma zugutekommt",
+  "zwei Fliegen mit einer Klappe schlagen lässt, was letztendlich dem gesamten Unternehmen zugutekommt",
+  "Auf der anderen Seite soll man auch in Betracht ziehen, dass",
+  "Auf der anderen Seite muss man in Betracht ziehen, dass",
+  "Das bereitet mir Sorgen, dass",
+  "Es bereitet mir Sorgen, dass",
+  "Deshalb empfehle ich, dass",
+  "Deshalb schlage ich vor, dass",
+  "Ich schlage vor, dass",
+  "Zusammenfassend lässt sich sagen, dass es außer Zweifel steht, dass",
+  "Zusammenfassend lässt sich sagen, dass außer Zweifel steht, dass",
+  "Zusammenfassend lässt sich sagen, dass",
+  "zwar eine positive Auswirkung auf",
+  "zwar positive Auswirkungen hat",
+  "verbessern wird,",
+  "aber man muss berücksichtigen, ob",
+  "aber man soll berücksichtigen, ob",
+  "Was denkt ihr darüber?",
+];
+
+function highlightSkeletonAndNouns(text, topicKey) {
+  let out = text;
+  // bold skeleton phrases (longer phrases first to avoid double-wrapping nested matches)
+  const sortedPhrases = [...SKEL_PHRASES].sort((a, b) => b.length - a.length);
+  sortedPhrases.forEach(p => {
+    const esc_p = p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    // Negative lookahead/behind-free approach: split on existing <span> tags, only replace in plain segments
+    const parts = out.split(/(<span class="skel-bold">.*?<\/span>)/g);
+    out = parts.map(part => {
+      if (part.startsWith('<span class="skel-bold">')) return part; // already highlighted, skip
+      return part.replace(new RegExp(esc_p, 'g'), m => `<span class="skel-bold">${m}</span>`);
+    }).join('');
+  });
+  // highlight positive nouns in green
+  POSITIVE_NOUNS.forEach(n => {
+    const bare = n.de.replace(/^(die|der|das|den|dem|des)\s+/, '');
+    const esc_n = bare.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    out = out.replace(new RegExp('\\b' + esc_n + '\\w*\\b', 'g'), m => `<span class="pos-highlight">${m}</span>`);
+  });
+  // highlight topic keywords in yellow (consistent with ||Thema|| placeholder style)
+  const keywords = TOPIC_KEYWORDS[topicKey] || [];
+  const sortedKeywords = [...keywords].sort((a, b) => b.length - a.length);
+  sortedKeywords.forEach(kw => {
+    const esc_kw = kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    out = out.replace(new RegExp(esc_kw, 'g'), m => `<span class="topic-highlight">${m}</span>`);
+  });
+  return out;
+}
+
+function renderPersonalExampleBlock(b) {
+  const rowsHtml = b.rows.map(row => {
+    const blocksHtml = row.blocks.map(bl =>
+      `<div class="analysis-item" onclick="speak('${esc(bl.de.replace(/\n/g,' '))}')">
+        <span class="a-de">${highlightSkeletonAndNouns(bl.de.replace(/\n/g,'<br>'), b.topic)}</span>
+        <span class="a-zh">${bl.zh.replace(/\n/g,'<br>')}</span>
+      </div>`
+    ).join('');
+    return `<tr>
+      <td class="label-cell col-label">
+        <span class="label-num">${row.num}</span>
+        <span class="label-de">${row.de}</span>
+        <span class="label-zh">${row.zh}</span>
+      </td>
+      <td>${blocksHtml}</td>
+    </tr>`;
+  }).join('');
+
+  return `<div class="section-block">
+    <div class="topic-banner">
+      📝 ${b.topic}
+      <span class="topic-zh">${b.topicZh}</span>
+    </div>
+    <div class="topic-prompt">${b.prompt}<br><span style="color:#aaa;font-style:italic;">${b.promptZh}</span></div>
+    <table>
+      <thead><tr>
+        <th class="col-label" style="text-align:center;">段落分類</th>
+        <th>範例文章（Beispieltext）&nbsp;🔊 點擊朗讀 &nbsp;｜&nbsp; <span class="skel-bold" style="font-size:10px;">粗體＝固定骨架</span> &nbsp;｜&nbsp; <span class="pos-highlight" style="font-size:10px;">綠色＝正向名詞</span> &nbsp;｜&nbsp; <span class="topic-highlight" style="font-size:10px;">黃色＝題目關鍵字</span></th>
+      </tr></thead>
+      <tbody>${rowsHtml}</tbody>
+    </table>
+  </div>`;
+}
+
+function renderSkeleton() {
+  const skeletonRows = SKELETON.map(s =>
+    `<tr>
+      <td class="skeleton-func">${s.func}</td>
+      <td class="skeleton-de" onclick="speak('${esc(s.de.replace(/<[^>]+>/g,'').replace(/\|\|.*?\|\|/g,'').trim())}')">${s.de}</td>
+    </tr>`
+  ).join('');
+
+  const posNounListHtml = POSITIVE_NOUNS.map(n =>
+    `<span class="pos-noun-item" onclick="speak('${esc(n.de)}')">${n.de}<span class="zh">${n.zh}</span></span>`
+  ).join('');
+
+  const examplesHtml = BEISPIELE.map(renderPersonalExampleBlock).join('');
+
+  document.getElementById('skeletonContent').innerHTML = `
+    <div class="section-block">
+      <div class="section-header">⭐ 個人固定骨架 Persönliches Gerüst &nbsp;·&nbsp; 考試套用句型（含 <span class="placeholder" style="font-size:10px;">|| Thema ||</span> 與 <span class="placeholder-pos" style="font-size:10px;">|| 正向主題 ||</span> 替換點）</div>
+      <table>
+        <thead><tr>
+          <th style="width:18%;">功能</th>
+          <th>固定句型（德文）&nbsp;🔊 點擊朗讀</th>
+        </tr></thead>
+        <tbody>${skeletonRows}</tbody>
+      </table>
+      <div class="pos-noun-box">
+        <div class="pos-noun-title">🟢 「|| 正向主題 ||」常用替換詞彙（點擊朗讀）</div>
+        <div class="pos-noun-list">${posNounListHtml}</div>
+      </div>
+      <p style="font-size:11px;color:#999;font-style:italic;padding:8px 10px 0;">
+        這套骨架（開場→表態→論點一→論點二→反方→擔憂→建議→總結→提問）可直接套用在其他 Forumsbeitrag 題目，只需替換主題相關詞彙。
+      </p>
+    </div>
+
+    <div style="margin:28px 0 10px; font-size:14px; font-weight:600; color:#1a3a6b; padding-bottom:6px; border-bottom:2px solid #d0ddf0;">
+      範例文章 Beispieltexte（4 篇精選）
     </div>
     ${examplesHtml}
   `;
@@ -554,6 +918,7 @@ function renderAufbau() {
 
 render();
 renderAufbau();
+renderSkeleton();
 </script>
 </body>
 </html>
