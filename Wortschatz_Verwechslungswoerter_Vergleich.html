@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>易混淆單字比較 · DTB B2</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", Arial, sans-serif; background: #f0f4f8; color: #1a1a2e; font-size: 14px; }
+
+/* ── Header ── */
+header { background: linear-gradient(135deg, #1a3a6b, #2563a8); color: #fff; padding: 20px 28px 16px; }
+header h1 { font-size: 21px; font-weight: 700; }
+header p { margin-top: 5px; font-size: 12px; opacity: 0.85; }
+
+/* ── Sticky tag nav ── */
+.tagnav {
+  position: sticky; top: 0; z-index: 200;
+  background: #fff; border-bottom: 1px solid #dde3ec;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  padding: 10px 20px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+}
+.tag-btn {
+  padding: 6px 15px; border-radius: 20px; border: 2px solid var(--c, #2563a8);
+  background: #fff; color: var(--c, #2563a8); font-size: 12.5px; font-weight: 600;
+  cursor: pointer; transition: all 0.15s; white-space: nowrap;
+}
+.tag-btn:hover, .tag-btn.active { background: var(--c, #2563a8); color: #fff; }
+.tag-btn .cnt { opacity: 0.75; font-weight: 500; margin-left: 3px; }
+.tag-btn.empty { opacity: 0.4; cursor: default; }
+.tag-btn.empty:hover { background: #fff; color: var(--c,#2563a8); }
+.search-box {
+  margin-left: auto; padding: 7px 14px; border: 1.5px solid #c5d0e0; border-radius: 20px;
+  font-size: 12.5px; width: 220px; outline: none;
+}
+.search-box:focus { border-color: #2563a8; }
+
+/* ── Layout ── */
+.container { max-width: 1000px; margin: 0 auto; padding: 22px 18px 60px; }
+.section-heading {
+  display: flex; align-items: baseline; gap: 10px; margin: 30px 0 14px;
+  scroll-margin-top: 66px;
+}
+.section-heading:first-child { margin-top: 4px; }
+.section-heading h2 { font-size: 16px; font-weight: 700; color: var(--c, #2563a8); }
+.section-heading .desc { font-size: 12px; color: #7a889c; }
+.section-empty-note { font-size: 12.5px; color: #aaa; background: #fff; border: 1px dashed #ccd6e4; border-radius: 8px; padding: 14px 16px; margin-bottom: 10px; }
+
+/* ── Card (group) ── */
+.group-card {
+  background: #fff; border-radius: 12px; padding: 18px 20px; margin-bottom: 16px;
+  border-left: 5px solid var(--c, #90a8c8); box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+}
+.group-card.hidden { display: none; }
+.group-title { font-size: 15px; font-weight: 700; color: #1a3a6b; margin-bottom: 4px; }
+.group-sub { font-size: 11.5px; color: #8a97ab; margin-bottom: 12px; }
+
+/* ── Table style groups (word family) ── */
+table.fam-table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+table.fam-table th {
+  text-align: left; font-size: 11px; font-weight: 600; color: #888; letter-spacing: 0.03em;
+  padding: 6px 9px; border-bottom: 1px solid #e4e8ee; background: #fafbfd;
+}
+table.fam-table td {
+  padding: 7px 9px; border-bottom: 1px solid #f0f2f6; font-size: 13px; vertical-align: top;
+}
+table.fam-table td.w { font-weight: 700; color: #1a5fc8; cursor: pointer; }
+table.fam-table td.w:hover { text-decoration: underline; }
+table.fam-table td.pos { color: #7d6000; font-size: 12px; white-space: nowrap; }
+table.fam-table td.zh { color: #222; }
+table.fam-table td.en { color: #999; font-style: italic; font-size: 12px; }
+
+/* ── Example sentences (shared) ── */
+.ex-block { margin-top: 8px; }
+.ex-item {
+  cursor: pointer; padding: 5px 9px; border-radius: 0 5px 5px 0; margin-bottom: 4px;
+  border-left: 2px solid #aed6f1; transition: background 0.12s;
+}
+.ex-item:hover { background: #eef4ff; }
+.ex-de { font-size: 12.5px; color: #222; line-height: 1.55; }
+.ex-zh { font-size: 11.5px; color: #999; font-style: italic; display: block; margin-top: 1px; }
+
+/* ── Contrast (side-by-side) groups ── */
+.contrast-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.contrast-item {
+  background: #fafbfd; border: 1px solid #e4e8ee; border-radius: 10px; padding: 12px 14px;
+}
+.contrast-item .cw { font-size: 16px; font-weight: 700; color: #1a3a6b; cursor: pointer; }
+.contrast-item .cw:hover { text-decoration: underline; }
+.contrast-item .cpos { font-size: 11px; color: #c0622a; font-weight: 600; margin: 2px 0 6px; }
+.contrast-item .cnote { font-size: 12px; color: #556; line-height: 1.5; margin-bottom: 8px; }
+.contrast-item .cforms { font-size: 11px; color: #999; margin-bottom: 8px; }
+.contrast-item .cforms b { color: #789; font-weight: 600; }
+
+/* ── Speaking feedback ── */
+.speaking { outline: 2px solid #4a7fd4; background: #dce8ff !important; }
+
+.empty-state { text-align: center; padding: 50px; color: #aaa; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>易混淆單字比較 · DTB B2</h1>
+  <p>點德文可朗讀 &nbsp;｜&nbsp; 上方標籤可快速跳轉，右側可搜尋德文／中文關鍵字</p>
+</header>
+
+<div class="tagnav" id="tagnav">
+  <!-- tag buttons injected by JS -->
+  <input type="text" class="search-box" id="searchBox" placeholder="搜尋德文或中文…" oninput="applySearch()">
+</div>
+
+<div class="container" id="container">
+  <!-- sections injected by JS -->
+</div>
+
+<script>
+// ══════════════════════════════ DATA ══════════════════════════════
+const TAGS = [
+  { id: 'family',     label: '詞族衍生',       color: '#2563a8', desc: '同字根衍生出動詞／名詞／形容詞／副詞' },
+  { id: 'contrast',   label: '自動／使動對比', color: '#c0622a', desc: '一個自己發生、一個需要受詞使其發生' },
+  { id: 'prefix',     label: '前綴語意轉變',   color: '#2a7a4a', desc: '加了前綴後意思整個改變' },
+  { id: 'lookalike',  label: '形近義異',       color: '#7d5fc8', desc: '拼字相近、詞性相同，但用法場合不同' },
+  { id: 'participle', label: '分詞形容詞化',   color: '#b0862a', desc: '分詞已固定當形容詞用，容易與動詞原型混淆' },
+];
+
+const GROUPS = [
+  // ───────────────────── 詞族衍生 ─────────────────────
+  {
+    id: 'gewoehnen', tag: 'family', title: 'gewöhnen 家族',
+    sub: '一個字根，四種詞性', type: 'table',
+    columns: ['德文', '詞性', '中文', '英文'],
+    rows: [
+      ['gewöhnen', '動詞', '使習慣、習慣於', 'to get used to'],
+      ['gewöhnt', '形容詞', '習慣於……的', 'used to'],
+      ['gewöhnlich', '形容詞／副詞', '平常的、通常', 'usual, normally'],
+      ['Gewohnheit', '名詞', '習慣', 'habit'],
+    ],
+    examples: [
+      { de: 'Ich muss mich an das deutsche Wetter gewöhnen.', zh: '我必須習慣德國的天氣。' },
+      { de: 'Jetzt bin ich daran gewöhnt.', zh: '現在我已經習慣了。' },
+      { de: 'Das Wetter ist hier gewöhnlich ziemlich kühl.', zh: '這裡的天氣通常比較涼。' },
+      { de: 'Jeden Morgen Kaffee zu trinken ist meine Gewohnheit.', zh: '每天早上喝咖啡是我的習慣。' },
+    ],
+  },
+  {
+    id: 'belasten', tag: 'family', title: 'belasten 家族',
+    sub: '壓力／負擔／抗壓相關字群', type: 'table',
+    columns: ['德文', '詞性', '中文', '常見搭配'],
+    rows: [
+      ['belasten', '動詞', '使有壓力、使負擔', 'jemanden stark belasten'],
+      ['belastend', '形容詞', '令人有壓力的', 'belastende Situation'],
+      ['belastbar', '形容詞', '抗壓的、能承受負荷的', 'psychisch belastbar'],
+      ['Belastung', '名詞', '壓力、負擔、負荷', 'Arbeitsbelastung'],
+      ['Belastbarkeit', '名詞', '抗壓能力', 'hohe Belastbarkeit'],
+      ['überlasten', '動詞', '使超負荷', 'Mitarbeiter überlasten'],
+      ['überlastet', '形容詞', '超負荷的', 'überlastete Mitarbeiter'],
+      ['entlasten', '動詞', '減輕負擔', 'das Team entlasten'],
+      ['Entlastung', '名詞', '減輕負擔、紓壓', 'eine große Entlastung'],
+    ],
+    examples: [
+      { de: 'Die hohe Arbeitsbelastung belastet viele Mitarbeiter.', zh: '高工作負荷讓許多員工承受壓力。' },
+      { de: 'Diese Situation ist für alle Beteiligten sehr belastend.', zh: '這個情況對所有相關人員都很有壓力。' },
+      { de: 'Wir suchen nach Maßnahmen, um das Team zu entlasten.', zh: '我們正在尋找方法減輕團隊負擔。' },
+      { de: 'In diesem Beruf sollte man psychisch belastbar sein.', zh: '從事這個職業應該具備良好的心理抗壓能力。' },
+    ],
+  },
+
+  // ───────────────────── 自動／使動對比 ─────────────────────
+  {
+    id: 'sinken-senken', tag: 'contrast', title: 'sinken vs. senken',
+    sub: '自己下降，還是使某物下降？', type: 'contrast',
+    items: [
+      {
+        label: 'sinken', pos: '不及物動詞（自動）', forms: 'sinkt · ist gesunken',
+        note: '主詞自己下降，不需要受詞：東西自己「掉下去」。',
+        examples: [
+          { de: 'Der Preis sinkt.', zh: '價格正在下降。' },
+          { de: 'Der Preis ist gesunken.', zh: '價格已經下降了。' },
+        ],
+      },
+      {
+        label: 'senken', pos: '及物動詞（使動）', forms: 'senkt · hat gesenkt',
+        note: '需要受詞，表示「使……下降」，主詞是造成下降的一方。',
+        examples: [
+          { de: 'Die Firma senkt die Preise.', zh: '公司調降價格。' },
+          { de: 'Die Firma hat die Preise gesenkt.', zh: '公司已經調降了價格。' },
+        ],
+      },
+    ],
+  },
+
+  // ───────────────────── 前綴語意轉變 ─────────────────────
+  {
+    id: 'kaufen-einkaufen', tag: 'prefix', title: 'kaufen vs. einkaufen',
+    sub: '買「一樣東西」，還是去「採買」？', type: 'contrast',
+    items: [
+      {
+        label: 'kaufen', pos: '及物動詞', forms: 'kauft · hat gekauft',
+        note: '買某個具體的東西，通常接明確的受詞。',
+        examples: [
+          { de: 'Ich kaufe mir ein neues Handy.', zh: '我要幫自己買一支新手機。' },
+          { de: 'Sie hat gestern ein Auto gekauft.', zh: '她昨天買了一輛車。' },
+        ],
+      },
+      {
+        label: 'einkaufen', pos: '動詞（常不及物）', forms: 'kauft ein · hat eingekauft',
+        note: '強調「去買日常用品」這件事本身，常搭配 gehen，受詞可省略。',
+        examples: [
+          { de: 'Ich gehe heute Nachmittag einkaufen.', zh: '我今天下午要去買東西。' },
+          { de: 'Wir müssen noch Lebensmittel einkaufen.', zh: '我們還要去採買食物。' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'reisen-verreisen', tag: 'prefix', title: 'reisen vs. verreisen',
+    sub: '泛指旅行，還是「出遠門一趟」？', type: 'contrast',
+    items: [
+      {
+        label: 'reisen', pos: '不及物動詞', forms: 'reist · ist gereist',
+        note: '泛指旅行、移動這件事本身，可長期或反覆使用。',
+        examples: [
+          { de: 'Er reist beruflich sehr viel.', zh: '他因為工作常常到處旅行。' },
+          { de: 'Wir sind letztes Jahr durch Asien gereist.', zh: '我們去年在亞洲各地旅行。' },
+        ],
+      },
+      {
+        label: 'verreisen', pos: '不及物動詞', forms: 'verreist · ist verreist',
+        note: '強調離開平常居住地出遠門，是一趟有始有終的旅程，常搭配明確天數／時間。',
+        examples: [
+          { de: 'Wir verreisen nächste Woche für zehn Tage.', zh: '我們下週要出門旅行十天。' },
+          { de: 'Sind Sie zurzeit verreist?', zh: '您目前是不是人在外地？（常見於自動回覆信）' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'zwingen-erzwingen', tag: 'prefix', title: 'zwingen vs. erzwingen',
+    sub: '強迫「某人」，還是強行取得「某事」？', type: 'contrast',
+    items: [
+      {
+        label: 'zwingen', pos: '及物動詞 + zu', forms: 'zwingt · hat gezwungen',
+        note: '強迫「某人」做某事，受詞是人，常搭配 zu + D。',
+        examples: [
+          { de: 'Der Chef zwingt die Mitarbeiter zu Überstunden.', zh: '老闆強迫員工加班。' },
+          { de: 'Niemand darf zu unbezahlter Mehrarbeit gezwungen werden.', zh: '任何人都不應被強迫做無薪的額外工作。' },
+        ],
+      },
+      {
+        label: 'erzwingen', pos: '及物動詞', forms: 'erzwingt · hat erzwungen',
+        note: '強行促成「某件事」，受詞是事物或結果，不是人。',
+        examples: [
+          { de: 'Er versucht, eine schnelle Entscheidung zu erzwingen.', zh: '他試圖強行促成一個快速的決定。' },
+          { de: 'Man kann Vertrauen nicht erzwingen.', zh: '信任是無法強求的。' },
+        ],
+      },
+    ],
+  },
+
+  // ───────────────────── 形近義異 ─────────────────────
+  {
+    id: 'zuverlaessig-verantwortlich-zustaendig', tag: 'lookalike',
+    title: 'zuverlässig · verantwortlich · zuständig',
+    sub: '三個都跟「靠得住」有關，但角度完全不同', type: 'contrast',
+    items: [
+      {
+        label: 'zuverlässig', pos: '形容詞', forms: '個人特質',
+        note: '形容人或事物本身穩定可信，不太看場合，是一種「性格」。',
+        examples: [
+          { de: 'Sie ist eine zuverlässige Kollegin, auf die man sich immer verlassen kann.', zh: '她是一位可靠的同事，總能讓人信賴。' },
+        ],
+      },
+      {
+        label: 'verantwortlich', pos: '形容詞 + für', forms: '道義／後果責任',
+        note: '強調對某個後果「該負責」，常帶有追究對錯的意味，搭配 für + A。',
+        examples: [
+          { de: 'Wer ist für diesen Fehler verantwortlich?', zh: '誰要為這個錯誤負責？' },
+        ],
+      },
+      {
+        label: 'zuständig', pos: '形容詞 + für', forms: '職務分工',
+        note: '強調業務分工上「歸誰管」，比較中性、行政層面，不帶對錯評價，也搭配 für + A。',
+        examples: [
+          { de: 'Für Urlaubsanträge ist die Personalabteilung zuständig.', zh: '休假申請由人資部門負責受理。' },
+        ],
+      },
+    ],
+  },
+
+  // ───────────────────── 分詞形容詞化 ─────────────────────
+  {
+    id: 'beiliegend-beigefuegt', tag: 'participle', title: 'beiliegend vs. beigefügt',
+    sub: '商用德文書信常見的一對「附件」用詞', type: 'contrast',
+    items: [
+      {
+        label: 'beiliegend', pos: 'Partizip I（源自 beiliegen）', forms: '常放句首，作副詞用',
+        note: '強調「隨附在其中」，常獨立放在句首，後面接主要子句（Beiliegend finden Sie …）。',
+        examples: [
+          { de: 'Beiliegend finden Sie meinen Lebenslauf und mein Anschreiben.', zh: '隨附您將看到我的履歷與求職信。' },
+        ],
+      },
+      {
+        label: 'beigefügt', pos: 'Partizip II（源自 beifügen）', forms: '常放名詞前，作形容詞用',
+        note: '強調「已經被附加」的狀態，通常放在名詞前面當形容詞（die beigefügten Unterlagen）。',
+        examples: [
+          { de: 'Die beigefügten Unterlagen enthalten weitere Informationen zu meiner Qualifikation.', zh: '附上的文件包含更多關於我資格的資訊。' },
+          { de: 'Bitte prüfen Sie die beigefügte Rechnung.', zh: '請查看附上的發票。' },
+        ],
+      },
+    ],
+  },
+];
+
+// ══════════════════════════════ RENDER ══════════════════════════════
+function speak(text) {
+  if (!text || !window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'de-DE'; u.rate = 0.92;
+  window.speechSynthesis.speak(u);
+}
+
+function esc(s) { return (s || '').replace(/"/g, '&quot;').replace(/'/g, "\\'"); }
+
+function buildTable(group) {
+  const thead = `<tr>${group.columns.map(c => `<th>${c}</th>`).join('')}</tr>`;
+  const rows = group.rows.map(r => `
+    <tr>
+      <td class="w" onclick="speak('${esc(r[0])}')">${r[0]}</td>
+      <td class="pos">${r[1]}</td>
+      <td class="zh">${r[2]}</td>
+      <td class="en">${r[3]}</td>
+    </tr>`).join('');
+  return `<table class="fam-table"><thead>${thead}</thead><tbody>${rows}</tbody></table>`;
+}
+
+function buildExamples(examples) {
+  return `<div class="ex-block">${examples.map(e => `
+    <div class="ex-item" onclick="speak('${esc(e.de)}')">
+      <span class="ex-de">${e.de}</span>
+      <span class="ex-zh">${e.zh}</span>
+    </div>`).join('')}</div>`;
+}
+
+function buildContrast(group) {
+  const items = group.items.map(it => `
+    <div class="contrast-item">
+      <div class="cw" onclick="speak('${esc(it.label)}')">${it.label}</div>
+      <div class="cpos">${it.pos}</div>
+      <div class="cforms"><b>變化：</b>${it.forms}</div>
+      <div class="cnote">${it.note}</div>
+      ${buildExamples(it.examples)}
+    </div>`).join('');
+  return `<div class="contrast-grid">${items}</div>`;
+}
+
+function buildGroupCard(group, color) {
+  const body = group.type === 'table'
+    ? buildTable(group) + buildExamples(group.examples)
+    : buildContrast(group);
+  return `
+    <div class="group-card" data-group="${group.id}" data-tag="${group.tag}" style="--c:${color}">
+      <div class="group-title">${group.title}</div>
+      <div class="group-sub">${group.sub}</div>
+      ${body}
+    </div>`;
+}
+
+function render() {
+  const container = document.getElementById('container');
+  const tagnav = document.getElementById('tagnav');
+  const searchBox = document.getElementById('searchBox');
+
+  let html = '';
+  TAGS.forEach(tag => {
+    const groups = GROUPS.filter(g => g.tag === tag.id);
+    html += `<div class="section-heading" id="sec-${tag.id}" style="--c:${tag.color}">
+      <h2>${tag.label}</h2><span class="desc">${tag.desc}</span>
+    </div>`;
+    if (!groups.length) {
+      html += `<div class="section-empty-note">此類別尚無資料，之後可以再補上例句。</div>`;
+    } else {
+      groups.forEach(g => { html += buildGroupCard(g, tag.color); });
+    }
+  });
+  container.innerHTML = html;
+
+  let navHtml = TAGS.map(tag => {
+    const count = GROUPS.filter(g => g.tag === tag.id).length;
+    const emptyCls = count ? '' : ' empty';
+    return `<button class="tag-btn${emptyCls}" style="--c:${tag.color}" onclick="jumpTo('${tag.id}')">${tag.label}<span class="cnt">${count}</span></button>`;
+  }).join('');
+  tagnav.insertAdjacentHTML('afterbegin', navHtml);
+}
+
+function jumpTo(tagId) {
+  document.getElementById('sec-' + tagId).scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function applySearch() {
+  const q = document.getElementById('searchBox').value.trim().toLowerCase();
+  document.querySelectorAll('.group-card').forEach(card => {
+    const text = card.textContent.toLowerCase();
+    card.classList.toggle('hidden', q.length > 0 && !text.includes(q));
+  });
+}
+
+render();
+</script>
+</body>
+</html>
