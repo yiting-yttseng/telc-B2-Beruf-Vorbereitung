@@ -907,6 +907,74 @@ const MODELLTEST9_DATA = [
     ex:"Alles steht bereit in der Backstube.",
     ez:"一切都已經準備好放在烘焙工作間裡了。" },
 
+  // ── LESEN TEIL 1 — Infoportal: Rund um den Beruf (S.130) ─────
+  // 注意：此區塊物理上位於檔案尾端，以保留現有 checkpoint 勾選記錄不受影響。
+  // HTML 顯示時會依 teil 自動排序，L1 仍會顯示在 L2 之前。
+
+  { mt:"MT9", teil:"L1",
+    a:"", w:"erwerben", p:"",
+    en:"to obtain / acquire", zh:"取得、獲得",
+    k:"einen Abschluss erwerben; Qualifikationen erwerben",
+    kz:"取得學歷；獲得資格",
+    ex:"Wer einen Berufsabschluss in seinem Heimatland erworben hat, hat einen Rechtsanspruch auf Überprüfung der Gleichwertigkeit.",
+    ez:"在本國取得職業學歷的人，有權申請與德國相應學歷的等值認定。" },
+
+  { mt:"MT9", teil:"L1",
+    a:"der", w:"Auftritt", p:"-e",
+    en:"appearance / presentation", zh:"外在形象、出場",
+    k:"ein perfekter Auftritt; beim Vorstellungsgespräch einen guten Auftritt haben",
+    kz:"完美的形象；在面試中留下好印象",
+    ex:"Bei deiner Bewerbung kommt es auch auf den Äußeren an – ein perfekter Auftritt beim Vorstellungsgespräch ist wichtig.",
+    ez:"求職時外表也很重要，在面試中展現完美形象至關重要。" },
+
+  { mt:"MT9", teil:"L1",
+    a:"der", w:"Stoff", p:"-e",
+    en:"fabric / material", zh:"布料、材料",
+    k:"mit Stoffen arbeiten; ein feiner Stoff",
+    kz:"使用布料工作；精緻的布料",
+    ex:"Du arbeitest gern mit Stoffen, hast ein Gespür für Trends und suchst eine neue Herausforderung?",
+    ez:"你喜歡和布料打交道，對流行趨勢有敏銳感覺，並在尋找新挑戰嗎？" },
+
+  { mt:"MT9", teil:"L1",
+    a:"das", w:"Gespür", p:"",
+    en:"feel / instinct / nose (for something)", zh:"（對……的）敏銳感、直覺",
+    k:"ein Gespür für Trends haben; ein feines Gespür für Qualität",
+    kz:"對趨勢有敏銳感；對品質有細膩的直覺",
+    ex:"Du arbeitest gern mit Stoffen, hast ein Gespür für Trends und suchst eine neue Herausforderung?",
+    ez:"你喜歡和布料打交道，對流行趨勢有敏銳感覺，並在尋找新挑戰嗎？" },
+
+  { mt:"MT9", teil:"L1",
+    a:"die", w:"Handwerkskammer", p:"-n",
+    en:"chamber of crafts / trade guild authority", zh:"手工業公會、手工業協會",
+    k:"Bildungseinrichtungen der Handwerkskammern; sich an die Handwerkskammer wenden",
+    kz:"手工業公會的教育機構；聯繫手工業公會",
+    ex:"Auf die vier erforderlichen Prüfungsteile kann man sich an Meisterschulen oder Bildungseinrichtungen der Handwerkskammern vorbereiten.",
+    ez:"可以在師傅學校或手工業公會的教育機構備考四個必要的考試項目。" },
+
+  { mt:"MT9", teil:"L1",
+    a:"der", w:"Umgang", p:"",
+    en:"handling / interaction / working with", zh:"與……打交道、操作",
+    k:"der Umgang mit der Kamera; der Umgang mit Kunden",
+    kz:"操作相機；與客戶打交道",
+    ex:"Andrea Weiler liebt den Umgang mit der Kamera und die ästhetische Darstellung der Produkte ihrer Kunden.",
+    ez:"Andrea Weiler 熱愛操作相機，以及將客戶的產品呈現出美感。" },
+
+  { mt:"MT9", teil:"L1",
+    a:"", w:"ästhetisch", p:"",
+    en:"aesthetic / visually pleasing", zh:"美感的、有審美性的",
+    k:"die ästhetische Darstellung; ästhetisch ansprechend",
+    kz:"有美感的呈現；具有美感吸引力的",
+    ex:"Andrea Weiler liebt den Umgang mit der Kamera und die ästhetische Darstellung der Produkte ihrer Kunden.",
+    ez:"Andrea Weiler 熱愛操作相機，以及將客戶的產品呈現出美感。" },
+
+  { mt:"MT9", teil:"L1",
+    a:"die", w:"Leidenschaft", p:"-en",
+    en:"passion", zh:"熱情、熱愛",
+    k:"aus einer Leidenschaft einen Beruf machen; mit Leidenschaft dabei sein",
+    kz:"把熱情變成職業；充滿熱情地投入",
+    ex:"Lesen Sie, wie aus einer Leidenschaft durch eine fundierte Ausbildung ihr Beruf geworden ist.",
+    ez:"閱讀一下，她是如何透過紮實的培訓，將熱情轉化為她的職業的。" },
+
 ];
 
 // GitHub Pages 自動載入機制：將資料注入全域陣列
